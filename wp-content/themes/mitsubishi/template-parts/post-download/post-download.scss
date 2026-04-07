@@ -1,0 +1,28 @@
+@import '../../assets/scss/variables';
+@import '../../assets/scss/mixins';
+
+.mit-post-download {
+  @include st-card;
+  @include st-card-padding;
+
+  &__meta {
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 12px;
+  }
+
+  &__image {
+    display: block;
+    margin-bottom: 15px;
+
+    @include img-ratio(16, 9);
+
+    &--portrait {
+      img {
+        width: auto !important;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    }
+  }
+}

@@ -1,0 +1,10 @@
+@import '../../../../assets/scss/variables';
+@import '../../../../assets/scss/mixins';
+
+.el-cards-grid {
+  .row {
+    @include media-breakpoint-up(xl) {
+      --bs-gutter-x: 40px;
+    }
+  }
+}

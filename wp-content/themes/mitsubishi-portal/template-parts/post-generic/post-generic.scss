@@ -1,0 +1,10 @@
+@import '../../assets/scss/variables';
+@import '../../assets/scss/mixins';
+
+.por-post-generic {
+  &__image {
+    display: block !important;
+
+    @include img-ratio(479, 284);
+  }
+}

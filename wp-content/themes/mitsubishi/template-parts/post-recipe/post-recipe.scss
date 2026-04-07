@@ -1,0 +1,41 @@
+@import '../../assets/scss/variables';
+@import '../../assets/scss/mixins';
+
+.mit-post-recipe {
+  position: relative;
+  @include st-card;
+
+  &__image {
+    @include img-ratio(306, 380);
+
+    display: block;
+  }
+
+  &__heading {
+    padding: 15px;
+    margin: 0;
+
+    @include media-breakpoint-up(lg) {
+      padding: 20px;
+      font-size: 18px;
+    }
+  }
+
+  &__tag {
+    color: #fff;
+    position: absolute;
+    top: 15px;
+    left: 0;
+    max-width: 100%;
+    background-color: var(--e-global-color-18c2fe6);
+    z-index: 1;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 8px 12px;
+
+    @include media-breakpoint-up(xxl) {
+      top: 20px;
+      font-size: 16px;
+    }
+  }
+}

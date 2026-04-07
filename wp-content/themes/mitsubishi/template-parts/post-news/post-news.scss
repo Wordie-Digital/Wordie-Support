@@ -1,0 +1,7 @@
+@import '../../assets/scss/variables';
+@import '../../assets/scss/mixins';
+
+.mit-post-news {
+  @include st-card;
+  @include st-card-padding;
+}

@@ -1,0 +1,375 @@
+<?php /** @noinspection DuplicatedCode */
+
+defined( 'ABSPATH' ) or exit;
+
+use Elementor\Controls_Manager;
+use Elementor\Widget_Base;
+
+class Custom_El_Products_Single_Tabs extends Widget_Base {
+  public function __construct( $data = [], $args = null ) {
+    parent::__construct( $data, $args );
+  }
+
+  public function get_name() {
+    return 'Custom_El_Products_Single_Tabs';
+  }
+
+  public function get_title() {
+    return 'Product | Tabs';
+  }
+
+  public function get_icon() {
+    return 'eicon-custom';
+  }
+
+  public function get_categories() {
+    return [ 'custom_woo' ];
+  }
+
+  public function get_script_depends() {
+    return [];
+  }
+
+  public function get_style_depends() {
+    return [];
+  }
+
+  protected function register_controls() {
+    $this->start_controls_section(
+      'content_section',
+      [
+        'label' => 'Content',
+        'tab'   => Controls_Manager::TAB_CONTENT,
+      ]
+    );
+
+    $this->add_control(
+      'message',
+      [
+        'label'     => __( 'Used on Products single page only', 'plugin-name' ),
+        'type'      => \Elementor\Controls_Manager::HEADING,
+        'separator' => 'after',
+      ]
+    );
+
+    $this->add_control(
+      'separate_tabs',
+      [
+        'label'       => __( 'Separate Tabs', 'plugin-domain' ),
+        'type'        => \Elementor\Controls_Manager::SELECT2,
+        'description' => "Select the content that are separated from the tabs. Applicable in professional flow only",
+        'multiple'    => true,
+        'default'     => '',
+        'options'     => [
+          'overview'       => 'Overview',
+          'features'       => 'Features',
+          'specifications' => 'Specifications',
+          'reviews'        => 'Reviews',
+          'videos'         => 'Videos',
+        ],
+      ]
+    );
+
+    $this->end_controls_section();
+  }
+
+  protected function render() {
+    if ( ! is_product() ) {
+      return;
+    }
+
+    global $product, $post;
+    $MIT_helpers = MIT_Core::instance()->helpers;
+
+    $uid           = uniqid( 'el-products-single-tabs-' );
+    $separate_tabs = $this->get_settings_for_display( 'separate_tabs' ) ?: [];
+
+    if ( ! $MIT_helpers->is_flow_professional() ) {
+      $separate_tabs = [];
+    }
+
+    $tabs    = [];
+    $no_tabs = [];
+
+    // Overview tab
+    ob_start();
+    ?>
+    <div class="container">
+      <? the_content(); ?>
+      <style>#rank-math-rich-snippet-wrapper{display: none;}</style>
+    </div>
+    <?php
+
+    $content_overview = [
+      'name'    => 'overview',
+      'title'   => 'Overview',
+      'content' => ob_get_clean(),
+    ];
+
+    if (
+      \Elementor\Plugin::$instance->preview->is_preview_mode() ||
+      ! empty( $post->post_content )
+    ) {
+      if ( in_array( 'overview', $separate_tabs ) ) {
+        $no_tabs[] = $content_overview;
+      } else {
+        $tabs[] = $content_overview;
+      }
+    }
+
+    // Features tab
+    $content_features = [
+      'name'    => 'features',
+      'title'   => 'Features',
+      'content' => call_user_func( function () {
+        global $post;
+
+        ob_start();
+        ?>
+        <div class="container">
+          <div class="row <?= empty( $post->post_content ) ? 'justify-content-center' : '' ?>">
+            <div class="col-lg-9">
+              <?
+              $key_features = array_map( function ( $key_feature_id ) {
+                return get_term( $key_feature_id, 'pa_key-features' );
+              }, get_field( 'key_features' ) );
+
+              if ( ! empty( $key_features ) ) : ?>
+                <div class="row">
+                  <?php foreach ( $key_features as $key_feature ) : /** @var WP_Term $key_feature */ ?>
+                    <div class="col-lg-6 d-flex mb-3 mb-lg-5 <?= empty( $key_feature->description ) ? 'align-items-center' : '' ?>">
+                      <div class="flex-shrink-0">
+                        <?php if ( ! empty( $thumb = get_field( 'thumbnail', "term_{$key_feature->term_id}" ) ) ) : ?>
+                          <div class="el-products-single__tabs-icon">
+                            <img
+                              src="<?= $thumb['sizes']['medium'] ?>"
+                              alt="<?= esc_attr( $key_feature->name ) ?>"
+                              class="img-fluid"
+                              width="77"
+                              loading="lazy"
+                            >
+                          </div>
+                        <?php else: ?>
+                          <div class="el-products-single__tabs-icon-none">
+                            <div style="width:54px; height:54px; -webkit-border-radius: 50%; -moz-border-radius: 50%; border-radius: 50%; background-color: red; margin-left: -6px; margin-top: -6px;"></div>
+                          </div>
+                        <?php endif; ?>
+                      </div>
+
+                      <div class="flex-grow-1 ms-3">
+                        <h4<?= empty( $key_feature->description ) ? ' class="mb-0"' : '' ?>>
+                          <?
+                          /**
+                           * Note: The underscore in key feature name is just for admin, to differentiate similar keys with different description
+                           */
+                          echo @explode( '_', $key_feature->name )[0];
+                          ?>
+                        </h4>
+                        <?= wpautop( $key_feature->description ) ?>
+                      </div>
+                    </div>
+                  <?php endforeach; ?>
+                </div>
+              <? endif; ?>
+            </div>
+
+            <?php if ( ! empty( $other_features = get_field( 'other_features' ) ) ) : ?>
+              <div class="col-lg-3">
+                <h2 class="text-capitalize">Other Features</h2>
+
+                <div class="el-products-single__product-details generic-content">
+                  <?= wpautop( $other_features ); ?>
+                </div>
+              </div>
+            <?php endif; ?>
+          </div>
+        </div>
+        <?php
+        return ob_get_clean();
+      } ),
+    ];
+
+    if ( in_array( 'features', $separate_tabs ) ) {
+      $no_tabs[] = $content_features;
+    } else {
+      $tabs[] = $content_features;
+    }
+
+    // Specifications tab
+    $content_specifications = [
+      'name'    => 'specifications',
+      'title'   => 'Specifications',
+      'content' => call_user_func( function () {
+        ob_start();
+
+        if ( ! empty( $specifications = MIT_Core::instance()->helpers->get_personalised_field( 'specifications' ) ) ) : ?>
+          <div class="container">
+            <?= $specifications ?>
+          </div>
+        <?php endif;
+        
+        return ob_get_clean();
+      } ),
+    ];
+
+    if ( in_array( 'specifications', $separate_tabs ) ) {
+      $no_tabs[] = $content_specifications;
+    } else {
+      $tabs[] = $content_specifications;
+    }
+
+    // Reviews tab
+    if ( ! empty( $productreview_identifier = get_field( 'productreviewcomau_identifier' ) ) ) {
+      $content_reviews = [
+        'name'    => 'reviews',
+        'title'   => 'Reviews',
+        'content' => call_user_func( function ( $productreview_identifier ) {
+          ob_start();
+          ?>
+          <div class="container">
+            <?
+            get_template_part( 'template-parts/product-reviews/product-reviews', null, [
+              'identifier' => $productreview_identifier,
+              'type'       => 'horizontal',
+            ] );
+            ?>
+          </div>
+          <?php
+
+          return ob_get_clean();
+        }, $productreview_identifier ),
+      ];
+
+      if ( in_array( 'reviews', $separate_tabs ) ) {
+        $no_tabs[] = $content_reviews;
+      } else {
+        $tabs[] = $content_reviews;
+      }
+    }
+
+    // Videos tab
+    $videos = get_posts( array(
+      'post_type'      => 'cpt-video',
+      'post_status'    => 'publish',
+      'posts_per_page' => - 1,
+      'meta_query'     => [
+        [
+          'key'     => 'series_products',
+          'compare' => 'LIKE',
+          'value'   => $product->get_id(),
+        ],
+      ],
+    ) );
+
+    if ( ! empty( $videos ) ) {
+      $content_videos = [
+        'name'    => 'videos',
+        'title'   => 'Videos',
+        'content' => call_user_func( function ( $videos ) {
+          ob_start();
+
+          ?>
+          <div class="container">
+            <?php foreach ( $videos as $video ) : ?>
+              <div class="row row--video">
+                <div class="col-lg-6 mb-3">
+                  <?
+                  $MIT_helpers = MIT_Core::instance()->helpers;
+                  $video_url   = get_field( 'video_url', $video->ID );
+
+                  echo $MIT_helpers->get_video_iframe( $video_url )
+                  ?>
+                </div>
+
+                <div class="col-lg-6">
+                  <h3><?= $video->post_title ?></h3>
+                  <?= wpautop( force_balance_tags( $video->post_content ) ) ?>
+
+                  <? get_template_part( 'template-parts/share/share', null, [
+                    'url' => $video_url ?: false,
+                  ] ) ?>
+                </div>
+              </div>
+            <?php endforeach; ?>
+          </div>
+          <?php
+
+          return ob_get_clean();
+        }, $videos ),
+      ];
+
+      if ( in_array( 'videos', $separate_tabs ) ) {
+        $no_tabs[] = $content_videos;
+      } else {
+        $tabs[] = $content_videos;
+      }
+    }
+
+    // Echo no tabs content
+    if ( ! empty( $no_tabs ) ) : ?>
+      <div class="el-products-single__no-tabs" id="<?= $uid ?>-no-tabs">
+        <?php foreach ( $no_tabs as $index => $tab ) : ?>
+          <?
+          if ( empty( $tab['content'] ) ) {
+            continue;
+          }
+          ?>
+          <div class="elementor-menu-anchor py-5" id="section-product-<?= $tab['name'] ?>">
+            <div class="container">
+              <?
+              get_template_part( 'template-parts/section-heading/section-heading', null, [
+                'heading' => $tab['title'],
+              ] );
+              ?>
+            </div>
+
+            <?= $tab['content'] ?>
+          </div>
+        <?php endforeach; ?>
+      </div>
+    <?php endif; ?>
+
+    <?php
+    // Echo tabs content
+    if ( ! empty( $tabs ) ) : ?>
+      <div class="el-products-single__tabs animated animate__fadeIn elementor-menu-anchor mt-4 mt-lg-0" id="section-product-tabs">
+        <ul class="nav nav-tabs" role="tablist">
+          <?php foreach ( $tabs as $index => $tab ) : ?>
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link <?= 0 == $index ? 'active' : '' ?>"
+                id="product-tab-<?= $tab['name'] ?>"
+                data-bs-toggle="tab"
+                data-bs-target="#product-tab-content-<?= $tab['name'] ?>"
+                type="button"
+                role="tab"
+                data-title="<?= esc_attr( $tab['title'] ) ?>"
+                aria-controls="product-tab-content-<?= $tab['name'] ?>"
+                aria-selected="<?= 0 == $index ? 'true' : 'false' ?>"
+              >
+                <?= $tab['title'] ?>
+              </button>
+            </li>
+          <?php endforeach; ?>
+        </ul>
+
+        <div class="tab-content">
+          <?php foreach ( $tabs as $index => $tab ) : ?>
+            <div class="tab-pane fade <?= 0 == $index ? 'show active' : '' ?>"
+                id="product-tab-content-<?= $tab['name'] ?>"
+                role="tabpanel"
+                aria-labelledby="product-tab-<?= $tab['name'] ?>">
+                <?= $tab['content'] ?>
+                <?php if ( in_array( $tab['name'], ['overview', 'features', 'specifications'] ) ) : ?>
+                    <div class="container">
+                    <?= mit_get_compliance_disclaimer() ?>
+                    </div>
+                <?php endif; ?>
+            </div>
+          <?php endforeach; ?>
+        </div>
+      </div>
+    <?php endif; ?>
+    <?php
+  }
+}

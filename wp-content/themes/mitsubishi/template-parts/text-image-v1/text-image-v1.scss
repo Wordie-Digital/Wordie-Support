@@ -1,0 +1,91 @@
+@import '../../assets/scss/variables';
+@import '../../assets/scss/mixins';
+
+.mit-text-image-v1 {
+  position: relative;
+  overflow: hidden;
+
+  &__bg {
+    position: absolute;
+    z-index: 0;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 140px;
+    min-height: 400px;
+
+    @include media-breakpoint-up(lg) {
+      min-height: 0;
+      bottom: 0;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__inner-content {
+    margin-bottom: 20px;
+  }
+
+  &__content {
+    @include offset-for-header;
+
+    .container {
+      min-height: 400px;
+      padding-top: 350px;
+
+      @include media-breakpoint-down(md) {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+
+      @include media-breakpoint-up(lg) {
+        padding-top: 140px;
+        padding-bottom: 140px;
+      }
+
+      @include media-breakpoint-up(xl) {
+        min-height: 620px;
+      }
+    }
+  }
+
+  &__content-box {
+    position: relative;
+    background-color: #fff;
+    padding: 20px 15px;
+    width: 480px;
+
+    @include media-breakpoint-down(md) {
+      @include st-shadow;
+      margin-bottom: 15px;
+    }
+
+    @include media-breakpoint-up(lg) {
+      padding: 30px;
+    }
+
+    @include media-breakpoint-up(xxl) {
+      padding: 50px;
+
+      .post-type-archive-cpt-recipe & {
+        min-height: 315px;
+      }
+    }
+
+    .btn {
+      margin-right: 10px;
+    }
+  }
+
+  &__meta {
+    margin-bottom: 15px;
+
+    p {
+      margin-bottom: 0;
+    }
+  }
+}

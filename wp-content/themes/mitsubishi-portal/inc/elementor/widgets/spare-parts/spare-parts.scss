@@ -1,0 +1,296 @@
+@import '../../../../assets/scss/variables';
+@import '../../../../assets/scss/mixins';
+
+.porel-spare-parts {
+  .form-label {
+    margin-bottom: 0;
+    font-weight: 600;
+  }
+
+  .table {
+    --bs-table-active-bg: rgba(0, 0, 0, 0.05);
+
+    &:not(.table-bordered) > :not(caption) > * > * {
+      padding: 0;
+    }
+  }
+
+  /*.nav-item--eta {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(100%);
+    @include st-transition;
+  }
+
+  .nav-item:first-child:has(.active) ~ .nav-item--eta {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }*/
+
+  .tab-content {
+    background-color: #fff;
+    z-index: 1;
+    position: relative;
+  }
+
+  &__search-form {
+    $h: 34px;
+
+    button.btn {
+      height: $h;
+      line-height: 1;
+      margin-top: 20px;
+      vertical-align: -1px !important;
+    }
+
+    .select2-container .select2-selection--single {
+      height: $h - 1;
+      border-color: #ced4da;
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__arrow b {
+      border-color: transparent;
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+      height: $h - 1;
+      background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns= 'http://www.w3.org/2000/svg' viewBox= '0 0 16 16' %3E%3Cpath fill= 'none' stroke= '%23343a40' stroke-linecap= 'round' stroke-linejoin= 'round' stroke-width= '2' d= 'm2 5 6 6 6-6' /%3E%3C/svg%3E");
+      background-size: 12px;
+      background-repeat: no-repeat;
+      background-position: left 10px;
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+      line-height: $h - 1;
+    }
+
+    .form-select {
+      background-position: right 5px center;
+
+      @include media-breakpoint-up(lg) {
+        padding-right: 1.3rem;
+      }
+    }
+
+    .form-select,
+    .form-control {
+      border-radius: 0;
+    }
+
+    .select2-container--default .select2-selection--single {
+      border-radius: 0;
+    }
+  }
+
+  &__table-row {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #dee2e6;
+
+    &:hover {
+      background-color: var(--bs-table-hover-bg);
+      color: var(--bs-table-hover-color);
+    }
+
+    &--head {
+      border-bottom: 2px solid currentColor;
+      font-weight: bold;
+      background-color: var(--bs-table-hover-bg);
+    }
+  }
+
+  &__table-row-wrapper {
+    &.active {
+      background-color: var(--bs-table-active-bg);
+
+      .porel-spare-parts__table-col--action-toggle-parts-list {
+        color: #fff;
+        background-color: var(--e-global-color-secondary);
+      }
+
+      > .porel-spare-parts__table-row {
+        background-color: var(--bs-table-hover-bg);
+      }
+    }
+
+    hr {
+      background-color: #000;
+      opacity: 1;
+    }
+
+    .border {
+      border-color: #000 !important;
+    }
+
+    .porel-spare-parts__table-row:last-child {
+      border-bottom: 0;
+    }
+  }
+
+  &__table-col {
+    flex: 1 0 100px;
+    padding: 8px 5px;
+
+    @include media-breakpoint-down(md) {
+      flex-basis: 33%;
+    }
+
+    &--part-number {
+      flex: 0 0 160px;
+    }
+
+    &--qty {
+      flex: 0 0 100px;
+      text-align: center;
+    }
+
+    &--types,
+    &--price {
+      flex: 0 0 110px;
+    }
+
+    &--material-title {
+      flex: 0 0 200px;
+    }
+
+    &--available {
+      flex: 0 0 170px;
+    }
+
+    &--actions {
+      a {
+        margin-left: 5px;
+        display: inline-block;
+        line-height: 1;
+        border: 1px solid var(--e-global-color-secondary);
+        padding: 3px 5px 2px;
+        margin-bottom: 3px;
+        margin-top: 3px;
+        text-align: center;
+
+        @media screen and (min-width: 1580px) {
+          margin: 0;
+        }
+
+        .loading-icon {
+          width: 14px;
+          height: 14px;
+          transform: translateY(-2px);
+          display: none;
+        }
+
+        &.loading {
+          span {
+            display: none;
+          }
+
+          .loading-icon {
+            display: inline-block;
+          }
+        }
+
+        &:disabled,
+        &.disabled {
+          pointer-events: none;
+          opacity: .35;
+        }
+
+        &:hover {
+          color: #fff;
+          text-decoration: none;
+          border-color: var(--e-global-color-secondary);
+          background-color: var(--e-global-color-secondary);
+        }
+      }
+
+      svg {
+        margin-top: -4px;
+        width: 14px;
+      }
+    }
+  }
+
+  &__sort-models,
+  &__sort {
+    background-color: transparent;
+    border: 0;
+    padding: 0 6px;
+    margin: 0;
+    box-shadow: none;
+    outline: none;
+    vertical-align: 1px;
+  }
+
+  &__request-eta-btn {
+    border: 1px solid var(--e-global-color-secondary);
+    font-size: 11px;
+    // padding-top: 2px;
+    background: transparent;
+    font-weight: 500;
+    height: 19px;
+    vertical-align: 1px;
+    @include st-transition;
+
+    &:not([disabled]):hover {
+      color: #fff;
+      background-color: var(--e-global-color-secondary);
+      @include st-shadow;
+    }
+
+    &:disabled {
+      border-color: #ccc;
+    }
+  }
+
+  .ajax-load-more-wrap .alm-listing {
+    @include media-breakpoint-down(lg) {
+      overflow: auto;
+    }
+  }
+
+  .modal {
+    .loading-icon {
+      width: 25px;
+      height: 25px;
+      transform: translateY(-2px);
+      display: none;
+      filter: invert(1) grayscale(100%) brightness(1000%);
+    }
+
+    .btn--default {
+      min-width: 175px;
+
+      &.loading {
+        span {
+          display: none;
+        }
+
+        .loading-icon {
+          display: inline-block;
+        }
+      }
+    }
+  }
+
+  &__eta-count {
+    position: absolute;
+    top: 4px;
+    right: 6px;
+    background-color: var(--e-global-color-secondary);
+    color: #fff;
+    padding: 2px 5px;
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1;
+    border-radius: 8px;
+
+    &:empty {
+      display: none;
+    }
+  }
+}
+
+.select2-container--default .select2-results__option--highlighted[aria-selected], .select2-container--default .select2-results__option--highlighted[data-selected] {
+  background-color: var(--e-global-color-primary);
+}

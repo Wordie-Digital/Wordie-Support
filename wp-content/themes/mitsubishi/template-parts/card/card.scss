@@ -1,0 +1,20 @@
+@import '../../assets/scss/variables';
+@import '../../assets/scss/mixins';
+
+.mit-card {
+  position: relative;
+  overflow: hidden;
+  @include st-card;
+
+  &__image {
+    @include img-ratio(479, 400)
+  }
+
+  &__content {
+    margin-bottom: 20px;
+  }
+
+  &__content-box {
+    @include st-card-padding;
+  }
+}

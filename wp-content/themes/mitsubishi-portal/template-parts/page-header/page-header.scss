@@ -1,0 +1,12 @@
+@import '../../assets/scss/variables';
+@import '../../assets/scss/mixins';
+
+.por-page-header {
+  .card {
+    padding: 10px;
+  }
+
+  &__excerpt {
+    font-size: 14px;
+  }
+}

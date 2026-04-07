@@ -1,0 +1,32 @@
+@import '../../assets/scss/variables';
+@import '../../assets/scss/mixins';
+
+.por-card {
+  position: relative;
+  overflow: hidden;
+  display: block;
+  text-decoration: none !important;
+
+  @include st-card;
+
+  &__image {
+    @include img-ratio(425, 490);
+
+    &--landscape {
+      @include img-ratio(658, 490);
+    }
+  }
+
+  &__content-box {
+    padding: 30px 15px;
+
+    h2, h3, h4, h5 {
+      font-size: 18px;
+      font-weight: normal;
+
+      @include media-breakpoint-up(xl) {
+        font-size: 22px;
+      }
+    }
+  }
+}

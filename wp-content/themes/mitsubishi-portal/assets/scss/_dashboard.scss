@@ -1,0 +1,15 @@
+.main,
+.simplebar-content {
+  .admin-bar & {
+    padding-top: $g-admin-bar-large !important;
+
+    @media screen and (min-width: #{$screen-admin-min}) {
+      padding-top: $g-admin-bar-small !important;
+    }
+  }
+}
+
+i[data-feather] {
+  min-width: 18px;
+  display: inline-block;
+}

@@ -1,0 +1,13 @@
+@import '../../assets/scss/variables';
+@import '../../assets/scss/mixins';
+
+.mit-post-career {
+  @include st-card;
+  border: 0;
+  background-color: #fff;
+  padding: 15px;
+
+  @include media-breakpoint-up(lg) {
+    padding: 30px;
+  }
+}

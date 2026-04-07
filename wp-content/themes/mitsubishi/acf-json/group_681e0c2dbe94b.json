@@ -1,0 +1,131 @@
+{
+    "key": "group_681e0c2dbe94b",
+    "title": "Additional Sitemap",
+    "fields": [
+        {
+            "key": "field_681e0c2db6cfe",
+            "label": "Index Group",
+            "name": "index_group",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "relevanssi_exclude": 1,
+            "layout": "block",
+            "pagination": 0,
+            "min": 0,
+            "max": 0,
+            "collapsed": "",
+            "button_label": "Add Row",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_681e0d61b6cff",
+                    "label": "Sitemap",
+                    "name": "sitemap",
+                    "aria-label": "",
+                    "type": "select",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "relevanssi_exclude": 0,
+                    "choices": {
+                        "post": "Posts",
+                        "page": "Pages",
+                        "product": "Products",
+                        "solutions": "Solutions",
+                        "wi-fi": "Wi-Fi",
+                        "systems": "Systems",
+                        "cpt-news": "News Releases",
+                        "category": "Categories",
+                        "product_cat": "Product categories",
+                        "category_news": "Topics"
+                    },
+                    "default_value": false,
+                    "return_format": "value",
+                    "multiple": 0,
+                    "allow_null": 0,
+                    "allow_in_bindings": 0,
+                    "ui": 1,
+                    "ajax": 0,
+                    "placeholder": "",
+                    "parent_repeater": "field_681e0c2db6cfe"
+                },
+                {
+                    "key": "field_681e0f4fb6d01",
+                    "label": "Last Modified",
+                    "name": "last_modified",
+                    "aria-label": "",
+                    "type": "date_time_picker",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "relevanssi_exclude": 1,
+                    "display_format": "d\/m\/Y g:i a",
+                    "return_format": "Y-m-d H:i:s",
+                    "first_day": 1,
+                    "allow_in_bindings": 0,
+                    "parent_repeater": "field_681e0c2db6cfe"
+                },
+                {
+                    "key": "field_681e0ed9b6d00",
+                    "label": "URLs",
+                    "name": "urls",
+                    "aria-label": "",
+                    "type": "textarea",
+                    "instructions": "Enter each URL on a new line.",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "100",
+                        "class": "",
+                        "id": ""
+                    },
+                    "relevanssi_exclude": 1,
+                    "default_value": "",
+                    "maxlength": "",
+                    "allow_in_bindings": 0,
+                    "rows": 12,
+                    "placeholder": "",
+                    "new_lines": "",
+                    "parent_repeater": "field_681e0c2db6cfe"
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "site-settings"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1746800781
+}

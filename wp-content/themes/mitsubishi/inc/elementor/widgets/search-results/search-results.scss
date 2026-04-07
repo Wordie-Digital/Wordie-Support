@@ -1,0 +1,12 @@
+@import '../../../../assets/scss/variables';
+@import '../../../../assets/scss/mixins';
+
+.el-search-results {
+  .nav-links {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    font-weight: bold;
+    color: var(--e-global-color-secondary);
+  }
+}

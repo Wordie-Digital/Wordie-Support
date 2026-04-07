@@ -1,0 +1,22 @@
+.swiper .swiper-button-next.swiper-button-disabled,
+.swiper .swiper-button-prev.swiper-button-disabled {
+  pointer-events: auto;
+}
+
+.elementor-section:not(.section-no-styles) {
+  word-wrap: break-word;
+  background-clip: border-box;
+  background-color: #fff;
+  border: 1px solid var(--por-c-border-card);
+  border-radius: 0;
+  min-width: 0;
+  box-shadow: 0 0 0.875rem 0 rgb(33 37 41 / 5%);
+  margin-bottom: 24px;
+  padding: 1rem 1.25rem;
+}
+
+.elementor-tab-content {
+  p a:not(.btn):not(.elementor-button) {
+    text-decoration: underline;
+  }
+}

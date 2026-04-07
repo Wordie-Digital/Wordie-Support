@@ -1,0 +1,36 @@
+@import '../../assets/scss/variables';
+@import '../../assets/scss/mixins';
+
+.mit-anchor-nav {
+  background-color: var(--e-global-color-b11023c);
+  overflow: hidden;
+
+  .container {
+    @include media-breakpoint-down(md) {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+
+  ul {
+    @include clear-ul-li;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    overflow: auto;
+    padding: 15px 0;
+
+    @include media-breakpoint-up(lg) {
+      padding: 25px;
+    }
+  }
+
+  .list-inline-item {
+    margin: 0;
+    padding-left: 15px;
+    padding-right: 15px;
+
+    + .list-inline-item {
+      border-left: 1px solid #ccc;
+    }
+  }
+}

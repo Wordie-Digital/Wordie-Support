@@ -1,0 +1,18 @@
+@import '../../../../assets/scss/variables';
+@import '../../../../assets/scss/mixins';
+
+.el-recipes-grid {
+  @include st-mobile-scroll-row;
+
+  &__posts {
+    padding: 4% 0;
+  }
+
+  &__container {
+    @include offset-scroll;
+
+    &:not(:last-child) {
+      margin-bottom: 5%;
+    }
+  }
+}

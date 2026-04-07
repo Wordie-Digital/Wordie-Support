@@ -1,0 +1,123 @@
+@import '../../assets/scss/variables';
+@import '../../assets/scss/mixins';
+
+.por-navbar {
+  height: var(--por-navbar-height);
+  padding: 0;
+
+  &__search {
+    width: 100%;
+    padding: 20px 20px 20px 0;
+
+    #ajaxsearchlite1,
+    div.asl_w {
+      box-shadow: none;
+
+      .probox {
+        box-shadow: none;
+
+        form {
+          border-bottom: 1px solid var(--e-global-color-accent) !important;
+        }
+
+        .promagnifier {
+          order: revert;
+
+          .innericon {
+            background: url('#{$images-from-template}/search.svg') center / contain no-repeat !important;
+          }
+
+          svg {
+            opacity: 0;
+          }
+        }
+
+        .proinput {
+          padding-left: 0;
+
+          input {
+            font-size: 16px;
+            box-shadow: none;
+          }
+        }
+      }
+    }
+  }
+
+  .sidebar-toggle:hover .hamburger,
+  .sidebar-toggle:hover .hamburger:after,
+  .sidebar-toggle:hover .hamburger:before {
+    background-color: var(--e-global-color-secondary);
+  }
+
+  .nav-item__logout {
+    background-color: var(--e-global-color-secondary);
+    color: #fff;
+    font-weight: bold;
+    height: 100%;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+
+    @include media-breakpoint-up(lg) {
+      padding: 20px 50px;
+      font-size: 18px;
+    }
+
+    svg {
+      margin-left: 15px;
+
+      * {
+        stroke: var(--e-global-color-primary);
+      }
+    }
+  }
+
+  .navbar-collapse {
+    height: 100%;
+    flex-shrink: 0;
+
+    .navbar-nav {
+      height: 100%;
+    }
+  }
+
+  .sidebar-toggle {
+    margin: 20px;
+
+    @include media-breakpoint-up(lg) {
+      margin: 30px;
+    }
+  }
+}
+
+div.asl_m .probox .proclose svg {
+  background-color: var(--e-global-color-accent);
+}
+
+div.asl_r {
+  .asl_nores_header {
+    display: inline-block;
+    margin-bottom: 10px;
+    font-size: 16px;
+  }
+
+  p.showmore a {
+    background-color: var(--e-global-color-primary);
+    color: #fff !important;
+    font-weight: bold !important;
+    font-size: 14px;
+  }
+
+  .results .item .asl_content h3,
+  .results .item .asl_content h3 a {
+    color: var(--e-global-color-text) !important;
+    font-weight: 500 !important;
+  }
+
+  &.asl_w.vertical .results .item::after {
+    background-color: var(--e-global-color-secondary);
+    left: 0;
+  }
+}

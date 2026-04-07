@@ -1,0 +1,13 @@
+@import '../../../../assets/scss/variables';
+@import '../../../../assets/scss/mixins';
+
+.el-text-image {
+  position: relative;
+
+  &__breadcrumb {
+    @include offset-for-header;
+    position: absolute;
+    inset: 0 0 auto 0;
+    z-index: 2;
+  }
+}

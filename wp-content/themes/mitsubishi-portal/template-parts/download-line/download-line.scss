@@ -1,0 +1,16 @@
+@import '../../assets/scss/variables';
+@import '../../assets/scss/mixins';
+
+.por-download-line {
+  display: block;
+  margin-bottom: 5px;
+
+  &:hover {
+    color: var(--e-global-color-primary);
+  }
+
+  svg {
+    margin-left: 5px;
+    margin-top: -5px;
+  }
+}

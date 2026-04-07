@@ -1,0 +1,38 @@
+@import '../../assets/scss/variables';
+@import '../../assets/scss/mixins';
+
+.mit-post-share {
+  margin-bottom: 10px;
+  color: var(--e-global-color-secondary);
+
+  .addtoany_list a, .widget .addtoany_list a {
+    padding-left: 0;
+  }
+
+  .addtoany_share {
+    display: inline-block;
+    padding-right: 14px !important;
+    text-decoration: underline;
+    font-size: 15px !important;
+    background: url('#{$images-from-template}/share.svg') right center / 10px no-repeat !important;
+  }
+}
+
+.a2a_menu_find_container {
+  border-radius: 0 !important;
+}
+
+div.a2a_full_footer {
+  display: none;
+}
+
+.a2a_menu {
+  border-radius: 0 !important;
+  transform: translateX(-2px);
+
+  a {
+    color: #000 !important;
+    font-family: $font-sans-serif !important;
+    font-size: 14px !important;
+  }
+}

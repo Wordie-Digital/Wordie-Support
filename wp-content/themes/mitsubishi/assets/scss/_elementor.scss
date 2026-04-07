@@ -1,0 +1,114 @@
+.elementor-section-wrap {
+  overflow: hidden;
+}
+
+.swiper .swiper-button-next.swiper-button-disabled,
+.swiper .swiper-button-prev.swiper-button-disabled {
+  pointer-events: auto;
+}
+
+.elementor-button {
+  min-width: $input-min-width;
+}
+
+.single-post .elementor-widget-theme-post-content,
+.single-cpt-news .elementor-widget-theme-post-content,
+.elementor-tab-content,
+.elementor-widget-text-editor {
+  @include st-list;
+
+  li,
+  p {
+    a:not(.btn):not(.button):not(.elementor-button) {
+      text-decoration: underline;
+    }
+  }
+}
+/* Header Section
+[data-elementor-type="header"] {
+  overflow: hidden;
+
+  @include media-breakpoint-up(lg) {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: map-get($container-max-widths, 'lg') + (2 * $g-logo-small) - 20px;
+  }
+
+  @include media-breakpoint-up(xl) {
+    max-width: map-get($container-max-widths, 'xl') + (2 * $g-logo-large) - 20px;
+  }
+
+  @include media-breakpoint-up(xxl) {
+    max-width: map-get($container-max-widths, 'xxl') + (2 * $g-logo-large) - 20px;
+  }
+
+  body:not(.elementor-editor-active) & {
+    @include media-breakpoint-up(lg) {
+      margin-bottom: -($header-top-desktop + $header-bottom-mobile);
+      z-index: 10;
+      position: relative;
+    }
+
+    @include media-breakpoint-up(xl) {
+      margin-bottom: -($header-top-desktop + $header-bottom-desktop);
+    }
+  }
+}
+*/
+[data-elementor-type="header"] {
+  overflow: hidden;
+
+  @include media-breakpoint-up(lg) {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 100%;
+  }
+
+  @include media-breakpoint-up(xl) {
+    max-width: 100%;
+  }
+
+  @include media-breakpoint-up(xxl) {
+    max-width: 100%;
+  }
+
+  body:not(.elementor-editor-active) & {
+    @include media-breakpoint-up(lg) {
+      margin-bottom: -($header-top-desktop + $header-bottom-mobile);
+      z-index: 10;
+      position: relative;
+    }
+
+    @include media-breakpoint-up(xl) {
+      margin-bottom: -($header-top-desktop + $header-bottom-desktop);
+    }
+  }
+}
+
+// UTILITIES CLASSES
+
+.elementor-offset-header-section {
+  > .elementor-container {
+    @include offset-padding-top;
+  }
+}
+
+.elementor-section--only-homeowner {
+  body.user-type--professional.elementor-editor-active & {
+    opacity: .5 !important;
+  }
+
+  body.user-type--professional:not(.elementor-editor-active) & {
+    display: none !important;
+  }
+}
+
+.elementor-section--only-professional {
+  body.user-type--homeowner.elementor-editor-active & {
+    opacity: .5 !important;
+  }
+
+  body.user-type--homeowner:not(.elementor-editor-active) & {
+    display: none !important;
+  }
+}

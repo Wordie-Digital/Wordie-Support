@@ -1,0 +1,29 @@
+@import '../../assets/scss/variables';
+@import '../../assets/scss/mixins';
+
+.por-post-resource {
+  @include st-card;
+
+  &__heading a {
+    font-size: 18px;
+    font-weight: normal;
+    display: block;
+    line-height: 1.2;
+  }
+
+  &__image {
+    display: block !important;
+
+    @include img-ratio(1, 1);
+  }
+
+  &__excerpt {
+    padding-bottom: 10px;
+    font-size: 12px;
+  }
+
+  &__content {
+    @include st-list;
+    @include st-card-padding;
+  }
+}

@@ -1,0 +1,45 @@
+@import '../../../../assets/scss/variables';
+@import '../../../../assets/scss/mixins';
+
+.porel-news-updates {
+  .card {
+    margin: 0;
+  }
+
+  .card-body--updates {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+  }
+
+  .swiper-container-horizontal > .swiper-pagination-bullets,
+  .swiper-pagination-custom, .swiper-pagination-fraction {
+    bottom: 0;
+  }
+
+  .swiper-slide {
+    margin-bottom: 40px;
+  }
+
+  .swiper-button-next, .swiper-button-prev {
+    @include media-breakpoint-up(lg) {
+      top: calc((100% - 140px) / 2 - 15px);
+    }
+  }
+
+  &__updates {
+    h4,
+    h3 {
+      font-size: 16px;
+    }
+
+    p {
+      font-size: 12px;
+    }
+  }
+
+  &__updates-row {
+    border-top: 1px solid var(--por-c-border);
+    padding: 15px 10px 15px 0;
+  }
+}

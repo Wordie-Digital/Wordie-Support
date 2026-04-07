@@ -1,0 +1,249 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: WP Store Locator - Statistics v1.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-01-18 12:48+0700\n"
+"PO-Revision-Date: 2015-09-01 13:49+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Poedit 1.8.11\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
+"_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2\n"
+"X-Poedit-Basepath: ..\n"
+"X-Textdomain-Support: yes\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: admin/class-admin.php:76 admin/templates/html-stats-overview.php:6
+msgid "Statistics"
+msgstr ""
+
+#: admin/class-admin.php:98 admin/class-dashboard.php:93
+msgid "Today"
+msgstr ""
+
+#: admin/class-admin.php:99 admin/class-dashboard.php:99
+msgid "Yesterday"
+msgstr ""
+
+#: admin/class-admin.php:100
+msgid "This week"
+msgstr ""
+
+#: admin/class-admin.php:101
+msgid "Last week"
+msgstr ""
+
+#: admin/class-admin.php:102
+msgid "This month"
+msgstr ""
+
+#: admin/class-admin.php:103
+msgid "Last month"
+msgstr ""
+
+#: admin/class-admin.php:104
+msgid "This quarter"
+msgstr ""
+
+#: admin/class-admin.php:105
+msgid "Last quarter"
+msgstr ""
+
+#: admin/class-admin.php:106
+msgid "Custom"
+msgstr ""
+
+#: admin/class-admin.php:182 admin/class-all-searches-table.php:199
+#: admin/class-popular-searches-table.php:110
+msgid "No data found."
+msgstr ""
+
+#: admin/class-admin.php:183
+msgid "No export data available"
+msgstr ""
+
+#: admin/class-admin.php:184 admin/templates/html-date-filters.php:42
+msgid "to"
+msgstr ""
+
+#: admin/class-admin.php:185
+msgid "OpenStreetMap"
+msgstr ""
+
+#: admin/class-admin.php:186
+#, php-format
+msgid "No locations found within a %d %s radius."
+msgstr ""
+
+#: admin/class-admin.php:304
+msgid "Items Per Page"
+msgstr ""
+
+#: admin/class-all-export.php:116 admin/class-export.php:56
+msgid "You do not have permission to export the statistics."
+msgstr ""
+
+#: admin/class-all-export.php:203 admin/class-all-export.php:283
+#: admin/class-export.php:184 admin/class-export.php:263
+msgid "No data found"
+msgstr ""
+
+#: admin/class-all-export.php:360 admin/class-export.php:353
+msgid "Search details for"
+msgstr ""
+
+#: admin/class-all-export.php:362 admin/class-export.php:355
+msgid "All searches overview"
+msgstr ""
+
+#: admin/class-all-export.php:364 admin/class-export.php:357
+msgid "Dashboard statistics"
+msgstr ""
+
+#: admin/class-all-export.php:446 admin/class-export.php:470
+msgid "Export to CSV file"
+msgstr ""
+
+#: admin/class-all-export.php:448 admin/class-export.php:470
+msgid "Export"
+msgstr ""
+
+#: admin/class-all-searches-table.php:39
+#: admin/class-popular-searches-table.php:23
+msgid "Store Search"
+msgstr ""
+
+#: admin/class-all-searches-table.php:40
+#: admin/class-popular-searches-table.php:24
+msgid "Store Searches"
+msgstr ""
+
+#: admin/class-all-searches-table.php:146 admin/class-dashboard.php:129
+#: admin/class-popular-searches-table.php:69
+msgid "Location"
+msgstr ""
+
+#: admin/class-all-searches-table.php:147 admin/class-dashboard.php:90
+#: admin/class-dashboard.php:130 admin/class-popular-searches-table.php:70
+#: admin/templates/html-stats-address-details.php:17
+#: admin/templates/html-stats-dashboard.php:17
+msgid "Searches"
+msgstr ""
+
+#: admin/class-dashboard.php:51
+msgid "WP Store Locator Statistics"
+msgstr ""
+
+#: admin/class-dashboard.php:105
+msgid "Week"
+msgstr ""
+
+#: admin/class-dashboard.php:111
+msgid "Current Month"
+msgstr ""
+
+#: admin/class-dashboard.php:122
+msgid "Today's Popular Searches"
+msgstr ""
+
+#: admin/class-dashboard.php:123
+msgid "View All"
+msgstr ""
+
+#: admin/class-dashboard.php:148
+msgid "No recent searches found"
+msgstr ""
+
+#: admin/class-statistics-report.php:259
+msgid "Searches: "
+msgstr ""
+
+#: admin/class-statistics-report.php:499
+msgid "Searched Location"
+msgstr ""
+
+#: admin/class-tools.php:47
+msgid "You do not have permission to reset the statistics."
+msgstr ""
+
+#: admin/class-tools.php:55
+msgid "Statistics successfully reset."
+msgstr ""
+
+#: admin/class-tools.php:57
+msgid "Something went wrong. Please try again."
+msgstr ""
+
+#: admin/templates/html-date-filters.php:20
+msgid "Go"
+msgstr ""
+
+#: admin/templates/html-stats-address-details.php:12
+#, php-format
+msgid "Search Details for %s"
+msgstr ""
+
+#: admin/templates/html-stats-address-details.php:28
+msgid "Nearby Locations"
+msgstr ""
+
+#: admin/templates/html-stats-address-details.php:43
+#: admin/templates/html-stats-dashboard.php:49
+msgid "Used Categories"
+msgstr ""
+
+#: admin/templates/html-stats-dashboard.php:28
+msgid "Popular Locations"
+msgstr ""
+
+#: admin/templates/html-stats-dashboard.php:63
+msgid "Heatmap"
+msgstr ""
+
+#: admin/templates/html-stats-overview.php:15
+msgid "Dashboard"
+msgstr ""
+
+#: admin/templates/html-stats-overview.php:16
+msgid "All Searches"
+msgstr ""
+
+#: admin/templates/html-stats-overview.php:21
+msgid "Tools"
+msgstr ""
+
+#: admin/templates/html-stats-tools.php:6
+msgid "You do not have permission to access the tools page."
+msgstr ""
+
+#: admin/templates/html-stats-tools.php:21
+msgid "Reset Statistics"
+msgstr ""
+
+#: admin/templates/html-stats-tools.php:30
+msgid "Submit"
+msgstr ""
+
+#: admin/templates/html-stats-tools.php:34
+msgid ""
+"Are you sure you want to reset the statistics? This cannot be undone, "
+"unless you restore a backup."
+msgstr ""
+
+#: admin/underscore-templates.php:22
+msgid "Categories:"
+msgstr ""
+
+#: wp-store-locator-statistics.php:80
+#, php-format
+msgid ""
+"The Statistics add-on requires at least version %s of WP Store Locator. "
+"Please upgrade to the %slatest version%s."
+msgstr ""
