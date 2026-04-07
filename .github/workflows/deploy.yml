@@ -1,0 +1,61 @@
+name: Deploy to WP Engine
+
+on:
+  push:
+    branches: [develop, staging]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to deploy to'
+        required: true
+        type: choice
+        options: [development, staging, production]
+
+# IMPORTANT: Production deploys are MANUAL ONLY via workflow_dispatch.
+# Pushing to main does NOT trigger any deploy.
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configure SSH
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.WPE_SSHG_KEY_PRIVATE }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -t rsa git.wpengine.com >> ~/.ssh/known_hosts
+
+      - name: Deploy to Development
+        if: |
+          (github.event_name == 'push' && github.ref == 'refs/heads/develop') ||
+          (github.event_name == 'workflow_dispatch' && github.event.inputs.environment == 'development')
+        env:
+          WPE_ENV: ${{ secrets.WPE_ENV_DEV }}
+        run: |
+          git remote add wpe-dev git@git.wpengine.com:production/${WPE_ENV}.git
+          git push wpe-dev HEAD:master --force
+
+      - name: Deploy to Staging
+        if: |
+          (github.event_name == 'push' && github.ref == 'refs/heads/staging') ||
+          (github.event_name == 'workflow_dispatch' && github.event.inputs.environment == 'staging')
+        env:
+          WPE_ENV: ${{ secrets.WPE_ENV_STAGING }}
+        run: |
+          git remote add wpe-staging git@git.wpengine.com:production/${WPE_ENV}.git
+          git push wpe-staging HEAD:master --force
+
+      - name: Deploy to Production
+        if: github.event_name == 'workflow_dispatch' && github.event.inputs.environment == 'production'
+        env:
+          WPE_ENV: ${{ secrets.WPE_ENV_PROD }}
+        run: |
+          echo "Production deploy - manually triggered only."
+          git remote add wpe-prod git@git.wpengine.com:production/${WPE_ENV}.git
+          git push wpe-prod HEAD:master --force
