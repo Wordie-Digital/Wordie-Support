@@ -243,6 +243,40 @@ jobs:
             echo "PHP_STATUS=PHP updated: $CURRENT_PHP → $NEW_PHP" >> $GITHUB_ENV
           fi
 
+      # ── 3c. Update WordPress core on dev ─────────────────────────────────
+      - name: Update WordPress core on dev
+        id: core
+        env:
+          DEV_ENV: ${{ secrets.WPE_ENV_DEV }}
+        run: |
+          [ -z "$DEV_ENV" ] && echo "WPE_ENV_DEV not set — skipping core update" \
+            && echo "core_summary=Skipped (no dev env configured)" >> $GITHUB_OUTPUT && exit 0
+
+          # Test SSH connectivity before attempting update
+          SSH_TEST=$(ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no -o ConnectTimeout=15 \
+            ${DEV_ENV}@${DEV_ENV}.ssh.wpengine.net "echo ok" 2>/dev/null || echo "")
+
+          if [ "$SSH_TEST" != "ok" ]; then
+            echo "Dev environment '${DEV_ENV}' not accessible via SSH — skipping core update"
+            echo "core_summary=Dev environment not accessible" >> $GITHUB_OUTPUT
+            echo "dev_accessible=false" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          echo "dev_accessible=true" >> $GITHUB_OUTPUT
+
+          CORE_RESULT=$(ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no \
+            ${DEV_ENV}@${DEV_ENV}.ssh.wpengine.net \
+            "wp core update 2>&1; wp core update-db --quiet 2>/dev/null" 2>/dev/null || echo "")
+
+          if echo "$CORE_RESULT" | grep -qi "success\|already at"; then
+            echo "core_summary=$CORE_RESULT" >> $GITHUB_OUTPUT
+          elif [ -z "$CORE_RESULT" ]; then
+            echo "core_summary=WordPress core already up to date" >> $GITHUB_OUTPUT
+          else
+            echo "core_summary=$CORE_RESULT" >> $GITHUB_OUTPUT
+          fi
+          echo "WordPress core: $CORE_RESULT"
+
       # ── 4. Update plugins on dev ──────────────────────────────────────────
       - name: Update plugins on dev
         id: plugins
@@ -251,6 +285,13 @@ jobs:
           DEV_ENV: ${{ secrets.WPE_ENV_DEV }}
         run: |
           [ -z "$DEV_ENV" ] && echo "WPE_ENV_DEV not set" && exit 0
+
+          # Skip if SSH already confirmed inaccessible in core step
+          if [ "${{ steps.core.outputs.dev_accessible }}" = "false" ]; then
+            echo "Dev environment not accessible — skipping plugin updates"
+            echo "plugins_summary=Dev environment not accessible" >> $GITHUB_OUTPUT
+            exit 0
+          fi
 
           PLUGIN_LIST=$(ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no -o ConnectTimeout=30 \
             ${DEV_ENV}@${DEV_ENV}.ssh.wpengine.net \
@@ -280,6 +321,12 @@ jobs:
           DEV_ENV: ${{ secrets.WPE_ENV_DEV }}
         run: |
           [ -z "$DEV_ENV" ] && echo "WPE_ENV_DEV not set" && exit 0
+
+          if [ "${{ steps.core.outputs.dev_accessible }}" = "false" ]; then
+            echo "Dev environment not accessible — skipping theme updates"
+            echo "themes_summary=Dev environment not accessible" >> $GITHUB_OUTPUT
+            exit 0
+          fi
 
           THEME_LIST=$(ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no -o ConnectTimeout=30 \
             ${DEV_ENV}@${DEV_ENV}.ssh.wpengine.net \
@@ -397,6 +444,7 @@ jobs:
           HUBSPOT_STAGE_QA:     ${{ secrets.HUBSPOT_STAGE_QA }}
           TICKET_ID:            ${{ steps.inputs.outputs.ticket_id }}
           PR_URL:               ${{ steps.create_pr.outputs.pr_url }}
+          CORE_SUMMARY:         ${{ steps.core.outputs.core_summary }}
           PLUGINS_UPDATED:      ${{ steps.plugins.outputs.plugins_summary }}
           THEMES_UPDATED:       ${{ steps.themes.outputs.themes_summary }}
           PHP_SUMMARY:          ${{ steps.php.outputs.php_summary }}
@@ -421,30 +469,38 @@ jobs:
             && echo "HubSpot ticket $TICKET_ID → QA (PR: $PR_URL)" \
             || echo "Warning: could not update HubSpot ticket"
 
-          # Add a note with the PR link
+          # Add a note summarising everything that was done
+          NOTE_BODY="✅ Monthly Maintenance Complete — ready for QA\n\nPR: $PR_URL\nDev site: https://${{ secrets.WPE_ENV_DEV }}.wpengine.com\n\n📋 What was updated:\n• WordPress Core: $CORE_SUMMARY\n• PHP: $PHP_SUMMARY\n• Plugins: $PLUGINS_UPDATED\n• Themes: $THEMES_UPDATED\n\nActions log: $RUN_URL"
           curl -sf \
             -X POST \
             -H "Authorization: Bearer $HUBSPOT_API_TOKEN" \
             -H "Content-Type: application/json" \
             -d "{
               \"properties\": {
-                \"hs_note_body\":  \"PR ready for review: $PR_URL\nPHP: $PHP_SUMMARY\nPlugins: $PLUGINS_UPDATED\nThemes: $THEMES_UPDATED\n\nDev site: https://${{ secrets.WPE_ENV_DEV }}.wpengine.com\nActions log: $RUN_URL\",
+                \"hs_note_body\":  $(echo "$NOTE_BODY" | jq -Rs .),
                 \"hs_timestamp\": \"$(date -u +%s)000\"
               },
               \"associations\": [{
                 \"to\": {\"id\": $TICKET_ID},
-                \"types\": [{\"associationCategory\": \"HUBSPOT_DEFINED\", \"associationTypeId\": 9}]
+                \"types\": [{\"associationCategory\": \"HUBSPOT_DEFINED\", \"associationTypeId\": 228}]
               }]
             }" \
-            "https://api.hubapi.com/crm/v3/objects/notes" || true
+            "https://api.hubapi.com/crm/v3/objects/notes" \
+            && echo "HubSpot note added" || echo "Warning: could not add note"
 
-      # ── 8b. HubSpot — no changes detected ─────────────────────────────────
+      # ── 8b. HubSpot — no changes but SSH worked (everything already up to date)
       - name: HubSpot — mark Complete (no changes needed)
-        if: steps.inputs.outputs.ticket_id != '' && steps.create_pr.outputs.no_changes == 'true'
+        if: >
+          steps.inputs.outputs.ticket_id != '' &&
+          steps.create_pr.outputs.no_changes == 'true' &&
+          steps.core.outputs.dev_accessible == 'true'
         env:
-          HUBSPOT_API_TOKEN:     ${{ secrets.HUBSPOT_API_TOKEN }}
+          HUBSPOT_API_TOKEN:      ${{ secrets.HUBSPOT_API_TOKEN }}
           HUBSPOT_STAGE_COMPLETE: ${{ secrets.HUBSPOT_STAGE_COMPLETE }}
           TICKET_ID:              ${{ steps.inputs.outputs.ticket_id }}
+          CORE_SUMMARY:           ${{ steps.core.outputs.core_summary }}
+          PHP_SUMMARY:            ${{ steps.php.outputs.php_summary }}
+          RUN_URL:                ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
           curl -sf \
             -X PATCH \
@@ -453,12 +509,72 @@ jobs:
             -d "{
               \"properties\": {
                 \"hs_pipeline_stage\": \"$HUBSPOT_STAGE_COMPLETE\",
-                \"plugins_updated\":   \"No updates available\",
-                \"themes_updated\":    \"No updates available\"
+                \"plugins_updated\":   \"All plugins already up to date\",
+                \"themes_updated\":    \"All themes already up to date\",
+                \"automation_error\":  \"\"
               }
             }" \
             "https://api.hubapi.com/crm/v3/objects/tickets/$TICKET_ID" \
-            && echo "HubSpot ticket $TICKET_ID → Complete (no changes)" || true
+            && echo "HubSpot ticket $TICKET_ID → Complete (all up to date)" || true
+
+          NOTE_BODY="✅ Monthly Maintenance Complete — no updates needed\n\n📋 Status:\n• WordPress Core: $CORE_SUMMARY\n• PHP: $PHP_SUMMARY\n• Plugins: All up to date\n• Themes: All up to date\n\nActions log: $RUN_URL"
+          curl -sf \
+            -X POST \
+            -H "Authorization: Bearer $HUBSPOT_API_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d "{
+              \"properties\": {
+                \"hs_note_body\":  $(echo "$NOTE_BODY" | jq -Rs .),
+                \"hs_timestamp\": \"$(date -u +%s)000\"
+              },
+              \"associations\": [{
+                \"to\": {\"id\": $TICKET_ID},
+                \"types\": [{\"associationCategory\": \"HUBSPOT_DEFINED\", \"associationTypeId\": 228}]
+              }]
+            }" \
+            "https://api.hubapi.com/crm/v3/objects/notes" || true
+
+      # ── 8c. HubSpot — dev env not accessible → Blocked ────────────────────
+      - name: HubSpot — mark Blocked (dev environment not accessible)
+        if: >
+          steps.inputs.outputs.ticket_id != '' &&
+          steps.core.outputs.dev_accessible == 'false'
+        env:
+          HUBSPOT_API_TOKEN:    ${{ secrets.HUBSPOT_API_TOKEN }}
+          HUBSPOT_STAGE_BLOCKED: ${{ secrets.HUBSPOT_STAGE_BLOCKED }}
+          TICKET_ID:             ${{ steps.inputs.outputs.ticket_id }}
+          DEV_ENV:               ${{ secrets.WPE_ENV_DEV }}
+          RUN_URL:               ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          curl -sf \
+            -X PATCH \
+            -H "Authorization: Bearer $HUBSPOT_API_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d "{
+              \"properties\": {
+                \"hs_pipeline_stage\": \"$HUBSPOT_STAGE_BLOCKED\",
+                \"automation_error\":  \"Dev environment not accessible via SSH\"
+              }
+            }" \
+            "https://api.hubapi.com/crm/v3/objects/tickets/$TICKET_ID" \
+            && echo "HubSpot ticket $TICKET_ID → Blocked (dev env not accessible)" || true
+
+          NOTE_BODY="⚠️ Maintenance Blocked — Dev environment not accessible\n\nThe WP Engine dev install '${DEV_ENV}' could not be reached via SSH.\n\nAction required: Please create a dev environment for this install in the WP Engine portal, then re-run this workflow.\n\nActions log: $RUN_URL"
+          curl -sf \
+            -X POST \
+            -H "Authorization: Bearer $HUBSPOT_API_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d "{
+              \"properties\": {
+                \"hs_note_body\":  $(echo "$NOTE_BODY" | jq -Rs .),
+                \"hs_timestamp\": \"$(date -u +%s)000\"
+              },
+              \"associations\": [{
+                \"to\": {\"id\": $TICKET_ID},
+                \"types\": [{\"associationCategory\": \"HUBSPOT_DEFINED\", \"associationTypeId\": 228}]
+              }]
+            }" \
+            "https://api.hubapi.com/crm/v3/objects/notes" || true
 
       # ── 9. Step summary ────────────────────────────────────────────────────
       - name: Job summary
