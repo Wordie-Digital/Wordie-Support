@@ -266,16 +266,23 @@ jobs:
 
           CORE_RESULT=$(ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no \
             ${DEV_ENV}@${DEV_ENV}.ssh.wpengine.net \
-            "wp core update 2>&1; wp core update-db --quiet 2>/dev/null" 2>/dev/null || echo "")
+            "wp core update 2>/dev/null; wp core update-db --quiet 2>/dev/null" 2>/dev/null || echo "")
 
-          if echo "$CORE_RESULT" | grep -qi "success\|already at"; then
-            echo "core_summary=$CORE_RESULT" >> $GITHUB_OUTPUT
-          elif [ -z "$CORE_RESULT" ]; then
-            echo "core_summary=WordPress core already up to date" >> $GITHUB_OUTPUT
-          else
-            echo "core_summary=$CORE_RESULT" >> $GITHUB_OUTPUT
-          fi
-          echo "WordPress core: $CORE_RESULT"
+          # Sanitize: strip PHP warnings/notices and collapse to single line
+          CORE_CLEAN=$(echo "$CORE_RESULT" \
+            | grep -v "^PHP \(Warning\|Notice\|Deprecated\|Fatal\)" \
+            | grep -v "^$" \
+            | tr '\n' ' ' \
+            | sed 's/  */ /g; s/^ //; s/ $//')
+
+          [ -z "$CORE_CLEAN" ] && CORE_CLEAN="WordPress core already up to date"
+
+          echo "WordPress core: $CORE_CLEAN"
+          {
+            echo "core_summary<<GH_EOF"
+            echo "$CORE_CLEAN"
+            echo "GH_EOF"
+          } >> $GITHUB_OUTPUT
 
       # ── 4. Update plugins on dev ──────────────────────────────────────────
       - name: Update plugins on dev
