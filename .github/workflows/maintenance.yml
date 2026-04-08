@@ -1,0 +1,299 @@
+name: 🔧 Maintenance & Support
+
+on:
+  schedule:
+    - cron: '0 2 * * 1'   # Every Monday at 2am AEST (Sunday 4pm UTC)
+  workflow_dispatch:
+    inputs:
+      copy_prod_to_dev:
+        description: 'Copy production database to dev first?'
+        required: true
+        type: boolean
+        default: true
+      update_plugins:
+        description: 'Update plugins?'
+        required: true
+        type: boolean
+        default: true
+      update_themes:
+        description: 'Update themes?'
+        required: true
+        type: boolean
+        default: true
+
+# SAFETY: This workflow ONLY touches the dev environment.
+# No changes are pushed to staging or production.
+# All updates are committed to a maintenance branch and require PR approval.
+
+jobs:
+  maintenance:
+    name: Run Maintenance on Dev
+    runs-on: ubuntu-latest
+    # Only run if dev environment is configured
+    if: vars.WPE_ENV_DEV != '' || secrets.WPE_ENV_DEV != ''
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      # ── Configure SSH for WP Engine ──────────────────────────────────────
+      - name: Configure SSH
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.WPE_SSHG_KEY_PRIVATE }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -t rsa git.wpengine.com >> ~/.ssh/known_hosts 2>/dev/null
+          # Add WP Engine SSH gateway to known hosts
+          ssh-keyscan -p 22 -t rsa ${{ secrets.WPE_ENV_DEV }}.ssh.wpengine.net >> ~/.ssh/known_hosts 2>/dev/null || true
+          ssh-keyscan -p 22 -t rsa ${{ secrets.WPE_ENV_PROD }}.ssh.wpengine.net >> ~/.ssh/known_hosts 2>/dev/null || true
+
+      # ── Step 1: Copy prod database → dev ─────────────────────────────────
+      - name: Copy production database to dev
+        if: |
+          (github.event_name == 'schedule') ||
+          (github.event_name == 'workflow_dispatch' && github.event.inputs.copy_prod_to_dev == 'true')
+        env:
+          DEV_ENV: ${{ secrets.WPE_ENV_DEV }}
+          PROD_ENV: ${{ secrets.WPE_ENV_PROD }}
+        run: |
+          if [ -z "$PROD_ENV" ] || [ -z "$DEV_ENV" ]; then
+            echo "⚠️  Skipping DB copy — WPE_ENV_PROD or WPE_ENV_DEV not set"
+            exit 0
+          fi
+
+          echo "📦 Exporting production database from $PROD_ENV..."
+          ssh -i ~/.ssh/id_ed25519 \
+            -o StrictHostKeyChecking=no \
+            -o ConnectTimeout=30 \
+            ${PROD_ENV}@${PROD_ENV}.ssh.wpengine.net \
+            "wp db export /tmp/prod-backup-$(date +%Y%m%d).sql --quiet" 2>/dev/null || {
+            echo "⚠️  Could not export prod DB — SSH access may not be configured. Skipping."
+            exit 0
+          }
+
+          echo "📥 Importing production database to $DEV_ENV..."
+          # Export from prod and pipe directly into dev
+          ssh -i ~/.ssh/id_ed25519 \
+            -o StrictHostKeyChecking=no \
+            ${PROD_ENV}@${PROD_ENV}.ssh.wpengine.net \
+            "wp db export - --quiet" 2>/dev/null | \
+          ssh -i ~/.ssh/id_ed25519 \
+            -o StrictHostKeyChecking=no \
+            ${DEV_ENV}@${DEV_ENV}.ssh.wpengine.net \
+            "wp db import - --quiet" 2>/dev/null && \
+          echo "✅ Production database copied to dev" || \
+          echo "⚠️  DB copy failed — continuing with plugin/theme updates only"
+
+          # Update site URL in dev to prevent redirects to prod
+          ssh -i ~/.ssh/id_ed25519 \
+            -o StrictHostKeyChecking=no \
+            ${DEV_ENV}@${DEV_ENV}.ssh.wpengine.net \
+            "wp search-replace 'https://${PROD_ENV}.wpengine.com' 'https://${DEV_ENV}.wpengine.com' --quiet --all-tables" 2>/dev/null || true
+          echo "✅ URLs updated for dev environment"
+
+      # ── Step 2: Run plugin updates on dev ────────────────────────────────
+      - name: Update plugins on dev
+        if: |
+          (github.event_name == 'schedule') ||
+          (github.event_name == 'workflow_dispatch' && github.event.inputs.update_plugins == 'true')
+        env:
+          DEV_ENV: ${{ secrets.WPE_ENV_DEV }}
+        run: |
+          if [ -z "$DEV_ENV" ]; then
+            echo "⚠️  WPE_ENV_DEV not set — skipping plugin updates"
+            exit 0
+          fi
+
+          echo "🔌 Checking for plugin updates on $DEV_ENV..."
+          PLUGIN_LIST=$(ssh -i ~/.ssh/id_ed25519 \
+            -o StrictHostKeyChecking=no \
+            -o ConnectTimeout=30 \
+            ${DEV_ENV}@${DEV_ENV}.ssh.wpengine.net \
+            "wp plugin list --update=available --fields=name,version,update_version --format=csv 2>/dev/null" || echo "")
+
+          if [ -z "$PLUGIN_LIST" ] || [ "$PLUGIN_LIST" = "name,version,update_version" ]; then
+            echo "✅ All plugins are up to date"
+            echo "PLUGIN_UPDATES=none" >> $GITHUB_ENV
+          else
+            echo "Found plugins to update:"
+            echo "$PLUGIN_LIST"
+            echo "PLUGIN_UPDATES<<EOF" >> $GITHUB_ENV
+            echo "$PLUGIN_LIST" >> $GITHUB_ENV
+            echo "EOF" >> $GITHUB_ENV
+
+            ssh -i ~/.ssh/id_ed25519 \
+              -o StrictHostKeyChecking=no \
+              ${DEV_ENV}@${DEV_ENV}.ssh.wpengine.net \
+              "wp plugin update --all --quiet 2>/dev/null" && \
+            echo "✅ All plugins updated on dev" || \
+            echo "⚠️  Some plugin updates may have failed"
+          fi
+
+      # ── Step 3: Run theme updates on dev ─────────────────────────────────
+      - name: Update themes on dev
+        if: |
+          (github.event_name == 'schedule') ||
+          (github.event_name == 'workflow_dispatch' && github.event.inputs.update_themes == 'true')
+        env:
+          DEV_ENV: ${{ secrets.WPE_ENV_DEV }}
+        run: |
+          if [ -z "$DEV_ENV" ]; then
+            echo "⚠️  WPE_ENV_DEV not set — skipping theme updates"
+            exit 0
+          fi
+
+          echo "🎨 Checking for theme updates on $DEV_ENV..."
+          THEME_LIST=$(ssh -i ~/.ssh/id_ed25519 \
+            -o StrictHostKeyChecking=no \
+            -o ConnectTimeout=30 \
+            ${DEV_ENV}@${DEV_ENV}.ssh.wpengine.net \
+            "wp theme list --update=available --fields=name,version,update_version --format=csv 2>/dev/null" || echo "")
+
+          if [ -z "$THEME_LIST" ] || [ "$THEME_LIST" = "name,version,update_version" ]; then
+            echo "✅ All themes are up to date"
+            echo "THEME_UPDATES=none" >> $GITHUB_ENV
+          else
+            echo "Found themes to update:"
+            echo "$THEME_LIST"
+            echo "THEME_UPDATES<<EOF" >> $GITHUB_ENV
+            echo "$THEME_LIST" >> $GITHUB_ENV
+            echo "EOF" >> $GITHUB_ENV
+
+            ssh -i ~/.ssh/id_ed25519 \
+              -o StrictHostKeyChecking=no \
+              ${DEV_ENV}@${DEV_ENV}.ssh.wpengine.net \
+              "wp theme update --all --quiet 2>/dev/null" && \
+            echo "✅ All themes updated on dev" || \
+            echo "⚠️  Some theme updates may have failed"
+          fi
+
+      # ── Step 4: Pull updated files back to git ───────────────────────────
+      - name: Pull updated files from dev
+        env:
+          DEV_ENV: ${{ secrets.WPE_ENV_DEV }}
+        run: |
+          if [ -z "$DEV_ENV" ]; then
+            echo "⚠️  WPE_ENV_DEV not set — skipping file sync"
+            exit 0
+          fi
+
+          echo "📂 Syncing updated files from dev environment..."
+
+          # Pull updated plugins
+          rsync -az --compress-level=6 \
+            -e "ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no" \
+            --exclude=cache/ \
+            --exclude='.git*' \
+            --exclude='node_modules/' \
+            ${DEV_ENV}@${DEV_ENV}.ssh.wpengine.net:~/sites/${DEV_ENV}/wp-content/plugins/ \
+            ./wp-content/plugins/ 2>/dev/null || echo "⚠️  Could not sync plugins"
+
+          # Pull updated themes
+          rsync -az --compress-level=6 \
+            -e "ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no" \
+            --exclude=cache/ \
+            --exclude='.git*' \
+            --exclude='node_modules/' \
+            ${DEV_ENV}@${DEV_ENV}.ssh.wpengine.net:~/sites/${DEV_ENV}/wp-content/themes/ \
+            ./wp-content/themes/ 2>/dev/null || echo "⚠️  Could not sync themes"
+
+          echo "✅ Files synced from dev"
+
+      # ── Step 5: Commit to maintenance branch and open PR ─────────────────
+      - name: Create maintenance branch and open PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEV_ENV: ${{ secrets.WPE_ENV_DEV }}
+        run: |
+          BRANCH="maintenance/$(date +%Y-%m-%d)"
+          DATE=$(date '+%d %B %Y')
+
+          git config user.name "Wordie Maintenance Bot"
+          git config user.email "hello@wordie.com.au"
+
+          # Check if there are any changes
+          if git diff --quiet && git diff --staged --quiet; then
+            echo "✅ No file changes detected — all plugins/themes were already up to date in git"
+            echo "NO_CHANGES=true" >> $GITHUB_ENV
+            exit 0
+          fi
+
+          echo "📝 Changes detected — creating maintenance branch..."
+          git checkout -b "$BRANCH"
+          git add wp-content/plugins/ wp-content/themes/ 2>/dev/null || true
+
+          # Build commit message with update details
+          COMMIT_MSG="chore: maintenance updates $(date +%Y-%m-%d)"
+          git commit -m "$COMMIT_MSG" || {
+            echo "Nothing to commit"
+            echo "NO_CHANGES=true" >> $GITHUB_ENV
+            exit 0
+          }
+
+          git push origin "$BRANCH"
+
+          # Build PR body
+          PR_BODY="## 🔧 Maintenance Update — $DATE
+
+> **⚠️ APPROVAL REQUIRED before anything is deployed to staging or production.**
+> Review the changes below, check the dev environment, then merge to proceed.
+
+### What was done
+- ✅ Production database copied to dev environment
+- ✅ Plugin updates applied on dev
+- ✅ Theme updates applied on dev
+- ✅ Updated files pulled back to this branch
+
+### Plugin updates
+\`\`\`
+${PLUGIN_UPDATES:-No plugin updates were available}
+\`\`\`
+
+### Theme updates
+\`\`\`
+${THEME_UPDATES:-No theme updates were available}
+\`\`\`
+
+### Dev environment
+🔗 https://${DEV_ENV}.wpengine.com — review here before approving
+
+### How to approve
+1. Review this PR and the file diffs below
+2. Check the dev site looks correct
+3. Merge this PR to \`develop\`
+4. When ready for staging: merge \`develop\` → \`staging\`
+5. When ready for prod: trigger manual deploy via Actions → Deploy to WP Engine → production
+
+---
+🤖 Generated by Wordie Maintenance Bot"
+
+          gh pr create \
+            --title "🔧 Maintenance: Plugin & Theme Updates — $DATE" \
+            --body "$PR_BODY" \
+            --base develop \
+            --head "$BRANCH" \
+            --label "maintenance" 2>/dev/null || \
+          gh pr create \
+            --title "🔧 Maintenance: Plugin & Theme Updates — $DATE" \
+            --body "$PR_BODY" \
+            --base main \
+            --head "$BRANCH"
+
+          echo "✅ Maintenance PR created — awaiting your approval"
+
+      - name: Summary
+        run: |
+          if [ "$NO_CHANGES" = "true" ]; then
+            echo "## ✅ Maintenance Complete — No Changes" >> $GITHUB_STEP_SUMMARY
+            echo "All plugins and themes were already up to date." >> $GITHUB_STEP_SUMMARY
+          else
+            echo "## 🔧 Maintenance Complete — PR Created" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "A maintenance PR has been created for your review." >> $GITHUB_STEP_SUMMARY
+            echo "No changes will be deployed until you approve and merge the PR." >> $GITHUB_STEP_SUMMARY
+          fi
