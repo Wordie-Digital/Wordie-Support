@@ -1,45 +1,120 @@
-name: 🔧 Maintenance & Support
+name: Maintenance and Support
 
+# ─── Triggers ────────────────────────────────────────────────────────────────
+# 1. repository_dispatch  → fired by HubSpot scheduler for automated tickets
+# 2. workflow_dispatch    → manual run by team (optional ticket ID override)
+# 3. schedule             → fallback weekly cron (Monday 2am AEST) without HubSpot
+#
+# SAFETY: Only touches DEV. Nothing reaches staging/prod without your approval.
+# ─────────────────────────────────────────────────────────────────────────────
 on:
+  repository_dispatch:
+    types: [hubspot-maintenance]
+
   schedule:
-    - cron: '0 2 * * 1'   # Every Monday at 2am AEST (Sunday 4pm UTC)
+    - cron: '0 16 * * 0'   # Monday 02:00 AEST
+
   workflow_dispatch:
     inputs:
+      hubspot_ticket_id:
+        description: 'HubSpot ticket ID to update (leave blank to skip HubSpot)'
+        required: false
+        default: ''
       copy_prod_to_dev:
         description: 'Copy production database to dev first?'
         required: true
-        type: boolean
-        default: true
+        default: 'true'
+        type: choice
+        options: ['true', 'false']
       update_plugins:
         description: 'Update plugins?'
         required: true
-        type: boolean
-        default: true
+        default: 'true'
+        type: choice
+        options: ['true', 'false']
       update_themes:
         description: 'Update themes?'
         required: true
-        type: boolean
-        default: true
+        default: 'true'
+        type: choice
+        options: ['true', 'false']
 
-# SAFETY: This workflow ONLY touches the dev environment.
-# No changes are pushed to staging or production.
-# All updates are committed to a maintenance branch and require PR approval.
+permissions:
+  contents: write
+  pull-requests: write
 
 jobs:
   maintenance:
     name: Run Maintenance on Dev
     runs-on: ubuntu-latest
-    # Only run if dev environment is configured
-    if: vars.WPE_ENV_DEV != '' || secrets.WPE_ENV_DEV != ''
+
+    # Prevent concurrent maintenance runs on the same repo
+    concurrency:
+      group: maintenance-${{ github.repository }}
+      cancel-in-progress: false
 
     steps:
+      # ── 0. Resolve inputs (works for all three trigger types) ─────────────
+      - name: Resolve trigger inputs
+        id: inputs
+        run: |
+          # Determine which trigger fired and set unified env vars
+          if [ "${{ github.event_name }}" = "repository_dispatch" ]; then
+            echo "trigger=hubspot"                                                       >> $GITHUB_OUTPUT
+            echo "ticket_id=${{ github.event.client_payload.hubspot_ticket_id }}"      >> $GITHUB_OUTPUT
+            echo "wp_install=${{ github.event.client_payload.wp_install }}"             >> $GITHUB_OUTPUT
+            echo "copy_prod_to_dev=true"                                                 >> $GITHUB_OUTPUT
+            echo "update_plugins=true"                                                   >> $GITHUB_OUTPUT
+            echo "update_themes=true"                                                    >> $GITHUB_OUTPUT
+          elif [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "trigger=manual"                                                         >> $GITHUB_OUTPUT
+            echo "ticket_id=${{ github.event.inputs.hubspot_ticket_id }}"               >> $GITHUB_OUTPUT
+            echo "wp_install=${{ secrets.WPE_ENV_DEV }}"                                >> $GITHUB_OUTPUT
+            echo "copy_prod_to_dev=${{ github.event.inputs.copy_prod_to_dev }}"         >> $GITHUB_OUTPUT
+            echo "update_plugins=${{ github.event.inputs.update_plugins }}"             >> $GITHUB_OUTPUT
+            echo "update_themes=${{ github.event.inputs.update_themes }}"               >> $GITHUB_OUTPUT
+          else
+            echo "trigger=schedule"                                                       >> $GITHUB_OUTPUT
+            echo "ticket_id="                                                             >> $GITHUB_OUTPUT
+            echo "wp_install=${{ secrets.WPE_ENV_DEV }}"                                >> $GITHUB_OUTPUT
+            echo "copy_prod_to_dev=true"                                                 >> $GITHUB_OUTPUT
+            echo "update_plugins=true"                                                   >> $GITHUB_OUTPUT
+            echo "update_themes=true"                                                    >> $GITHUB_OUTPUT
+          fi
+
+      # ── 0b. Notify HubSpot: automation started ────────────────────────────
+      - name: HubSpot — mark In Progress
+        if: steps.inputs.outputs.ticket_id != ''
+        env:
+          HUBSPOT_API_TOKEN: ${{ secrets.HUBSPOT_API_TOKEN }}
+          HUBSPOT_STAGE_IN_PROGRESS: ${{ secrets.HUBSPOT_STAGE_IN_PROGRESS }}
+          TICKET_ID: ${{ steps.inputs.outputs.ticket_id }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          curl -sf \
+            -X PATCH \
+            -H "Authorization: Bearer $HUBSPOT_API_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d "{
+              \"properties\": {
+                \"hs_pipeline_stage\":  \"$HUBSPOT_STAGE_IN_PROGRESS\",
+                \"automation_run_date\": \"$(date -u +%s)000\",
+                \"automation_log_url\":  \"$RUN_URL\",
+                \"automation_error\":    \"\"
+              }
+            }" \
+            "https://api.hubapi.com/crm/v3/objects/tickets/$TICKET_ID" \
+            && echo "HubSpot ticket $TICKET_ID → In Progress" \
+            || echo "Warning: could not update HubSpot ticket"
+
+      # ── 1. Checkout ───────────────────────────────────────────────────────
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      # ── Configure SSH for WP Engine ──────────────────────────────────────
+      # ── 2. Configure SSH ──────────────────────────────────────────────────
       - name: Configure SSH
         env:
           SSH_PRIVATE_KEY: ${{ secrets.WPE_SSHG_KEY_PRIVATE }}
@@ -47,253 +122,431 @@ jobs:
           mkdir -p ~/.ssh
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
-          ssh-keyscan -t rsa git.wpengine.com >> ~/.ssh/known_hosts 2>/dev/null
-          # Add WP Engine SSH gateway to known hosts
-          ssh-keyscan -p 22 -t rsa ${{ secrets.WPE_ENV_DEV }}.ssh.wpengine.net >> ~/.ssh/known_hosts 2>/dev/null || true
-          ssh-keyscan -p 22 -t rsa ${{ secrets.WPE_ENV_PROD }}.ssh.wpengine.net >> ~/.ssh/known_hosts 2>/dev/null || true
+          DEV_ENV="${{ secrets.WPE_ENV_DEV }}"
+          PROD_ENV="${{ secrets.WPE_ENV_PROD }}"
+          ssh-keyscan -t rsa git.wpengine.com >> ~/.ssh/known_hosts 2>/dev/null || true
+          [ -n "$DEV_ENV"  ] && ssh-keyscan -t rsa ${DEV_ENV}.ssh.wpengine.net  >> ~/.ssh/known_hosts 2>/dev/null || true
+          [ -n "$PROD_ENV" ] && ssh-keyscan -t rsa ${PROD_ENV}.ssh.wpengine.net >> ~/.ssh/known_hosts 2>/dev/null || true
 
-      # ── Step 1: Copy prod database → dev ─────────────────────────────────
+      # ── 3. Copy PROD → DEV (fresh snapshot) ──────────────────────────────
       - name: Copy production database to dev
-        if: |
-          (github.event_name == 'schedule') ||
-          (github.event_name == 'workflow_dispatch' && github.event.inputs.copy_prod_to_dev == 'true')
+        if: steps.inputs.outputs.copy_prod_to_dev == 'true'
         env:
-          DEV_ENV: ${{ secrets.WPE_ENV_DEV }}
+          DEV_ENV:  ${{ secrets.WPE_ENV_DEV }}
           PROD_ENV: ${{ secrets.WPE_ENV_PROD }}
         run: |
           if [ -z "$PROD_ENV" ] || [ -z "$DEV_ENV" ]; then
-            echo "⚠️  Skipping DB copy — WPE_ENV_PROD or WPE_ENV_DEV not set"
+            echo "Skipping DB copy — WPE_ENV_PROD or WPE_ENV_DEV not configured"
+            exit 0
+          fi
+          echo "Copying production DB from $PROD_ENV → $DEV_ENV..."
+
+          # Step 1: Capture the real production siteurl BEFORE the copy
+          # This handles custom domains (e.g. wordie.com.au) not just wpengine.com subdomains
+          PROD_SITEURL=$(ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no -o ConnectTimeout=15 \
+            ${PROD_ENV}@${PROD_ENV}.ssh.wpengine.net \
+            "wp option get siteurl --quiet 2>/dev/null" 2>/dev/null || echo "")
+          DEV_SITEURL="https://${DEV_ENV}.wpengine.com"
+          echo "Prod siteurl: $PROD_SITEURL"
+          echo "Dev  siteurl: $DEV_SITEURL"
+
+          # Step 2: Export prod DB and import into dev
+          ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no -o ConnectTimeout=30 \
+            ${PROD_ENV}@${PROD_ENV}.ssh.wpengine.net "wp db export - --quiet" 2>/dev/null | \
+          ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no \
+            ${DEV_ENV}@${DEV_ENV}.ssh.wpengine.net "wp db import - --quiet" 2>/dev/null \
+            && echo "Database copied" \
+            || echo "DB copy failed — continuing with updates only"
+
+          # Step 3: Search-replace the actual production URL (custom domain or WPE default)
+          # Handles both https:// and http:// variants of the prod URL
+          if [ -n "$PROD_SITEURL" ] && [ "$PROD_SITEURL" != "$DEV_SITEURL" ]; then
+            ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no \
+              ${DEV_ENV}@${DEV_ENV}.ssh.wpengine.net \
+              "wp search-replace '$PROD_SITEURL' '$DEV_SITEURL' --all-tables --quiet 2>/dev/null; \
+               wp option update siteurl '$DEV_SITEURL' --quiet 2>/dev/null; \
+               wp option update home    '$DEV_SITEURL' --quiet 2>/dev/null; \
+               wp cache flush 2>/dev/null || true" 2>/dev/null || true
+            echo "URL replace: $PROD_SITEURL → $DEV_SITEURL"
+          else
+            # Fallback: replace WPE subdomain pattern if siteurl fetch failed
+            ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no \
+              ${DEV_ENV}@${DEV_ENV}.ssh.wpengine.net \
+              "wp search-replace '${PROD_ENV}.wpengine.com' '${DEV_ENV}.wpengine.com' --all-tables --quiet 2>/dev/null; \
+               wp cache flush 2>/dev/null || true" 2>/dev/null || true
+            echo "URL replace (fallback): ${PROD_ENV}.wpengine.com → ${DEV_ENV}.wpengine.com"
+          fi
+          echo "DB copy + URL replace complete"
+
+      # ── 3b. Check and update PHP version on DEV ──────────────────────────
+      - name: Check and update PHP on dev
+        id: php
+        env:
+          WPE_API_USER: ${{ secrets.WPE_API_USER }}
+          WPE_API_PASS: ${{ secrets.WPE_API_PASS }}
+          DEV_ENV:      ${{ secrets.WPE_ENV_DEV }}
+        run: |
+          TARGET_PHP="8.2"
+
+          if [ -z "$WPE_API_USER" ] || [ -z "$WPE_API_PASS" ] || [ -z "$DEV_ENV" ]; then
+            echo "WPE API credentials not set — skipping PHP check"
+            echo "php_summary=PHP check skipped (no API credentials)" >> $GITHUB_OUTPUT
+            echo "PHP_STATUS=PHP check skipped (no API credentials)" >> $GITHUB_ENV
             exit 0
           fi
 
-          echo "📦 Exporting production database from $PROD_ENV..."
-          ssh -i ~/.ssh/id_ed25519 \
-            -o StrictHostKeyChecking=no \
-            -o ConnectTimeout=30 \
-            ${PROD_ENV}@${PROD_ENV}.ssh.wpengine.net \
-            "wp db export /tmp/prod-backup-$(date +%Y%m%d).sql --quiet" 2>/dev/null || {
-            echo "⚠️  Could not export prod DB — SSH access may not be configured. Skipping."
+          # Find the install ID and current PHP version by name
+          INSTALL_JSON=$(curl -sf \
+            -u "$WPE_API_USER:$WPE_API_PASS" \
+            "https://api.wpengineapi.com/v1/installs?limit=100" 2>/dev/null \
+            | jq -r "[.results[] | select(.name == \"$DEV_ENV\")] | first // empty")
+
+          INSTALL_ID=$(echo "$INSTALL_JSON"   | jq -r '.id // ""')
+          CURRENT_PHP=$(echo "$INSTALL_JSON"  | jq -r '.php_version // "unknown"')
+
+          if [ -z "$INSTALL_ID" ]; then
+            echo "Install '$DEV_ENV' not found via WP Engine API — skipping PHP check"
+            echo "php_summary=PHP check skipped (install not found)" >> $GITHUB_OUTPUT
+            echo "PHP_STATUS=PHP check skipped (install not found)" >> $GITHUB_ENV
             exit 0
-          }
+          fi
 
-          echo "📥 Importing production database to $DEV_ENV..."
-          # Export from prod and pipe directly into dev
-          ssh -i ~/.ssh/id_ed25519 \
-            -o StrictHostKeyChecking=no \
-            ${PROD_ENV}@${PROD_ENV}.ssh.wpengine.net \
-            "wp db export - --quiet" 2>/dev/null | \
-          ssh -i ~/.ssh/id_ed25519 \
-            -o StrictHostKeyChecking=no \
-            ${DEV_ENV}@${DEV_ENV}.ssh.wpengine.net \
-            "wp db import - --quiet" 2>/dev/null && \
-          echo "✅ Production database copied to dev" || \
-          echo "⚠️  DB copy failed — continuing with plugin/theme updates only"
+          echo "Install: $DEV_ENV (ID: $INSTALL_ID) | Current PHP: $CURRENT_PHP | Target: $TARGET_PHP"
 
-          # Update site URL in dev to prevent redirects to prod
-          ssh -i ~/.ssh/id_ed25519 \
-            -o StrictHostKeyChecking=no \
-            ${DEV_ENV}@${DEV_ENV}.ssh.wpengine.net \
-            "wp search-replace 'https://${PROD_ENV}.wpengine.com' 'https://${DEV_ENV}.wpengine.com' --quiet --all-tables" 2>/dev/null || true
-          echo "✅ URLs updated for dev environment"
+          # Compare versions — skip if already on target or higher
+          NEEDS_UPDATE=$(python3 -c "
+          import sys
+          cur = '$CURRENT_PHP'.replace('PHP ', '').strip()
+          tgt = '$TARGET_PHP'
+          try:
+              sys.exit(0 if tuple(map(int, cur.split('.'))) >= tuple(map(int, tgt.split('.'))) else 1)
+          except Exception:
+              sys.exit(1)
+          " 2>/dev/null; echo $?)
 
-      # ── Step 2: Run plugin updates on dev ────────────────────────────────
+          if [ "$NEEDS_UPDATE" = "0" ]; then
+            echo "PHP $CURRENT_PHP ≥ $TARGET_PHP — no update needed"
+            echo "php_summary=PHP $CURRENT_PHP (already up to date)" >> $GITHUB_OUTPUT
+            echo "PHP_STATUS=PHP $CURRENT_PHP (already up to date)" >> $GITHUB_ENV
+          else
+            echo "Updating PHP $CURRENT_PHP → $TARGET_PHP on DEV install $DEV_ENV..."
+            PATCH=$(curl -sf \
+              -X PATCH \
+              -u "$WPE_API_USER:$WPE_API_PASS" \
+              -H "Content-Type: application/json" \
+              -d "{\"php_version\": \"$TARGET_PHP\"}" \
+              "https://api.wpengineapi.com/v1/installs/$INSTALL_ID" 2>/dev/null || echo "{}")
+
+            NEW_PHP=$(echo "$PATCH" | jq -r '.php_version // "unknown"')
+            echo "PHP updated → $NEW_PHP"
+            echo "php_summary=PHP updated: $CURRENT_PHP → $NEW_PHP" >> $GITHUB_OUTPUT
+            echo "PHP_STATUS=PHP updated: $CURRENT_PHP → $NEW_PHP" >> $GITHUB_ENV
+          fi
+
+      # ── 4. Update plugins on dev ──────────────────────────────────────────
       - name: Update plugins on dev
-        if: |
-          (github.event_name == 'schedule') ||
-          (github.event_name == 'workflow_dispatch' && github.event.inputs.update_plugins == 'true')
+        id: plugins
+        if: steps.inputs.outputs.update_plugins == 'true'
         env:
           DEV_ENV: ${{ secrets.WPE_ENV_DEV }}
         run: |
-          if [ -z "$DEV_ENV" ]; then
-            echo "⚠️  WPE_ENV_DEV not set — skipping plugin updates"
-            exit 0
-          fi
+          [ -z "$DEV_ENV" ] && echo "WPE_ENV_DEV not set" && exit 0
 
-          echo "🔌 Checking for plugin updates on $DEV_ENV..."
-          PLUGIN_LIST=$(ssh -i ~/.ssh/id_ed25519 \
-            -o StrictHostKeyChecking=no \
-            -o ConnectTimeout=30 \
+          PLUGIN_LIST=$(ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no -o ConnectTimeout=30 \
             ${DEV_ENV}@${DEV_ENV}.ssh.wpengine.net \
-            "wp plugin list --update=available --fields=name,version,update_version --format=csv 2>/dev/null" || echo "")
+            "wp plugin list --update=available --fields=name,version,update_version --format=csv" 2>/dev/null || echo "")
 
           if [ -z "$PLUGIN_LIST" ] || [ "$PLUGIN_LIST" = "name,version,update_version" ]; then
-            echo "✅ All plugins are up to date"
-            echo "PLUGIN_UPDATES=none" >> $GITHUB_ENV
+            echo "All plugins already up to date"
+            echo "plugins_summary=All plugins already up to date" >> $GITHUB_OUTPUT
+            echo "PLUGIN_UPDATES=All plugins already up to date" >> $GITHUB_ENV
           else
-            echo "Found plugins to update:"
             echo "$PLUGIN_LIST"
-            echo "PLUGIN_UPDATES<<EOF" >> $GITHUB_ENV
+            NAMES=$(echo "$PLUGIN_LIST" | tail -n +2 | cut -d, -f1 | tr '\n' ',' | sed 's/,$//')
+            echo "plugins_summary=$NAMES" >> $GITHUB_OUTPUT
+            echo "PLUGIN_UPDATES<<PLUGIN_EOF" >> $GITHUB_ENV
             echo "$PLUGIN_LIST" >> $GITHUB_ENV
-            echo "EOF" >> $GITHUB_ENV
-
-            ssh -i ~/.ssh/id_ed25519 \
-              -o StrictHostKeyChecking=no \
-              ${DEV_ENV}@${DEV_ENV}.ssh.wpengine.net \
-              "wp plugin update --all --quiet 2>/dev/null" && \
-            echo "✅ All plugins updated on dev" || \
-            echo "⚠️  Some plugin updates may have failed"
+            echo "PLUGIN_EOF" >> $GITHUB_ENV
+            ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no \
+              ${DEV_ENV}@${DEV_ENV}.ssh.wpengine.net "wp plugin update --all" 2>/dev/null \
+              && echo "Plugins updated" || echo "Some plugin updates failed"
           fi
 
-      # ── Step 3: Run theme updates on dev ─────────────────────────────────
+      # ── 5. Update themes on dev ───────────────────────────────────────────
       - name: Update themes on dev
-        if: |
-          (github.event_name == 'schedule') ||
-          (github.event_name == 'workflow_dispatch' && github.event.inputs.update_themes == 'true')
+        id: themes
+        if: steps.inputs.outputs.update_themes == 'true'
         env:
           DEV_ENV: ${{ secrets.WPE_ENV_DEV }}
         run: |
-          if [ -z "$DEV_ENV" ]; then
-            echo "⚠️  WPE_ENV_DEV not set — skipping theme updates"
-            exit 0
-          fi
+          [ -z "$DEV_ENV" ] && echo "WPE_ENV_DEV not set" && exit 0
 
-          echo "🎨 Checking for theme updates on $DEV_ENV..."
-          THEME_LIST=$(ssh -i ~/.ssh/id_ed25519 \
-            -o StrictHostKeyChecking=no \
-            -o ConnectTimeout=30 \
+          THEME_LIST=$(ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no -o ConnectTimeout=30 \
             ${DEV_ENV}@${DEV_ENV}.ssh.wpengine.net \
-            "wp theme list --update=available --fields=name,version,update_version --format=csv 2>/dev/null" || echo "")
+            "wp theme list --update=available --fields=name,version,update_version --format=csv" 2>/dev/null || echo "")
 
           if [ -z "$THEME_LIST" ] || [ "$THEME_LIST" = "name,version,update_version" ]; then
-            echo "✅ All themes are up to date"
-            echo "THEME_UPDATES=none" >> $GITHUB_ENV
+            echo "All themes already up to date"
+            echo "themes_summary=All themes already up to date" >> $GITHUB_OUTPUT
+            echo "THEME_UPDATES=All themes already up to date" >> $GITHUB_ENV
           else
-            echo "Found themes to update:"
             echo "$THEME_LIST"
-            echo "THEME_UPDATES<<EOF" >> $GITHUB_ENV
+            NAMES=$(echo "$THEME_LIST" | tail -n +2 | cut -d, -f1 | tr '\n' ',' | sed 's/,$//')
+            echo "themes_summary=$NAMES" >> $GITHUB_OUTPUT
+            echo "THEME_UPDATES<<THEME_EOF" >> $GITHUB_ENV
             echo "$THEME_LIST" >> $GITHUB_ENV
-            echo "EOF" >> $GITHUB_ENV
-
-            ssh -i ~/.ssh/id_ed25519 \
-              -o StrictHostKeyChecking=no \
-              ${DEV_ENV}@${DEV_ENV}.ssh.wpengine.net \
-              "wp theme update --all --quiet 2>/dev/null" && \
-            echo "✅ All themes updated on dev" || \
-            echo "⚠️  Some theme updates may have failed"
+            echo "THEME_EOF" >> $GITHUB_ENV
+            ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no \
+              ${DEV_ENV}@${DEV_ENV}.ssh.wpengine.net "wp theme update --all" 2>/dev/null \
+              && echo "Themes updated" || echo "Some theme updates failed"
           fi
 
-      # ── Step 4: Pull updated files back to git ───────────────────────────
+      # ── 6. Rsync updated files from dev ───────────────────────────────────
       - name: Pull updated files from dev
         env:
           DEV_ENV: ${{ secrets.WPE_ENV_DEV }}
         run: |
-          if [ -z "$DEV_ENV" ]; then
-            echo "⚠️  WPE_ENV_DEV not set — skipping file sync"
-            exit 0
-          fi
-
-          echo "📂 Syncing updated files from dev environment..."
-
-          # Pull updated plugins
-          rsync -az --compress-level=6 \
-            -e "ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no" \
-            --exclude=cache/ \
-            --exclude='.git*' \
-            --exclude='node_modules/' \
+          [ -z "$DEV_ENV" ] && echo "WPE_ENV_DEV not set — skipping" && exit 0
+          mkdir -p wp-content/plugins wp-content/themes
+          rsync -az -e "ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no" \
+            --exclude=cache/ --exclude='.git*' --exclude='node_modules/' \
             ${DEV_ENV}@${DEV_ENV}.ssh.wpengine.net:~/sites/${DEV_ENV}/wp-content/plugins/ \
-            ./wp-content/plugins/ 2>/dev/null || echo "⚠️  Could not sync plugins"
-
-          # Pull updated themes
-          rsync -az --compress-level=6 \
-            -e "ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no" \
-            --exclude=cache/ \
-            --exclude='.git*' \
-            --exclude='node_modules/' \
+            ./wp-content/plugins/ 2>/dev/null || echo "Could not sync plugins"
+          rsync -az -e "ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no" \
+            --exclude=cache/ --exclude='.git*' --exclude='node_modules/' \
             ${DEV_ENV}@${DEV_ENV}.ssh.wpengine.net:~/sites/${DEV_ENV}/wp-content/themes/ \
-            ./wp-content/themes/ 2>/dev/null || echo "⚠️  Could not sync themes"
+            ./wp-content/themes/ 2>/dev/null || echo "Could not sync themes"
+          echo "File sync complete"
 
-          echo "✅ Files synced from dev"
-
-      # ── Step 5: Commit to maintenance branch and open PR ─────────────────
-      - name: Create maintenance branch and open PR
+      # ── 7. Create maintenance branch + PR ─────────────────────────────────
+      - name: Create maintenance branch and PR
+        id: create_pr
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          DEV_ENV: ${{ secrets.WPE_ENV_DEV }}
+          GH_TOKEN:  ${{ secrets.GITHUB_TOKEN }}
+          DEV_ENV:   ${{ secrets.WPE_ENV_DEV }}
+          TICKET_ID: ${{ steps.inputs.outputs.ticket_id }}
         run: |
-          BRANCH="maintenance/$(date +%Y-%m-%d)"
+          BRANCH="maintenance/$(date +%Y-%m-%d-%H%M)"
           DATE=$(date '+%d %B %Y')
-
-          git config user.name "Wordie Maintenance Bot"
+          git config user.name  "Wordie Maintenance Bot"
           git config user.email "hello@wordie.com.au"
 
-          # Check if there are any changes
           if git diff --quiet && git diff --staged --quiet; then
-            echo "✅ No file changes detected — all plugins/themes were already up to date in git"
-            echo "NO_CHANGES=true" >> $GITHUB_ENV
+            echo "No file changes — everything already up to date"
+            echo "pr_url=" >> $GITHUB_OUTPUT
+            echo "no_changes=true" >> $GITHUB_OUTPUT
             exit 0
           fi
 
-          echo "📝 Changes detected — creating maintenance branch..."
           git checkout -b "$BRANCH"
           git add wp-content/plugins/ wp-content/themes/ 2>/dev/null || true
-
-          # Build commit message with update details
-          COMMIT_MSG="chore: maintenance updates $(date +%Y-%m-%d)"
-          git commit -m "$COMMIT_MSG" || {
-            echo "Nothing to commit"
-            echo "NO_CHANGES=true" >> $GITHUB_ENV
-            exit 0
-          }
-
+          git commit -m "chore: maintenance updates $(date +%Y-%m-%d)"
           git push origin "$BRANCH"
 
           # Build PR body
-          PR_BODY="## 🔧 Maintenance Update — $DATE
+          HS_LINK=""
+          [ -n "$TICKET_ID" ] && HS_LINK="HubSpot ticket: https://app.hubspot.com/contacts/442124622/record/0-5/${TICKET_ID}"
 
-> **⚠️ APPROVAL REQUIRED before anything is deployed to staging or production.**
-> Review the changes below, check the dev environment, then merge to proceed.
+          printf '%s\n' \
+            "## Maintenance Update — ${DATE}" \
+            "" \
+            "Your approval is required before anything deploys to staging or production." \
+            "Review the diffs below and check the dev site before merging." \
+            "" \
+            "### PHP version" \
+            "${PHP_STATUS:-Not checked}" \
+            "" \
+            "### Plugins updated" \
+            "${PLUGIN_UPDATES:-No plugin updates available}" \
+            "" \
+            "### Themes updated" \
+            "${THEME_UPDATES:-No theme updates available}" \
+            "" \
+            "### Dev environment to review" \
+            "https://${DEV_ENV}.wpengine.com" \
+            "" \
+            "${HS_LINK}" \
+            "" \
+            "### Merging this PR" \
+            "1. Merge → develop (deploys to WP Engine staging via deploy.yml)" \
+            "2. Review on staging — then: Actions → Deploy to WP Engine → production" \
+            > /tmp/pr_body.txt
 
-### What was done
-- ✅ Production database copied to dev environment
-- ✅ Plugin updates applied on dev
-- ✅ Theme updates applied on dev
-- ✅ Updated files pulled back to this branch
-
-### Plugin updates
-\`\`\`
-${PLUGIN_UPDATES:-No plugin updates were available}
-\`\`\`
-
-### Theme updates
-\`\`\`
-${THEME_UPDATES:-No theme updates were available}
-\`\`\`
-
-### Dev environment
-🔗 https://${DEV_ENV}.wpengine.com — review here before approving
-
-### How to approve
-1. Review this PR and the file diffs below
-2. Check the dev site looks correct
-3. Merge this PR to \`develop\`
-4. When ready for staging: merge \`develop\` → \`staging\`
-5. When ready for prod: trigger manual deploy via Actions → Deploy to WP Engine → production
-
----
-🤖 Generated by Wordie Maintenance Bot"
-
-          gh pr create \
-            --title "🔧 Maintenance: Plugin & Theme Updates — $DATE" \
-            --body "$PR_BODY" \
+          PR_URL=$(gh pr create \
+            --title "Maintenance: Plugin and Theme Updates — $DATE" \
+            --body-file /tmp/pr_body.txt \
             --base develop \
             --head "$BRANCH" \
             --label "maintenance" 2>/dev/null || \
           gh pr create \
-            --title "🔧 Maintenance: Plugin & Theme Updates — $DATE" \
-            --body "$PR_BODY" \
+            --title "Maintenance: Plugin and Theme Updates — $DATE" \
+            --body-file /tmp/pr_body.txt \
             --base main \
-            --head "$BRANCH"
+            --head "$BRANCH" \
+            --label "maintenance")
 
-          echo "✅ Maintenance PR created — awaiting your approval"
+          echo "pr_url=$PR_URL" >> $GITHUB_OUTPUT
+          echo "no_changes=false" >> $GITHUB_OUTPUT
+          echo "PR created: $PR_URL"
 
-      - name: Summary
+      # ── 8. HubSpot — post PR URL, move to QA ──────────────────────────────
+      - name: HubSpot — post PR URL and move to QA
+        if: steps.inputs.outputs.ticket_id != '' && steps.create_pr.outputs.pr_url != ''
+        env:
+          HUBSPOT_API_TOKEN:    ${{ secrets.HUBSPOT_API_TOKEN }}
+          HUBSPOT_STAGE_QA:     ${{ secrets.HUBSPOT_STAGE_QA }}
+          TICKET_ID:            ${{ steps.inputs.outputs.ticket_id }}
+          PR_URL:               ${{ steps.create_pr.outputs.pr_url }}
+          PLUGINS_UPDATED:      ${{ steps.plugins.outputs.plugins_summary }}
+          THEMES_UPDATED:       ${{ steps.themes.outputs.themes_summary }}
+          PHP_SUMMARY:          ${{ steps.php.outputs.php_summary }}
+          RUN_URL:              ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
-          if [ "$NO_CHANGES" = "true" ]; then
-            echo "## ✅ Maintenance Complete — No Changes" >> $GITHUB_STEP_SUMMARY
-            echo "All plugins and themes were already up to date." >> $GITHUB_STEP_SUMMARY
-          else
-            echo "## 🔧 Maintenance Complete — PR Created" >> $GITHUB_STEP_SUMMARY
-            echo "" >> $GITHUB_STEP_SUMMARY
-            echo "A maintenance PR has been created for your review." >> $GITHUB_STEP_SUMMARY
-            echo "No changes will be deployed until you approve and merge the PR." >> $GITHUB_STEP_SUMMARY
-          fi
+          curl -sf \
+            -X PATCH \
+            -H "Authorization: Bearer $HUBSPOT_API_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d "{
+              \"properties\": {
+                \"hs_pipeline_stage\": \"$HUBSPOT_STAGE_QA\",
+                \"github_pr_url\":     \"$PR_URL\",
+                \"plugins_updated\":   $(echo "$PLUGINS_UPDATED" | jq -Rs .),
+                \"themes_updated\":    $(echo "$THEMES_UPDATED"  | jq -Rs .),
+                \"automation_log_url\":\"$RUN_URL\",
+                \"qa_status\":         \"Not Tested\",
+                \"automation_error\":  \"\"
+              }
+            }" \
+            "https://api.hubapi.com/crm/v3/objects/tickets/$TICKET_ID" \
+            && echo "HubSpot ticket $TICKET_ID → QA (PR: $PR_URL)" \
+            || echo "Warning: could not update HubSpot ticket"
+
+          # Add a note with the PR link
+          curl -sf \
+            -X POST \
+            -H "Authorization: Bearer $HUBSPOT_API_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d "{
+              \"properties\": {
+                \"hs_note_body\":  \"PR ready for review: $PR_URL\nPHP: $PHP_SUMMARY\nPlugins: $PLUGINS_UPDATED\nThemes: $THEMES_UPDATED\n\nDev site: https://${{ secrets.WPE_ENV_DEV }}.wpengine.com\nActions log: $RUN_URL\",
+                \"hs_timestamp\": \"$(date -u +%s)000\"
+              },
+              \"associations\": [{
+                \"to\": {\"id\": $TICKET_ID},
+                \"types\": [{\"associationCategory\": \"HUBSPOT_DEFINED\", \"associationTypeId\": 9}]
+              }]
+            }" \
+            "https://api.hubapi.com/crm/v3/objects/notes" || true
+
+      # ── 8b. HubSpot — no changes detected ─────────────────────────────────
+      - name: HubSpot — mark Complete (no changes needed)
+        if: steps.inputs.outputs.ticket_id != '' && steps.create_pr.outputs.no_changes == 'true'
+        env:
+          HUBSPOT_API_TOKEN:     ${{ secrets.HUBSPOT_API_TOKEN }}
+          HUBSPOT_STAGE_COMPLETE: ${{ secrets.HUBSPOT_STAGE_COMPLETE }}
+          TICKET_ID:              ${{ steps.inputs.outputs.ticket_id }}
+        run: |
+          curl -sf \
+            -X PATCH \
+            -H "Authorization: Bearer $HUBSPOT_API_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d "{
+              \"properties\": {
+                \"hs_pipeline_stage\": \"$HUBSPOT_STAGE_COMPLETE\",
+                \"plugins_updated\":   \"No updates available\",
+                \"themes_updated\":    \"No updates available\"
+              }
+            }" \
+            "https://api.hubapi.com/crm/v3/objects/tickets/$TICKET_ID" \
+            && echo "HubSpot ticket $TICKET_ID → Complete (no changes)" || true
+
+      # ── 9. Step summary ────────────────────────────────────────────────────
+      - name: Job summary
+        if: always()
+        run: |
+          echo "## Maintenance Run Complete" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Field | Value |" >> $GITHUB_STEP_SUMMARY
+          echo "|-------|-------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Trigger | ${{ steps.inputs.outputs.trigger }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| HubSpot Ticket | ${{ steps.inputs.outputs.ticket_id || 'none' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| PR | ${{ steps.create_pr.outputs.pr_url || 'no changes' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| PHP     | ${{ steps.php.outputs.php_summary || 'n/a' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Plugins | ${{ steps.plugins.outputs.plugins_summary || 'n/a' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Themes  | ${{ steps.themes.outputs.themes_summary || 'n/a' }} |" >> $GITHUB_STEP_SUMMARY
+
+  # ── On failure: move HubSpot ticket to Blocked + create task ────────────
+  on-failure:
+    name: Handle Failure
+    runs-on: ubuntu-latest
+    needs: maintenance
+    if: failure() && needs.maintenance.result == 'failure'
+    steps:
+      - name: HubSpot — move to Blocked and create follow-up task
+        env:
+          HUBSPOT_API_TOKEN:          ${{ secrets.HUBSPOT_API_TOKEN }}
+          HUBSPOT_STAGE_BLOCKED:      ${{ secrets.HUBSPOT_STAGE_BLOCKED }}
+          WORDIE_SUPPORT_OWNER_ID:    "359922394"
+          TICKET_ID:                  ${{ github.event.client_payload.hubspot_ticket_id || github.event.inputs.hubspot_ticket_id }}
+          REPO:                       ${{ github.repository }}
+          RUN_URL:                    ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          [ -z "$TICKET_ID" ] && echo "No ticket ID — nothing to update" && exit 0
+
+          ERROR_MSG="Automation failed during DEV maintenance on $REPO. GitHub Actions run: $RUN_URL"
+
+          # 1. Move ticket to Blocked + record error
+          curl -sf \
+            -X PATCH \
+            -H "Authorization: Bearer $HUBSPOT_API_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d "{
+              \"properties\": {
+                \"hs_pipeline_stage\": \"$HUBSPOT_STAGE_BLOCKED\",
+                \"automation_error\":  $(echo "$ERROR_MSG" | jq -Rs .)
+              }
+            }" \
+            "https://api.hubapi.com/crm/v3/objects/tickets/$TICKET_ID" \
+            && echo "HubSpot ticket $TICKET_ID → Blocked" \
+            || echo "Warning: could not update HubSpot ticket"
+
+          # 2. Create a HubSpot task assigned to Wordie Support
+          DUE_DATE=$(date -u -d '+1 day' +%s 2>/dev/null || date -u -v+1d +%s)000
+          TASK_BODY=$(cat <<TASKBODY
+          Automation blocked during DEV maintenance. Manual intervention required.
+
+          Repo: $REPO
+          HubSpot ticket: #$TICKET_ID
+          Failure: GitHub Actions run failed (DEV update / plugin update / PR creation step)
+          Actions log: $RUN_URL
+
+          Steps to resolve:
+          1. Check the Actions log for the specific error
+          2. SSH into dev environment and verify manually
+          3. Fix the issue, then re-trigger maintenance workflow or handle manually
+          4. Move ticket out of Blocked once resolved
+          TASKBODY
+          )
+
+          curl -sf \
+            -X POST \
+            -H "Authorization: Bearer $HUBSPOT_API_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d "{
+              \"properties\": {
+                \"hs_task_subject\":   \"BLOCKED: Manual fix required — $REPO maintenance failed\",
+                \"hs_task_body\":      $(echo "$TASK_BODY" | jq -Rs .),
+                \"hs_task_status\":    \"NOT_STARTED\",
+                \"hs_task_priority\":  \"HIGH\",
+                \"hs_timestamp\":      \"$(date -u +%s)000\",
+                \"hs_task_due_date\":  \"$DUE_DATE\",
+                \"hubspot_owner_id\":  \"$WORDIE_SUPPORT_OWNER_ID\"
+              },
+              \"associations\": [{
+                \"to\":    {\"id\": $TICKET_ID},
+                \"types\": [{\"associationCategory\": \"HUBSPOT_DEFINED\", \"associationTypeId\": 26}]
+              }]
+            }" \
+            "https://api.hubapi.com/crm/v3/objects/tasks" \
+            && echo "HubSpot task created for ticket $TICKET_ID" \
+            || echo "Warning: could not create HubSpot task"
