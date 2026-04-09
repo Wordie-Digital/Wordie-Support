@@ -178,6 +178,59 @@ jobs:
           fi
           echo "DB copy + URL replace complete"
 
+      # ── 3a. Sync prod plugin/theme FILES → dev ────────────────────────────
+      # Ensures non-WP.org plugins (no auto-update URL) match prod versions.
+      # Runner acts as intermediary: prod → runner → dev.
+      - name: Sync production plugin and theme files to dev
+        env:
+          DEV_ENV:  ${{ secrets.WPE_ENV_DEV }}
+          PROD_ENV: ${{ secrets.WPE_ENV_PROD }}
+        run: |
+          if [ -z "$PROD_ENV" ] || [ -z "$DEV_ENV" ]; then
+            echo "Skipping file sync — env vars not configured"
+            exit 0
+          fi
+
+          PROD_OK=$(ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no -o ConnectTimeout=15 \
+            ${PROD_ENV}@${PROD_ENV}.ssh.wpengine.net "echo ok" 2>/dev/null || echo "")
+          DEV_OK=$(ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no -o ConnectTimeout=15 \
+            ${DEV_ENV}@${DEV_ENV}.ssh.wpengine.net "echo ok" 2>/dev/null || echo "")
+
+          if [ "$PROD_OK" != "ok" ] || [ "$DEV_OK" != "ok" ]; then
+            echo "Cannot reach prod or dev via SSH — skipping file sync"
+            exit 0
+          fi
+
+          mkdir -p /tmp/prod-plugins /tmp/prod-themes
+
+          echo "Syncing plugins: prod → runner..."
+          rsync -az --delete \
+            -e "ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no" \
+            ${PROD_ENV}@${PROD_ENV}.ssh.wpengine.net:~/sites/${PROD_ENV}/wp-content/plugins/ \
+            /tmp/prod-plugins/ 2>/dev/null || echo "Plugin rsync from prod failed — skipping"
+
+          echo "Syncing plugins: runner → dev..."
+          rsync -az --delete \
+            -e "ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no" \
+            /tmp/prod-plugins/ \
+            ${DEV_ENV}@${DEV_ENV}.ssh.wpengine.net:~/sites/${DEV_ENV}/wp-content/plugins/ 2>/dev/null \
+            && echo "Plugins synced prod → dev" || echo "Plugin rsync to dev failed — continuing"
+
+          echo "Syncing themes: prod → runner..."
+          rsync -az --delete \
+            -e "ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no" \
+            ${PROD_ENV}@${PROD_ENV}.ssh.wpengine.net:~/sites/${PROD_ENV}/wp-content/themes/ \
+            /tmp/prod-themes/ 2>/dev/null || echo "Theme rsync from prod failed — skipping"
+
+          echo "Syncing themes: runner → dev..."
+          rsync -az --delete \
+            -e "ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no" \
+            /tmp/prod-themes/ \
+            ${DEV_ENV}@${DEV_ENV}.ssh.wpengine.net:~/sites/${DEV_ENV}/wp-content/themes/ 2>/dev/null \
+            && echo "Themes synced prod → dev" || echo "Theme rsync to dev failed — continuing"
+
+          echo "File sync complete"
+
       # ── 3b. Check and update PHP version on DEV ──────────────────────────
       - name: Check and update PHP on dev
         id: php
