@@ -1,0 +1,156 @@
+@import '../../../../assets/scss/variables';
+@import '../../../../assets/scss/mixins';
+
+.el-products-archive {
+  .row {
+    @include media-breakpoint-up(xxl) {
+      --bs-gutter-x: 30px;
+    }
+  }
+
+  &__header {
+    @include offset-for-header;
+    min-height: 200px;
+    background-color: var(--e-global-color-f65e74e);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+
+    @include media-breakpoint-up(lg) {
+      min-height: 400px;
+    }
+
+    @include media-breakpoint-up(xxl) {
+      min-height: 500px;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+    }
+
+    &--has-bg {
+      color: #fff;
+
+      &:before {
+        @include pseudo-content;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(#000, 0.6);
+        z-index: 0;
+      }
+    }
+
+    h1 {
+      margin-top: 25px;
+
+      @include media-breakpoint-up(lg) {
+        letter-spacing: 2px;
+      }
+    }
+  }
+
+  &__filters {
+    h6 {
+      font-size: 18px;
+      font-weight: normal;
+    }
+
+    .alm-filters {
+      &.alm-filters-container .alm-filter--title .alm-filter--toggle {
+        margin-bottom: 0;
+        padding-top: 15px;
+        padding-bottom: 15px;
+
+        &:after {
+          border: 0 !important;
+          width: 11px !important;
+          height: 11px !important;
+          transform: rotate(180deg);
+          top: 50%;
+          margin-top: -6px;
+          background: url('#{$images-from-widgets}/chev-down.svg') center / 10px no-repeat;
+        }
+
+        &[aria-expanded=false]:after {
+          transform: none;
+        }
+      }
+
+      &.alm-filters-container .alm-filter--title {
+        border-top: 1px solid var(--e-global-color-f65e74e);
+        border-bottom: 1px solid var(--e-global-color-f65e74e);
+
+        .alm-filter--toggle {
+          font-size: 16px;
+        }
+      }
+
+      &.alm-filters-container .alm-filter--inner {
+        border-bottom: 1px solid var(--e-global-color-f65e74e);
+        padding: 15px 0 15px 15px;
+      }
+
+      &.alm-filters-container .alm-filter li {
+        margin-bottom: 10px;
+
+        div.alm-filter--link {
+          color: #000;
+          padding-right: 0;
+          font-size: 14px;
+          padding-left: 23px;
+
+          @include media-breakpoint-up(xxl) {
+            font-size: 16px;
+          }
+
+          &:before {
+            width: 15px;
+            height: 15px;
+            border-color: #000;
+            top: 2px;
+
+            @include media-breakpoint-up(xxl) {
+              top: 4px;
+            }
+          }
+
+          &.field-checkbox {
+            &:after {
+              border-width: 0 2px 2px 0;
+              width: 4px;
+              height: 8px;
+              left: 6px;
+              top: 5px;
+            }
+
+            &:before {
+              border-radius: 0;
+            }
+          }
+
+          &.active.field-checkbox:before,
+          &.active.field-radio:before {
+            border-color: #000;
+            background-color: #000;
+          }
+        }
+      }
+
+      &.alm-filters-container .alm-filter ul ul {
+        padding-left: 20px;
+        padding-top: 10px;
+      }
+
+      #alm-filters-reset-button {
+        color: var(--e-global-color-secondary);
+        text-decoration: underline;
+        box-shadow: none !important;
+        margin-top: 10px;
+      }
+    }
+  }
+}

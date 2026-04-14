@@ -1,0 +1,135 @@
+@import '../../../../assets/scss/variables';
+@import '../../../../assets/scss/mixins';
+
+.el-marketo-form {
+  .mktoForm {
+    font-family: $font-sans-serif !important;
+    font-size: 16px !important;
+    width: 100% !important;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 0 !important;
+
+    > * {
+      width: 100%;
+
+      @include media-breakpoint-up(lg) {
+        width: 48%;
+      }
+    }
+
+    .mktoGutter,
+    .mktoOffset {
+      display: none;
+    }
+
+    .mktoFormCol {
+      float: none;
+      margin-bottom: 15px !important;
+    }
+
+    .mktoAsterix {
+      float: right !important;
+    }
+
+    //.mktoAsterix,
+    .mktoField,
+    .mktoFieldWrap,
+    .mktoLabel {
+      float: none;
+      display: block;
+    }
+
+    .mktoLabel {
+      width: auto !important;
+      font-weight: normal !important;
+      float: left;
+      display: inline-block;
+      margin-bottom: 5px;
+      font-size: 14px;
+      //display: flex;
+      //flex-direction: row-reverse;
+      //justify-content: flex-end;
+    }
+
+    textarea,
+    input[type=text],
+    input[type=url],
+    input[type=email],
+    input[type=tel],
+    input[type=number],
+    input[type=date] {
+      min-height: $input-height;
+      border: 1px solid var(--e-global-color-f65e74e) !important;
+      width: 100% !important;
+      padding: 0 10px;
+      box-shadow: none !important;
+    }
+
+    [name="Address"] {
+      height: $input-height !important;
+    }
+
+    select {
+      border: 1px solid var(--e-global-color-f65e74e) !important;
+      width: 100% !important;
+      box-shadow: none !important;
+      outline: none;
+      border-radius: 0;
+      appearance: none;
+      -webkit-appearance: none;
+      height: $input-height !important;
+      padding-left: 10px !important;
+      padding-right: 15px !important;
+      font-size: 16px;
+      background: #fff url('#{$images-from-widgets}/chev-down.svg') right 10px center / 10px no-repeat;
+    }
+
+    .mktoError .mktoErrorArrow {
+      background-color: var(--e-global-color-secondary);
+      border: 1px solid var(--e-global-color-secondary);
+    }
+
+    .mktoCheckboxList {
+      padding: 0;
+    }
+
+    .mktoError .mktoErrorMsg {
+      background: var(--e-global-color-secondary) !important;
+      box-shadow: none;
+      border-radius: 0;
+      border: 0;
+      font-size: 13px;
+      color: #fff;
+      text-shadow: none;
+    }
+
+    .mktoButtonRow {
+      width: 100%;
+
+      .mktoButtonWrap {
+        margin-left: 0 !important;
+      }
+    }
+
+    .mktoButton {
+      background: var(--e-global-color-secondary) !important;
+      border: 0 !important;
+      box-shadow: none !important;
+      padding: 10px 25px !important;
+      color: #fff !important;
+      border-radius: 0 !important;
+      text-shadow: none !important;
+      margin: 0 !important;
+
+      &:before {
+        content: none !important;
+      }
+    }
+  }
+
+  .mktoHtmlText {
+    width: 100% !important;
+  }
+}

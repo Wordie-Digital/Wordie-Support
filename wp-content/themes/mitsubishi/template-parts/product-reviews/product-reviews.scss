@@ -1,0 +1,18 @@
+@import '../../assets/scss/variables';
+@import '../../assets/scss/mixins';
+
+.mit-product-reviews {
+  a[role="button"] {
+    font-size: 16px !important;
+    text-transform: uppercase;
+  }
+
+  a[role="button"][href*="write-review"] {
+    background-color: var(--e-global-color-secondary) !important;
+    border-color: var(--e-global-color-secondary) !important;
+  }
+
+  * {
+    font-family: "Roboto", sans-serif !important;
+  }
+}

@@ -1,0 +1,130 @@
+@import '../../../../assets/scss/variables';
+@import '../../../../assets/scss/mixins';
+
+.el-recipes-single {
+  @include offset-for-header;
+
+  &__image {
+    @include img-ratio(427, 546);
+    display: block;
+    position: relative;
+
+    &:after {
+      @include pseudo-content;
+      @include st-transition;
+      right: 10px;
+      bottom: 10px;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: rgba(#fff, 0.6) url('#{$images-from-widgets}/expand.svg') center / 20px no-repeat;
+    }
+
+    &:hover {
+      &:after {
+        transform: scale(1.2);
+      }
+    }
+  }
+
+  &__content {
+    padding: 4% 0 6%;
+  }
+
+  &__brief {
+    margin-top: 15px;
+    margin-bottom: 7%;
+
+    @include media-breakpoint-up(xxl) {
+      font-size: 24px;
+    }
+
+    .list-inline {
+      @include media-breakpoint-down(md) {
+        display: flex;
+        flex-direction: column;
+      }
+    }
+
+    .list-inline-item {
+      padding-right: 20px;
+      margin-right: 15px;
+      margin-bottom: 5px;
+
+      &:not(:last-child) {
+        @include media-breakpoint-up(lg) {
+          border-right: 1px solid var(--e-global-color-f65e74e);
+        }
+      }
+    }
+  }
+
+  &__tag {
+    color: #fff;
+    background-color: var(--e-global-color-18c2fe6);
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 5px 8px;
+    font-size: 12px;
+    vertical-align: 1px;
+
+    @include media-breakpoint-up(xxl) {
+      padding: 8px 12px;
+      font-size: 16px;
+      vertical-align: 3px;
+    }
+  }
+
+  &__step {
+    margin-bottom: 25px;
+  }
+
+  &__step-name {
+    font-size: 16px;
+    margin-bottom: 5px;
+  }
+
+  &__ingredients {
+    padding: 15px;
+    background-color: var(--e-global-color-b11023c);
+    margin: 15px 0;
+    font-weight: 500;
+
+    @include media-breakpoint-up(lg) {
+      padding: 25px;
+    }
+
+    @include media-breakpoint-up(xxl) {
+      padding: 40px;
+      margin: 35px 0;
+    }
+
+    ul {
+      margin: 0;
+    }
+
+    li + li {
+      margin-top: 10px;
+    }
+  }
+
+  &__recommends {
+    @include st-mobile-scroll-row;
+
+    .col:last-child {
+      @include media-breakpoint-down(xl) {
+        display: none !important;
+      }
+    }
+  }
+
+  &__download-link {
+    font-size: 14px;
+    color: var(--e-global-color-secondary) !important;
+    display: inline-block;
+    padding-right: 20px;
+    background: url('#{$images-from-widgets}/download.svg') right 5px / 12px no-repeat;
+    text-decoration: underline !important;
+    margin: 3px 30px 3px 0;
+  }
+}

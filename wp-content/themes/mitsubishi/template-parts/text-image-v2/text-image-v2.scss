@@ -1,0 +1,49 @@
+@import '../../assets/scss/variables';
+@import '../../assets/scss/mixins';
+
+.mit-text-image-v2 {
+  position: relative;
+
+  &__image-wrapper {
+    @include img-ratio(1370, 660);
+  }
+
+  &__text {
+    @include media-breakpoint-up(lg) {
+      position: absolute;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  &__text-box {
+    text-align: center;
+    background-color: #fff;
+    padding: 30px 15px 40px;
+
+    @include media-breakpoint-up(lg) {
+      padding: 30px 15px;
+    }
+
+    @include media-breakpoint-up(xl) {
+      padding: 50px 15px;
+    }
+
+    @include media-breakpoint-up(xxl) {
+      padding: 80px 15px;
+    }
+
+    .btn {
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+  }
+
+  &__text-box-inner {
+    margin: 0 auto;
+    max-width: 600px;
+  }
+}

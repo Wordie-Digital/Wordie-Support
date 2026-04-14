@@ -1,0 +1,57 @@
+@import '../../assets/scss/variables';
+@import '../../assets/scss/mixins';
+
+.mit-post-product {
+  @include st-card;
+
+  &__heading a {
+    font-size: 18px;
+    font-weight: normal;
+    display: block;
+    line-height: 1.2;
+  }
+
+  &__image {
+    @include img-ratio(306, 256);
+
+    display: block;
+    background-color: var(--e-global-color-b11023c);
+  }
+
+  &__excerpt {
+    padding-bottom: 10px;
+    font-size: 12px;
+  }
+
+  &__content {
+    @include st-list;
+    @include st-card-padding;
+  }
+
+  &__meta {
+    font-size: 12px;
+    margin-bottom: 15px;
+
+    @include media-breakpoint-up(xxl) {
+      font-size: 14px;
+    }
+  }
+
+  &__info-subheading {
+    font-size: 14px;
+    color: var(--e-global-color-3eec4d9);
+    margin-bottom: 10px;
+  }
+}
+
+.mit-post-product-professional {
+  &__content {
+    @include st-list;
+
+    &--2-columns {
+      @include media-breakpoint-up(xxl) {
+        column-count: 2;
+      }
+    }
+  }
+}

@@ -1,0 +1,23 @@
+@import '../../../../assets/scss/variables';
+@import '../../../../assets/scss/mixins';
+
+.el-customer-reviews {
+  &__reviews-slider {
+    padding: 6% 0;
+
+    @include media-breakpoint-up(xxl) {
+      min-height: 420px;
+    }
+
+    @include media-breakpoint-up(lg) {
+      padding: 4% 0;
+    }
+
+    [data-slider-scroller="true"][display="flex"] > div {
+      @include media-breakpoint-up(xxl) {
+        flex-basis: 25% !important;
+        max-width: 25% !important;
+      }
+    }
+  }
+}

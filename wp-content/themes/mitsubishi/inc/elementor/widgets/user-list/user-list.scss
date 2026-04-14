@@ -1,0 +1,27 @@
+@import '../../../../assets/scss/variables';
+@import '../../../../assets/scss/mixins';
+
+.el-user-list {
+  &__heading {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 5px;
+    display: block;
+
+    @include media-breakpoint-up(lg) {
+      font-size: 18px;
+    }
+  }
+
+  p {
+    margin-bottom: 10px;
+  }
+
+  li {
+    margin: 10px 0;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+}

@@ -1,0 +1,91 @@
+@import '../../../../assets/scss/variables';
+@import '../../../../assets/scss/mixins';
+
+.el-footer-menu {
+  font-size: 16px;
+
+  @include media-breakpoint-up(xxl) {
+    font-size: 18px;
+  }
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  a {
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .menu {
+    @include media-breakpoint-up(lg) {
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: space-between;
+    }
+
+    > li {
+      position: relative;
+      padding-right: 45px;
+
+      &:not(:last-child) {
+        margin-bottom: 40px;
+
+        @include media-breakpoint-up(lg) {
+          margin-bottom: 0;
+        }
+      }
+
+      @include media-breakpoint-up(lg) {
+        padding-right: 0;
+        padding-left: 15px;
+      }
+
+      > a {
+        font-size: 18px;
+        font-weight: 500;
+        display: block;
+
+        @include media-breakpoint-up(lg) {
+          margin-bottom: 20px;
+        }
+      }
+
+      > ul {
+        display: none;
+
+        @include media-breakpoint-up(lg) {
+          display: block !important;
+        }
+      }
+
+      li {
+        padding: 5px 0;
+
+        @include media-breakpoint-up(lg) {
+          padding: 8px 0;
+        }
+      }
+    }
+  }
+
+  &__toggle {
+    background: url('#{$images-from-widgets}/chev-down.svg') center / 10px no-repeat;
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    margin: 0;
+    position: absolute;
+    z-index: 1;
+    top: -8px;
+    right: 0;
+    text-decoration: none !important;
+
+    @include media-breakpoint-up(lg) {
+      display: none !important;
+    }
+  }
+}

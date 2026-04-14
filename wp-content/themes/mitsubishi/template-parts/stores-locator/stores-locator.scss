@@ -1,0 +1,261 @@
+@import '../../assets/scss/variables';
+@import '../../assets/scss/mixins';
+
+.mit-stores-locator {
+  padding: 4% 0;
+
+  &__info {
+    margin-bottom: 15px;
+  }
+
+  &__checkbox-box {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border: 1px solid #ccc;
+    position: absolute;
+    left: 0;
+    top: 2px;
+
+    input:checked + & {
+      background: var(--e-global-color-secondary);
+      border-color: var(--e-global-color-secondary);
+    }
+
+    input[type="radio"] + & {
+      border-radius: 50%;
+    }
+  }
+
+  #wpsl-wrap {
+    @include media-breakpoint-up(lg) {
+      display: flex;
+      flex-direction: row-reverse;
+    }
+
+    .wpsl-search {
+      padding: 0;
+      background: none;
+    }
+
+    #wpsl-gmap {
+      float: none;
+
+      @include media-breakpoint-down(md) {
+        width: 100% !important;
+        height: 400px !important;
+        margin-bottom: 20px;
+      }
+
+      button {
+        box-shadow: none !important;
+      }
+
+      .wpsl-info-actions {
+        .page-id-1062 & {
+          display: none !important;
+        }
+      }
+    }
+
+    #wpsl-result-list {
+      width: 100%;
+      margin-right: 0;
+      border: 1px solid var(--e-global-color-f65e74e);
+      height: 100% !important;
+    }
+
+    #wpsl-result-list-wrapper {
+      margin-right: 0;
+      display: flex;
+      flex-direction: column;
+      width: 33%;
+      flex: 0 0 33%;
+
+      @include media-breakpoint-down(md) {
+        width: 100% !important;
+      }
+
+      @include media-breakpoint-up(lg) {
+        margin-right: 25px;
+      }
+
+      @include media-breakpoint-up(xxl) {
+        margin-right: 50px;
+      }
+
+      ul#wpsl-checkbox-dealer-service-filter,
+      ul#wpsl-checkbox-filter {
+        float: none;
+        margin: 0 0 15px;
+
+        @include media-breakpoint-up(xl) {
+          columns: 2;
+        }
+        @include media-breakpoint-up(xxl) {
+          columns: 3;
+        }
+
+        li {
+          float: none;
+          width: 100%;
+          border-bottom: 0;
+          padding: 0;
+        }
+
+        label {
+          position: relative;
+          padding-left: 20px;
+          cursor: pointer;
+        }
+
+        input[type="radio"],
+        input[type="checkbox"] {
+          opacity: 0;
+          visibility: hidden;
+          position: absolute;
+        }
+      }
+
+      p {
+        padding-left: 0;
+      }
+
+      .wpsl-contact-details {
+        margin-bottom: 10px;
+
+        span {
+          display: inline-block !important;
+          margin-right: 15px;
+        }
+      }
+    }
+
+    #wpsl-search-wrap {
+      margin-bottom: 15px;
+
+      .wpsl-input,
+      .wpsl-select-wrap {
+        display: block;
+      }
+
+      #wpsl-search-input {
+        border-radius: 0;
+        border: 0;
+        border-bottom: 1px solid var(--e-global-color-f65e74e);
+        padding-right: 0;
+        padding-left: 30px;
+        width: 100% !important;
+        background: url('#{$images-from-template}/search-red.svg') center left / 15px no-repeat;
+
+        &.wpsl-error {
+          background-color: rgba(red, 0.1);
+          border: 0 !important;
+          border-bottom: 1px solid var(--e-global-color-secondary) !important;
+        }
+      }
+
+      div {
+        margin: 0;
+        float: none;
+      }
+    }
+
+    #wpsl-search-btn {
+      border: 0;
+      background: var(--e-global-color-secondary) !important;
+      color: #fff;
+      border-radius: 0;
+      font-weight: 500;
+      text-transform: uppercase;
+    }
+
+    #wpsl-stores {
+      li[data-store-id] {
+        border-bottom: 0;
+        padding: 10px 10px 0;
+        position: relative;
+
+        @include media-breakpoint-up(lg) {
+          padding: 15px 15px 0;
+        }
+
+        > div:last-child {
+          border-bottom: 1px solid var(--e-global-color-f65e74e);
+          padding-bottom: 10px;
+
+          @include media-breakpoint-up(lg) {
+            padding-bottom: 15px;
+          }
+        }
+
+        &:last-child > div:last-child {
+          border-bottom: 0;
+        }
+
+        &.wpsl-preloader {
+          padding-left: 35px;
+          padding-bottom: 8px;
+        }
+      }
+    }
+
+    .wpsl-store-full-address {
+      font-size: 16px;
+      margin-bottom: 10px;
+      padding-right: 60px;
+    }
+
+    .wpsl-store-name {
+      text-transform: uppercase;
+
+      strong {
+        font-weight: 500 !important;
+      }
+    }
+
+    .wpsl-distance {
+      font-weight: bold;
+      position: absolute;
+      top: 12px;
+      right: 10px;
+      font-size: 13px;
+
+      @include media-breakpoint-up(lg) {
+        right: 15px;
+      }
+    }
+
+    .wpsl-directions {
+      font-size: 13px;
+      font-style: italic;
+      text-decoration: underline;
+      margin-bottom: 20px;
+    }
+  }
+
+  #wpsl-category {
+    position: relative;
+    z-index: 3;
+  }
+
+  #wpsl-dealer-service,
+  #wpsl-category {
+    margin-bottom: 15px !important;
+
+    [for="wpsl-dealer-service-list"],
+    [for="wpsl-category-list"] {
+      display: none;
+    }
+
+    .wpsl-dropdown {
+      width: 100%;
+      border-radius: 0;
+      border-color: var(--e-global-color-f65e74e);
+
+      div {
+        border-color: var(--e-global-color-f65e74e);
+      }
+    }
+  }
+}

@@ -1,0 +1,71 @@
+@import '../../../../assets/scss/variables';
+@import '../../../../assets/scss/mixins';
+
+.el-page-header {
+  &:not(&--has-bg) {
+    /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#cecece+0,ffffff+100&1+0,0+100 */
+    background: -moz-linear-gradient(left, rgba(206, 206, 206, 1) 0%, rgba(255, 255, 255, 0) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(left, rgba(206, 206, 206, 1) 0%, rgba(255, 255, 255, 0) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to right, rgba(206, 206, 206, 1) 0%, rgba(255, 255, 255, 0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#cecece', endColorstr='#00ffffff', GradientType=1); /* IE6-9 */
+  }
+
+  @include offset-for-header;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+
+  &--has-bg {
+    color: #fff;
+
+    &:before {
+      @include pseudo-content;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(#000, 0.6);
+      z-index: 0;
+    }
+  }
+
+  &--hide-title {
+    &:before {
+      content: none !important;
+    }
+  }
+
+  &__inner {
+    position: relative;
+    z-index: 1;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    min-height: 300px;
+    justify-content: center;
+
+    h1 {
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+
+  &__excerpt {
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+
+    a:not(.btn) {
+      color: var(--e-global-color-secondary);
+      text-decoration: underline;
+    }
+
+    @include media-breakpoint-up(xl) {
+      font-size: 20px;
+    }
+  }
+}

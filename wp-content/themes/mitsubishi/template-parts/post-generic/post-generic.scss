@@ -1,0 +1,24 @@
+@import '../../assets/scss/variables';
+@import '../../assets/scss/mixins';
+
+.mit-post-generic {
+  @include st-card;
+
+  &__image {
+    display: block !important;
+
+    @include img-ratio(479, 284);
+  }
+
+  &__heading {
+    font-weight: normal;
+
+    @include media-breakpoint-down(sm) {
+      font-size: 14px !important;
+    }
+  }
+
+  &__content {
+    @include st-card-padding;
+  }
+}

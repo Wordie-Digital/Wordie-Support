@@ -1,0 +1,30 @@
+@import '../../../../assets/scss/variables';
+@import '../../../../assets/scss/mixins';
+
+.el-posts-slider {
+  overflow: hidden;
+
+  .swiper {
+    overflow: visible;
+  }
+
+  .swiper .swiper-button-prev,
+  .swiper .swiper-rtl .swiper-button-next {
+    display: none;
+
+    @include media-breakpoint-up(lg) {
+      display: block;
+      left: -40px;
+    }
+  }
+
+  .swiper .swiper-button-next,
+  .swiper .swiper-rtl .swiper-button-prev {
+    display: none;
+
+    @include media-breakpoint-up(lg) {
+      display: block;
+      right: -40px;
+    }
+  }
+}

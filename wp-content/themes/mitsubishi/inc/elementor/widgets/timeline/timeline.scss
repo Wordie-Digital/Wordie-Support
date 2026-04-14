@@ -1,0 +1,110 @@
+@import '../../../../assets/scss/variables';
+@import '../../../../assets/scss/mixins';
+
+.el-timeline {
+  --el-timeline-gap: 40px;
+  --swiper-pagination-bullet-size: 12px;
+  --swiper-pagination-bullet-inactive-opacity: 1;
+  --swiper-pagination-bullet-inactive-color: var(--e-global-color-secondary);
+
+  overflow: hidden;
+  padding-bottom: var(--el-timeline-gap);
+
+  @include media-breakpoint-up(lg) {
+    --swiper-pagination-bullet-size: 17px;
+    --el-timeline-gap: 70px;
+  }
+
+  .swiper-pagination-bullet {
+    @include st-transition;
+  }
+
+  .swiper-pagination-bullet-active {
+    transform: scale(1.6);
+  }
+
+  .swiper {
+    overflow: visible;
+  }
+
+  .container {
+    max-width: 1280px;
+  }
+
+  &__item-subheading {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: var(--e-global-color-secondary);
+
+    @include media-breakpoint-up(lg) {
+      font-size: 32px;
+    }
+  }
+
+  &__item-content {
+    background-color: #fff;
+    padding: 15px;
+    min-height: 400px;
+    overflow: hidden;
+
+    @include st-overlay-bottom;
+
+    @include media-breakpoint-up(lg) {
+      padding: 40px;
+      max-height: 489px;
+    }
+
+    p + ul {
+      margin-top: -10px;
+
+      @include media-breakpoint-up(xl) {
+        margin-top: -15px;
+      }
+    }
+  }
+
+  &__item-image {
+    @include img-ratio(843, 495);
+  }
+
+  .swiper-pagination-horizontal.swiper-pagination-bullets,
+  .swiper-pagination-custom,
+  .swiper-pagination-fraction {
+    bottom: calc(var(--el-timeline-gap) * -1 + 10px);
+  }
+
+  .swiper-pagination {
+    &.swiper-pagination-bullets {
+      width: 80%;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      justify-content: space-between;
+
+      &:after {
+        @include pseudo-content;
+        left: 10px;
+        height: 1px;
+        right: 10px;
+        top: 50%;
+        z-index: -1;
+        background-color: var(--e-global-color-secondary);
+      }
+    }
+  }
+
+  .swiper .swiper-button-prev,
+  .swiper .swiper-rtl .swiper-button-next {
+    @include media-breakpoint-up(lg) {
+      left: -30px;
+    }
+  }
+
+  .swiper .swiper-button-next,
+  .swiper .swiper-rtl .swiper-button-prev {
+    @include media-breakpoint-up(lg) {
+      right: -30px;
+    }
+  }
+}

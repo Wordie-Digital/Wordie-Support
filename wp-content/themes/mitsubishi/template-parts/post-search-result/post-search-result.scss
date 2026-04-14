@@ -1,0 +1,22 @@
+@import '../../assets/scss/variables';
+@import '../../assets/scss/mixins';
+
+.mit-post-search-result {
+  @include st-card;
+
+  &__heading {
+    font-weight: normal;
+
+    @include media-breakpoint-down(sm) {
+      font-size: 14px !important;
+    }
+  }
+
+  &__content {
+    @include st-card-padding;
+
+    strong {
+      color: var(--e-global-color-secondary);
+    }
+  }
+}
