@@ -1,5 +1,13 @@
 name: Deploy to WP Engine
 
+# ─── Triggers ────────────────────────────────────────────────────────────────
+# Push to develop  → deploys to WP Engine dev
+# Push to staging  → deploys to WP Engine staging
+# Manual dispatch  → choose any environment (production requires manual only)
+#
+# NOTE: WP Engine Git push (git.wpengine.com) is not available for this install.
+# Deployment uses rsync over SSH to WPE SFTP endpoints instead.
+# ─────────────────────────────────────────────────────────────────────────────
 on:
   push:
     branches: [develop, staging]
@@ -14,14 +22,51 @@ on:
 # IMPORTANT: Production deploys are MANUAL ONLY via workflow_dispatch.
 # Pushing to main does NOT trigger any deploy.
 
+permissions:
+  contents: read
+
 jobs:
   deploy:
+    name: Deploy → ${{ github.ref_name == 'staging' && 'Staging' || (github.event.inputs.environment == 'production' && 'Production') || 'Dev' }}
     runs-on: ubuntu-latest
+
+    concurrency:
+      group: deploy-${{ github.ref_name }}-${{ github.event.inputs.environment || 'auto' }}
+      cancel-in-progress: false
+
+    environment:
+      name: ${{ github.ref_name == 'staging' && 'staging' || (github.event.inputs.environment == 'production' && 'production') || 'development' }}
+
     steps:
-      - uses: actions/checkout@v4
+      # ── 1. Resolve target WP Engine install ──────────────────────────────
+      - name: Resolve deploy target
+        id: target
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            ENV="${{ github.event.inputs.environment }}"
+          elif [ "${{ github.ref_name }}" = "staging" ]; then
+            ENV="staging"
+          else
+            ENV="development"
+          fi
+
+          case "$ENV" in
+            production)  WPE_INSTALL="${{ secrets.WPE_ENV_PROD }}" ;;
+            staging)     WPE_INSTALL="${{ secrets.WPE_ENV_STAGING }}" ;;
+            *)           WPE_INSTALL="${{ secrets.WPE_ENV_DEV }}" ;;
+          esac
+
+          echo "env=$ENV"                   >> $GITHUB_OUTPUT
+          echo "wpe_install=$WPE_INSTALL"   >> $GITHUB_OUTPUT
+          echo "Deploying '${{ github.ref_name }}' → $WPE_INSTALL ($ENV)"
+
+      # ── 2. Checkout ───────────────────────────────────────────────────────
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
+      # ── 3. Set up SSH ─────────────────────────────────────────────────────
       - name: Configure SSH
         env:
           SSH_PRIVATE_KEY: ${{ secrets.WPE_SSHG_KEY_PRIVATE }}
@@ -29,33 +74,85 @@ jobs:
           mkdir -p ~/.ssh
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
-          ssh-keyscan -t rsa git.wpengine.com >> ~/.ssh/known_hosts
+          WPE_INSTALL="${{ steps.target.outputs.wpe_install }}"
+          ssh-keyscan -t rsa "${WPE_INSTALL}.ssh.wpengine.net" >> ~/.ssh/known_hosts 2>/dev/null || true
 
-      - name: Deploy to Development
-        if: |
-          (github.event_name == 'push' && github.ref == 'refs/heads/develop') ||
-          (github.event_name == 'workflow_dispatch' && github.event.inputs.environment == 'development')
+      # ── 4. Deploy via rsync ───────────────────────────────────────────────
+      - name: Deploy theme and custom plugins
         env:
-          WPE_ENV: ${{ secrets.WPE_ENV_DEV }}
+          WPE_INSTALL: ${{ steps.target.outputs.wpe_install }}
         run: |
-          git remote add wpe-dev git@git.wpengine.com:production/${WPE_ENV}.git
-          git push wpe-dev HEAD:master --force
+          # Build exclude flags from .wpe-push-ignore
+          EXCLUDES=""
+          if [ -f .wpe-push-ignore ]; then
+            while IFS= read -r line || [ -n "$line" ]; do
+              [[ "$line" =~ ^#.*$ || -z "$line" ]] && continue
+              EXCLUDES="$EXCLUDES --exclude=$line"
+            done < .wpe-push-ignore
+          fi
 
-      - name: Deploy to Staging
-        if: |
-          (github.event_name == 'push' && github.ref == 'refs/heads/staging') ||
-          (github.event_name == 'workflow_dispatch' && github.event.inputs.environment == 'staging')
-        env:
-          WPE_ENV: ${{ secrets.WPE_ENV_STAGING }}
-        run: |
-          git remote add wpe-staging git@git.wpengine.com:production/${WPE_ENV}.git
-          git push wpe-staging HEAD:master --force
+          REMOTE="${WPE_INSTALL}@${WPE_INSTALL}.ssh.wpengine.net:sites/${WPE_INSTALL}/wp-content"
+          SSH_OPTS="-e 'ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no'"
 
-      - name: Deploy to Production
-        if: github.event_name == 'workflow_dispatch' && github.event.inputs.environment == 'production'
+          # Deploy mitsubishi theme (exclude build artefacts and backup files)
+          echo "→ Deploying theme: mitsubishi"
+          rsync -az --delete \
+            -e "ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no" \
+            $EXCLUDES \
+            --exclude="dist.bak/" \
+            --exclude="*.bak" \
+            --exclude="*.bak2" \
+            --exclude="*-3-3-2026" \
+            --exclude="*.php-*" \
+            wp-content/themes/mitsubishi/ \
+            ${WPE_INSTALL}@${WPE_INSTALL}.ssh.wpengine.net:sites/${WPE_INSTALL}/wp-content/themes/mitsubishi/
+
+          # Deploy custom/licensed plugins not available on wordpress.org
+          for plugin in ajax-load-more-custom ajax-load-more-filters ajax-load-more-preloaded; do
+            if [ -d "wp-content/plugins/$plugin" ]; then
+              echo "→ Deploying plugin: $plugin"
+              rsync -az --delete \
+                -e "ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no" \
+                $EXCLUDES \
+                wp-content/plugins/$plugin/ \
+                ${WPE_INSTALL}@${WPE_INSTALL}.ssh.wpengine.net:sites/${WPE_INSTALL}/wp-content/plugins/$plugin/
+            fi
+          done
+
+          echo "✓ Deploy complete → ${WPE_INSTALL}.wpengine.com"
+
+      # ── 5. Flush cache ────────────────────────────────────────────────────
+      - name: Flush WP cache
         env:
-          WPE_ENV: ${{ secrets.WPE_ENV_PROD }}
+          WPE_INSTALL: ${{ steps.target.outputs.wpe_install }}
         run: |
-          echo "Production deploy - manually triggered only."
-          git remote add wpe-prod git@git.wpengine.com:production/${WPE_ENV}.git
-          git push wpe-prod HEAD:master --force
+          ssh -i ~/.ssh/id_ed25519 \
+            -o StrictHostKeyChecking=no -o ConnectTimeout=30 \
+            ${WPE_INSTALL}@${WPE_INSTALL}.ssh.wpengine.net \
+            "wp --allow-root cache flush 2>/dev/null || true; \
+             wp --allow-root rewrite flush 2>/dev/null || true" \
+            2>/dev/null || echo "Cache flush skipped"
+
+      # ── 6. Smoke test ─────────────────────────────────────────────────────
+      - name: Smoke test — Rolling Stock pages
+        env:
+          WPE_INSTALL: ${{ steps.target.outputs.wpe_install }}
+        run: |
+          BASE="https://${WPE_INSTALL}.wpenginepowered.com"
+          URLS=(
+            "/product/australian-rolling-stock-86-class-8601-8650/"
+            "/product/australian-rolling-stock-v-set/"
+            "/product/australian-rolling-stock-80-class/"
+            "/product/australian-rolling-stock-86-class-8601-8650-blue/"
+          )
+          FAILED=0
+          for path in "${URLS[@]}"; do
+            CODE=$(curl -s -o /dev/null -w "%{http_code}" --max-time 30 "${BASE}${path}")
+            if [ "$CODE" = "200" ] || [ "$CODE" = "301" ] || [ "$CODE" = "302" ]; then
+              echo "OK   $CODE → ${path}"
+            else
+              echo "FAIL $CODE → ${path}"
+              FAILED=$((FAILED+1))
+            fi
+          done
+          [ $FAILED -eq 0 ] || (echo "::error::Smoke test failed — $FAILED URL(s) not OK" && exit 1)
