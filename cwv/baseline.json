@@ -1,0 +1,77 @@
+{
+  "measured_at": "2026-04-14",
+  "url": "https://www.mitsubishielectric.com.au",
+  "note": "Scores provided by client. PSI API rate-limited at measurement time. Detailed metrics estimated from HTML source analysis — re-run PSI to confirm exact LCP/TBT/CLS values.",
+
+  "scores": {
+    "desktop": {
+      "performance": 56,
+      "accessibility": 90,
+      "best_practices": 100
+    },
+    "mobile": {
+      "performance": 34,
+      "accessibility": 88,
+      "best_practices": 100
+    }
+  },
+
+  "metrics_estimated": {
+    "note": "Estimated from source analysis — confirm via PSI before each optimisation",
+    "mobile": {
+      "LCP": "~5–7s (poor) — hero PNG not WebP; 20+ render-blocking CSS sheets",
+      "TBT": "~500–900ms (poor) — jQuery loaded synchronously, GTM in <head>",
+      "CLS": "unknown — needs measurement",
+      "FCP": "~3–5s (poor) — large CSS payload blocks first paint"
+    },
+    "desktop": {
+      "LCP": "~2.5–4s (needs improvement)",
+      "TBT": "~200–400ms (needs improvement)",
+      "CLS": "unknown — needs measurement",
+      "FCP": "~1.5–2.5s (needs improvement)"
+    }
+  },
+
+  "identified_issues": [
+    {
+      "rank": 1,
+      "id": "jquery-render-blocking",
+      "impact": "TBT / FCP",
+      "severity": "critical",
+      "description": "jquery.min.js and jquery-migrate.min.js loaded without defer in <head>. Both are synchronous, blocking the parser on every page load.",
+      "estimated_saving": "200–500ms TBT"
+    },
+    {
+      "rank": 2,
+      "id": "wpe-cache-bypass",
+      "impact": "LCP / TTFB / all metrics",
+      "severity": "critical",
+      "description": "WP Engine page cache bypassed on every request (x-cacheable: NO:Set Known Cookie). WooCommerce session cookie forces uncached PHP rendering for all visitors.",
+      "estimated_saving": "500ms–2s TTFB"
+    },
+    {
+      "rank": 3,
+      "id": "css-render-blocking",
+      "impact": "FCP / LCP",
+      "severity": "high",
+      "description": "20+ CSS stylesheets loaded synchronously in <head>, including Font Awesome loaded TWICE (v4 shim + v5 all = ~80KB duplicated icon CSS), WooCommerce CSS on non-shop pages, dashicons, and plugin-specific CSS.",
+      "estimated_saving": "300–600ms FCP"
+    },
+    {
+      "rank": 4,
+      "id": "lcp-image-format",
+      "impact": "LCP",
+      "severity": "medium",
+      "description": "LCP image (hero award badge) served as PNG. WebP equivalent would be ~30–50% smaller. Image is preloaded correctly but format is unoptimised.",
+      "estimated_saving": "100–300ms LCP"
+    },
+    {
+      "rank": 5,
+      "id": "gtm-preconnect",
+      "impact": "TBT / FCP",
+      "severity": "low",
+      "description": "Google Tag Manager domain (googletagmanager.com) uses dns-prefetch only. Upgrading to preconnect saves the TLS handshake time (~100–150ms).",
+      "estimated_saving": "100–150ms"
+    }
+  ]
+}

@@ -34,6 +34,9 @@ class MIT_Setup {
     add_filter( 'the_content', [ $this, 'customise_table_tags' ] );
     add_filter( 'acf/format_value', [ $this, 'customise_table_tags' ] );
 
+    // Performance: preconnect to third-party origins used on every page
+    add_filter( 'wp_resource_hints', [ $this, 'add_preconnect_hints' ], 10, 2 );
+
     // Plugins
     add_filter( 'rocket_cache_dynamic_cookies', [ $this, 'wp_rocket_dynamic_cookie' ] );
     add_filter( 'alm_filters_public_taxonomies', '__return_false' );
@@ -970,6 +973,15 @@ class MIT_Setup {
 
   function excerpt_length( $length ): string {
     return 30;
+  }
+
+  function add_preconnect_hints( $urls, $relation_type ) {
+    if ( 'preconnect' !== $relation_type ) {
+      return $urls;
+    }
+    $urls[] = 'https://www.googletagmanager.com';
+    $urls[] = 'https://www.google-analytics.com';
+    return $urls;
   }
 
   function hook_head() {
