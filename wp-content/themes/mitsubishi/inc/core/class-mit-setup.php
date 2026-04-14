@@ -814,25 +814,41 @@ class MIT_Setup {
   }
 
   function set_user_type_cookie() {
+    // Helper closures — only emit Set-Cookie when the value actually changes.
+    // Emitting Set-Cookie unconditionally causes WP Engine to mark every response
+    // as non-cacheable (x-cacheable: NO:Set Known Cookie), bypassing the full-page
+    // cache even for anonymous visitors who don't need a personalised response.
+    $set_type = function( $type ) {
+      $type = sanitize_key( $type );
+      if ( ( $_COOKIE[ MIT_USER_TYPE__COOKIE ] ?? '' ) === $type ) {
+        return; // Value unchanged — no Set-Cookie header needed.
+      }
+      $_COOKIE[ MIT_USER_TYPE__COOKIE ] = $type;
+      setcookie( MIT_USER_TYPE__COOKIE, $type, time() + ( 7 * DAY_IN_SECONDS ), '/' );
+    };
+
+    $clear_type = function() {
+      if ( ! isset( $_COOKIE[ MIT_USER_TYPE__COOKIE ] ) ) {
+        return; // Already absent — no Set-Cookie header needed.
+      }
+      unset( $_COOKIE[ MIT_USER_TYPE__COOKIE ] );
+      setcookie( MIT_USER_TYPE__COOKIE, null, - 1, '/' );
+    };
+
     if (
       isset( $_GET[ MIT_USER_TYPE__GET_PARAM ] ) &&
       in_array( $_GET[ MIT_USER_TYPE__GET_PARAM ], MIT_USER_TYPES )
     ) {
       // Params base
       if ( $_GET[ MIT_USER_TYPE__GET_PARAM ] != MIT_USER_TYPE__HO ) {
-        // Not HO
-        $_COOKIE[ MIT_USER_TYPE__COOKIE ] = sanitize_key( $_GET[ MIT_USER_TYPE__GET_PARAM ] );
-        setcookie( MIT_USER_TYPE__COOKIE, sanitize_key( $_GET[ MIT_USER_TYPE__GET_PARAM ] ), time() + ( 7 * DAY_IN_SECONDS ), '/' );
+        $set_type( $_GET[ MIT_USER_TYPE__GET_PARAM ] ); // Not HO
       } else {
-        // HO
-        unset( $_COOKIE[ MIT_USER_TYPE__COOKIE ] );
-        setcookie( MIT_USER_TYPE__COOKIE, null, - 1, '/' );
+        $clear_type(); // HO
       }
     } else {
       // For front page, always as HO
       if ( '/' == $_SERVER['REQUEST_URI'] ) {
-        unset( $_COOKIE[ MIT_USER_TYPE__COOKIE ] );
-        setcookie( MIT_USER_TYPE__COOKIE, null, - 1, '/' );
+        $clear_type();
       }
 
       // Slugs base
@@ -845,13 +861,9 @@ class MIT_Setup {
           )
         ) {
           if ( $user_type != MIT_USER_TYPE__HO ) {
-            // Not HO
-            $_COOKIE[ MIT_USER_TYPE__COOKIE ] = $user_type;
-            setcookie( MIT_USER_TYPE__COOKIE, $user_type, time() + ( 7 * DAY_IN_SECONDS ), '/' );
+            $set_type( $user_type ); // Not HO
           } else {
-            // HO
-            unset( $_COOKIE[ MIT_USER_TYPE__COOKIE ] );
-            setcookie( MIT_USER_TYPE__COOKIE, null, - 1, '/' );
+            $clear_type(); // HO
           }
         }
       }
