@@ -132,7 +132,7 @@ class Custom_El_Products_Single_Tabs extends Widget_Base {
               <?
               $key_features = array_map( function ( $key_feature_id ) {
                 return get_term( $key_feature_id, 'pa_key-features' );
-              }, get_field( 'key_features' ) );
+              }, get_field( 'key_features' ) ?: [] );
 
               if ( ! empty( $key_features ) ) : ?>
                 <div class="row">
