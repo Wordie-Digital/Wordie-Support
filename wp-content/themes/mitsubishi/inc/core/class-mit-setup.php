@@ -924,9 +924,9 @@ class MIT_Setup {
     wp_register_script( 'js-OverlayScrollbars', get_theme_file_uri( "assets/lib/overlayscrollbars/js/OverlayScrollbars{$suffix}.js" ), [], false, true );
 
     /* Common assets */
-    $assets_css = [
-      'css-font-awesome' => 'lib/font-awesome-4.7.0/css/font-awesome.min.css',
-    ];
+    // css-font-awesome (FA v4.7.0) removed — Elementor loads FA v5 + v4 CSS shim
+    // which covers all fa/fa-* classes used in templates. Saves ~37KB render-blocking CSS.
+    $assets_css = [];
     $assets_js  = [
       'js-css-browser' => 'lib/css_browser_selector/css_browser_selector.js',
       'js-wow'         => 'lib/wow/dist/wow.min.js',
@@ -952,7 +952,10 @@ class MIT_Setup {
     wp_script_add_data( 'theme-respond', 'conditional', 'lt IE 9' );
 
     /* Main assets */
-    wp_enqueue_style( 'theme-dashicons', includes_url( "css/dashicons$suffix.css" ), [], ASSETS_VERSION );
+    // Dashicons only needed in WP admin — not in frontend templates.
+    if ( is_admin() ) {
+      wp_enqueue_style( 'theme-dashicons', includes_url( "css/dashicons$suffix.css" ), [], ASSETS_VERSION );
+    }
     wp_enqueue_style( 'theme-style', get_theme_file_uri( 'dist/main.min.css' ), [], ASSETS_VERSION );
     wp_enqueue_script( 'theme-js', get_theme_file_uri( 'dist/main.min.js' ), [], ASSETS_VERSION, true );
 
