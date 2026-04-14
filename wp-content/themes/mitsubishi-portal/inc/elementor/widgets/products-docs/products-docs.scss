@@ -1,0 +1,54 @@
+@import '../../../../assets/scss/variables';
+@import '../../../../assets/scss/mixins';
+
+.porel-products-docs {
+  .row {
+    @include media-breakpoint-up(xxl) {
+      --bs-gutter-x: 30px;
+    }
+  }
+
+  .col-xl-4 {
+    @include media-breakpoint-up(xl) {
+      width: 350px;
+    }
+  }
+
+  .col-xl-8 {
+    @include media-breakpoint-up(xl) {
+      width: 100%;
+      flex: 1 0;
+    }
+  }
+
+  &__products {
+    position: relative;
+    min-height: 600px; // Fallback
+    min-height: 50vh;
+    height: calc(100% - 60px);
+
+    .alm-btn-wrap {
+      margin-bottom: 0;
+    }
+  }
+
+  &__docs-results {
+    background-color: #fff;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 3;
+    overflow: auto;
+  }
+
+  &__products-inner {
+    /*position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;*/
+    overflow: auto;
+  }
+}

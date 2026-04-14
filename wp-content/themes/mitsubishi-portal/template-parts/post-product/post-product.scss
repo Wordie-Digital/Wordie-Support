@@ -1,0 +1,39 @@
+@import '../../assets/scss/variables';
+@import '../../assets/scss/mixins';
+
+.por-post-product {
+  @include st-card;
+
+  &__image {
+    @include img-ratio(306, 256);
+
+    display: block;
+  }
+
+  &__docs {
+    background-color: #fff;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    height: 100%;
+    min-height: 400px;
+    z-index: 2;
+  }
+
+  &__heading {
+    font-size: 16px;
+  }
+
+  &__content {
+    @include st-card-padding;
+  }
+
+  &__docs-group {
+    margin-bottom: 30px;
+    
+    h4 {
+      font-size: 16px;
+    }
+  }
+}

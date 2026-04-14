@@ -1,0 +1,24 @@
+@import '../../assets/scss/variables';
+@import '../../assets/scss/mixins';
+
+.por-post-generic-large {
+  @include st-card;
+
+  &__image {
+    display: block !important;
+
+    @include img-ratio(844, 387);
+  }
+
+  &__heading {
+    font-size: 16px;
+  }
+
+  &__meta {
+    font-size: 12px;
+  }
+
+  &__content {
+    padding: 15px;
+  }
+}

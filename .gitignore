@@ -1,49 +1,7 @@
-# WordPress Core
-wp-admin/
-wp-includes/
-wp-*.php
-index.php
-license.txt
-readme.html
-xmlrpc.php
-
-# WP Config
-wp-config.php
-wp-config-sample.php
-
-# Uploads / media
 wp-content/uploads/
-
-# WP Engine specific
-wp-content/mu-plugins/
-wp-content/advanced-cache.php
-wp-content/object-cache.php
-wp-content/drop-ins/
-wp-content/aiowps_backups/
-wp-content/bfu-temp/
 wp-content/cache/
-wp-content/smush-webp/
 wp-content/upgrade/
-wp-content/upgrade-temp-backup/
-wp-content/mysql.sql
-wp-content/debug.log
-wp-content/wp-rocket-config/
-wp-content/webtoffee_export/
-wp-content/sites/
-
-# OS
-.DS_Store
-*.swp
-Thumbs.db
-
-# Node / build artifacts
-node_modules/
+wp-content/backup-db/
+wp-content/wflogs/
 *.log
-dist/
-dist.bak/
-
-# Backups
-*.bak
-*.bak2
-*-3-3-2026
-*.php-*
+.DS_Store

@@ -1,0 +1,35 @@
+name: PR Checks
+
+on:
+  pull_request:
+    branches: [main, develop, staging]
+
+# Runs on every PR — must pass before merge is allowed
+
+jobs:
+  pr-checks:
+    name: Security & Quality Checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Block dangerous file types
+        run: |
+          BLOCKED=$(git diff --name-only ${{ github.event.pull_request.base.sha }} HEAD \
+            | grep -E '\.(sql|zip|tar\.gz|env)$' || true)
+          if [ -n "$BLOCKED" ]; then
+            echo "❌ Blocked file types detected:"
+            echo "$BLOCKED"
+            exit 1
+          fi
+          echo "✅ No blocked file types"
+
+      - name: Scan for hardcoded secrets
+        uses: trufflesecurity/trufflehog@main
+        with:
+          path: ./
+          base: ${{ github.event.pull_request.base.sha }}
+          head: ${{ github.sha }}
+          extra_args: --only-verified

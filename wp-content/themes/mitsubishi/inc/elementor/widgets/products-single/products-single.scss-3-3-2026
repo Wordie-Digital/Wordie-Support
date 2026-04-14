@@ -1,0 +1,332 @@
+@import '../../../../assets/scss/variables';
+@import '../../../../assets/scss/mixins';
+
+.el-products-single {
+  &__discontinued {
+    color: var(--e-global-color-secondary);
+    font-weight: bold;
+  }
+
+  &__info {
+    @include offset-for-header;
+    padding-bottom: 4%;
+
+    .mit-product-reviews {
+      min-height: 30px;
+      overflow: hidden;
+    }
+
+    .row {
+      @include media-breakpoint-up(xxl) {
+        --bs-gutter-x: 40px;
+      }
+    }
+  }
+
+  &__info-subheading {
+    @include media-breakpoint-up(xl) {
+      font-size: 26px;
+    }
+  }
+
+  &__info-title {
+    font-weight: bold !important;
+    text-transform: none !important;
+  }
+
+  &__info-images {
+    .woocommerce-product-gallery {
+      margin: 0 !important;
+      width: 100% !important;
+      float: none !important;
+      display: flex;
+      flex-wrap: nowrap;
+      flex-direction: row-reverse;
+      justify-content: space-between;
+    }
+
+    .woocommerce-product-gallery .flex-viewport {
+      flex: 0 0 auto;
+      width: 77%;
+
+      [data-thumb] {
+        a {
+          display: block;
+          // @include img-ratio(993, 575);
+          @include img-ratio(767, 575);
+        }
+      }
+    }
+
+    .woocommerce-product-gallery .flex-control-thumbs {
+      flex: 0 0 auto;
+      width: 20%;
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      overflow: auto !important;
+
+      li {
+        width: 100% !important;
+        float: none !important;
+        margin: 0 !important;
+        background-color: var(--e-global-color-b11023c);
+
+        + li {
+          margin-top: 20px !important;
+        }
+
+        @include img-ratio(193, 143);
+      }
+    }
+
+    @keyframes mit-bounce {
+      50% {
+        transform: translateY(-5px);
+      }
+    }
+
+    div.images .flex-control-thumbs {
+      &:before,
+      &:after {
+        @include st-transition;
+        @include pseudo-content;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 30px;
+        pointer-events: none;
+        opacity: 0;
+      }
+
+      &:before {
+        z-index: 1;
+        background: url('#{$images-from-widgets}/chev-down-red.svg') center / 30px 20px no-repeat;
+        filter: grayscale(1);
+        animation: mit-bounce 1600ms infinite cubic-bezier(0.445, 0.05, 0.55, 0.95);
+      }
+
+      &:after {
+        z-index: 0;
+        /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#ffffff+0,ffffff+100&0+0,1+100 */
+        background: -moz-linear-gradient(top, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00ffffff', endColorstr='#ffffff', GradientType=0); /* IE6-9 */
+      }
+    }
+
+    &:not(.bottom-reached) {
+      div.images .flex-control-thumbs {
+        &:before {
+          opacity: 0.5;
+        }
+
+        &:after {
+          opacity: 1;
+        }
+      }
+    }
+
+    div.images .flex-control-thumbs.os-host-scrollbar-vertical-hidden {
+      &:after,
+      &:before {
+        opacity: 0 !important;
+      }
+    }
+
+    .woocommerce-product-gallery__wrapper {
+      width: 100%;
+    }
+  }
+
+  &__info-image {
+    // @include img-ratio(767, 575);
+    @include img-ratio(993, 575);
+  }
+
+  &__info-description {
+    @include st-list;
+
+    ul {
+      @include media-breakpoint-up(xl) {
+        columns: 2;
+      }
+    }
+  }
+
+  &__downloads {
+    padding: 4% 0 0;
+  }
+
+  &__tabs {
+    .nav-tabs {
+      justify-content: flex-start;
+      border-bottom: 4px solid var(--e-global-color-secondary);
+      flex-wrap: nowrap;
+      white-space: nowrap;
+      overflow: auto;
+
+      @include media-breakpoint-up(md) {
+        justify-content: center;
+      }
+
+      .nav-item {
+        margin-bottom: 10px;
+
+        @include media-breakpoint-up(lg) {
+          margin-bottom: 20px;
+        }
+
+        & + .nav-item {
+          border-left: 1px solid var(--e-global-color-3eec4d9);
+        }
+      }
+
+      .nav-link {
+        margin: 0;
+        border: 0;
+        font-size: 16px;
+        font-weight: normal;
+        color: #000;
+        text-transform: none;
+        padding: 0 50px;
+        background-color: transparent !important;
+        box-shadow: none !important;
+
+        @include media-breakpoint-up(xl) {
+          font-size: 24px;
+        }
+
+        &:after {
+          display: block;
+          content: attr(data-title);
+          font-weight: bold;
+          height: 0;
+          overflow: hidden;
+          visibility: hidden;
+        }
+
+        &.active {
+          color: var(--e-global-color-secondary);
+          font-weight: bold;
+        }
+      }
+    }
+
+    .tab-content > .tab-pane {
+      padding: 4% 0;
+
+      .container {
+        @include media-breakpoint-up(xxl) {
+          max-width: 1500px;
+        }
+      }
+    }
+
+    #product-tab-content-features {
+      .row {
+        @include media-breakpoint-up(xxl) {
+          --bs-gutter-x: 100px;
+
+          .row {
+            @include media-breakpoint-up(xxl) {
+              --bs-gutter-x: 40px;
+            }
+          }
+        }
+      }
+    }
+
+    .row--video {
+      @include media-breakpoint-up(xxl) {
+        --bs-gutter-x: 40px;
+      }
+
+      + .row--video {
+        margin-top: 40px;
+
+        @include media-breakpoint-up(lg) {
+          margin-top: 6%;
+        }
+      }
+    }
+  }
+
+  &__tabs-icon {
+    width: 50px;
+    height: 50px;
+
+    @include media-breakpoint-up(lg) {
+      width: 70px;
+      height: 70px;
+    }
+
+    img {
+      transform: scale(1.9);
+    }
+  }
+
+  &__tabs-icon-none {
+    width: 50px;
+    height: 50px;
+    line-height: 20px;
+    border: 2px solid var(--e-global-color-secondary);
+    border-radius: 50%;
+    overflow: hidden;
+    padding: 10px;
+
+    @include media-breakpoint-up(lg) {
+      width: 70px;
+      height: 70px;
+      line-height: 35px;
+      border-width: 4px;
+    }
+  }
+
+  &__product-details {
+    @include media-breakpoint-up(md) {
+      columns: 2;
+    }
+    @include media-breakpoint-up(lg) {
+      columns: 1;
+    }
+  }
+
+  &__recommend {
+    padding: 4% 0;
+
+    @include st-mobile-scroll-row;
+
+    .row {
+      @include media-breakpoint-up(xxl) {
+        --bs-gutter-x: 60px;
+      }
+    }
+  }
+
+  &__optional-parts {
+    padding: 4% 0;
+  }
+
+  &__info-quick-links-header {
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid var(--e-global-color-f65e74e);
+  }
+
+  &__info-term {
+    @include media-breakpoint-up(xl) {
+      font-size: 18px;
+    }
+  }
+
+  &__extra-description {
+    /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#eaeaea+0,ffffff+100&1+0,0+100 */
+    background: -moz-linear-gradient(left, rgba(234, 234, 234, 1) 0%, rgba(255, 255, 255, 0) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(left, rgba(234, 234, 234, 1) 0%, rgba(255, 255, 255, 0) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to right, rgba(234, 234, 234, 1) 0%, rgba(255, 255, 255, 0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#eaeaea', endColorstr='#00ffffff', GradientType=1); /* IE6-9 */
+  }
+}
