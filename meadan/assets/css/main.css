@@ -214,6 +214,18 @@ p + p {
     color: var(--color-white);
 }
 
+/* Sand — warm beige fill, dark text (Figma hero CTA) */
+.btn--sand {
+    background-color: var(--color-sand);
+    color: var(--color-dark);
+    border-color: var(--color-sand);
+}
+
+.btn--sand:hover {
+    background-color: transparent;
+    color: var(--color-sand);
+}
+
 /* Outline on dark background — white border + text */
 .btn--outline-light {
     background-color: transparent;

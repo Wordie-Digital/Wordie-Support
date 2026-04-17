@@ -13,7 +13,8 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;   /* content anchored to bottom */
+    justify-content: center;
+    align-items: center;
 }
 
 /* Video / fallback image — full bleed */
@@ -40,23 +41,25 @@
     z-index: 1;
 }
 
-/* Content block — bottom-left, above overlay */
+/* Content block — centred, above overlay */
 .hero-video__content {
     position: relative;
     z-index: 2;
     color: var(--color-white);
     padding: var(--space-80) var(--gutter);
-    max-width: 760px;
+    max-width: 640px;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .hero-video__subtitle {
     font-family: var(--font-body);
-    font-size: var(--text-xs);
+    font-size: var(--text-md);
     font-weight: var(--weight-medium);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
     color: var(--color-white);
-    opacity: 0.8;
     margin-bottom: var(--space-16);
 }
 
@@ -74,7 +77,6 @@
     font-size: var(--text-sm);
     font-weight: var(--weight-light);
     line-height: 1.39;
-    max-width: 520px;
     margin-bottom: var(--space-40);
     opacity: 0.9;
 }
@@ -104,16 +106,27 @@
 
 .hero-video__scroll-label {
     font-family: var(--font-body);
-    font-size: var(--text-xs);
+    font-size: var(--text-sm);
     font-weight: var(--weight-light);
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
+    line-height: 1.39;
 }
 
-/* Down arrow icon */
+/* Scroll icon — sand circle with dark arrow (Figma) */
+.hero-video__scroll-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background-color: var(--color-sand);
+    border-radius: 1000px;
+    color: var(--color-dark);
+    flex-shrink: 0;
+}
+
 .hero-video__scroll-icon {
-    width: 20px;
-    height: 20px;
+    width: 12px;
+    height: 12px;
 }
 
 @keyframes hero-scroll-bounce {
@@ -129,13 +142,5 @@
 
     .hero-video__title {
         font-size: clamp(2rem, 8vw, 2.5rem);
-    }
-
-    .hero-video__ctas {
-        flex-direction: column;
-    }
-
-    .hero-video__ctas .btn {
-        width: fit-content;
     }
 }

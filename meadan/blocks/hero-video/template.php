@@ -57,27 +57,22 @@ $block_id = ! empty( $block['anchor'] ) ? ' id="' . esc_attr( $block['anchor'] )
             <p class="hero-video__description"><?php echo esc_html( $description ); ?></p>
         <?php endif; ?>
 
-        <?php if ( $cta_primary_label || $cta_sec_label ) : ?>
+        <?php if ( $cta_primary_label && $cta_primary_url ) : ?>
             <div class="hero-video__ctas">
-                <?php if ( $cta_primary_label && $cta_primary_url ) : ?>
-                    <a class="btn btn--primary" href="<?php echo esc_url( $cta_primary_url ); ?>">
-                        <?php echo esc_html( $cta_primary_label ); ?>
-                    </a>
-                <?php endif; ?>
-                <?php if ( $cta_sec_label && $cta_sec_url ) : ?>
-                    <a class="btn btn--outline-light" href="<?php echo esc_url( $cta_sec_url ); ?>">
-                        <?php echo esc_html( $cta_sec_label ); ?>
-                    </a>
-                <?php endif; ?>
+                <a class="btn btn--sand" href="<?php echo esc_url( $cta_primary_url ); ?>">
+                    <?php echo esc_html( $cta_primary_label ); ?>
+                </a>
             </div>
         <?php endif; ?>
     </div>
 
     <div class="hero-video__scroll-indicator" aria-hidden="true">
         <span class="hero-video__scroll-label"><?php echo esc_html( $scroll_label ); ?></span>
-        <svg class="hero-video__scroll-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" focusable="false">
-            <path d="M8 2v12M2 9l6 6 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+        <span class="hero-video__scroll-btn">
+            <svg class="hero-video__scroll-icon" width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true" focusable="false">
+                <path d="M8 2v12M2 9l6 6 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </span>
     </div>
 
 </section>
