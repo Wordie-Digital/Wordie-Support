@@ -1,0 +1,70 @@
+/* ==========================================================================
+   CTA Section — Editor Preview Styles
+   ========================================================================== */
+
+.cta-section {
+    padding: 3rem 2rem;
+    background-color: #1c1c1c;
+    text-align: center;
+    color: #ffffff;
+}
+
+.cta-section__inner {
+    max-width: 640px;
+    margin-inline: auto;
+}
+
+.cta-section__heading {
+    font-size: 2rem;
+    font-weight: 400;
+    color: #ffffff;
+    margin-bottom: 0.75rem;
+    line-height: 1.2;
+}
+
+.cta-section__subheading {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.75);
+    margin-bottom: 1.5rem;
+}
+
+.cta-section__btn {
+    display: inline-block;
+    padding: 0.75rem 2rem;
+    background-color: #ffffff;
+    color: #1c1c1c;
+    font-weight: 500;
+    text-decoration: none;
+    border: 1px solid #ffffff;
+    cursor: pointer;
+    font-size: 0.9375rem;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.cta-section__btn:hover {
+    background-color: transparent;
+    color: #ffffff;
+}
+
+.cta-section__btn--disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.cta-section__link-missing {
+    font-size: 0.75rem;
+    font-style: italic;
+    margin-left: 0.5rem;
+    color: #e88;
+}
+
+.cta-section__placeholder {
+    color: rgba(255, 255, 255, 0.4);
+    font-style: italic;
+    font-size: 0.875rem;
+    border: 1px dashed rgba(255, 255, 255, 0.2);
+    padding: 0.5rem 1rem;
+    display: inline-block;
+    border-radius: 2px;
+    margin-bottom: 1rem;
+}

@@ -1,0 +1,89 @@
+{
+  "key": "group_services_section",
+  "title": "Services Section",
+  "fields": [
+    {
+      "key": "field_services_section_label",
+      "label": "Section Label",
+      "name": "section_label",
+      "type": "text",
+      "instructions": "Small uppercase label (e.g. \"WHAT WE DO\")",
+      "required": 0,
+      "default_value": "WHAT WE DO"
+    },
+    {
+      "key": "field_services_heading",
+      "label": "Heading",
+      "name": "heading",
+      "type": "text",
+      "required": 1,
+      "default_value": "Our Services"
+    },
+    {
+      "key": "field_services_cards",
+      "label": "Service Cards",
+      "name": "service_cards",
+      "type": "repeater",
+      "instructions": "Add up to 3 service cards",
+      "required": 1,
+      "min": 1,
+      "max": 3,
+      "layout": "block",
+      "sub_fields": [
+        {
+          "key": "field_services_card_image",
+          "label": "Image",
+          "name": "image",
+          "type": "image",
+          "return_format": "array",
+          "preview_size": "medium",
+          "required": 0
+        },
+        {
+          "key": "field_services_card_title",
+          "label": "Service Title",
+          "name": "title",
+          "type": "text",
+          "required": 1
+        },
+        {
+          "key": "field_services_card_description",
+          "label": "Service Description",
+          "name": "description",
+          "type": "textarea",
+          "rows": 3,
+          "required": 0
+        },
+        {
+          "key": "field_services_card_link_label",
+          "label": "Link Label",
+          "name": "link_label",
+          "type": "text",
+          "required": 0,
+          "default_value": "Learn more"
+        },
+        {
+          "key": "field_services_card_link_url",
+          "label": "Link URL",
+          "name": "link_url",
+          "type": "url",
+          "required": 0
+        }
+      ]
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "block",
+        "operator": "==",
+        "value": "acf/services-section"
+      }
+    ]
+  ],
+  "menu_order": 2,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "active": true
+}

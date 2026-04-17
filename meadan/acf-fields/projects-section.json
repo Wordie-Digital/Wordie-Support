@@ -1,0 +1,69 @@
+{
+  "key": "group_projects_section",
+  "title": "Projects Section",
+  "fields": [
+    {
+      "key": "field_projects_section_label",
+      "label": "Section Label",
+      "name": "section_label",
+      "type": "text",
+      "required": 0,
+      "default_value": "PORTFOLIO"
+    },
+    {
+      "key": "field_projects_heading",
+      "label": "Heading",
+      "name": "heading",
+      "type": "text",
+      "required": 1,
+      "default_value": "Our Projects"
+    },
+    {
+      "key": "field_projects_description",
+      "label": "Description",
+      "name": "description",
+      "type": "textarea",
+      "required": 0,
+      "rows": 3
+    },
+    {
+      "key": "field_projects_count",
+      "label": "Number of Projects to Show",
+      "name": "count",
+      "type": "number",
+      "instructions": "How many project cards to display per page",
+      "default_value": 3,
+      "min": 1,
+      "max": 9
+    },
+    {
+      "key": "field_projects_cta_label",
+      "label": "View All CTA Label",
+      "name": "cta_label",
+      "type": "text",
+      "required": 0,
+      "default_value": "View All Projects"
+    },
+    {
+      "key": "field_projects_cta_url",
+      "label": "View All CTA URL",
+      "name": "cta_url",
+      "type": "url",
+      "required": 0
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "block",
+        "operator": "==",
+        "value": "acf/projects-section"
+      }
+    ]
+  ],
+  "menu_order": 4,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "active": true
+}

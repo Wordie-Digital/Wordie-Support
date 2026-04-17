@@ -1,0 +1,18 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "acf/display-home",
+  "title": "Display Home",
+  "description": "Two-column section promoting the display home with label, title, description, CTA, and 3:2 image.",
+  "category": "meadan",
+  "icon": "admin-home",
+  "keywords": ["display", "home", "meadan"],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "template.php"
+  },
+  "supports": {
+    "anchor": true,
+    "align": false
+  }
+}

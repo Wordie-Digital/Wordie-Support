@@ -1,0 +1,131 @@
+/* ==========================================================================
+   Block: About Section
+   File:  assets/css/blocks/about-section.css
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Section shell
+   -------------------------------------------------------------------------- */
+.about-section {
+    background-color: var(--color-white);
+    padding-block: var(--space-xl);
+    padding-inline: var(--gutter);
+}
+
+/* --------------------------------------------------------------------------
+   2. Two-column inner grid
+   -------------------------------------------------------------------------- */
+.about-section__inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+    max-width: var(--max-width);
+    margin-inline: auto;
+}
+
+/* Single-column fallback when no image */
+.about-section--no-image .about-section__inner {
+    grid-template-columns: 1fr;
+    max-width: 760px;
+}
+
+/* --------------------------------------------------------------------------
+   3. Content column
+   -------------------------------------------------------------------------- */
+.about-section__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+
+/* --------------------------------------------------------------------------
+   4. Heading
+   -------------------------------------------------------------------------- */
+.about-section__heading {
+    font-family: var(--font-heading);
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
+    font-weight: var(--weight-regular);
+    line-height: 1.15;
+    color: var(--color-dark);
+}
+
+/* --------------------------------------------------------------------------
+   5. Body text
+   -------------------------------------------------------------------------- */
+.about-section__text {
+    font-size: var(--text-sm);
+    font-weight: var(--weight-light);
+    color: #444;
+    line-height: 1.75;
+}
+
+.about-section__text p {
+    margin-bottom: 1em;
+}
+
+.about-section__text p:last-child {
+    margin-bottom: 0;
+}
+
+.about-section__text strong {
+    font-weight: var(--weight-medium);
+    color: var(--color-dark);
+}
+
+/* --------------------------------------------------------------------------
+   6. Image column
+   -------------------------------------------------------------------------- */
+.about-section__figure {
+    overflow: hidden;
+    border-radius: 2px;
+    margin: 0;
+}
+
+.about-section__image {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 2px;
+    object-fit: cover;
+}
+
+/* --------------------------------------------------------------------------
+   7. Placeholder (editor)
+   -------------------------------------------------------------------------- */
+.about-section__figure--placeholder {
+    aspect-ratio: 4 / 3;
+    background-color: var(--color-sand);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2px;
+}
+
+.about-section__placeholder-label {
+    font-size: 0.75rem;
+    color: #9a8f87;
+    font-style: italic;
+    text-align: center;
+    padding: 1rem;
+}
+
+/* --------------------------------------------------------------------------
+   8. Responsive — stack on mobile
+   -------------------------------------------------------------------------- */
+@media (max-width: 900px) {
+    .about-section__inner {
+        grid-template-columns: 1fr;
+    }
+
+    /* Swap order — image first on mobile */
+    .about-section__figure {
+        order: -1;
+    }
+}
+
+@media (max-width: 480px) {
+    .about-section {
+        padding-block: var(--space-lg);
+    }
+}

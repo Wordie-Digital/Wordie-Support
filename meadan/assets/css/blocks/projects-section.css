@@ -1,0 +1,162 @@
+/* ==========================================================================
+   Block: Projects Section
+   Figma: white bg, section heading + subheading, 3-col project card grid.
+          Project Card: 7:8 image, title Geist Medium, "Discover More" link
+   ========================================================================== */
+
+.projects-section {
+    background-color: var(--color-white);
+    padding: var(--space-80) var(--gutter);
+}
+
+.projects-section__header {
+    max-width: var(--max-width);
+    margin-inline: auto;
+    margin-bottom: var(--space-40);
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-40);
+    flex-wrap: wrap;
+}
+
+.projects-section__label {
+    font-family: var(--font-body);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-medium);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-dark);
+    opacity: 0.65;
+    margin-bottom: var(--space-12);
+}
+
+.projects-section__heading {
+    font-family: var(--font-heading);
+    font-size: clamp(1.75rem, 4vw, var(--text-xl));
+    font-weight: var(--weight-regular);
+    line-height: 1.15;
+    color: var(--color-dark);
+}
+
+.projects-section__description {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-light);
+    line-height: 1.39;
+    opacity: 0.75;
+    max-width: 600px;
+    margin-top: var(--space-12);
+}
+
+/* Grid */
+.projects-section__grid {
+    max-width: var(--max-width);
+    margin-inline: auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-40);
+}
+
+/* Footer CTA */
+.projects-section__footer {
+    max-width: var(--max-width);
+    margin-inline: auto;
+    margin-top: var(--space-40);
+    display: flex;
+    justify-content: center;
+}
+
+/* ── Project Card — Figma node 4490:8336 ───────────────────────────────── */
+.project-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-32);
+}
+
+/* Image — 7:8 aspect ratio per Figma (280×320) */
+.project-card__image-link {
+    display: block;
+    overflow: hidden;
+    aspect-ratio: 7 / 8;
+}
+
+.project-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.5s ease;
+}
+
+.project-card:hover .project-card__image {
+    transform: scale(1.03);
+}
+
+.project-card__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-12);
+}
+
+.project-card__title {
+    font-family: var(--font-body);
+    font-size: 1.5rem; /* 24px — Geist Medium H4 */
+    font-weight: var(--weight-medium);
+    line-height: 1.1;
+    color: var(--color-dark);
+}
+
+.project-card__title a {
+    color: var(--color-dark);
+    transition: opacity 0.2s;
+}
+
+.project-card__title a:hover { opacity: 0.7; }
+
+.project-card__excerpt {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-light);
+    line-height: 1.39;
+    opacity: 0.75;
+}
+
+/* "Discover More" border-bottom link */
+.project-card__link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-4);
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-light);
+    letter-spacing: 0.01em;
+    color: var(--color-dark);
+    border-bottom: 1px solid var(--color-dark);
+    padding-bottom: 2px;
+    align-self: flex-start;
+    transition: opacity 0.2s ease;
+}
+
+.project-card__link:hover { opacity: 0.65; }
+
+@media (max-width: 1024px) {
+    .projects-section__grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .projects-section {
+        padding: var(--space-60) var(--gutter-mobile);
+    }
+
+    .projects-section__header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .projects-section__grid {
+        grid-template-columns: 1fr;
+    }
+}

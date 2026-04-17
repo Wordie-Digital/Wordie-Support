@@ -1,0 +1,85 @@
+{
+  "key": "group_image_carousel",
+  "title": "Image Carousel",
+  "fields": [
+    {
+      "key": "field_carousel_slides",
+      "label": "Slides",
+      "name": "slides",
+      "type": "repeater",
+      "instructions": "Add carousel slides (images with optional caption). Min 2, max 8.",
+      "required": 1,
+      "min": 2,
+      "max": 8,
+      "layout": "block",
+      "sub_fields": [
+        {
+          "key": "field_carousel_slide_image",
+          "label": "Background Image",
+          "name": "image",
+          "type": "image",
+          "return_format": "array",
+          "preview_size": "large",
+          "required": 1
+        },
+        {
+          "key": "field_carousel_slide_caption",
+          "label": "Caption",
+          "name": "caption",
+          "type": "text",
+          "required": 0
+        },
+        {
+          "key": "field_carousel_slide_alt",
+          "label": "Alt Text",
+          "name": "alt",
+          "type": "text",
+          "instructions": "Describe the image for screen readers",
+          "required": 0
+        }
+      ]
+    },
+    {
+      "key": "field_carousel_autoplay",
+      "label": "Autoplay",
+      "name": "autoplay",
+      "type": "true_false",
+      "instructions": "Automatically advance slides",
+      "default_value": 0,
+      "ui": 1
+    },
+    {
+      "key": "field_carousel_autoplay_speed",
+      "label": "Autoplay Speed (ms)",
+      "name": "autoplay_speed",
+      "type": "number",
+      "instructions": "Milliseconds between slides (e.g. 4000)",
+      "default_value": 4000,
+      "min": 1000,
+      "max": 10000,
+      "conditional_logic": [
+        [
+          {
+            "field": "field_carousel_autoplay",
+            "operator": "==",
+            "value": "1"
+          }
+        ]
+      ]
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "block",
+        "operator": "==",
+        "value": "acf/image-carousel"
+      }
+    ]
+  ],
+  "menu_order": 3,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "active": true
+}

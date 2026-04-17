@@ -1,0 +1,89 @@
+[
+  {
+    "key": "group_about_section",
+    "title": "About Section",
+    "fields": [
+      {
+        "key": "field_about_heading",
+        "label": "Heading",
+        "name": "heading",
+        "type": "text",
+        "instructions": "",
+        "required": 1,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "",
+        "placeholder": "",
+        "prepend": "",
+        "append": "",
+        "maxlength": ""
+      },
+      {
+        "key": "field_about_text",
+        "label": "Body Text",
+        "name": "text",
+        "type": "wysiwyg",
+        "instructions": "Use paragraph and bold formatting only. No headings.",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "",
+        "tabs": "visual",
+        "toolbar": "basic",
+        "media_upload": 0,
+        "delay": 0
+      },
+      {
+        "key": "field_about_image",
+        "label": "Section Image",
+        "name": "image",
+        "type": "image",
+        "instructions": "Recommended: 800\u00d7600px. Displays beside body text.",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "return_format": "array",
+        "preview_size": "medium",
+        "library": "all",
+        "min_width": "",
+        "min_height": "",
+        "min_size": "",
+        "max_width": "",
+        "max_height": "",
+        "max_size": "",
+        "mime_types": ""
+      }
+    ],
+    "location": [
+      [
+        {
+          "param": "block",
+          "operator": "==",
+          "value": "acf\/about-section"
+        }
+      ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Fields for the About Section block.",
+    "show_in_rest": 0,
+    "modified": 1712649600
+  }
+]

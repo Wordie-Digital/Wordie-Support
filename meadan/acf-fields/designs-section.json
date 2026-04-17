@@ -1,0 +1,68 @@
+{
+  "key": "group_designs_section",
+  "title": "Designs Section",
+  "fields": [
+    {
+      "key": "field_designs_section_label",
+      "label": "Section Label",
+      "name": "section_label",
+      "type": "text",
+      "required": 0,
+      "default_value": "HOME DESIGNS"
+    },
+    {
+      "key": "field_designs_heading",
+      "label": "Heading",
+      "name": "heading",
+      "type": "text",
+      "required": 1,
+      "default_value": "Homes Designed for the Way You Live"
+    },
+    {
+      "key": "field_designs_description",
+      "label": "Description",
+      "name": "description",
+      "type": "textarea",
+      "required": 0,
+      "rows": 3
+    },
+    {
+      "key": "field_designs_count",
+      "label": "Number of Designs to Show",
+      "name": "count",
+      "type": "number",
+      "default_value": 2,
+      "min": 1,
+      "max": 6
+    },
+    {
+      "key": "field_designs_cta_label",
+      "label": "View All CTA Label",
+      "name": "cta_label",
+      "type": "text",
+      "required": 0,
+      "default_value": "View All Designs"
+    },
+    {
+      "key": "field_designs_cta_url",
+      "label": "View All CTA URL",
+      "name": "cta_url",
+      "type": "url",
+      "required": 0
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "block",
+        "operator": "==",
+        "value": "acf/designs-section"
+      }
+    ]
+  ],
+  "menu_order": 6,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "active": true
+}

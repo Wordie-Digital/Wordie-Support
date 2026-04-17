@@ -1,0 +1,124 @@
+[
+  {
+    "key": "group_hero_banner",
+    "title": "Hero Banner",
+    "fields": [
+      {
+        "key": "field_hero_banner_heading",
+        "label": "Heading",
+        "name": "heading",
+        "type": "text",
+        "instructions": "Main hero heading. Keep under 12 words.",
+        "required": 1,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "",
+        "placeholder": "",
+        "prepend": "",
+        "append": "",
+        "maxlength": ""
+      },
+      {
+        "key": "field_hero_banner_subheading",
+        "label": "Subheading",
+        "name": "subheading",
+        "type": "text",
+        "instructions": "Supporting text below heading.",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "",
+        "placeholder": "",
+        "prepend": "",
+        "append": "",
+        "maxlength": ""
+      },
+      {
+        "key": "field_hero_banner_bg_image",
+        "label": "Background Image",
+        "name": "background_image",
+        "type": "image",
+        "instructions": "Recommended: 1920\u00d71080px, JPG\/WebP. This image spans full screen.",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "return_format": "array",
+        "preview_size": "medium",
+        "library": "all",
+        "min_width": "",
+        "min_height": "",
+        "min_size": "",
+        "max_width": "",
+        "max_height": "",
+        "max_size": "",
+        "mime_types": ""
+      },
+      {
+        "key": "field_hero_banner_cta_text",
+        "label": "CTA Button Text",
+        "name": "cta_text",
+        "type": "text",
+        "instructions": "e.g. 'View Our Work'",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "50",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "",
+        "placeholder": "View Our Work",
+        "prepend": "",
+        "append": "",
+        "maxlength": ""
+      },
+      {
+        "key": "field_hero_banner_cta_link",
+        "label": "CTA Button Link",
+        "name": "cta_link",
+        "type": "url",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "50",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "",
+        "placeholder": "https://"
+      }
+    ],
+    "location": [
+      [
+        {
+          "param": "block",
+          "operator": "==",
+          "value": "acf\/hero-banner"
+        }
+      ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Fields for the Hero Banner block.",
+    "show_in_rest": 0,
+    "modified": 1712649600
+  }
+]

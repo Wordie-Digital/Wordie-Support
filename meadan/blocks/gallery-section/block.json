@@ -1,0 +1,18 @@
+{
+  "name": "acf/gallery-section",
+  "title": "Gallery",
+  "description": "Responsive image gallery grid with optional captions shown on hover.",
+  "category": "meadan",
+  "icon": "images-alt2",
+  "keywords": ["gallery", "images", "grid", "photos", "meadan"],
+  "acf": {
+    "mode": "edit",
+    "renderTemplate": "blocks/gallery-section/template.php"
+  },
+  "supports": {
+    "align": false,
+    "multiple": true,
+    "jsx": false,
+    "anchor": true
+  }
+}

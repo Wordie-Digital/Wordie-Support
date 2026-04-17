@@ -1,0 +1,53 @@
+{
+  "key": "group_contact_section",
+  "title": "Contact Section",
+  "fields": [
+    {
+      "key": "field_contact_section_label",
+      "label": "Section Label",
+      "name": "section_label",
+      "type": "text",
+      "required": 0,
+      "default_value": "GET IN TOUCH"
+    },
+    {
+      "key": "field_contact_heading",
+      "label": "Heading",
+      "name": "heading",
+      "type": "text",
+      "required": 1,
+      "placeholder": "Let's Build Something Together"
+    },
+    {
+      "key": "field_contact_description",
+      "label": "Description",
+      "name": "description",
+      "type": "textarea",
+      "required": 0,
+      "rows": 3
+    },
+    {
+      "key": "field_contact_form_shortcode",
+      "label": "Contact Form Shortcode",
+      "name": "form_shortcode",
+      "type": "text",
+      "instructions": "Paste the Contact Form 7 shortcode here (e.g. [contact-form-7 id=\"123\"])",
+      "required": 0,
+      "placeholder": "[contact-form-7 id=\"123\" title=\"Contact Form\"]"
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "block",
+        "operator": "==",
+        "value": "acf/contact-section"
+      }
+    ]
+  ],
+  "menu_order": 8,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "active": true
+}

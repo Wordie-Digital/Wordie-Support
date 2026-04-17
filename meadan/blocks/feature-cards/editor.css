@@ -1,0 +1,80 @@
+/* ==========================================================================
+   Feature Cards — Editor Preview Styles
+   ========================================================================== */
+
+.feature-cards {
+    padding: 2rem;
+    background-color: #f0ebdf;
+}
+
+.feature-cards__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
+.feature-card {
+    background-color: #ffffff;
+    border-radius: 2px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.feature-card__image-wrap {
+    aspect-ratio: 4 / 3;
+    background-color: #e6dfd7;
+    overflow: hidden;
+}
+
+.feature-card__image-wrap--placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #b0a89e;
+    font-size: 2rem;
+}
+
+.feature-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.feature-card__body {
+    padding: 1.25rem;
+}
+
+.feature-card__title {
+    font-size: 1.125rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: #1c1c1c;
+}
+
+.feature-card__title--placeholder {
+    color: #999;
+    background-color: #e9e9e9;
+    height: 1em;
+    border-radius: 2px;
+}
+
+.feature-card__description {
+    font-size: 0.875rem;
+    color: #555;
+    line-height: 1.5;
+}
+
+.feature-card__description--placeholder {
+    color: #aaa;
+    font-style: italic;
+    font-size: 0.75rem;
+}
+
+.feature-cards__editor-notice {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.75rem;
+    color: #888;
+    font-style: italic;
+}

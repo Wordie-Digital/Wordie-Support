@@ -1,0 +1,18 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "acf/projects-section",
+  "title": "Projects Section",
+  "description": "Dynamic project feed from Project CPT with section header and prev/next slider navigation.",
+  "category": "meadan",
+  "icon": "portfolio",
+  "keywords": ["projects", "portfolio", "meadan"],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "template.php"
+  },
+  "supports": {
+    "anchor": true,
+    "align": false
+  }
+}

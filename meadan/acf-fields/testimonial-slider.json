@@ -1,0 +1,110 @@
+[
+  {
+    "key": "group_testimonial_slider",
+    "title": "Testimonial Slider",
+    "fields": [
+      {
+        "key": "field_testimonial_items",
+        "label": "Testimonials",
+        "name": "testimonials",
+        "type": "repeater",
+        "instructions": "Add at least 2 testimonials for the slider to work correctly.",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "collapsed": "field_testimonial_author",
+        "min": 1,
+        "max": 10,
+        "layout": "block",
+        "button_label": "Add Testimonial",
+        "sub_fields": [
+          {
+            "key": "field_testimonial_quote",
+            "label": "Quote",
+            "name": "quote",
+            "type": "textarea",
+            "instructions": "Do not include quotation marks \u2014 they are added automatically.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+              "width": "",
+              "class": "",
+              "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 4,
+            "new_lines": "br"
+          },
+          {
+            "key": "field_testimonial_author",
+            "label": "Author Name",
+            "name": "author_name",
+            "type": "text",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+              "width": "50",
+              "class": "",
+              "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+          },
+          {
+            "key": "field_testimonial_author_image",
+            "label": "Author Photo",
+            "name": "author_image",
+            "type": "image",
+            "instructions": "Square crop recommended, min 80\u00d780px.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+              "width": "50",
+              "class": "",
+              "id": ""
+            },
+            "return_format": "array",
+            "preview_size": "thumbnail",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": ""
+          }
+        ]
+      }
+    ],
+    "location": [
+      [
+        {
+          "param": "block",
+          "operator": "==",
+          "value": "acf\/testimonial-slider"
+        }
+      ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Fields for the Testimonial Slider block.",
+    "show_in_rest": 0,
+    "modified": 1712649600
+  }
+]

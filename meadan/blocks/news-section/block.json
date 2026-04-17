@@ -1,0 +1,18 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "acf/news-section",
+  "title": "News Section",
+  "description": "Dynamic news feed from WordPress Posts with section header and prev/next navigation.",
+  "category": "meadan",
+  "icon": "admin-post",
+  "keywords": ["news", "blog", "articles", "meadan"],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "template.php"
+  },
+  "supports": {
+    "anchor": true,
+    "align": false
+  }
+}

@@ -1,0 +1,92 @@
+/* ==========================================================================
+   Block: Image Carousel
+   ========================================================================== */
+
+.image-carousel {
+    position: relative;
+    width: 100%;
+    height: 700px;
+    overflow: hidden;
+}
+
+.image-carousel__track {
+    display: flex;
+    height: 100%;
+    transition: transform 0.5s ease;
+}
+
+.image-carousel__slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+}
+
+.image-carousel__slide--active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.image-carousel__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.image-carousel__caption {
+    position: absolute;
+    bottom: var(--space-60);
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--color-white);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-light);
+    text-align: center;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+    white-space: nowrap;
+}
+
+.image-carousel__dots {
+    position: absolute;
+    bottom: var(--space-28);
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: var(--space-6);
+    z-index: 10;
+}
+
+.image-carousel__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--color-grey);
+    border: none;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    cursor: pointer;
+}
+
+.image-carousel__dot--active,
+.image-carousel__dot:hover {
+    background-color: var(--color-white);
+    transform: scale(1.25);
+}
+
+.image-carousel__dot:focus-visible {
+    outline: 2px solid var(--color-white);
+    outline-offset: 3px;
+}
+
+@media (max-width: 768px) {
+    .image-carousel {
+        height: 450px;
+    }
+
+    .image-carousel__caption {
+        white-space: normal;
+        width: 90%;
+        bottom: var(--space-40);
+    }
+}

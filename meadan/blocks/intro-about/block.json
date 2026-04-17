@@ -1,0 +1,18 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "acf/intro-about",
+  "title": "Intro / About",
+  "description": "Centred section with section label, heading, body copy, and dual CTA buttons.",
+  "category": "meadan",
+  "icon": "align-center",
+  "keywords": ["intro", "about", "meadan"],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "template.php"
+  },
+  "supports": {
+    "anchor": true,
+    "align": false
+  }
+}

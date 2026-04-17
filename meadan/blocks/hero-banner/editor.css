@@ -1,0 +1,70 @@
+/* ==========================================================================
+   Hero Banner — Editor Preview Styles
+   Loaded only in the Gutenberg block editor canvas.
+   ========================================================================== */
+
+.hero-banner {
+    position: relative;
+    min-height: 360px;
+    display: flex;
+    align-items: center;
+    background-color: #1c1c1c;
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+}
+
+.hero-banner--no-image {
+    background: linear-gradient(135deg, #1c1c1c 0%, #3a3a3a 100%);
+}
+
+.hero-banner__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    pointer-events: none;
+}
+
+.hero-banner__inner {
+    position: relative;
+    z-index: 1;
+    padding: 3rem 2rem;
+    color: #ffffff;
+    max-width: 760px;
+}
+
+.hero-banner__heading {
+    font-size: 2.5rem;
+    font-weight: 400;
+    color: #ffffff;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+}
+
+.hero-banner__subheading {
+    font-size: 1.125rem;
+    color: rgba(255, 255, 255, 0.85);
+    margin-bottom: 1.5rem;
+}
+
+.hero-banner__cta {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background-color: #ffffff;
+    color: #1c1c1c;
+    font-weight: 500;
+    text-decoration: none;
+    border: 1px solid #ffffff;
+    cursor: pointer;
+}
+
+.hero-banner__placeholder-label {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.875rem;
+    font-style: italic;
+    border: 1px dashed rgba(255, 255, 255, 0.3);
+    padding: 0.5rem 1rem;
+    display: inline-block;
+    border-radius: 2px;
+    margin-bottom: 1rem;
+}

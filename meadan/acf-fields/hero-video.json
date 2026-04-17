@@ -1,0 +1,103 @@
+{
+  "key": "group_hero_video",
+  "title": "Hero Video",
+  "fields": [
+    {
+      "key": "field_hero_video_subtitle",
+      "label": "Subtitle",
+      "name": "subtitle",
+      "type": "text",
+      "instructions": "Short label above the heading (e.g. \"Custom\")",
+      "required": 0,
+      "placeholder": "Custom"
+    },
+    {
+      "key": "field_hero_video_title",
+      "label": "Title",
+      "name": "title",
+      "type": "text",
+      "instructions": "Main heading displayed over the video",
+      "required": 1,
+      "placeholder": "Made by Meadan"
+    },
+    {
+      "key": "field_hero_video_description",
+      "label": "Description",
+      "name": "description",
+      "type": "textarea",
+      "instructions": "Short paragraph below the heading",
+      "required": 0,
+      "rows": 3
+    },
+    {
+      "key": "field_hero_video_video_url",
+      "label": "Background Video URL",
+      "name": "video_url",
+      "type": "url",
+      "instructions": "MP4 video URL for the full-width background",
+      "required": 1
+    },
+    {
+      "key": "field_hero_video_video_poster",
+      "label": "Video Poster Image",
+      "name": "video_poster",
+      "type": "image",
+      "instructions": "Fallback image shown while the video loads",
+      "required": 0,
+      "return_format": "array",
+      "preview_size": "medium"
+    },
+    {
+      "key": "field_hero_video_cta_primary_label",
+      "label": "Primary CTA Label",
+      "name": "cta_primary_label",
+      "type": "text",
+      "required": 0,
+      "placeholder": "View Our Work"
+    },
+    {
+      "key": "field_hero_video_cta_primary_url",
+      "label": "Primary CTA URL",
+      "name": "cta_primary_url",
+      "type": "url",
+      "required": 0
+    },
+    {
+      "key": "field_hero_video_cta_secondary_label",
+      "label": "Secondary CTA Label",
+      "name": "cta_secondary_label",
+      "type": "text",
+      "required": 0,
+      "placeholder": "Contact Us"
+    },
+    {
+      "key": "field_hero_video_cta_secondary_url",
+      "label": "Secondary CTA URL",
+      "name": "cta_secondary_url",
+      "type": "url",
+      "required": 0
+    },
+    {
+      "key": "field_hero_video_scroll_label",
+      "label": "Scroll Indicator Label",
+      "name": "scroll_label",
+      "type": "text",
+      "required": 0,
+      "default_value": "Learn more"
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "block",
+        "operator": "==",
+        "value": "acf/hero-video"
+      }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "active": true
+}

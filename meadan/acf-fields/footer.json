@@ -1,0 +1,145 @@
+[
+  {
+    "key": "group_footer_settings",
+    "title": "Footer Settings",
+    "fields": [
+      {
+        "key": "field_footer_copyright",
+        "label": "Copyright Text",
+        "name": "copyright_text",
+        "type": "text",
+        "instructions": "e.g. '\u00a9 2025 Meadan Homes. All rights reserved.'",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "",
+        "placeholder": "\u00a9 2025 Meadan Homes. All rights reserved.",
+        "prepend": "",
+        "append": "",
+        "maxlength": ""
+      },
+      {
+        "key": "field_footer_logo",
+        "label": "Footer Logo",
+        "name": "logo_image",
+        "type": "image",
+        "instructions": "Recommend white\/light version of logo for dark backgrounds.",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "return_format": "array",
+        "preview_size": "medium",
+        "library": "all",
+        "min_width": "",
+        "min_height": "",
+        "min_size": "",
+        "max_width": "",
+        "max_height": "",
+        "max_size": "",
+        "mime_types": ""
+      },
+      {
+        "key": "field_footer_social_links",
+        "label": "Social Links",
+        "name": "social_links",
+        "type": "repeater",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "collapsed": "field_footer_social_platform",
+        "min": 0,
+        "max": 6,
+        "layout": "table",
+        "button_label": "Add Social Link",
+        "sub_fields": [
+          {
+            "key": "field_footer_social_platform",
+            "label": "Platform Name",
+            "name": "platform",
+            "type": "text",
+            "instructions": "e.g. Instagram, Facebook",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+              "width": "34",
+              "class": "",
+              "id": ""
+            },
+            "default_value": "",
+            "placeholder": "Instagram",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+          },
+          {
+            "key": "field_footer_social_url",
+            "label": "URL",
+            "name": "url",
+            "type": "url",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+              "width": "33",
+              "class": "",
+              "id": ""
+            },
+            "default_value": "",
+            "placeholder": "https://"
+          },
+          {
+            "key": "field_footer_social_icon",
+            "label": "Icon Class",
+            "name": "icon",
+            "type": "text",
+            "instructions": "Dashicon or custom class e.g. 'dashicons-instagram'",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+              "width": "33",
+              "class": "",
+              "id": ""
+            },
+            "default_value": "",
+            "placeholder": "dashicons-instagram",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+          }
+        ]
+      }
+    ],
+    "location": [
+      [
+        {
+          "param": "options_page",
+          "operator": "==",
+          "value": "footer-settings"
+        }
+      ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Footer settings — logo, social links, copyright text.",
+    "show_in_rest": 0,
+    "modified": 1712649600
+  }
+]

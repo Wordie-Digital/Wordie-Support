@@ -1,0 +1,18 @@
+{
+  "name": "acf/hero-banner",
+  "title": "Hero Banner",
+  "description": "Full-viewport hero with background image, heading, subheading and CTA button.",
+  "category": "meadan",
+  "icon": "video-alt3",
+  "keywords": ["hero", "banner", "header", "meadan"],
+  "acf": {
+    "mode": "edit",
+    "renderTemplate": "blocks/hero-banner/template.php"
+  },
+  "supports": {
+    "align": false,
+    "multiple": true,
+    "jsx": false,
+    "anchor": true
+  }
+}

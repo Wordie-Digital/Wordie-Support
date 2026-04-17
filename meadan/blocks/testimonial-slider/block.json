@@ -1,0 +1,18 @@
+{
+  "name": "acf/testimonial-slider",
+  "title": "Testimonial Slider",
+  "description": "Auto-advancing slider of customer testimonials with author photo.",
+  "category": "meadan",
+  "icon": "format-quote",
+  "keywords": ["testimonial", "slider", "quote", "review", "meadan"],
+  "acf": {
+    "mode": "edit",
+    "renderTemplate": "blocks/testimonial-slider/template.php"
+  },
+  "supports": {
+    "align": false,
+    "multiple": true,
+    "jsx": false,
+    "anchor": true
+  }
+}

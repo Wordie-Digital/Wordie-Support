@@ -1,0 +1,156 @@
+/* ==========================================================================
+   Meadan Homes — editor.css
+   Loaded via add_editor_style() + enqueue_block_editor_assets.
+   Applies only inside the Gutenberg block editor canvas.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Editor Canvas Tokens (mirror main.css but scoped to editor wrapper)
+   -------------------------------------------------------------------------- */
+.editor-styles-wrapper {
+    --color-dark:       #1c1c1c;
+    --color-sand:       #e6dfd7;
+    --color-sand-light: #f0ebdf;
+    --color-white:      #ffffff;
+    --color-grey:       #d9d9d9;
+    --font-body:        'Geist', system-ui, sans-serif;
+    --font-heading:     'Freight Neo Pro', Georgia, serif;
+    --max-width:        1320px;
+}
+
+/* --------------------------------------------------------------------------
+   2. Editor Body / Base
+   -------------------------------------------------------------------------- */
+.editor-styles-wrapper {
+    font-family: var(--font-body) !important;
+    color: var(--color-dark);
+    font-size: 1rem;
+    line-height: 1.6;
+    background-color: var(--color-white);
+}
+
+/* --------------------------------------------------------------------------
+   3. Editor Headings
+   -------------------------------------------------------------------------- */
+.editor-styles-wrapper h1,
+.editor-styles-wrapper h2,
+.editor-styles-wrapper h3,
+.editor-styles-wrapper h4,
+.editor-styles-wrapper h5,
+.editor-styles-wrapper h6 {
+    font-family: var(--font-heading);
+    font-weight: 400;
+    line-height: 1.2;
+    color: var(--color-dark);
+}
+
+.editor-styles-wrapper h1 { font-size: clamp(2rem,    5vw, 3rem);   }
+.editor-styles-wrapper h2 { font-size: clamp(1.75rem, 4vw, 2.5rem); }
+.editor-styles-wrapper h3 { font-size: clamp(1.25rem, 3vw, 1.75rem);}
+
+/* --------------------------------------------------------------------------
+   4. Paragraphs & Links
+   -------------------------------------------------------------------------- */
+.editor-styles-wrapper p {
+    line-height: 1.7;
+    margin-bottom: 1em;
+}
+
+.editor-styles-wrapper a {
+    color: var(--color-dark);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   5. Block Placeholder Backgrounds
+   Gives a visual preview colour to ACF block wrappers in the editor
+   when no content has been added yet.
+   -------------------------------------------------------------------------- */
+
+/* Hero Banner — dark with gradient hint */
+.wp-block[data-type="acf/hero-banner"] {
+    min-height: 320px;
+    background: linear-gradient(135deg, #1c1c1c 0%, #3a3a3a 100%);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+/* Feature Cards — sand background */
+.wp-block[data-type="acf/feature-cards"] {
+    background-color: var(--color-sand-light);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+/* About Section — white */
+.wp-block[data-type="acf/about-section"] {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-grey);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+/* Testimonial Slider — sand */
+.wp-block[data-type="acf/testimonial-slider"] {
+    background-color: var(--color-sand-light);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+/* CTA Section — dark */
+.wp-block[data-type="acf/cta-section"] {
+    background-color: var(--color-dark);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+/* Gallery Section — white */
+.wp-block[data-type="acf/gallery-section"] {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-grey);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+/* --------------------------------------------------------------------------
+   6. Block Spacing in Editor
+   Give each block a generous vertical buffer so they don't crowd
+   -------------------------------------------------------------------------- */
+.wp-block[data-type^="acf/"] {
+    margin-block: 0.5rem;
+}
+
+/* --------------------------------------------------------------------------
+   7. Block Category Badge
+   Appears above ACF blocks in the editor sidebar
+   -------------------------------------------------------------------------- */
+.block-editor-block-list__layout .wp-block::before {
+    /* No extra markup needed — handled by Gutenberg */
+}
+
+/* --------------------------------------------------------------------------
+   8. Admin Editor Colours for Placeholder / Notice Messages
+   -------------------------------------------------------------------------- */
+.hero-banner__placeholder-label,
+.feature-cards__editor-notice,
+.gallery-section__editor-notice,
+.testimonial-slider__editor-notice,
+.about-section__placeholder,
+.cta-section__placeholder {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.55);
+    font-style: italic;
+    padding: 0.5rem 0.75rem;
+    border: 1px dashed rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+    display: inline-block;
+}
+
+/* Notices on light-background blocks */
+.feature-cards__editor-notice,
+.gallery-section__editor-notice,
+.about-section__placeholder {
+    color: #888;
+    border-color: #ccc;
+}

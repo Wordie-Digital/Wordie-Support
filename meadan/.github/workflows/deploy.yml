@@ -1,0 +1,229 @@
+name: Deploy to WP Engine
+
+on:
+  push:
+    branches:
+      - main         # → Production
+      - staging      # → Staging
+      - development  # → Development
+
+concurrency:
+  group: deploy-${{ github.ref_name }}
+  cancel-in-progress: true
+
+env:
+  PHP_VERSION: "8.2"
+  NODE_VERSION: "20"
+  THEME_DIR: meadan
+
+jobs:
+  # ---------------------------------------------------------------------------
+  # 1. Lint — PHP syntax + JS
+  # ---------------------------------------------------------------------------
+  lint:
+    name: Lint (PHP + JS)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # -----------------------------------------------------------------------
+      # PHP
+      # -----------------------------------------------------------------------
+      - name: Setup PHP ${{ env.PHP_VERSION }}
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ env.PHP_VERSION }}
+          tools: phpcs, phpstan
+          coverage: none
+
+      - name: Install Composer dependencies (if present)
+        run: |
+          if [ -f composer.json ]; then
+            composer install --no-interaction --prefer-dist --no-progress --quiet
+          else
+            echo "No composer.json found — skipping."
+          fi
+
+      - name: PHP CodeSniffer (WordPress coding standards)
+        run: |
+          phpcs \
+            --standard=WordPress \
+            --extensions=php \
+            --ignore=vendor,node_modules \
+            --report=summary \
+            ${{ env.THEME_DIR }}/ || true
+
+      # -----------------------------------------------------------------------
+      # JavaScript
+      # -----------------------------------------------------------------------
+      - name: Setup Node ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+        continue-on-error: true
+
+      - name: Install Node dependencies (if present)
+        run: |
+          if [ -f package.json ]; then
+            npm ci --prefer-offline --quiet
+          else
+            echo "No package.json found — skipping."
+          fi
+
+      - name: Lint JavaScript files
+        run: |
+          if [ -f .eslintrc.js ] || [ -f .eslintrc.json ] || [ -f .eslintrc.yml ] || [ -f eslint.config.js ] || [ -f eslint.config.mjs ]; then
+            npx eslint "${{ env.THEME_DIR }}/assets/js/**/*.js" --max-warnings=0
+          else
+            echo "No ESLint config found — skipping JS lint."
+          fi
+
+  # ---------------------------------------------------------------------------
+  # 2. Smoke test — confirm required files exist + PHP parses clean
+  # ---------------------------------------------------------------------------
+  smoke-test:
+    name: Smoke Test
+    runs-on: ubuntu-latest
+    needs: lint
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup PHP ${{ env.PHP_VERSION }}
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ env.PHP_VERSION }}
+          coverage: none
+
+      - name: Verify required theme files exist
+        run: |
+          REQUIRED_FILES=(
+            "${{ env.THEME_DIR }}/style.css"
+            "${{ env.THEME_DIR }}/functions.php"
+            "${{ env.THEME_DIR }}/index.php"
+            "${{ env.THEME_DIR }}/header.php"
+            "${{ env.THEME_DIR }}/footer.php"
+            "${{ env.THEME_DIR }}/inc/theme-setup.php"
+            "${{ env.THEME_DIR }}/inc/block-registration.php"
+            "${{ env.THEME_DIR }}/inc/acf-options.php"
+            "${{ env.THEME_DIR }}/assets/css/main.css"
+            "${{ env.THEME_DIR }}/assets/js/testimonial-slider.js"
+          )
+          PASS=true
+          for f in "${REQUIRED_FILES[@]}"; do
+            if [ -f "$f" ]; then
+              echo "  OK  $f"
+            else
+              echo "  MISSING  $f"
+              PASS=false
+            fi
+          done
+          if [ "$PASS" = false ]; then
+            echo ""
+            echo "One or more required theme files are missing. Aborting."
+            exit 1
+          fi
+          echo ""
+          echo "All required files present."
+
+      - name: PHP syntax check (all .php files)
+        run: |
+          ERRORS=0
+          while IFS= read -r -d '' FILE; do
+            if ! php -l "$FILE" > /dev/null 2>&1; then
+              php -l "$FILE"
+              ERRORS=$(( ERRORS + 1 ))
+            fi
+          done < <(find "${{ env.THEME_DIR }}" -name "*.php" -print0)
+          if [ "$ERRORS" -gt 0 ]; then
+            echo "$ERRORS PHP syntax error(s) found. Aborting."
+            exit 1
+          fi
+          echo "PHP syntax OK."
+
+      - name: Verify ACF JSON field groups exist
+        run: |
+          REQUIRED_JSON=(
+            "${{ env.THEME_DIR }}/acf-fields/hero-banner.json"
+            "${{ env.THEME_DIR }}/acf-fields/feature-cards.json"
+            "${{ env.THEME_DIR }}/acf-fields/about-section.json"
+            "${{ env.THEME_DIR }}/acf-fields/testimonial-slider.json"
+            "${{ env.THEME_DIR }}/acf-fields/cta-section.json"
+            "${{ env.THEME_DIR }}/acf-fields/gallery-section.json"
+            "${{ env.THEME_DIR }}/acf-fields/footer.json"
+            "${{ env.THEME_DIR }}/acf-fields/global-options.json"
+          )
+          for f in "${REQUIRED_JSON[@]}"; do
+            if [ ! -f "$f" ]; then
+              echo "MISSING ACF JSON: $f"
+              exit 1
+            fi
+          done
+          echo "All ACF JSON field groups present."
+
+  # ---------------------------------------------------------------------------
+  # 3. Deploy — push to WP Engine Git endpoint
+  # ---------------------------------------------------------------------------
+  deploy:
+    name: Deploy → WP Engine (${{ github.ref_name }})
+    runs-on: ubuntu-latest
+    needs: smoke-test
+
+    steps:
+      - name: Checkout repository (full history)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Resolve WP Engine environment name
+        id: wpe_env
+        run: |
+          if [[ "${{ github.ref_name }}" == "main" ]]; then
+            echo "name=${{ secrets.WPE_ENV_PRODUCTION }}" >> "$GITHUB_OUTPUT"
+          elif [[ "${{ github.ref_name }}" == "staging" ]]; then
+            echo "name=${{ secrets.WPE_ENV_STAGING }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "name=${{ secrets.WPE_ENV_DEVELOPMENT }}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Configure SSH key for WP Engine
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "${{ secrets.WPE_SSH_KEY }}" > ~/.ssh/wpengine_ed25519
+          chmod 600 ~/.ssh/wpengine_ed25519
+          # Add WP Engine Git server to known hosts
+          ssh-keyscan -t rsa git.wpengine.com >> ~/.ssh/known_hosts 2>/dev/null
+          # Tell SSH to use this key for git.wpengine.com
+          cat >> ~/.ssh/config <<'EOF'
+          Host git.wpengine.com
+            IdentityFile ~/.ssh/wpengine_ed25519
+            StrictHostKeyChecking no
+          EOF
+
+      - name: Configure Git identity
+        run: |
+          git config user.email "deploy@meadan.com.au"
+          git config user.name  "Meadan CI"
+
+      - name: Add WP Engine remote
+        run: |
+          git remote remove wpengine 2>/dev/null || true
+          git remote add wpengine \
+            "git@git.wpengine.com:production/${{ steps.wpe_env.outputs.name }}.git"
+
+      - name: Push to WP Engine
+        run: |
+          git push wpengine HEAD:master --force
+
+      - name: Deployment summary
+        run: |
+          echo "========================================"
+          echo " Deployment complete"
+          echo " Branch  : ${{ github.ref_name }}"
+          echo " WPE env : ${{ steps.wpe_env.outputs.name }}"
+          echo " Commit  : ${{ github.sha }}"
+          echo "========================================"

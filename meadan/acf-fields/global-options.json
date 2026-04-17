@@ -1,0 +1,102 @@
+[
+  {
+    "key": "group_global_options",
+    "title": "Global Design",
+    "fields": [
+      {
+        "key": "field_global_site_logo",
+        "label": "Site Logo",
+        "name": "site_logo",
+        "type": "image",
+        "instructions": "Used in site header. SVG or PNG preferred.",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "return_format": "array",
+        "preview_size": "medium",
+        "library": "all",
+        "min_width": "",
+        "min_height": "",
+        "min_size": "",
+        "max_width": "",
+        "max_height": "",
+        "max_size": "",
+        "mime_types": ""
+      },
+      {
+        "key": "field_global_primary_color",
+        "label": "Primary Colour",
+        "name": "primary_color",
+        "type": "color_picker",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "50",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "#1c1c1c",
+        "enable_opacity": 0,
+        "return_format": "string"
+      },
+      {
+        "key": "field_global_secondary_color",
+        "label": "Secondary Colour",
+        "name": "secondary_color",
+        "type": "color_picker",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "50",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "#e6dfd7",
+        "enable_opacity": 0,
+        "return_format": "string"
+      },
+      {
+        "key": "field_global_typography",
+        "label": "Typography",
+        "name": "typography_settings",
+        "type": "message",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "message": "Fonts are set by the developer. Contact your developer to change typefaces.",
+        "new_lines": "wpautop",
+        "esc_html": 0
+      }
+    ],
+    "location": [
+      [
+        {
+          "param": "options_page",
+          "operator": "==",
+          "value": "global-design"
+        }
+      ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Global design settings — logo, brand colours.",
+    "show_in_rest": 0,
+    "modified": 1712649600
+  }
+]

@@ -1,0 +1,74 @@
+{
+  "key": "group_intro_about",
+  "title": "Intro / About",
+  "fields": [
+    {
+      "key": "field_intro_about_section_label",
+      "label": "Section Label",
+      "name": "section_label",
+      "type": "text",
+      "instructions": "Small uppercase label (e.g. \"ABOUT US\")",
+      "required": 0
+    },
+    {
+      "key": "field_intro_about_title",
+      "label": "Heading",
+      "name": "title",
+      "type": "text",
+      "instructions": "Main section heading",
+      "required": 1,
+      "placeholder": "Personalised with Intention"
+    },
+    {
+      "key": "field_intro_about_description",
+      "label": "Description",
+      "name": "description",
+      "type": "textarea",
+      "instructions": "Body copy paragraph",
+      "required": 0,
+      "rows": 5
+    },
+    {
+      "key": "field_intro_about_cta_primary_label",
+      "label": "Primary CTA Label",
+      "name": "cta_primary_label",
+      "type": "text",
+      "required": 0
+    },
+    {
+      "key": "field_intro_about_cta_primary_url",
+      "label": "Primary CTA URL",
+      "name": "cta_primary_url",
+      "type": "url",
+      "required": 0
+    },
+    {
+      "key": "field_intro_about_cta_secondary_label",
+      "label": "Secondary CTA Label",
+      "name": "cta_secondary_label",
+      "type": "text",
+      "required": 0
+    },
+    {
+      "key": "field_intro_about_cta_secondary_url",
+      "label": "Secondary CTA URL",
+      "name": "cta_secondary_url",
+      "type": "url",
+      "required": 0
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "block",
+        "operator": "==",
+        "value": "acf/intro-about"
+      }
+    ]
+  ],
+  "menu_order": 1,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "active": true
+}

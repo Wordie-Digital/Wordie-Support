@@ -1,0 +1,126 @@
+/* ==========================================================================
+   Block: CTA Section
+   File:  assets/css/blocks/cta-section.css
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Section shell
+   -------------------------------------------------------------------------- */
+.cta-section {
+    background-color: var(--color-dark);
+    color: var(--color-white);
+    padding-block: var(--space-xl);
+    padding-inline: var(--gutter);
+    text-align: center;
+}
+
+/* --------------------------------------------------------------------------
+   2. Inner container
+   -------------------------------------------------------------------------- */
+.cta-section__inner {
+    max-width: 640px;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+/* --------------------------------------------------------------------------
+   3. Heading
+   -------------------------------------------------------------------------- */
+.cta-section__heading {
+    font-family: var(--font-heading);
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
+    font-weight: var(--weight-regular);
+    line-height: 1.15;
+    color: var(--color-white);
+}
+
+/* --------------------------------------------------------------------------
+   4. Subheading
+   -------------------------------------------------------------------------- */
+.cta-section__subheading {
+    font-size: var(--text-sm);
+    font-weight: var(--weight-light);
+    color: rgba(255, 255, 255, 0.75);
+    line-height: 1.6;
+    max-width: 40ch;
+}
+
+/* --------------------------------------------------------------------------
+   5. Button
+   -------------------------------------------------------------------------- */
+.cta-section__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.875rem 2.25rem;
+    margin-top: var(--space-sm);
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    letter-spacing: 0.02em;
+    border: 1px solid var(--color-white);
+    color: var(--color-dark);
+    background-color: var(--color-white);
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.25s ease, color 0.25s ease;
+    white-space: nowrap;
+}
+
+.cta-section__btn:hover,
+.cta-section__btn:focus-visible {
+    background-color: transparent;
+    color: var(--color-white);
+}
+
+.cta-section__btn:focus-visible {
+    outline: 2px solid var(--color-white);
+    outline-offset: 3px;
+}
+
+.cta-section__btn--disabled,
+.cta-section__btn.btn--disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* --------------------------------------------------------------------------
+   6. Editor — missing link notice
+   -------------------------------------------------------------------------- */
+.cta-section__link-missing {
+    font-size: 0.75rem;
+    font-style: italic;
+    color: #e88;
+    margin-left: 0.5rem;
+}
+
+/* --------------------------------------------------------------------------
+   7. Placeholder (editor)
+   -------------------------------------------------------------------------- */
+.cta-section__placeholder {
+    color: rgba(255, 255, 255, 0.4);
+    font-style: italic;
+    font-size: 0.875rem;
+    border: 1px dashed rgba(255, 255, 255, 0.2);
+    padding: 0.5rem 1rem;
+    display: inline-block;
+    border-radius: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   8. Responsive
+   -------------------------------------------------------------------------- */
+@media (max-width: 640px) {
+    .cta-section {
+        padding-block: var(--space-lg);
+    }
+
+    .cta-section__btn {
+        width: 100%;
+        justify-content: center;
+    }
+}

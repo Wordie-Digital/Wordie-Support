@@ -1,0 +1,141 @@
+/* ==========================================================================
+   Block: Hero Video
+   Figma: full-viewport, background video/image, dark overlay,
+          content bottom-left, white text, pill CTA buttons,
+          "Scroll" label bottom-centre with down arrow
+   ========================================================================== */
+
+.hero-video {
+    position: relative;
+    width: 100%;
+    height: 100svh;
+    min-height: 600px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;   /* content anchored to bottom */
+}
+
+/* Video / fallback image — full bleed */
+.hero-video__video,
+.hero-video__fallback {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* Gradient overlay — darker at bottom to ensure text legibility */
+.hero-video__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to bottom,
+        rgba(28, 28, 28, 0.05) 0%,
+        rgba(28, 28, 28, 0.15) 50%,
+        rgba(28, 28, 28, 0.60) 100%
+    );
+    z-index: 1;
+}
+
+/* Content block — bottom-left, above overlay */
+.hero-video__content {
+    position: relative;
+    z-index: 2;
+    color: var(--color-white);
+    padding: var(--space-80) var(--gutter);
+    max-width: 760px;
+}
+
+.hero-video__subtitle {
+    font-family: var(--font-body);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-medium);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-white);
+    opacity: 0.8;
+    margin-bottom: var(--space-16);
+}
+
+.hero-video__title {
+    font-family: var(--font-heading);
+    font-size: clamp(2.5rem, 6vw, var(--text-2xl));
+    font-weight: var(--weight-regular);
+    line-height: 1.0;
+    color: var(--color-white);
+    margin-bottom: var(--space-20);
+}
+
+.hero-video__description {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-light);
+    line-height: 1.39;
+    max-width: 520px;
+    margin-bottom: var(--space-40);
+    opacity: 0.9;
+}
+
+/* CTA buttons — pill style */
+.hero-video__ctas {
+    display: flex;
+    gap: var(--space-12);
+    flex-wrap: wrap;
+}
+
+/* Scroll indicator — centred at very bottom */
+.hero-video__scroll-indicator {
+    position: absolute;
+    bottom: var(--space-32);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-8);
+    color: var(--color-white);
+    opacity: 0.7;
+    animation: hero-scroll-bounce 2s ease-in-out infinite;
+}
+
+.hero-video__scroll-label {
+    font-family: var(--font-body);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-light);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+/* Down arrow icon */
+.hero-video__scroll-icon {
+    width: 20px;
+    height: 20px;
+}
+
+@keyframes hero-scroll-bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50%       { transform: translateX(-50%) translateY(6px); }
+}
+
+@media (max-width: 768px) {
+    .hero-video__content {
+        padding: var(--space-60) var(--gutter-mobile);
+        max-width: 100%;
+    }
+
+    .hero-video__title {
+        font-size: clamp(2rem, 8vw, 2.5rem);
+    }
+
+    .hero-video__ctas {
+        flex-direction: column;
+    }
+
+    .hero-video__ctas .btn {
+        width: fit-content;
+    }
+}

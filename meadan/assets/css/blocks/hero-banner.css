@@ -1,0 +1,146 @@
+/* ==========================================================================
+   Block: Hero Banner
+   File:  assets/css/blocks/hero-banner.css
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Section shell
+   -------------------------------------------------------------------------- */
+.hero-banner {
+    position: relative;
+    width: 100%;
+    min-height: 100svh;          /* full viewport height on modern browsers */
+    min-height: 100vh;           /* fallback */
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+
+    /* Background image — set via inline style from template */
+    background-color: var(--color-dark);   /* fallback colour */
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+/* Gradient fallback when no image set */
+.hero-banner--no-image {
+    background: linear-gradient(135deg, var(--color-dark) 0%, #3a3a3a 100%);
+}
+
+/* --------------------------------------------------------------------------
+   2. Overlay
+   -------------------------------------------------------------------------- */
+.hero-banner__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* --------------------------------------------------------------------------
+   3. Inner content
+   -------------------------------------------------------------------------- */
+.hero-banner__inner {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: var(--max-width);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+    padding-block: var(--space-xl);
+    color: var(--color-white);
+}
+
+/* --------------------------------------------------------------------------
+   4. Heading
+   -------------------------------------------------------------------------- */
+.hero-banner__heading {
+    font-family: var(--font-heading);
+    font-size: clamp(2.25rem, 6vw, 4.5rem);
+    font-weight: 400;
+    line-height: 1.1;
+    color: var(--color-white);
+    max-width: 14ch;
+    margin-bottom: var(--space-sm);
+}
+
+/* --------------------------------------------------------------------------
+   5. Subheading
+   -------------------------------------------------------------------------- */
+.hero-banner__subheading {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.85);
+    max-width: 48ch;
+    line-height: 1.6;
+    margin-bottom: var(--space-md);
+}
+
+/* --------------------------------------------------------------------------
+   6. CTA Button
+   -------------------------------------------------------------------------- */
+.hero-banner__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.875rem 2rem;
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    letter-spacing: 0.02em;
+    border: 1px solid var(--color-white);
+    color: var(--color-dark);
+    background-color: var(--color-white);
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.25s ease, color 0.25s ease;
+    white-space: nowrap;
+}
+
+.hero-banner__cta:hover,
+.hero-banner__cta:focus-visible {
+    background-color: transparent;
+    color: var(--color-white);
+}
+
+.hero-banner__cta:focus-visible {
+    outline: 2px solid var(--color-white);
+    outline-offset: 3px;
+}
+
+.hero-banner__cta--disabled,
+.hero-banner__cta.btn--disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* --------------------------------------------------------------------------
+   7. Responsive
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+    .hero-banner {
+        min-height: 85svh;
+        min-height: 85vh;
+    }
+
+    .hero-banner__inner {
+        padding-block: var(--space-lg);
+    }
+
+    .hero-banner__heading {
+        font-size: clamp(2rem, 8vw, 3rem);
+    }
+
+    .hero-banner__subheading {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-banner__cta {
+        width: 100%;
+        justify-content: center;
+    }
+}

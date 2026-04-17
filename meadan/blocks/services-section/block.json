@@ -1,0 +1,18 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "acf/services-section",
+  "title": "Services Section",
+  "description": "Section label, heading, and a repeater of up to 3 service cards.",
+  "category": "meadan",
+  "icon": "grid-view",
+  "keywords": ["services", "meadan"],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "template.php"
+  },
+  "supports": {
+    "anchor": true,
+    "align": false
+  }
+}
