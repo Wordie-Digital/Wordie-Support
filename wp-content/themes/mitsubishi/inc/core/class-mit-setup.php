@@ -1024,34 +1024,6 @@ class MIT_Setup {
     return 30;
   }
 
-<<<<<<< HEAD
-=======
-  function suppress_slick_elementor_code_meta( $value, $object_id, $meta_key, $single ) {
-    if ( is_admin() ) {
-      return $value;
-    }
-    if ( $meta_key !== '_elementor_code' ) {
-      return $value;
-    }
-    if ( get_post_type( $object_id ) !== 'elementor_snippet' ) {
-      return $value;
-    }
-    // One-time DB query to find all snippet IDs whose code contains slick-carousel.
-    static $slick_ids = null;
-    if ( $slick_ids === null ) {
-      global $wpdb;
-      $ids      = $wpdb->get_col(
-        "SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key = '_elementor_code' AND meta_value LIKE '%slick-carousel%'"
-      );
-      $slick_ids = array_flip( $ids );
-    }
-    if ( isset( $slick_ids[ $object_id ] ) ) {
-      return $single ? '' : [];
-    }
-    return $value;
-  }
-
->>>>>>> meaust/develop
   function dequeue_woo_css() {
     if (
       function_exists( 'is_woocommerce' ) &&
