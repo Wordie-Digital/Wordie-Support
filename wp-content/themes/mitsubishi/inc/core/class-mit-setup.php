@@ -43,6 +43,9 @@ class MIT_Setup {
     // Performance: dequeue WooCommerce CSS on non-WooCommerce pages
     add_action( 'wp_enqueue_scripts', [ $this, 'dequeue_woo_css' ], 100 );
 
+    // Performance: suppress Slick carousel CDN snippets injected via Elementor Custom Code
+    add_filter( 'the_posts', [ $this, 'suppress_slick_elementor_snippets' ], 10, 2 );
+
     // Performance: disable WordPress emoji scripts and styles
     remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
     remove_action( 'wp_print_styles', 'print_emoji_styles' );
@@ -1006,6 +1009,21 @@ class MIT_Setup {
 
   function excerpt_length( $length ): string {
     return 30;
+  }
+
+  function suppress_slick_elementor_snippets( $posts, $query ) {
+    if ( is_admin() ) {
+      return $posts;
+    }
+    if ( $query->get( 'post_type' ) !== 'elementor_snippet' ) {
+      return $posts;
+    }
+    foreach ( $posts as &$post ) {
+      if ( strpos( $post->post_content ?? '', 'slick-carousel' ) !== false ) {
+        $post->post_status = 'draft';
+      }
+    }
+    return $posts;
   }
 
   function dequeue_woo_css() {
