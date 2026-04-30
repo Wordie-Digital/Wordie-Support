@@ -41,10 +41,13 @@ class MIT_Setup {
     // and jquery.sticky all load sync and crash with "jQuery is not defined" if deferred.
     add_filter( 'rocket_exclude_defer_js', [ $this, 'exclude_jquery_from_rocket_defer' ] );
 
-    // Compatibility: protect critical scripts from WP Rocket's "Delay JS Execution" feature.
-    // If Delay JS is enabled in WP Admin, these scripts still run immediately.
-    // All other scripts (GTM, FB pixel, etc.) will be delayed until user interaction,
-    // which reduces TBT significantly.
+    // Performance: enable WP Rocket "Delay JS Execution" via filter — no Admin toggle needed.
+    // GTM, FB pixel, and all non-excluded third-party scripts are delayed until first user
+    // interaction, removing ~550ms of blocking JS from the critical path (TBT reduction).
+    add_filter( 'pre_get_rocket_option_delay_js', '__return_true' );
+
+    // Compatibility: protect critical scripts from WP Rocket's Delay JS feature.
+    // jQuery, Elementor, Swiper, sticky header, and main.min.js run immediately.
     add_filter( 'rocket_delay_js_exclusions', [ $this, 'exclude_critical_scripts_from_rocket_delay' ] );
 
     // Performance: dequeue WooCommerce CSS and other page-specific assets on pages that don't need them
