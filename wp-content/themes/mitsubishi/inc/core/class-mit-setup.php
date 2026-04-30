@@ -43,8 +43,10 @@ class MIT_Setup {
     // Performance: dequeue WooCommerce CSS on non-WooCommerce pages
     add_action( 'wp_enqueue_scripts', [ $this, 'dequeue_woo_css' ], 100 );
 
-    // Performance: suppress Slick carousel CDN snippets injected via Elementor Custom Code
-    add_filter( 'the_posts', [ $this, 'suppress_slick_elementor_snippets' ], 10, 2 );
+    // Performance: suppress Slick carousel CDN snippets injected via Elementor Custom Code.
+    // Must use posts_results (not the_posts) because get_posts() sets suppress_filters=true
+    // which blocks the_posts but not posts_results.
+    add_filter( 'posts_results', [ $this, 'suppress_slick_elementor_snippets' ], 10, 2 );
 
     // Performance: disable WordPress emoji scripts and styles
     remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
