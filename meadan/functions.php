@@ -17,6 +17,8 @@ define( 'MEADAN_URI', get_template_directory_uri() );
 require_once MEADAN_DIR . '/inc/theme-setup.php';
 require_once MEADAN_DIR . '/inc/block-registration.php';
 require_once MEADAN_DIR . '/inc/acf-options.php';
+require_once MEADAN_DIR . '/inc/posts/group-single-post.php';
+require_once MEADAN_DIR . '/inc/seed-blog-posts.php';
 
 // ---------------------------------------------------------------------------
 // ACF local JSON — save / load paths
@@ -50,6 +52,29 @@ add_action( 'wp_enqueue_scripts', function () {
         MEADAN_VERSION,
         true
     );
+
+    // Single Blog Post — page styles
+    if ( is_singular( 'post' ) ) {
+        wp_enqueue_style(
+            'meadan-single-post',
+            MEADAN_URI . '/assets/css/blocks/single-post.css',
+            [ 'meadan-main' ],
+            filemtime( MEADAN_DIR . '/assets/css/blocks/single-post.css' )
+        );
+    }
+} );
+
+// ---------------------------------------------------------------------------
+// Template routing — single post
+// ---------------------------------------------------------------------------
+add_filter( 'single_template', function ( $template ) {
+    if ( is_singular( 'post' ) ) {
+        $candidate = MEADAN_DIR . '/templates/single-post.php';
+        if ( file_exists( $candidate ) ) {
+            return $candidate;
+        }
+    }
+    return $template;
 } );
 
 // ---------------------------------------------------------------------------

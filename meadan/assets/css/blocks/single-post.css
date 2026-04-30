@@ -1,0 +1,757 @@
+/* ==========================================================================
+   Single Blog Post — page styles
+   Figma node: 4520:33598
+   Sections: Hero · Content · Featured Design · Related Articles
+   ========================================================================== */
+
+/* ==========================================================================
+   1. HERO — bg #c8bbab (Stone), h: 400px
+   ========================================================================== */
+
+.post-hero {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    background-color: #c8bbab;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* Bottom gradient overlay */
+.post-hero__overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 277px;
+    background: linear-gradient(
+        to top,
+        rgba(28, 28, 28, 0.35) 0%,
+        transparent 100%
+    );
+    pointer-events: none;
+}
+
+/* Centred content stack */
+.post-hero__content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 626px;
+    max-width: calc(100% - 120px);
+    text-align: center;
+}
+
+/* Breadcrumb */
+.post-hero__breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.post-hero__breadcrumb-link {
+    font-family: 'Geist', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: 0.16px;
+    color: #1c1c1c;
+    text-decoration: none;
+    text-transform: capitalize;
+    white-space: nowrap;
+}
+
+.post-hero__breadcrumb-link:hover {
+    text-decoration: underline;
+}
+
+.post-hero__breadcrumb-sep {
+    font-family: 'Geist', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    color: #1c1c1c;
+    opacity: 0.6;
+}
+
+/* H1 */
+.post-hero__title {
+    font-family: 'freight-neo-pro', 'Freight Neo', Georgia, serif;
+    font-size: 48px;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 1;
+    color: #1c1c1c;
+    margin: 0;
+}
+
+/* Excerpt */
+.post-hero__excerpt {
+    font-family: 'Geist', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.39;
+    color: #1c1c1c;
+    margin: 0;
+}
+
+/* Metadata row */
+.post-hero__meta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.post-hero__meta-cat a {
+    font-family: 'Geist', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1;
+    text-transform: uppercase;
+    color: #1c1c1c;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.post-hero__meta-cat a:hover {
+    text-decoration: underline;
+}
+
+.post-hero__meta-date {
+    font-family: 'Geist', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.3;
+    color: #1c1c1c;
+    opacity: 0.5;
+    white-space: nowrap;
+}
+
+.post-hero__meta-read {
+    font-family: 'Geist', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: 1.12px;
+    text-transform: uppercase;
+    color: #1c1c1c;
+    opacity: 0.5;
+    white-space: nowrap;
+}
+
+/* ==========================================================================
+   2. CONTENT — bg white, padding 80px 60px
+   ========================================================================== */
+
+.post-content {
+    background-color: #ffffff;
+    padding: 80px 60px;
+}
+
+.post-content__inner {
+    max-width: 1320px;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 80px;
+}
+
+/* Featured image — 2:1 ratio, centred */
+.post-content__featured-image {
+    width: 1096px;
+    max-width: 100%;
+    aspect-ratio: 2 / 1;
+    overflow: hidden;
+    margin: 0;
+}
+
+.post-content__featured-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Article body — 874px centred */
+.post-content__body {
+    width: 874px;
+    max-width: 100%;
+}
+
+/* Typography for the_content() output */
+.post-content__body h1,
+.post-content__body h2,
+.post-content__body h3,
+.post-content__body h4,
+.post-content__body h5,
+.post-content__body h6 {
+    font-family: 'Geist', sans-serif;
+    font-weight: 500;
+    line-height: 1.1;
+    color: #1c1c1c;
+    margin: 0 0 16px;
+}
+
+.post-content__body h1 { font-size: 32px; }
+.post-content__body h2 { font-size: 28px; }
+.post-content__body h3 { font-size: 24px; }
+.post-content__body h4 { font-size: 24px; }
+.post-content__body h5 { font-size: 20px; }
+.post-content__body h6 { font-size: 16px; }
+
+.post-content__body p {
+    font-family: 'Geist', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.39;
+    color: #1c1c1c;
+    margin: 0 0 20px;
+}
+
+.post-content__body p:last-child {
+    margin-bottom: 0;
+}
+
+.post-content__body a {
+    color: #1c1c1c;
+    text-decoration: underline;
+}
+
+.post-content__body a:hover {
+    opacity: 0.7;
+}
+
+.post-content__body ul,
+.post-content__body ol {
+    font-family: 'Geist', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.39;
+    color: #1c1c1c;
+    margin: 0 0 20px;
+    padding-left: 24px;
+}
+
+.post-content__body li {
+    margin-bottom: 8px;
+}
+
+.post-content__body blockquote {
+    border-left: 3px solid #b99980;
+    margin: 0 0 20px 0;
+    padding: 12px 24px;
+    font-style: italic;
+}
+
+/* Image rows inside content (2-up grid matching Figma) */
+.post-content__body figure,
+.post-content__body .wp-block-image {
+    margin: 0 0 20px;
+}
+
+.post-content__body figure img,
+.post-content__body .wp-block-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* 2-column image layout using WP columns block or manual gallery */
+.post-content__body .wp-block-columns {
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+/* ==========================================================================
+   3. FEATURED DESIGN — bg #f0ebdf (Chalk), padding 100px 60px
+   ========================================================================== */
+
+.post-featured-design {
+    background-color: #f0ebdf;
+    padding: 100px 60px;
+}
+
+.post-featured-design__inner {
+    max-width: 1320px;
+    margin-inline: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 60px;
+}
+
+/* ── Left column ─────────────────────────────────────────────────────────── */
+.post-featured-design__left {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    flex: 0 0 538px;
+    width: 538px;
+}
+
+.post-featured-design__text {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+/* Eyebrow */
+.post-featured-design__eyebrow {
+    font-family: 'Geist', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1;
+    text-transform: uppercase;
+    color: #1c1c1c;
+    margin: 0;
+}
+
+/* H2 */
+.post-featured-design__heading {
+    font-family: 'freight-neo-pro', 'Freight Neo', Georgia, serif;
+    font-size: 40px;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 1.15;
+    color: #1c1c1c;
+    margin: 0;
+}
+
+/* Icons row */
+.post-featured-design__icons {
+    display: flex;
+    align-items: center;
+    gap: 60px;
+}
+
+.post-featured-design__icon-group {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.post-featured-design__icon {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+}
+
+.post-featured-design__icon-value {
+    font-family: 'Geist', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.39;
+    color: #1c1c1c;
+}
+
+/* Description */
+.post-featured-design__description {
+    font-family: 'Geist', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.39;
+    color: #1c1c1c;
+    margin: 0;
+}
+
+/* CTA */
+.post-featured-design__actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+/* Prev/next arrows */
+.post-featured-design__nav {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.post-featured-design__nav-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 58px;
+    height: 37px;
+    border: 1px solid #1c1c1c;
+    border-radius: 1000px;
+    background: transparent;
+    cursor: pointer;
+    padding: 10px 16px;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.post-featured-design__nav-btn:hover {
+    background-color: #1c1c1c;
+}
+
+.post-featured-design__nav-btn:hover svg path {
+    fill: #ffffff;
+}
+
+/* ── Right column: image ─────────────────────────────────────────────────── */
+.post-featured-design__image-wrap {
+    flex: 0 0 669px;
+    width: 669px;
+    height: 536px;
+    overflow: hidden;
+    margin: 0;
+}
+
+.post-featured-design__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Swiper slide reset */
+.post-featured-design__swiper .swiper-slide {
+    height: auto;
+}
+
+/* ==========================================================================
+   4. RELATED ARTICLES — bg #c8bbab (Stone), padding 80px 60px
+   ========================================================================== */
+
+.post-related {
+    background-color: #c8bbab;
+    padding: 80px 60px;
+}
+
+.post-related__inner {
+    max-width: 1320px;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+/* ── Header row ──────────────────────────────────────────────────────────── */
+.post-related__header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 40px;
+}
+
+.post-related__header-text {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+.post-related__eyebrow {
+    font-family: 'Geist', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1;
+    text-transform: uppercase;
+    color: #1c1c1c;
+    margin: 0;
+}
+
+.post-related__heading {
+    font-family: 'freight-neo-pro', 'Freight Neo', Georgia, serif;
+    font-size: 40px;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 1.15;
+    color: #1c1c1c;
+    margin: 0;
+}
+
+/* ── Article cards ───────────────────────────────────────────────────────── */
+.post-related__cards {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+/* Individual card */
+.post-card {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    min-width: 0;
+}
+
+/* Card image */
+.post-card__image-link {
+    display: block;
+}
+
+.post-card__image-wrap {
+    aspect-ratio: 426 / 320;
+    overflow: hidden;
+    margin: 0;
+    width: 100%;
+}
+
+.post-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+}
+
+.post-card__image-link:hover .post-card__image {
+    transform: scale(1.03);
+}
+
+/* Card body */
+.post-card__body {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Metadata */
+.post-card__meta {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(28, 28, 28, 0.2);
+    flex-wrap: nowrap;
+}
+
+.post-card__meta-cat {
+    font-family: 'Geist', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1;
+    text-transform: uppercase;
+    color: #1c1c1c;
+    text-decoration: none;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.post-card__meta-cat:hover {
+    text-decoration: underline;
+}
+
+.post-card__meta-date {
+    font-family: 'Geist', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.3;
+    color: #1c1c1c;
+    opacity: 0.5;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.post-card__meta-read {
+    font-family: 'Geist', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: 1.12px;
+    text-transform: uppercase;
+    color: #1c1c1c;
+    opacity: 0.5;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+/* Text */
+.post-card__text {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.post-card__title {
+    font-family: 'Geist', sans-serif;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 1.1;
+    color: #1c1c1c;
+    margin: 0;
+}
+
+.post-card__title a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.post-card__title a:hover {
+    text-decoration: underline;
+}
+
+.post-card__excerpt {
+    font-family: 'Geist', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.39;
+    color: #1c1c1c;
+    margin: 0;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+/* "Read More" underline link */
+.post-card__link {
+    display: inline-flex;
+    align-items: center;
+    font-family: 'Geist', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: 0.16px;
+    color: #1c1c1c;
+    text-decoration: none;
+    border-bottom: 1px solid #1c1c1c;
+    padding-bottom: 2px;
+    text-transform: capitalize;
+    align-self: flex-start;
+}
+
+.post-card__link:hover {
+    opacity: 0.7;
+}
+
+/* ==========================================================================
+   Responsive — ≤1200px
+   ========================================================================== */
+@media (max-width: 1200px) {
+    .post-hero,
+    .post-content,
+    .post-featured-design,
+    .post-related {
+        padding-inline: 40px;
+    }
+
+    .post-hero__content {
+        max-width: calc(100% - 80px);
+    }
+
+    .post-featured-design__image-wrap {
+        flex: 0 0 500px;
+        width: 500px;
+    }
+}
+
+/* ==========================================================================
+   Responsive — ≤1024px
+   ========================================================================== */
+@media (max-width: 1024px) {
+    .post-hero {
+        height: 360px;
+    }
+
+    .post-hero__title {
+        font-size: 36px;
+    }
+
+    .post-featured-design__inner {
+        flex-direction: column;
+    }
+
+    .post-featured-design__left {
+        flex: 0 0 auto;
+        width: 100%;
+    }
+
+    .post-featured-design__image-wrap {
+        flex: 0 0 auto;
+        width: 100%;
+        height: 400px;
+    }
+
+    .post-related__header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .post-related__cards {
+        flex-direction: column;
+    }
+
+    .post-card {
+        flex: 0 0 auto;
+        width: 100%;
+    }
+
+    .post-card__image-wrap {
+        aspect-ratio: 16 / 9;
+    }
+}
+
+/* ==========================================================================
+   Responsive — ≤768px
+   ========================================================================== */
+@media (max-width: 768px) {
+    .post-hero,
+    .post-content,
+    .post-featured-design,
+    .post-related {
+        padding-inline: 16px;
+    }
+
+    .post-hero {
+        height: 320px;
+    }
+
+    .post-hero__title {
+        font-size: 28px;
+    }
+
+    .post-hero__excerpt {
+        display: none;
+    }
+
+    .post-content {
+        padding-top: 60px;
+        padding-bottom: 60px;
+    }
+
+    .post-content__inner {
+        gap: 40px;
+    }
+
+    .post-featured-design {
+        padding-top: 60px;
+        padding-bottom: 60px;
+    }
+
+    .post-featured-design__image-wrap {
+        height: 280px;
+    }
+
+    .post-featured-design__heading {
+        font-size: 32px;
+    }
+
+    .post-featured-design__icons {
+        gap: 30px;
+    }
+
+    .post-related {
+        padding-top: 60px;
+        padding-bottom: 60px;
+    }
+
+    .post-related__heading {
+        font-size: 32px;
+    }
+}
