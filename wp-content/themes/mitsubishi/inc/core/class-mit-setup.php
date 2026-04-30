@@ -37,6 +37,9 @@ class MIT_Setup {
     // Performance: preconnect to third-party origins used on every page
     add_filter( 'wp_resource_hints', [ $this, 'add_preconnect_hints' ], 10, 2 );
 
+    // Performance: dequeue WooCommerce CSS on non-WooCommerce pages
+    add_action( 'wp_enqueue_scripts', [ $this, 'dequeue_woo_css' ], 100 );
+
     // Plugins
     add_filter( 'rocket_cache_dynamic_cookies', [ $this, 'wp_rocket_dynamic_cookie' ] );
     add_filter( 'alm_filters_public_taxonomies', '__return_false' );
@@ -989,6 +992,23 @@ class MIT_Setup {
 
   function excerpt_length( $length ): string {
     return 30;
+  }
+
+  function dequeue_woo_css() {
+    if (
+      function_exists( 'is_woocommerce' ) &&
+      ! is_woocommerce() &&
+      ! is_cart() &&
+      ! is_checkout() &&
+      ! is_account_page()
+    ) {
+      wp_dequeue_style( 'woocommerce-general' );
+      wp_dequeue_style( 'woocommerce-layout' );
+      wp_dequeue_style( 'woocommerce-smallscreen' );
+      wp_dequeue_style( 'woocommerce-inline' );
+      wp_dequeue_style( 'wc-blocks-style' );
+      wp_dequeue_style( 'wc-blocks-vendors-style' );
+    }
   }
 
   function add_preconnect_hints( $urls, $relation_type ) {
