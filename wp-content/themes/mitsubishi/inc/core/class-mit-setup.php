@@ -1018,12 +1018,15 @@ class MIT_Setup {
     if ( $query->get( 'post_type' ) !== 'elementor_snippet' ) {
       return $posts;
     }
-    foreach ( $posts as &$post ) {
-      if ( strpos( $post->post_content ?? '', 'slick-carousel' ) !== false ) {
-        $post->post_status = 'draft';
+    $filtered = [];
+    foreach ( $posts as $post ) {
+      $code = get_post_meta( $post->ID, '_elementor_code', true );
+      if ( strpos( $code ?? '', 'slick-carousel' ) !== false ) {
+        continue;
       }
+      $filtered[] = $post;
     }
-    return $posts;
+    return $filtered;
   }
 
   function dequeue_woo_css() {
