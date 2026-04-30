@@ -942,9 +942,10 @@ class MIT_Setup {
     // css-font-awesome (FA v4.7.0) removed — Elementor loads FA v5 + v4 CSS shim
     // which covers all fa/fa-* classes used in templates. Saves ~37KB render-blocking CSS.
     $assets_css = [];
+    // css_browser_selector.js removed — 2010-era browser-detection library, unused by any CSS/JS in the theme.
+    // Saves ~1.3KB of always-loaded JS and eliminates unnecessary HTML class mutations on page load.
     $assets_js  = [
-      'js-css-browser' => 'lib/css_browser_selector/css_browser_selector.js',
-      'js-wow'         => 'lib/wow/dist/wow.min.js',
+      'js-wow' => 'lib/wow/dist/wow.min.js',
     ];
 
     if ( has_shortcode( get_the_content(), 'wpsl' ) ) {
