@@ -190,7 +190,17 @@ class Custom_El_Text_Image extends Widget_Base {
     $is_slider         = $this->get_settings_for_display( 'is_slider' ) == 'yes' && count( $slides ) > 1;
     $enable_breadcrumb = $this->get_settings_for_display( 'enable_breadcrumb' ) == 'yes';
 
-    if ( ! empty( $slides ) ) : ?>
+    if ( ! empty( $slides ) ) :
+      // Emit a preload hint for the first slide image so the browser
+      // starts fetching it as early as possible in the HTML stream.
+      $first_slide = $slides[0] ?? null;
+      if ( $first_slide && ! empty( $first_slide['image']['id'] ) ) {
+        $preload_url = wp_get_attachment_image_url( $first_slide['image']['id'], 'full' );
+        if ( $preload_url ) {
+          echo '<link rel="preload" as="image" fetchpriority="high" href="' . esc_url( $preload_url ) . '">';
+        }
+      }
+    ?>
       <div id="<?= $uid ?>" class="el-text-image">
         <?php if ( $enable_breadcrumb ) : ?>
           <div class="el-text-image__breadcrumb">
