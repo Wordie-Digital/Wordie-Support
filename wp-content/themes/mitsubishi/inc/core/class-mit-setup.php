@@ -34,9 +34,6 @@ class MIT_Setup {
     add_filter( 'the_content', [ $this, 'customise_table_tags' ] );
     add_filter( 'acf/format_value', [ $this, 'customise_table_tags' ] );
 
-    // Performance: defer jQuery to eliminate render-blocking in <head>
-    add_filter( 'script_loader_tag', [ $this, 'defer_jquery_tags' ], 10, 2 );
-
     // Performance: preconnect to third-party origins used on every page
     add_filter( 'wp_resource_hints', [ $this, 'add_preconnect_hints' ], 10, 2 );
 
@@ -1044,16 +1041,6 @@ class MIT_Setup {
       wp_dequeue_style( 'wc-blocks-style' );
       wp_dequeue_style( 'wc-blocks-vendors-style' );
     }
-  }
-
-  function defer_jquery_tags( $tag, $handle ) {
-    if ( is_admin() ) {
-      return $tag;
-    }
-    if ( ! in_array( $handle, [ 'jquery-core', 'jquery-migrate' ] ) ) {
-      return $tag;
-    }
-    return str_replace( ' src=', ' defer src=', $tag );
   }
 
   function remove_emoji_dns_prefetch( $urls, $relation_type ) {
