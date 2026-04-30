@@ -43,6 +43,17 @@ class MIT_Setup {
     // Performance: dequeue WooCommerce CSS on non-WooCommerce pages
     add_action( 'wp_enqueue_scripts', [ $this, 'dequeue_woo_css' ], 100 );
 
+    // Performance: disable WordPress emoji scripts and styles
+    remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
+    remove_action( 'wp_print_styles', 'print_emoji_styles' );
+    remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
+    remove_action( 'admin_print_styles', 'print_emoji_styles' );
+    remove_filter( 'the_content_feed', 'wp_staticize_emoji' );
+    remove_filter( 'comment_text_rss', 'wp_staticize_emoji' );
+    remove_filter( 'wp_mail', 'wp_staticize_emoji_for_email' );
+    add_filter( 'wp_resource_hints', [ $this, 'remove_emoji_dns_prefetch' ], 10, 2 );
+    add_filter( 'tiny_mce_plugins', [ $this, 'remove_tinymce_emoji' ] );
+
     // Plugins
     add_filter( 'rocket_cache_dynamic_cookies', [ $this, 'wp_rocket_dynamic_cookie' ] );
     add_filter( 'alm_filters_public_taxonomies', '__return_false' );
@@ -997,6 +1008,7 @@ class MIT_Setup {
     return 30;
   }
 
+<<<<<<< HEAD
   function dequeue_woo_css() {
     if (
       function_exists( 'is_woocommerce' ) &&
@@ -1022,6 +1034,17 @@ class MIT_Setup {
       return $tag;
     }
     return str_replace( ' src=', ' defer src=', $tag );
+=======
+  function remove_emoji_dns_prefetch( $urls, $relation_type ) {
+    if ( 'dns-prefetch' === $relation_type ) {
+      $urls = array_values( array_diff( $urls, [ 'https://s.w.org' ] ) );
+    }
+    return $urls;
+  }
+
+  function remove_tinymce_emoji( $plugins ) {
+    return array_diff( $plugins, [ 'wpemoji' ] );
+>>>>>>> 1fec337f (perf(cwv): disable WordPress emoji scripts and styles)
   }
 
   function add_preconnect_hints( $urls, $relation_type ) {
