@@ -11223,12 +11223,6 @@ td td {
   }
 }
 
-.wow {
-  visibility: hidden;
-}
-.wow.wow-visible {
-  visibility: hidden;
-}
 
 .swiper .swiper-button-next,
 .swiper .swiper-container-rtl,

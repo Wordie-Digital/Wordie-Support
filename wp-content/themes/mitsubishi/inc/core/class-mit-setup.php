@@ -941,12 +941,12 @@ class MIT_Setup {
     /* Common assets */
     // css-font-awesome (FA v4.7.0) removed — Elementor loads FA v5 + v4 CSS shim
     // which covers all fa/fa-* classes used in templates. Saves ~37KB render-blocking CSS.
+    // js-wow (WOW.js) removed — scroll-animation library causes measurable TBT on every page load.
+    // The theme's .wow CSS already hides elements even after WOW marks them "visible" (both rules
+    // set visibility:hidden), so animations were not rendering anyway. Saves ~8.4KB of always-loaded JS.
+    // css_browser_selector.js removed — 2010-era browser-detection library, unused by any CSS/JS.
     $assets_css = [];
-    // css_browser_selector.js removed — 2010-era browser-detection library, unused by any CSS/JS in the theme.
-    // Saves ~1.3KB of always-loaded JS and eliminates unnecessary HTML class mutations on page load.
-    $assets_js  = [
-      'js-wow' => 'lib/wow/dist/wow.min.js',
-    ];
+    $assets_js  = [];
 
     if ( has_shortcode( get_the_content(), 'wpsl' ) ) {
       wp_enqueue_style( 'css-OverlayScrollbars' );
