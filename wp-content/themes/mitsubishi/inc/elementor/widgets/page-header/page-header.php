@@ -126,7 +126,15 @@ class Custom_El_Page_Header extends Widget_Base {
     }
 
     ?>
-    <div id="<?= $uid ?>" class="el-page-header <?= $bg_image ? 'el-page-header--has-bg' : '' ?> <?= $hide_title ? 'el-page-header--hide-title' : '' ?>" <?php if ( $bg_image ) : ?>style="background-image: url('<?= $bg_image ?>');"<?php endif; ?>>
+    <div id="<?= $uid ?>" class="el-page-header <?= $bg_image ? 'el-page-header--has-bg' : '' ?> <?= $hide_title ? 'el-page-header--hide-title' : '' ?>">
+      <?php if ( $bg_image ) : ?>
+        <img class="el-page-header__bg-img"
+             src="<?= esc_url( $bg_image ) ?>"
+             alt=""
+             fetchpriority="high"
+             loading="eager"
+             decoding="async">
+      <?php endif; ?>
       <div class="el-page-header__inner">
         <div class="container">
           <? get_template_part( 'template-parts/breadcrumbs/breadcrumbs' ) ?>
