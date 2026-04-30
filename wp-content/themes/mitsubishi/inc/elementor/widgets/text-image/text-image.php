@@ -202,7 +202,7 @@ class Custom_El_Text_Image extends Widget_Base {
 
         <div class="<?= $is_slider ? 'swiper' : '' ?>">
           <div class="<?= $is_slider ? 'swiper-wrapper' : '' ?>">
-            <?php foreach ( $slides as $slide ) : ?>
+            <?php $slide_index = 0; foreach ( $slides as $slide ) : ?>
               <div class="<?= $is_slider ? 'swiper-slide' : '' ?>">
                 <?
                 $style   = $slide['style'];
@@ -216,6 +216,10 @@ class Custom_El_Text_Image extends Widget_Base {
                 $button_label_2 = $slide['button_label_2'];
                 $button_link_2  = $slide['button_link_2'];
 
+                // Only the first slide is above-the-fold; mark it as the LCP candidate
+                // so the template part emits loading="eager" fetchpriority="high".
+                $is_lcp = ( $slide_index === 0 );
+
                 switch ( $style ) {
                   case 'style-1':
                     get_template_part( 'template-parts/text-image-v1/text-image-v1', null, [
@@ -227,6 +231,7 @@ class Custom_El_Text_Image extends Widget_Base {
                       'button_label'   => $button_label,
                       'button_link_2'  => ! empty( $button_link_2['url'] ) ? $button_link_2['url'] : '',
                       'button_label_2' => $button_label_2,
+                      'is_lcp'         => $is_lcp,
                     ] );
                     break;
                   case 'style-2':
@@ -242,6 +247,7 @@ class Custom_El_Text_Image extends Widget_Base {
                     ] );
                     break;
                 }
+                $slide_index++;
                 ?>
               </div>
             <?php endforeach; ?>
