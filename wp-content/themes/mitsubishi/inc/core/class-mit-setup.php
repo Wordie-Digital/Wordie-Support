@@ -34,6 +34,9 @@ class MIT_Setup {
     add_filter( 'the_content', [ $this, 'customise_table_tags' ] );
     add_filter( 'acf/format_value', [ $this, 'customise_table_tags' ] );
 
+    // Performance: defer jQuery to eliminate render-blocking in <head>
+    add_filter( 'script_loader_tag', [ $this, 'defer_jquery_tags' ], 10, 2 );
+
     // Performance: preconnect to third-party origins used on every page
     add_filter( 'wp_resource_hints', [ $this, 'add_preconnect_hints' ], 10, 2 );
 
@@ -1011,6 +1014,16 @@ class MIT_Setup {
     }
   }
 
+  function defer_jquery_tags( $tag, $handle ) {
+    if ( is_admin() ) {
+      return $tag;
+    }
+    if ( ! in_array( $handle, [ 'jquery-core', 'jquery-migrate' ] ) ) {
+      return $tag;
+    }
+    return str_replace( ' src=', ' defer src=', $tag );
+  }
+
   function add_preconnect_hints( $urls, $relation_type ) {
     if ( 'preconnect' !== $relation_type ) {
       return $urls;
@@ -1022,7 +1035,9 @@ class MIT_Setup {
 
   function hook_head() {
     ?>
-    <script type="text/javascript">var $ = jQuery.noConflict();</script>
+    <script>document.addEventListener('DOMContentLoaded', function() {
+      if (typeof jQuery !== 'undefined') { window.$ = jQuery.noConflict(); }
+    });</script>
     <?php
   }
 
