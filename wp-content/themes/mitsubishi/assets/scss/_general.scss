@@ -217,3 +217,9 @@ td td {
 .color-red {
   color: var(--e-global-color-secondary);
 }
+
+/* Prevent Elementor popup modals from causing CLS by hiding them until
+   Elementor's dialog JS is ready to position and display them. */
+div[id^="elementor-popup-modal"] {
+  display: none;
+}
