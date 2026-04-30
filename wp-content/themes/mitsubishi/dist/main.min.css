@@ -12376,9 +12376,23 @@ body.user-type--homeowner:not(.elementor-editor-active) .elementor-section--only
   }
 }
 .el-page-header {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
+}
+.el-page-header__bg-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  z-index: -1;
+  pointer-events: none;
 }
 .el-page-header:not(.el-page-header--has-bg) {
   /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#cecece+0,ffffff+100&1+0,0+100 */
