@@ -37,6 +37,10 @@ class MIT_Setup {
     // Performance: preconnect to third-party origins used on every page
     add_filter( 'wp_resource_hints', [ $this, 'add_preconnect_hints' ], 10, 2 );
 
+    // Compatibility: prevent WP Rocket from deferring jQuery — Elementor, jQuery UI,
+    // and jquery.sticky all load sync and crash with "jQuery is not defined" if deferred.
+    add_filter( 'rocket_exclude_defer_js', [ $this, 'exclude_jquery_from_rocket_defer' ] );
+
     // Performance: dequeue WooCommerce CSS on non-WooCommerce pages
     add_action( 'wp_enqueue_scripts', [ $this, 'dequeue_woo_css' ], 100 );
 
@@ -1062,6 +1066,12 @@ class MIT_Setup {
 
   function remove_tinymce_emoji( $plugins ) {
     return array_diff( $plugins, [ 'wpemoji' ] );
+  }
+
+  function exclude_jquery_from_rocket_defer( $exclusions ) {
+    $exclusions[] = 'jquery.min.js';
+    $exclusions[] = 'jquery-migrate.min.js';
+    return $exclusions;
   }
 
   function add_preconnect_hints( $urls, $relation_type ) {
