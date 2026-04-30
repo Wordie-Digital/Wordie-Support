@@ -44,9 +44,10 @@ class MIT_Setup {
     add_action( 'wp_enqueue_scripts', [ $this, 'dequeue_woo_css' ], 100 );
 
     // Performance: suppress Slick carousel CDN snippets injected via Elementor Custom Code.
-    // Must use posts_results (not the_posts) because get_posts() sets suppress_filters=true
-    // which blocks the_posts but not posts_results.
-    add_filter( 'posts_results', [ $this, 'suppress_slick_elementor_snippets' ], 10, 2 );
+    // Intercepts get_post_meta() for _elementor_code — the call inside Document::print_content().
+    // Filtering WP_Query results isn't sufficient because Elementor re-adds snippets via the
+    // conditions manager in do_location(), bypassing any query-level filter.
+    add_filter( 'get_post_metadata', [ $this, 'suppress_slick_elementor_code_meta' ], 10, 4 );
 
     // Performance: disable WordPress emoji scripts and styles
     remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
@@ -1013,22 +1014,29 @@ class MIT_Setup {
     return 30;
   }
 
-  function suppress_slick_elementor_snippets( $posts, $query ) {
+  function suppress_slick_elementor_code_meta( $value, $object_id, $meta_key, $single ) {
     if ( is_admin() ) {
-      return $posts;
+      return $value;
     }
-    if ( $query->get( 'post_type' ) !== 'elementor_snippet' ) {
-      return $posts;
+    if ( $meta_key !== '_elementor_code' ) {
+      return $value;
     }
-    $filtered = [];
-    foreach ( $posts as $post ) {
-      $code = get_post_meta( $post->ID, '_elementor_code', true );
-      if ( strpos( $code ?? '', 'slick-carousel' ) !== false ) {
-        continue;
-      }
-      $filtered[] = $post;
+    if ( get_post_type( $object_id ) !== 'elementor_snippet' ) {
+      return $value;
     }
-    return $filtered;
+    // One-time DB query to find all snippet IDs whose code contains slick-carousel.
+    static $slick_ids = null;
+    if ( $slick_ids === null ) {
+      global $wpdb;
+      $ids      = $wpdb->get_col(
+        "SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key = '_elementor_code' AND meta_value LIKE '%slick-carousel%'"
+      );
+      $slick_ids = array_flip( $ids );
+    }
+    if ( isset( $slick_ids[ $object_id ] ) ) {
+      return $single ? '' : [];
+    }
+    return $value;
   }
 
   function dequeue_woo_css() {
