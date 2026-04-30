@@ -41,13 +41,12 @@ class MIT_Setup {
     // and jquery.sticky all load sync and crash with "jQuery is not defined" if deferred.
     add_filter( 'rocket_exclude_defer_js', [ $this, 'exclude_jquery_from_rocket_defer' ] );
 
-    // Performance: dequeue WooCommerce CSS on non-WooCommerce pages
+    // Performance: dequeue WooCommerce CSS and other page-specific assets on pages that don't need them
     add_action( 'wp_enqueue_scripts', [ $this, 'dequeue_woo_css' ], 100 );
 
-    // Performance: strip slick carousel CSS hardcoded via Elementor custom code —
-    // it cannot be dequeued (no WP handle), so intercept wp_head output instead.
-    add_action( 'wp_head', [ $this, 'start_head_buffer' ], 1 );
-    add_action( 'wp_head', [ $this, 'end_head_buffer' ], 999 );
+    // Performance: strip slick carousel CSS injected via Elementor Custom Code.
+    // Intercepts the _elementor_code meta at render time — no output-buffering risk.
+    add_filter( 'get_post_metadata', [ $this, 'suppress_slick_elementor_code_meta' ], 10, 4 );
 
     // Performance: disable WordPress emoji scripts and styles
     remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
@@ -1014,22 +1013,6 @@ class MIT_Setup {
     return 30;
   }
 
-  function start_head_buffer() {
-    ob_start();
-  }
-
-  function end_head_buffer() {
-    $head = ob_get_clean();
-    // Remove slick carousel CSS injected via Elementor custom code.
-    // Uses a CDN link with SRI hash — no WordPress handle, so ob_start is the only option.
-    $head = preg_replace(
-      '/<link[^>]*cdnjs\.cloudflare\.com\/ajax\/libs\/slick-carousel[^>]*>\s*/i',
-      '',
-      $head
-    );
-    echo $head;
-  }
-
   function dequeue_woo_css() {
     if (
       function_exists( 'is_woocommerce' ) &&
@@ -1045,6 +1028,36 @@ class MIT_Setup {
       wp_dequeue_style( 'wc-blocks-style' );
       wp_dequeue_style( 'wc-blocks-vendors-style' );
     }
+
+    // WP Store Locator CSS is only needed on the /find-a-stockist/ page.
+    // Skip dequeue when the [wpsl] shortcode is present on the current post.
+    if ( ! has_shortcode( (string) get_the_content(), 'wpsl' ) ) {
+      wp_dequeue_style( 'wpsl-styles' );
+    }
+  }
+
+  function suppress_slick_elementor_code_meta( $value, $object_id, $meta_key, $single ) {
+    if ( is_admin() ) {
+      return $value;
+    }
+    if ( $meta_key !== '_elementor_code' ) {
+      return $value;
+    }
+    if ( get_post_type( $object_id ) !== 'elementor_snippet' ) {
+      return $value;
+    }
+    static $slick_ids = null;
+    if ( $slick_ids === null ) {
+      global $wpdb;
+      $ids      = $wpdb->get_col(
+        "SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key = '_elementor_code' AND meta_value LIKE '%slick-carousel%'"
+      );
+      $slick_ids = array_flip( $ids );
+    }
+    if ( isset( $slick_ids[ $object_id ] ) ) {
+      return $single ? '' : [];
+    }
+    return $value;
   }
 
   function remove_emoji_dns_prefetch( $urls, $relation_type ) {

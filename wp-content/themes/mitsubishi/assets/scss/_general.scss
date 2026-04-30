@@ -26,6 +26,8 @@ body {
 
 html {
   font-size: $font-size-root;
+  /* Reserve scrollbar gutter so popup open/close (overflow:hidden on body) doesn't shift layout (CLS) */
+  scrollbar-gutter: stable;
 }
 
 body {
