@@ -113,23 +113,41 @@ class Custom_El_Page_Header extends Widget_Base {
     $button_link  = $this->get_settings_for_display( 'button_link' );
 
     $bg_image       = false;
+    $bg_image_id    = 0;
     $page_for_posts = get_option( 'page_for_posts', true );
     $hide_title     = is_page() && 'yes' == ( Elementor\Core\Settings\Manager::get_settings_managers( 'page' )->get_model( get_the_ID() )->get_settings_for_display( 'hide_title' ) );
 
-    // Image URL
+    // Image URL + ID (ID needed for srcset generation)
     if ( ! empty( $image['id'] ) ) {
-      $bg_image = wp_get_attachment_image_url( $image['id'], 'full' );
+      $bg_image    = wp_get_attachment_image_url( $image['id'], 'full' );
+      $bg_image_id = (int) $image['id'];
     } elseif ( is_home() && $page_for_posts && has_post_thumbnail( $page_for_posts ) ) {
-      $bg_image = get_the_post_thumbnail_url( $page_for_posts, 'full' );
+      $bg_image    = get_the_post_thumbnail_url( $page_for_posts, 'full' );
+      $bg_image_id = (int) get_post_thumbnail_id( $page_for_posts );
     } elseif ( is_singular() && has_post_thumbnail() ) {
-      $bg_image = get_the_post_thumbnail_url( $post, 'full' );
+      $bg_image    = get_the_post_thumbnail_url( $post, 'full' );
+      $bg_image_id = (int) get_post_thumbnail_id();
+    }
+
+    // Emit a preload hint with imagesrcset so the browser starts fetching the
+    // LCP image — and picks the right responsive size — as early as possible.
+    if ( $bg_image ) {
+      $preload_srcset = $bg_image_id ? wp_get_attachment_image_srcset( $bg_image_id, 'full' ) : false;
+      echo '<link rel="preload" as="image" fetchpriority="high" href="' . esc_url( $bg_image ) . '"'
+        . ( $preload_srcset ? ' imagesrcset="' . esc_attr( $preload_srcset ) . '" imagesizes="100vw"' : '' )
+        . '>';
     }
 
     ?>
     <div id="<?= $uid ?>" class="el-page-header <?= $bg_image ? 'el-page-header--has-bg' : '' ?> <?= $hide_title ? 'el-page-header--hide-title' : '' ?>">
       <?php if ( $bg_image ) : ?>
+        <?php $bg_srcset = $bg_image_id ? wp_get_attachment_image_srcset( $bg_image_id, 'full' ) : false; ?>
         <img class="el-page-header__bg-img"
              src="<?= esc_url( $bg_image ) ?>"
+             <?php if ( $bg_srcset ) : ?>
+               srcset="<?= esc_attr( $bg_srcset ) ?>"
+               sizes="100vw"
+             <?php endif; ?>
              alt=""
              fetchpriority="high"
              loading="eager"

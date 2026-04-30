@@ -195,9 +195,12 @@ class Custom_El_Text_Image extends Widget_Base {
       // starts fetching it as early as possible in the HTML stream.
       $first_slide = $slides[0] ?? null;
       if ( $first_slide && ! empty( $first_slide['image']['id'] ) ) {
-        $preload_url = wp_get_attachment_image_url( $first_slide['image']['id'], 'full' );
+        $preload_url    = wp_get_attachment_image_url( $first_slide['image']['id'], 'full' );
+        $preload_srcset = wp_get_attachment_image_srcset( $first_slide['image']['id'], 'full' );
         if ( $preload_url ) {
-          echo '<link rel="preload" as="image" fetchpriority="high" href="' . esc_url( $preload_url ) . '">';
+          echo '<link rel="preload" as="image" fetchpriority="high" href="' . esc_url( $preload_url ) . '"'
+            . ( $preload_srcset ? ' imagesrcset="' . esc_attr( $preload_srcset ) . '" imagesizes="100vw"' : '' )
+            . '>';
         }
       }
     ?>
@@ -234,6 +237,7 @@ class Custom_El_Text_Image extends Widget_Base {
                   case 'style-1':
                     get_template_part( 'template-parts/text-image-v1/text-image-v1', null, [
                       'layout'         => $layout,
+                      'image_id'       => ! empty( $image['id'] ) ? (int) $image['id'] : 0,
                       'image_url'      => ! empty( $image['id'] ) ? wp_get_attachment_image_url( $image['id'], 'full' ) : $MIT_helpers->get_assets_path( 'images/placeholder.png' ),
                       'image_alt'      => get_the_title( $image['id'] ),
                       'content'        => $content,
@@ -247,6 +251,7 @@ class Custom_El_Text_Image extends Widget_Base {
                   case 'style-2':
                     get_template_part( 'template-parts/text-image-v2/text-image-v2', null, [
                       'layout'         => $layout,
+                      'image_id'       => ! empty( $image['id'] ) ? (int) $image['id'] : 0,
                       'image_url'      => ! empty( $image['id'] ) ? wp_get_attachment_image_url( $image['id'], 'full' ) : $MIT_helpers->get_assets_path( 'images/placeholder.png' ),
                       'image_alt'      => get_the_title( $image['id'] ),
                       'content'        => $content,

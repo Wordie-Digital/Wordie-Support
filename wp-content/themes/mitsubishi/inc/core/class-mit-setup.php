@@ -41,6 +41,12 @@ class MIT_Setup {
     // and jquery.sticky all load sync and crash with "jQuery is not defined" if deferred.
     add_filter( 'rocket_exclude_defer_js', [ $this, 'exclude_jquery_from_rocket_defer' ] );
 
+    // Compatibility: protect critical scripts from WP Rocket's "Delay JS Execution" feature.
+    // If Delay JS is enabled in WP Admin, these scripts still run immediately.
+    // All other scripts (GTM, FB pixel, etc.) will be delayed until user interaction,
+    // which reduces TBT significantly.
+    add_filter( 'rocket_delay_js_exclusions', [ $this, 'exclude_critical_scripts_from_rocket_delay' ] );
+
     // Performance: dequeue WooCommerce CSS and other page-specific assets on pages that don't need them
     add_action( 'wp_enqueue_scripts', [ $this, 'dequeue_woo_css' ], 100 );
 
@@ -1074,6 +1080,20 @@ class MIT_Setup {
   function exclude_jquery_from_rocket_defer( $exclusions ) {
     $exclusions[] = 'jquery.min.js';
     $exclusions[] = 'jquery-migrate.min.js';
+    return $exclusions;
+  }
+
+  function exclude_critical_scripts_from_rocket_delay( $exclusions ) {
+    // Elementor, Swiper, jQuery UI, and sticky header must run immediately.
+    // Delaying any of these breaks the page. Everything else (GTM, FB pixel,
+    // analytics) will be delayed until first user interaction, cutting TBT.
+    $exclusions[] = 'jquery.min.js';
+    $exclusions[] = 'jquery-migrate.min.js';
+    $exclusions[] = 'elementor/assets/js/frontend';
+    $exclusions[] = 'elementor-pro/assets/js';
+    $exclusions[] = 'swiper-bundle';
+    $exclusions[] = 'jquery.sticky';
+    $exclusions[] = 'main.min.js';
     return $exclusions;
   }
 

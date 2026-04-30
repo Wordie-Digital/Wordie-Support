@@ -6,8 +6,10 @@ $layout         = $args['layout'] ?? 'image-right';
 $position_image = 'image-left' == $layout ? 'start' : 'end';
 $position_text  = 'image-right' == $layout ? 'start' : 'end';
 
+$image_id  = $args['image_id'] ?? 0;
 $image_url = $args['image_url'] ?? MIT_Core::instance()->helpers->get_assets_path( 'images/placeholder.png' );
 $image_alt = $args['image_alt'] ?? '';
+$img_srcset = $image_id ? wp_get_attachment_image_srcset( $image_id, 'full' ) : false;
 $content   = $args['content'] ?? '';
 
 $button_link  = $args['button_link'] ?? '';
@@ -22,7 +24,10 @@ $button_label_2 = $args['button_label_2'] ?? 'Read More';
       <div class="row justify-content-<?= $position_image ?>">
         <div class="col-lg-9">
           <div class="mit-text-image-v2__image-wrapper">
-            <img loading="lazy" src="<?= esc_url( $image_url ) ?>" alt="<?= $image_alt ?>"/>
+            <img loading="lazy"
+               src="<?= esc_url( $image_url ) ?>"
+               <?php if ( $img_srcset ) : ?>srcset="<?= esc_attr( $img_srcset ) ?>" sizes="100vw"<?php endif; ?>
+               alt="<?= esc_attr( $image_alt ) ?>"/>
           </div>
         </div>
       </div>

@@ -8,11 +8,13 @@ $meta_right = $args['meta_right'] ?? '';
 $layout        = $args['layout'] ?? 'image-left';
 $position_text = 'image-left' == $layout ? 'end' : 'start';
 
+$image_id    = $args['image_id'] ?? 0;
 $image_url   = $args['image_url'] ?? MIT_Core::instance()->helpers->get_assets_path( 'images/placeholder.png' );
 $image_alt   = $args['image_alt'] ?? '';
 $content     = $args['content'] ?? '';
 $img_loading = ! empty( $args['is_lcp'] ) ? 'eager' : 'lazy';
 $img_fetch   = ! empty( $args['is_lcp'] ) ? ' fetchpriority="high"' : '';
+$img_srcset  = $image_id ? wp_get_attachment_image_srcset( $image_id, 'full' ) : false;
 
 $button_link  = $args['button_link'] ?? '';
 $button_label = $args['button_label'] ?? 'Read More';
@@ -21,13 +23,16 @@ $button_link_2  = $args['button_link_2'] ?? '';
 $button_label_2 = $args['button_label_2'] ?? 'Read More';
 ?>
 <div class="mit-text-image-v1">
+  <?php
+  $img_srcset_attr = $img_srcset ? ' srcset="' . esc_attr( $img_srcset ) . '" sizes="100vw"' : '';
+  ?>
   <?php if ( empty( $content ) && ! empty( $button_link ) ) : ?>
     <a class="mit-text-image-v1__bg d-block" href="<?= esc_url( $button_link ) ?>">
-      <img loading="<?= $img_loading ?>"<?= $img_fetch ?> src="<?= esc_url( $image_url ) ?>" alt="<?= esc_attr( $image_alt ) ?>">
+      <img loading="<?= $img_loading ?>"<?= $img_fetch ?><?= $img_srcset_attr ?> src="<?= esc_url( $image_url ) ?>" alt="<?= esc_attr( $image_alt ) ?>">
     </a>
   <?php else: ?>
     <div class="mit-text-image-v1__bg">
-      <img loading="<?= $img_loading ?>"<?= $img_fetch ?> src="<?= esc_url( $image_url ) ?>" alt="<?= esc_attr( $image_alt ) ?>">
+      <img loading="<?= $img_loading ?>"<?= $img_fetch ?><?= $img_srcset_attr ?> src="<?= esc_url( $image_url ) ?>" alt="<?= esc_attr( $image_alt ) ?>">
     </div>
   <?php endif; ?>
 
