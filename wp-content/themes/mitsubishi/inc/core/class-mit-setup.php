@@ -1008,7 +1008,6 @@ class MIT_Setup {
     return 30;
   }
 
-<<<<<<< HEAD
   function dequeue_woo_css() {
     if (
       function_exists( 'is_woocommerce' ) &&
@@ -1034,7 +1033,8 @@ class MIT_Setup {
       return $tag;
     }
     return str_replace( ' src=', ' defer src=', $tag );
-=======
+  }
+
   function remove_emoji_dns_prefetch( $urls, $relation_type ) {
     if ( 'dns-prefetch' === $relation_type ) {
       $urls = array_values( array_diff( $urls, [ 'https://s.w.org' ] ) );
@@ -1044,7 +1044,6 @@ class MIT_Setup {
 
   function remove_tinymce_emoji( $plugins ) {
     return array_diff( $plugins, [ 'wpemoji' ] );
->>>>>>> 1fec337f (perf(cwv): disable WordPress emoji scripts and styles)
   }
 
   function add_preconnect_hints( $urls, $relation_type ) {
