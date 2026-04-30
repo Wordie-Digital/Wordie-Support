@@ -43,11 +43,6 @@ class MIT_Setup {
     // Performance: dequeue WooCommerce CSS on non-WooCommerce pages
     add_action( 'wp_enqueue_scripts', [ $this, 'dequeue_woo_css' ], 100 );
 
-    // Performance: strip slick carousel CSS hardcoded via Elementor custom code —
-    // it cannot be dequeued (no WP handle), so intercept wp_head output instead.
-    add_action( 'wp_head', [ $this, 'start_head_buffer' ], 1 );
-    add_action( 'wp_head', [ $this, 'end_head_buffer' ], 999 );
-
     // Performance: disable WordPress emoji scripts and styles
     remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
     remove_action( 'wp_print_styles', 'print_emoji_styles' );
@@ -1011,22 +1006,6 @@ class MIT_Setup {
 
   function excerpt_length( $length ): string {
     return 30;
-  }
-
-  function start_head_buffer() {
-    ob_start();
-  }
-
-  function end_head_buffer() {
-    $head = ob_get_clean();
-    // Remove slick carousel CSS injected via Elementor custom code.
-    // Uses a CDN link with SRI hash — no WordPress handle, so ob_start is the only option.
-    $head = preg_replace(
-      '/<link[^>]*cdnjs\.cloudflare\.com\/ajax\/libs\/slick-carousel[^>]*>\s*/i',
-      '',
-      $head
-    );
-    echo $head;
   }
 
   function dequeue_woo_css() {
