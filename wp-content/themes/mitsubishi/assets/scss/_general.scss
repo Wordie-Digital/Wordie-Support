@@ -220,11 +220,20 @@ td td {
   color: var(--e-global-color-secondary);
 }
 
-/* Prevent Elementor popup modal from causing CLS.
-   The dialog-lightbox-widget is 412×566px and sits in normal document flow
-   for a brief window between Elementor setting display:block and its dialog
-   JS applying position:fixed. Forcing fixed here eliminates the 0.688 shift. */
+/* Prevent Elementor popup from causing CLS.
+   .dialog-lightbox-widget sits in normal document flow for a brief window
+   between the outer wrapper becoming display:block and Elementor's dialog JS
+   applying position:fixed + inset:0. Pre-applying those values here eliminates
+   the race window entirely — the widget is always a full-viewport overlay,
+   never a block element shifting page content. */
 div[id^="elementor-popup-modal"] {
   display: none;
-  position: fixed;
+}
+
+.elementor-popup-modal .dialog-lightbox-widget {
+  position: fixed !important;
+  top: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  left: 0 !important;
 }
