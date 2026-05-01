@@ -221,16 +221,17 @@ td td {
 }
 
 /* Prevent Elementor popup from causing CLS.
-   .dialog-lightbox-widget sits in normal document flow for a brief window
-   between the outer wrapper becoming display:block and Elementor's dialog JS
-   applying position:fixed + inset:0. Pre-applying those values here eliminates
-   the race window entirely — the widget is always a full-viewport overlay,
-   never a block element shifting page content. */
+   All three layers of the popup stack must be position:fixed so none of them
+   ever participates in normal document flow — even for the brief window between
+   the outer wrapper becoming display:block and Elementor's JS finishing layout.
+   Lighthouse reports .dialog-message as the CLS source (score 0.688), so that
+   element must be explicitly fixed as well as the two parent containers. */
 div[id^="elementor-popup-modal"] {
   display: none;
 }
 
-.elementor-popup-modal .dialog-lightbox-widget {
+.elementor-popup-modal .dialog-lightbox-widget,
+.elementor-popup-modal .dialog-message.dialog-lightbox-message {
   position: fixed !important;
   top: 0 !important;
   right: 0 !important;
