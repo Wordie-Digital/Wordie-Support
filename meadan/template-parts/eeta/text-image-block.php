@@ -5,17 +5,21 @@ $heading = get_sub_field( 'heading' );
 $body    = get_sub_field( 'body' );
 ?>
 <section class="eeta-text-image">
-    <div class="eeta-text-image__image-col">
+    <div class="eeta-text-image__image-wrap">
         <?php if ( $image ) : ?>
-            <figure class="eeta-text-image__figure">
-                <img src="<?php echo esc_url( $image['url'] ); ?>" alt="<?php echo esc_attr( $image['alt'] ); ?>" width="<?php echo esc_attr( $image['width'] ); ?>" height="<?php echo esc_attr( $image['height'] ); ?>" loading="lazy" />
-                <?php if ( $caption ) : ?>
-                    <figcaption class="eeta-text-image__caption"><?php echo esc_html( $caption ); ?></figcaption>
-                <?php endif; ?>
-            </figure>
+            <img
+                src="<?php echo esc_url( $image['url'] ); ?>"
+                alt="<?php echo esc_attr( $image['alt'] ); ?>"
+                width="<?php echo esc_attr( $image['width'] ); ?>"
+                height="<?php echo esc_attr( $image['height'] ); ?>"
+                loading="lazy"
+            />
+        <?php endif; ?>
+        <?php if ( $caption ) : ?>
+            <p class="eeta-text-image__caption"><?php echo esc_html( $caption ); ?></p>
         <?php endif; ?>
     </div>
-    <div class="eeta-text-image__text-col">
+    <div class="eeta-text-image__copy">
         <?php if ( $heading ) : ?>
             <h2 class="eeta-text-image__heading"><?php echo esc_html( $heading ); ?></h2>
         <?php endif; ?>
