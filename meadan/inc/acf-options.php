@@ -54,4 +54,36 @@ add_action( 'acf/init', function () {
         'autoload'    => true,
     ] );
 
+    // -------------------------------------------------------------------------
+    // EETA — Essential Energy Training Academy options
+    // -------------------------------------------------------------------------
+    acf_add_options_page( [
+        'page_title'  => __( 'EETA Settings', 'meadan' ),
+        'menu_title'  => __( 'EETA Settings', 'meadan' ),
+        'menu_slug'   => 'eeta-settings',
+        'capability'  => 'manage_options',
+        'redirect'    => true,
+        'icon_url'    => 'dashicons-welcome-learn-more',
+        'position'    => 61,
+        'autoload'    => true,
+    ] );
+
+    acf_add_options_sub_page( [
+        'page_title'  => __( 'EETA Header', 'meadan' ),
+        'menu_title'  => __( 'Header', 'meadan' ),
+        'menu_slug'   => 'eeta-settings-header',
+        'parent_slug' => 'eeta-settings',
+        'capability'  => 'manage_options',
+        'autoload'    => true,
+    ] );
+
+    acf_add_options_sub_page( [
+        'page_title'  => __( 'EETA Footer', 'meadan' ),
+        'menu_title'  => __( 'Footer', 'meadan' ),
+        'menu_slug'   => 'eeta-settings-footer',
+        'parent_slug' => 'eeta-settings',
+        'capability'  => 'manage_options',
+        'autoload'    => true,
+    ] );
+
 } );

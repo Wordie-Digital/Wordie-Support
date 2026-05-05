@@ -1,0 +1,189 @@
+[
+  {
+    "key": "group_eeta_homepage",
+    "title": "EETA — Homepage Sections",
+    "fields": [
+      {
+        "key": "field_eeta_page_sections",
+        "label": "Page Sections",
+        "name": "eeta_page_sections",
+        "type": "flexible_content",
+        "instructions": "Add and reorder EETA homepage sections. Each layout corresponds to a Figma block.",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": { "width": "", "class": "", "id": "" },
+        "button_label": "Add Section",
+        "min": 0,
+        "max": 0,
+        "layouts": [
+          {
+            "key": "layout_eeta_hero",
+            "name": "hero",
+            "label": "Hero",
+            "display": "block",
+            "min": "",
+            "max": "",
+            "sub_fields": [
+              { "key": "field_eeta_hero_heading", "label": "Heading", "name": "heading", "type": "text", "instructions": "Main hero headline. Keep to 5–8 words.", "required": 1, "conditional_logic": 0, "wrapper": { "width": "", "class": "", "id": "" }, "maxlength": 100 },
+              { "key": "field_eeta_hero_subheading", "label": "Subheading", "name": "subheading", "type": "text", "instructions": "Short supporting line below the heading.", "required": 0, "conditional_logic": 0, "wrapper": { "width": "", "class": "", "id": "" }, "maxlength": 150 },
+              { "key": "field_eeta_hero_body", "label": "Body Text", "name": "body", "type": "textarea", "instructions": "Supporting paragraph text.", "required": 0, "conditional_logic": 0, "wrapper": { "width": "", "class": "", "id": "" }, "rows": 4 },
+              { "key": "field_eeta_hero_cta_label", "label": "CTA Button Label", "name": "cta_label", "type": "text", "instructions": "Button text, e.g. 'Enquire now'.", "required": 0, "conditional_logic": 0, "wrapper": { "width": "50", "class": "", "id": "" }, "maxlength": 50 },
+              { "key": "field_eeta_hero_cta_url", "label": "CTA Button URL", "name": "cta_url", "type": "url", "instructions": "URL the CTA button links to.", "required": 0, "conditional_logic": 0, "wrapper": { "width": "50", "class": "", "id": "" } },
+              { "key": "field_eeta_hero_hero_image", "label": "Hero Image (Right Panel)", "name": "hero_image", "type": "image", "instructions": "Right-panel image. Upload at minimum 720×720px.", "required": 1, "conditional_logic": 0, "wrapper": { "width": "", "class": "", "id": "" }, "return_format": "array", "preview_size": "medium", "library": "all" }
+            ]
+          },
+          {
+            "key": "layout_eeta_text_image_block",
+            "name": "text_image_block",
+            "label": "Text + Image Block",
+            "display": "block",
+            "min": "",
+            "max": "",
+            "sub_fields": [
+              { "key": "field_eeta_tib_image", "label": "Image", "name": "image", "type": "image", "instructions": "Upload at minimum 624×499px (5:4 ratio).", "required": 1, "conditional_logic": 0, "wrapper": { "width": "", "class": "", "id": "" }, "return_format": "array", "preview_size": "medium", "library": "all" },
+              { "key": "field_eeta_tib_caption", "label": "Image Caption", "name": "caption", "type": "text", "instructions": "Optional caption below the image.", "required": 0, "conditional_logic": 0, "wrapper": { "width": "", "class": "", "id": "" }, "maxlength": 200 },
+              { "key": "field_eeta_tib_heading", "label": "Heading", "name": "heading", "type": "text", "instructions": "Section heading above the body text.", "required": 1, "conditional_logic": 0, "wrapper": { "width": "", "class": "", "id": "" }, "maxlength": 100 },
+              { "key": "field_eeta_tib_body", "label": "Body Text", "name": "body", "type": "wysiwyg", "instructions": "Body content. Supports bold, italic, links.", "required": 0, "conditional_logic": 0, "wrapper": { "width": "", "class": "", "id": "" }, "toolbar": "basic", "media_upload": 0 }
+            ]
+          },
+          {
+            "key": "layout_eeta_audience_cards",
+            "name": "audience_cards",
+            "label": "Audience Cards",
+            "display": "block",
+            "min": "",
+            "max": "",
+            "sub_fields": [
+              { "key": "field_eeta_ac_section_heading", "label": "Section Heading", "name": "section_heading", "type": "text", "instructions": "Main heading above the cards.", "required": 1, "conditional_logic": 0, "wrapper": { "width": "", "class": "", "id": "" }, "maxlength": 100 },
+              { "key": "field_eeta_ac_section_subheading", "label": "Section Subheading", "name": "section_subheading", "type": "text", "instructions": "Supporting line below the heading.", "required": 0, "conditional_logic": 0, "wrapper": { "width": "", "class": "", "id": "" }, "maxlength": 200 },
+              {
+                "key": "field_eeta_ac_cards",
+                "label": "Cards",
+                "name": "cards",
+                "type": "repeater",
+                "instructions": "Add up to 3 audience cards.",
+                "required": 1,
+                "conditional_logic": 0,
+                "wrapper": { "width": "", "class": "", "id": "" },
+                "min": 1, "max": 3, "layout": "block", "button_label": "Add Card",
+                "sub_fields": [
+                  { "key": "field_eeta_ac_cards_icon", "label": "Card Icon", "name": "icon", "type": "image", "instructions": "Icon image. Upload at 64×64px.", "required": 0, "conditional_logic": 0, "wrapper": { "width": "20", "class": "", "id": "" }, "return_format": "array", "preview_size": "thumbnail", "library": "all" },
+                  { "key": "field_eeta_ac_cards_title", "label": "Card Title", "name": "title", "type": "text", "instructions": "Audience group name.", "required": 1, "conditional_logic": 0, "wrapper": { "width": "80", "class": "", "id": "" }, "maxlength": 80 },
+                  {
+                    "key": "field_eeta_ac_cards_bullet_points",
+                    "label": "Bullet Points",
+                    "name": "bullet_points",
+                    "type": "repeater",
+                    "instructions": "Add bullet points for this card.",
+                    "required": 0, "conditional_logic": 0, "wrapper": { "width": "", "class": "", "id": "" },
+                    "min": 0, "max": 6, "layout": "table", "button_label": "Add Point",
+                    "sub_fields": [
+                      { "key": "field_eeta_ac_cards_bp_point", "label": "Point", "name": "point", "type": "text", "instructions": "Single bullet point text.", "required": 1, "conditional_logic": 0, "wrapper": { "width": "", "class": "", "id": "" }, "maxlength": 150 }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "layout_eeta_icon_boxes",
+            "name": "icon_boxes",
+            "label": "Icon Boxes",
+            "display": "block",
+            "min": "",
+            "max": "",
+            "sub_fields": [
+              { "key": "field_eeta_ib_section_heading", "label": "Section Heading", "name": "section_heading", "type": "text", "instructions": "Heading above the icon grid.", "required": 1, "conditional_logic": 0, "wrapper": { "width": "", "class": "", "id": "" }, "maxlength": 100 },
+              { "key": "field_eeta_ib_section_subheading", "label": "Section Subheading", "name": "section_subheading", "type": "text", "instructions": "Optional supporting text.", "required": 0, "conditional_logic": 0, "wrapper": { "width": "", "class": "", "id": "" }, "maxlength": 200 },
+              {
+                "key": "field_eeta_ib_boxes",
+                "label": "Icon Boxes",
+                "name": "boxes",
+                "type": "repeater",
+                "instructions": "Add icon boxes. 6 boxes = 3×2 grid on desktop.",
+                "required": 1, "conditional_logic": 0, "wrapper": { "width": "", "class": "", "id": "" },
+                "min": 1, "max": 6, "layout": "block", "button_label": "Add Box",
+                "sub_fields": [
+                  { "key": "field_eeta_ib_boxes_icon", "label": "Icon", "name": "icon", "type": "image", "instructions": "Icon image at 48×48px.", "required": 1, "conditional_logic": 0, "wrapper": { "width": "20", "class": "", "id": "" }, "return_format": "array", "preview_size": "thumbnail", "library": "all" },
+                  { "key": "field_eeta_ib_boxes_title", "label": "Title", "name": "title", "type": "text", "instructions": "Short title for this box.", "required": 1, "conditional_logic": 0, "wrapper": { "width": "80", "class": "", "id": "" }, "maxlength": 80 },
+                  { "key": "field_eeta_ib_boxes_description", "label": "Description", "name": "description", "type": "text", "instructions": "Brief description (1–2 lines).", "required": 0, "conditional_logic": 0, "wrapper": { "width": "", "class": "", "id": "" }, "maxlength": 200 }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "layout_eeta_upcoming_courses",
+            "name": "upcoming_courses",
+            "label": "Upcoming Courses",
+            "display": "block",
+            "min": "",
+            "max": "",
+            "sub_fields": [
+              { "key": "field_eeta_uc_heading", "label": "Heading", "name": "heading", "type": "text", "instructions": "Section heading, e.g. 'What's coming next'.", "required": 1, "conditional_logic": 0, "wrapper": { "width": "", "class": "", "id": "" }, "maxlength": 100 },
+              { "key": "field_eeta_uc_subheading", "label": "Subheading", "name": "subheading", "type": "textarea", "instructions": "Supporting paragraph below the heading.", "required": 0, "conditional_logic": 0, "wrapper": { "width": "", "class": "", "id": "" }, "rows": 3 },
+              {
+                "key": "field_eeta_uc_courses",
+                "label": "Courses",
+                "name": "courses",
+                "type": "repeater",
+                "instructions": "Add upcoming course or initiative entries.",
+                "required": 1, "conditional_logic": 0, "wrapper": { "width": "", "class": "", "id": "" },
+                "min": 1, "max": 10, "layout": "block", "button_label": "Add Course",
+                "sub_fields": [
+                  { "key": "field_eeta_uc_courses_status", "label": "Status", "name": "status", "type": "select", "instructions": "Current status.", "required": 1, "conditional_logic": 0, "wrapper": { "width": "33", "class": "", "id": "" }, "choices": { "ongoing": "Ongoing", "year": "Year", "late_2027": "Late 2027" }, "default_value": "ongoing", "allow_null": 0, "multiple": 0, "ui": 1, "ajax": 0, "return_format": "value" },
+                  { "key": "field_eeta_uc_courses_year_label", "label": "Year / Period Label", "name": "year_label", "type": "text", "instructions": "Label for the year column, e.g. '2025'.", "required": 1, "conditional_logic": 0, "wrapper": { "width": "33", "class": "", "id": "" }, "maxlength": 30 },
+                  { "key": "field_eeta_uc_courses_title", "label": "Course Title", "name": "title", "type": "text", "instructions": "Name of the course or initiative.", "required": 1, "conditional_logic": 0, "wrapper": { "width": "33", "class": "", "id": "" }, "maxlength": 150 },
+                  { "key": "field_eeta_uc_courses_description", "label": "Description", "name": "description", "type": "textarea", "instructions": "Brief description.", "required": 0, "conditional_logic": 0, "wrapper": { "width": "", "class": "", "id": "" }, "rows": 3 }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "layout_eeta_enquire_section",
+            "name": "enquire_section",
+            "label": "Enquire Section",
+            "display": "block",
+            "min": "",
+            "max": "",
+            "sub_fields": [
+              { "key": "field_eeta_es_heading", "label": "Heading", "name": "heading", "type": "text", "instructions": "Section heading, e.g. 'Enquire now'.", "required": 1, "conditional_logic": 0, "wrapper": { "width": "50", "class": "", "id": "" }, "maxlength": 80 },
+              { "key": "field_eeta_es_subheading", "label": "Subheading", "name": "subheading", "type": "text", "instructions": "Short supporting line.", "required": 0, "conditional_logic": 0, "wrapper": { "width": "50", "class": "", "id": "" }, "maxlength": 150 },
+              { "key": "field_eeta_es_intro_text", "label": "Intro Text", "name": "intro_text", "type": "textarea", "instructions": "Introductory paragraph.", "required": 0, "conditional_logic": 0, "wrapper": { "width": "", "class": "", "id": "" }, "rows": 4 },
+              {
+                "key": "field_eeta_es_benefits",
+                "label": "Benefits List",
+                "name": "benefits",
+                "type": "repeater",
+                "instructions": "Add checkmark benefit items.",
+                "required": 0, "conditional_logic": 0, "wrapper": { "width": "", "class": "", "id": "" },
+                "min": 0, "max": 6, "layout": "table", "button_label": "Add Benefit",
+                "sub_fields": [
+                  { "key": "field_eeta_es_benefits_benefit_text", "label": "Benefit Text", "name": "benefit_text", "type": "text", "instructions": "Single benefit item.", "required": 1, "conditional_logic": 0, "wrapper": { "width": "", "class": "", "id": "" }, "maxlength": 200 }
+                ]
+              },
+              { "key": "field_eeta_es_disclaimer_text", "label": "Disclaimer Text", "name": "disclaimer_text", "type": "textarea", "instructions": "Small print below the benefits.", "required": 0, "conditional_logic": 0, "wrapper": { "width": "", "class": "", "id": "" }, "rows": 3 },
+              { "key": "field_eeta_es_form_id", "label": "Gravity Form ID", "name": "form_id", "type": "number", "instructions": "Numeric ID of the Gravity Form to embed. Find in WP Admin → Forms.", "required": 1, "conditional_logic": 0, "wrapper": { "width": "50", "class": "", "id": "" }, "min": 1, "max": 9999, "step": 1 },
+              { "key": "field_eeta_es_bg_image", "label": "Background Image (Right Panel)", "name": "bg_image", "type": "image", "instructions": "Decorative bg for the form panel. Upload at minimum 720×698px.", "required": 0, "conditional_logic": 0, "wrapper": { "width": "50", "class": "", "id": "" }, "return_format": "array", "preview_size": "medium", "library": "all" }
+            ]
+          }
+        ]
+      }
+    ],
+    "location": [
+      [
+        {
+          "param": "page_template",
+          "operator": "==",
+          "value": "templates/template-essential-energy.php"
+        }
+      ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "active": true,
+    "description": "EETA homepage flexible content sections. Appears on pages using the Essential Energy Training Academy template."
+  }
+]

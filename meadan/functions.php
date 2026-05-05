@@ -53,6 +53,23 @@ add_action( 'wp_enqueue_scripts', function () {
         true
     );
 
+    // EETA landing page styles
+    if ( is_page_template( 'templates/template-essential-energy.php' ) ) {
+        wp_enqueue_style(
+            'eeta-styles',
+            MEADAN_URI . '/assets/css/blocks/eeta.css',
+            [],
+            filemtime( MEADAN_DIR . '/assets/css/blocks/eeta.css' )
+        );
+        wp_enqueue_script(
+            'eeta-main',
+            MEADAN_URI . '/assets/js/eeta.js',
+            [],
+            MEADAN_VERSION,
+            true
+        );
+    }
+
     // Single Blog Post — page styles
     if ( is_singular( 'post' ) ) {
         wp_enqueue_style(

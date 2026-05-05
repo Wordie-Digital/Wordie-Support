@@ -1,0 +1,54 @@
+[
+  {
+    "key": "group_eeta_header_options",
+    "title": "EETA — Header Settings",
+    "fields": [
+      { "key": "field_eeta_header_logo", "label": "Logo", "name": "eeta_header_logo", "type": "image", "instructions": "Upload the EETA logo. SVG or PNG with transparent background.", "required": 1, "conditional_logic": 0, "wrapper": { "width": "", "class": "", "id": "" }, "return_format": "array", "preview_size": "medium", "library": "all" },
+      {
+        "key": "field_eeta_header_nav_links",
+        "label": "Navigation Links",
+        "name": "eeta_header_nav_links",
+        "type": "repeater",
+        "instructions": "Add up to 5 navigation links.",
+        "required": 0, "conditional_logic": 0, "wrapper": { "width": "", "class": "", "id": "" },
+        "min": 0, "max": 5, "layout": "table", "button_label": "Add Link",
+        "sub_fields": [
+          { "key": "field_eeta_header_nav_label", "label": "Label", "name": "label", "type": "text", "instructions": "Link label text.", "required": 1, "conditional_logic": 0, "wrapper": { "width": "50", "class": "", "id": "" }, "maxlength": 60 },
+          { "key": "field_eeta_header_nav_url", "label": "URL", "name": "url", "type": "url", "instructions": "Link destination URL.", "required": 1, "conditional_logic": 0, "wrapper": { "width": "50", "class": "", "id": "" } }
+        ]
+      },
+      { "key": "field_eeta_header_cta_label", "label": "CTA Button Label", "name": "eeta_header_cta_label", "type": "text", "instructions": "Header CTA button text, e.g. 'Enquire now'.", "required": 0, "conditional_logic": 0, "wrapper": { "width": "50", "class": "", "id": "" }, "maxlength": 50 },
+      { "key": "field_eeta_header_cta_url", "label": "CTA Button URL", "name": "eeta_header_cta_url", "type": "url", "instructions": "URL the header CTA links to.", "required": 0, "conditional_logic": 0, "wrapper": { "width": "50", "class": "", "id": "" } }
+    ],
+    "location": [[{ "param": "options_page", "operator": "==", "value": "eeta-settings-header" }]],
+    "menu_order": 0, "position": "normal", "style": "default", "label_placement": "top", "instruction_placement": "label", "active": true, "description": "EETA global header/navigation settings."
+  },
+  {
+    "key": "group_eeta_footer_options",
+    "title": "EETA — Footer Settings",
+    "fields": [
+      { "key": "field_eeta_footer_logo", "label": "Footer Logo", "name": "eeta_footer_logo", "type": "image", "instructions": "Footer logo. SVG or PNG.", "required": 0, "conditional_logic": 0, "wrapper": { "width": "", "class": "", "id": "" }, "return_format": "array", "preview_size": "medium", "library": "all" },
+      { "key": "field_eeta_footer_email", "label": "Email Address", "name": "eeta_footer_email", "type": "text", "instructions": "Contact email address.", "required": 0, "conditional_logic": 0, "wrapper": { "width": "50", "class": "", "id": "" }, "maxlength": 100 },
+      { "key": "field_eeta_footer_phone", "label": "Phone Number", "name": "eeta_footer_phone", "type": "text", "instructions": "Contact phone number.", "required": 0, "conditional_logic": 0, "wrapper": { "width": "50", "class": "", "id": "" }, "maxlength": 30 },
+      { "key": "field_eeta_footer_address", "label": "Postal Address", "name": "eeta_footer_address", "type": "textarea", "instructions": "Postal address.", "required": 0, "conditional_logic": 0, "wrapper": { "width": "", "class": "", "id": "" }, "rows": 3 },
+      { "key": "field_eeta_footer_ack_image", "label": "Acknowledgement Image", "name": "eeta_footer_acknowledgement_image", "type": "image", "instructions": "Acknowledgement of Country banner image.", "required": 0, "conditional_logic": 0, "wrapper": { "width": "30", "class": "", "id": "" }, "return_format": "array", "preview_size": "thumbnail", "library": "all" },
+      { "key": "field_eeta_footer_ack_text", "label": "Acknowledgement Text", "name": "eeta_footer_acknowledgement_text", "type": "textarea", "instructions": "Acknowledgement of Country statement.", "required": 0, "conditional_logic": 0, "wrapper": { "width": "70", "class": "", "id": "" }, "rows": 3 },
+      { "key": "field_eeta_footer_copyright", "label": "Copyright Text", "name": "eeta_footer_copyright", "type": "text", "instructions": "Copyright notice.", "required": 0, "conditional_logic": 0, "wrapper": { "width": "50", "class": "", "id": "" }, "maxlength": 200 },
+      {
+        "key": "field_eeta_footer_links",
+        "label": "Footer Links",
+        "name": "eeta_footer_links",
+        "type": "repeater",
+        "instructions": "Add footer links (e.g. Privacy Policy).",
+        "required": 0, "conditional_logic": 0, "wrapper": { "width": "", "class": "", "id": "" },
+        "min": 0, "max": 5, "layout": "table", "button_label": "Add Link",
+        "sub_fields": [
+          { "key": "field_eeta_footer_link_label", "label": "Label", "name": "label", "type": "text", "instructions": "Link label text.", "required": 1, "conditional_logic": 0, "wrapper": { "width": "50", "class": "", "id": "" }, "maxlength": 60 },
+          { "key": "field_eeta_footer_link_url", "label": "URL", "name": "url", "type": "url", "instructions": "Link destination URL.", "required": 1, "conditional_logic": 0, "wrapper": { "width": "50", "class": "", "id": "" } }
+        ]
+      }
+    ],
+    "location": [[{ "param": "options_page", "operator": "==", "value": "eeta-settings-footer" }]],
+    "menu_order": 0, "position": "normal", "style": "default", "label_placement": "top", "instruction_placement": "label", "active": true, "description": "EETA global footer settings."
+  }
+]
