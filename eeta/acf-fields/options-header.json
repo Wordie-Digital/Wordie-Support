@@ -1,0 +1,95 @@
+[
+  {
+    "key": "group_eeta_header",
+    "title": "Header Settings",
+    "fields": [
+      {
+        "key": "field_eeta_header_logo",
+        "label": "Logo",
+        "name": "header_logo",
+        "type": "image",
+        "instructions": "Upload the site logo. SVG or PNG with transparent background recommended.",
+        "required": 1,
+        "conditional_logic": 0,
+        "wrapper": { "width": "", "class": "", "id": "" },
+        "return_format": "array",
+        "preview_size": "medium",
+        "library": "all"
+      },
+      {
+        "key": "field_eeta_header_nav_links",
+        "label": "Navigation Links",
+        "name": "header_nav_links",
+        "type": "repeater",
+        "instructions": "Add up to 5 navigation links.",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": { "width": "", "class": "", "id": "" },
+        "min": 0,
+        "max": 5,
+        "layout": "table",
+        "button_label": "Add Link",
+        "sub_fields": [
+          {
+            "key": "field_eeta_header_nav_links_label",
+            "label": "Label",
+            "name": "label",
+            "type": "text",
+            "instructions": "Link label text.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": { "width": "50", "class": "", "id": "" },
+            "maxlength": 60
+          },
+          {
+            "key": "field_eeta_header_nav_links_url",
+            "label": "URL",
+            "name": "url",
+            "type": "url",
+            "instructions": "Link destination URL.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": { "width": "50", "class": "", "id": "" }
+          }
+        ]
+      },
+      {
+        "key": "field_eeta_header_cta_label",
+        "label": "CTA Button Label",
+        "name": "header_cta_label",
+        "type": "text",
+        "instructions": "Label for the header call-to-action button, e.g. 'Enquire now'.",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": { "width": "50", "class": "", "id": "" },
+        "maxlength": 50
+      },
+      {
+        "key": "field_eeta_header_cta_url",
+        "label": "CTA Button URL",
+        "name": "header_cta_url",
+        "type": "url",
+        "instructions": "URL the header CTA button links to.",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": { "width": "50", "class": "", "id": "" }
+      }
+    ],
+    "location": [
+      [
+        {
+          "param": "options_page",
+          "operator": "==",
+          "value": "eeta-settings-header"
+        }
+      ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "active": true,
+    "description": "Global header/navigation settings."
+  }
+]

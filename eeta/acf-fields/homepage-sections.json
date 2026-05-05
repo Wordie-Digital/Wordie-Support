@@ -1,0 +1,564 @@
+[
+  {
+    "key": "group_eeta_homepage",
+    "title": "Homepage Sections",
+    "fields": [
+      {
+        "key": "field_eeta_page_sections",
+        "label": "Page Sections",
+        "name": "page_sections",
+        "type": "flexible_content",
+        "instructions": "Add, reorder, and configure homepage sections. Each layout corresponds to a Figma design block.",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": { "width": "", "class": "", "id": "" },
+        "button_label": "Add Section",
+        "min": 0,
+        "max": 0,
+        "layouts": [
+          {
+            "key": "layout_eeta_hero",
+            "name": "hero",
+            "label": "Hero",
+            "display": "block",
+            "min": "",
+            "max": "",
+            "sub_fields": [
+              {
+                "key": "field_eeta_hero_heading",
+                "label": "Heading",
+                "name": "heading",
+                "type": "text",
+                "instructions": "Main hero headline. Keep to 5\u20138 words for best layout.",
+                "required": 1,
+                "conditional_logic": 0,
+                "wrapper": { "width": "", "class": "", "id": "" },
+                "maxlength": 100
+              },
+              {
+                "key": "field_eeta_hero_subheading",
+                "label": "Subheading",
+                "name": "subheading",
+                "type": "text",
+                "instructions": "Short supporting line below the heading.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": { "width": "", "class": "", "id": "" },
+                "maxlength": 150
+              },
+              {
+                "key": "field_eeta_hero_body",
+                "label": "Body Text",
+                "name": "body",
+                "type": "textarea",
+                "instructions": "Supporting paragraph text below the subheading.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": { "width": "", "class": "", "id": "" },
+                "rows": 4
+              },
+              {
+                "key": "field_eeta_hero_cta_label",
+                "label": "CTA Button Label",
+                "name": "cta_label",
+                "type": "text",
+                "instructions": "Text for the call-to-action button, e.g. \u2018Enquire now\u2019.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": { "width": "50", "class": "", "id": "" },
+                "maxlength": 50
+              },
+              {
+                "key": "field_eeta_hero_cta_url",
+                "label": "CTA Button URL",
+                "name": "cta_url",
+                "type": "url",
+                "instructions": "URL the CTA button links to.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": { "width": "50", "class": "", "id": "" }
+              },
+              {
+                "key": "field_eeta_hero_hero_image",
+                "label": "Hero Image (Right Panel)",
+                "name": "hero_image",
+                "type": "image",
+                "instructions": "Full-bleed right-panel image. Upload at minimum 720\u00d7720px.",
+                "required": 1,
+                "conditional_logic": 0,
+                "wrapper": { "width": "", "class": "", "id": "" },
+                "return_format": "array",
+                "preview_size": "medium",
+                "library": "all"
+              }
+            ]
+          },
+          {
+            "key": "layout_eeta_text_image_block",
+            "name": "text_image_block",
+            "label": "Text + Image Block",
+            "display": "block",
+            "min": "",
+            "max": "",
+            "sub_fields": [
+              {
+                "key": "field_eeta_text_image_block_image",
+                "label": "Image",
+                "name": "image",
+                "type": "image",
+                "instructions": "Upload at minimum 624\u00d7499px (5:4 ratio recommended).",
+                "required": 1,
+                "conditional_logic": 0,
+                "wrapper": { "width": "", "class": "", "id": "" },
+                "return_format": "array",
+                "preview_size": "medium",
+                "library": "all"
+              },
+              {
+                "key": "field_eeta_text_image_block_caption",
+                "label": "Image Caption",
+                "name": "caption",
+                "type": "text",
+                "instructions": "Optional caption displayed below the image.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": { "width": "", "class": "", "id": "" },
+                "maxlength": 200
+              },
+              {
+                "key": "field_eeta_text_image_block_heading",
+                "label": "Heading",
+                "name": "heading",
+                "type": "text",
+                "instructions": "Section heading displayed above the body text.",
+                "required": 1,
+                "conditional_logic": 0,
+                "wrapper": { "width": "", "class": "", "id": "" },
+                "maxlength": 100
+              },
+              {
+                "key": "field_eeta_text_image_block_body",
+                "label": "Body Text",
+                "name": "body",
+                "type": "wysiwyg",
+                "instructions": "Body content. Supports bold, italic, and links.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": { "width": "", "class": "", "id": "" },
+                "toolbar": "basic",
+                "media_upload": 0
+              }
+            ]
+          },
+          {
+            "key": "layout_eeta_audience_cards",
+            "name": "audience_cards",
+            "label": "Audience Cards",
+            "display": "block",
+            "min": "",
+            "max": "",
+            "sub_fields": [
+              {
+                "key": "field_eeta_audience_cards_section_heading",
+                "label": "Section Heading",
+                "name": "section_heading",
+                "type": "text",
+                "instructions": "Main heading above the audience cards.",
+                "required": 1,
+                "conditional_logic": 0,
+                "wrapper": { "width": "", "class": "", "id": "" },
+                "maxlength": 100
+              },
+              {
+                "key": "field_eeta_audience_cards_section_subheading",
+                "label": "Section Subheading",
+                "name": "section_subheading",
+                "type": "text",
+                "instructions": "Supporting line below the section heading.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": { "width": "", "class": "", "id": "" },
+                "maxlength": 200
+              },
+              {
+                "key": "field_eeta_audience_cards_cards",
+                "label": "Cards",
+                "name": "cards",
+                "type": "repeater",
+                "instructions": "Add up to 3 audience cards. Desktop renders as 3 columns.",
+                "required": 1,
+                "conditional_logic": 0,
+                "wrapper": { "width": "", "class": "", "id": "" },
+                "min": 1,
+                "max": 3,
+                "layout": "block",
+                "button_label": "Add Card",
+                "sub_fields": [
+                  {
+                    "key": "field_eeta_audience_cards_cards_icon",
+                    "label": "Card Icon",
+                    "name": "icon",
+                    "type": "image",
+                    "instructions": "Icon image for this audience card. Upload SVG or PNG at 64\u00d764px.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": { "width": "20", "class": "", "id": "" },
+                    "return_format": "array",
+                    "preview_size": "thumbnail",
+                    "library": "all"
+                  },
+                  {
+                    "key": "field_eeta_audience_cards_cards_title",
+                    "label": "Card Title",
+                    "name": "title",
+                    "type": "text",
+                    "instructions": "Audience group name, e.g. \u2018Individuals and employees\u2019.",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": { "width": "80", "class": "", "id": "" },
+                    "maxlength": 80
+                  },
+                  {
+                    "key": "field_eeta_audience_cards_cards_bullet_points",
+                    "label": "Bullet Points",
+                    "name": "bullet_points",
+                    "type": "repeater",
+                    "instructions": "Add bullet points for this card. Max 5 recommended.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": { "width": "", "class": "", "id": "" },
+                    "min": 0,
+                    "max": 6,
+                    "layout": "table",
+                    "button_label": "Add Point",
+                    "sub_fields": [
+                      {
+                        "key": "field_eeta_audience_cards_cards_bullet_points_point",
+                        "label": "Point",
+                        "name": "point",
+                        "type": "text",
+                        "instructions": "Single bullet point text.",
+                        "required": 1,
+                        "conditional_logic": 0,
+                        "wrapper": { "width": "", "class": "", "id": "" },
+                        "maxlength": 150
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "layout_eeta_icon_boxes",
+            "name": "icon_boxes",
+            "label": "Icon Boxes",
+            "display": "block",
+            "min": "",
+            "max": "",
+            "sub_fields": [
+              {
+                "key": "field_eeta_icon_boxes_section_heading",
+                "label": "Section Heading",
+                "name": "section_heading",
+                "type": "text",
+                "instructions": "Main heading above the icon boxes grid.",
+                "required": 1,
+                "conditional_logic": 0,
+                "wrapper": { "width": "", "class": "", "id": "" },
+                "maxlength": 100
+              },
+              {
+                "key": "field_eeta_icon_boxes_section_subheading",
+                "label": "Section Subheading",
+                "name": "section_subheading",
+                "type": "text",
+                "instructions": "Optional supporting text below the section heading.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": { "width": "", "class": "", "id": "" },
+                "maxlength": 200
+              },
+              {
+                "key": "field_eeta_icon_boxes_boxes",
+                "label": "Icon Boxes",
+                "name": "boxes",
+                "type": "repeater",
+                "instructions": "Add icon boxes. Exactly 6 boxes render as a 3\u00d72 grid on desktop.",
+                "required": 1,
+                "conditional_logic": 0,
+                "wrapper": { "width": "", "class": "", "id": "" },
+                "min": 1,
+                "max": 6,
+                "layout": "block",
+                "button_label": "Add Box",
+                "sub_fields": [
+                  {
+                    "key": "field_eeta_icon_boxes_boxes_icon",
+                    "label": "Icon",
+                    "name": "icon",
+                    "type": "image",
+                    "instructions": "Icon image. Upload SVG or PNG at 48\u00d748px.",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": { "width": "20", "class": "", "id": "" },
+                    "return_format": "array",
+                    "preview_size": "thumbnail",
+                    "library": "all"
+                  },
+                  {
+                    "key": "field_eeta_icon_boxes_boxes_title",
+                    "label": "Title",
+                    "name": "title",
+                    "type": "text",
+                    "instructions": "Short title for this icon box.",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": { "width": "80", "class": "", "id": "" },
+                    "maxlength": 80
+                  },
+                  {
+                    "key": "field_eeta_icon_boxes_boxes_description",
+                    "label": "Description",
+                    "name": "description",
+                    "type": "text",
+                    "instructions": "Brief description for this icon box (1\u20132 lines).",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": { "width": "", "class": "", "id": "" },
+                    "maxlength": 200
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "layout_eeta_upcoming_courses",
+            "name": "upcoming_courses",
+            "label": "Upcoming Courses",
+            "display": "block",
+            "min": "",
+            "max": "",
+            "sub_fields": [
+              {
+                "key": "field_eeta_upcoming_courses_heading",
+                "label": "Heading",
+                "name": "heading",
+                "type": "text",
+                "instructions": "Section heading, e.g. \u2018What\u2019s coming next\u2019.",
+                "required": 1,
+                "conditional_logic": 0,
+                "wrapper": { "width": "", "class": "", "id": "" },
+                "maxlength": 100
+              },
+              {
+                "key": "field_eeta_upcoming_courses_subheading",
+                "label": "Subheading",
+                "name": "subheading",
+                "type": "textarea",
+                "instructions": "Supporting paragraph below the heading.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": { "width": "", "class": "", "id": "" },
+                "rows": 3
+              },
+              {
+                "key": "field_eeta_upcoming_courses_courses",
+                "label": "Courses",
+                "name": "courses",
+                "type": "repeater",
+                "instructions": "Add individual upcoming course or initiative entries.",
+                "required": 1,
+                "conditional_logic": 0,
+                "wrapper": { "width": "", "class": "", "id": "" },
+                "min": 1,
+                "max": 10,
+                "layout": "block",
+                "button_label": "Add Course",
+                "sub_fields": [
+                  {
+                    "key": "field_eeta_upcoming_courses_courses_status",
+                    "label": "Status",
+                    "name": "status",
+                    "type": "select",
+                    "instructions": "Select the current status of this course or initiative.",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": { "width": "33", "class": "", "id": "" },
+                    "choices": {
+                      "ongoing": "Ongoing",
+                      "year": "Year",
+                      "late_2027": "Late 2027"
+                    },
+                    "default_value": "ongoing",
+                    "allow_null": 0,
+                    "multiple": 0,
+                    "ui": 1,
+                    "ajax": 0,
+                    "return_format": "value"
+                  },
+                  {
+                    "key": "field_eeta_upcoming_courses_courses_year_label",
+                    "label": "Year / Period Label",
+                    "name": "year_label",
+                    "type": "text",
+                    "instructions": "Display label for the year or period, e.g. \u20182025\u2019 or \u2018Late 2027\u2019.",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": { "width": "33", "class": "", "id": "" },
+                    "maxlength": 30
+                  },
+                  {
+                    "key": "field_eeta_upcoming_courses_courses_title",
+                    "label": "Course Title",
+                    "name": "title",
+                    "type": "text",
+                    "instructions": "Name of the course or initiative.",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": { "width": "33", "class": "", "id": "" },
+                    "maxlength": 150
+                  },
+                  {
+                    "key": "field_eeta_upcoming_courses_courses_description",
+                    "label": "Description",
+                    "name": "description",
+                    "type": "textarea",
+                    "instructions": "Brief description of the course or initiative.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": { "width": "", "class": "", "id": "" },
+                    "rows": 3
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "layout_eeta_enquire_section",
+            "name": "enquire_section",
+            "label": "Enquire Section",
+            "display": "block",
+            "min": "",
+            "max": "",
+            "sub_fields": [
+              {
+                "key": "field_eeta_enquire_section_heading",
+                "label": "Heading",
+                "name": "heading",
+                "type": "text",
+                "instructions": "Section heading, e.g. \u2018Enquire now\u2019.",
+                "required": 1,
+                "conditional_logic": 0,
+                "wrapper": { "width": "50", "class": "", "id": "" },
+                "maxlength": 80
+              },
+              {
+                "key": "field_eeta_enquire_section_subheading",
+                "label": "Subheading",
+                "name": "subheading",
+                "type": "text",
+                "instructions": "Short supporting line below the heading.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": { "width": "50", "class": "", "id": "" },
+                "maxlength": 150
+              },
+              {
+                "key": "field_eeta_enquire_section_intro_text",
+                "label": "Intro Text",
+                "name": "intro_text",
+                "type": "textarea",
+                "instructions": "Introductory paragraph explaining who should enquire.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": { "width": "", "class": "", "id": "" },
+                "rows": 4
+              },
+              {
+                "key": "field_eeta_enquire_section_benefits",
+                "label": "Benefits List",
+                "name": "benefits",
+                "type": "repeater",
+                "instructions": "Add the checkmark benefit items that appear below the intro text.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": { "width": "", "class": "", "id": "" },
+                "min": 0,
+                "max": 6,
+                "layout": "table",
+                "button_label": "Add Benefit",
+                "sub_fields": [
+                  {
+                    "key": "field_eeta_enquire_section_benefits_benefit_text",
+                    "label": "Benefit Text",
+                    "name": "benefit_text",
+                    "type": "text",
+                    "instructions": "Single benefit item, e.g. \u20181x weekly email digest: key developments, dates, and opportunities\u2019.",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": { "width": "", "class": "", "id": "" },
+                    "maxlength": 200
+                  }
+                ]
+              },
+              {
+                "key": "field_eeta_enquire_section_disclaimer_text",
+                "label": "Disclaimer Text",
+                "name": "disclaimer_text",
+                "type": "textarea",
+                "instructions": "Small print or disclaimer text below the benefits list.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": { "width": "", "class": "", "id": "" },
+                "rows": 3
+              },
+              {
+                "key": "field_eeta_enquire_section_form_id",
+                "label": "Gravity Form ID",
+                "name": "form_id",
+                "type": "number",
+                "instructions": "Enter the numeric ID of the Gravity Form to embed. Find it in WP Admin \u2192 Forms.",
+                "required": 1,
+                "conditional_logic": 0,
+                "wrapper": { "width": "50", "class": "", "id": "" },
+                "min": 1,
+                "max": 9999,
+                "step": 1
+              },
+              {
+                "key": "field_eeta_enquire_section_bg_image",
+                "label": "Background Image (Right Panel)",
+                "name": "bg_image",
+                "type": "image",
+                "instructions": "Decorative background image for the right (form) panel. Upload at minimum 720\u00d7698px.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": { "width": "50", "class": "", "id": "" },
+                "return_format": "array",
+                "preview_size": "medium",
+                "library": "all"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "location": [
+      [
+        {
+          "param": "page_type",
+          "operator": "==",
+          "value": "front_page"
+        }
+      ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "active": true,
+    "description": "Flexible content sections for the EETA homepage. Each layout corresponds to a Figma section."
+  }
+]
