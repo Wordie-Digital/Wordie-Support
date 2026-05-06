@@ -44,6 +44,15 @@ add_action( 'wp_enqueue_scripts', function () {
         MEADAN_VERSION
     );
 
+    // Navigation JS — dropdowns, mobile accordion, scroll state
+    wp_enqueue_script(
+        'meadan-nav',
+        MEADAN_URI . '/assets/js/nav.js',
+        [],
+        filemtime( MEADAN_DIR . '/assets/js/nav.js' ),
+        true
+    );
+
     // Testimonial slider JS
     wp_enqueue_script(
         'meadan-testimonial-slider',

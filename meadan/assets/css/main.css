@@ -289,19 +289,39 @@ p + p {
     justify-content: center;
 }
 
+/* Scroll state — subtle border to lift header off page */
+.site-header.is-scrolled {
+    border-bottom: 1px solid rgba( 255, 255, 255, 0.08 );
+}
+
+/* Prevent body scroll when mobile nav is open */
+body.nav-is-open {
+    overflow: hidden;
+}
+
+/* ── Top-level list ────────────────────────────────────────────────────── */
 .site-header__nav-list {
     display: flex;
     align-items: center;
     gap: var(--space-32);
     list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
+.site-header__nav-list > li {
+    position: relative;
+}
+
+/* All nav links */
 .site-header__nav-list a {
     font-family: var(--font-body);
     font-size: var(--text-sm);
     font-weight: var(--weight-light);
     color: var(--color-white);
+    text-decoration: none;
     transition: opacity 0.2s ease;
+    white-space: nowrap;
 }
 
 .site-header__nav-list a:hover,
@@ -314,7 +334,92 @@ p + p {
     opacity: 0.7;
 }
 
-/* Contact Us CTA — pill button */
+/* ── Dropdown trigger — chevron ────────────────────────────────────────── */
+.site-header__nav-list .menu-item-has-children > a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.site-header__nav-list .menu-item-has-children > a::after {
+    content: '';
+    display: inline-block;
+    width: 10px;
+    height: 6px;
+    flex-shrink: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6' fill='none'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23ffffff' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+    transition: transform 0.2s ease;
+}
+
+.site-header__nav-list .menu-item-has-children.is-open > a::after,
+.site-header__nav-list .menu-item-has-children:hover > a::after {
+    transform: rotate(180deg);
+}
+
+/* ── Dropdown panel ────────────────────────────────────────────────────── */
+.site-header__nav-list .sub-menu {
+    position: absolute;
+    top: calc(100% + 16px);
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 200px;
+    background-color: var(--color-dark);
+    border: 1px solid rgba( 255, 255, 255, 0.1 );
+    list-style: none;
+    margin: 0;
+    padding: 8px 0;
+    /* Hidden by default */
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.18s ease, visibility 0.18s ease, transform 0.18s ease;
+    transform: translateX(-50%) translateY(-4px);
+}
+
+/* Show on hover (desktop) or .is-open (keyboard/click) */
+.site-header__nav-list .menu-item-has-children:hover > .sub-menu,
+.site-header__nav-list .menu-item-has-children.is-open > .sub-menu {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Bridge gap so mouse can travel to dropdown without it closing */
+.site-header__nav-list .menu-item-has-children > .sub-menu::before {
+    content: '';
+    position: absolute;
+    top: -16px;
+    left: 0;
+    right: 0;
+    height: 16px;
+}
+
+/* Dropdown items */
+.site-header__nav-list .sub-menu li {
+    list-style: none;
+}
+
+.site-header__nav-list .sub-menu a {
+    display: block;
+    padding: 10px 20px;
+    font-size: 0.8125rem;     /* 13px */
+    font-weight: var(--weight-light);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    opacity: 1;
+    transition: background-color 0.15s ease, opacity 0.15s ease;
+}
+
+.site-header__nav-list .sub-menu a:hover,
+.site-header__nav-list .sub-menu a:focus-visible {
+    opacity: 0.7;
+    background-color: rgba( 255, 255, 255, 0.05 );
+}
+
+/* ── Contact Us CTA ────────────────────────────────────────────────────── */
 .site-header__cta {
     flex-shrink: 0;
 }
@@ -324,7 +429,7 @@ p + p {
     font-size: var(--text-sm);
 }
 
-/* Mobile Toggle */
+/* ── Mobile Toggle (hamburger) ─────────────────────────────────────────── */
 .site-header__nav-toggle {
     display: none;
     flex-direction: column;
@@ -345,7 +450,7 @@ p + p {
     transition: transform 0.25s ease, opacity 0.25s ease;
 }
 
-/* Mobile — open state */
+/* Hamburger → X */
 .site-header__nav-toggle[aria-expanded="true"] .site-header__nav-toggle-bar:nth-child(1) {
     transform: translateY(6.5px) rotate(45deg);
 }
@@ -357,11 +462,38 @@ p + p {
     transform: translateY(-6.5px) rotate(-45deg);
 }
 
+/* ── Mobile submenu accordion toggle ──────────────────────────────────── */
+.site-header__submenu-toggle {
+    display: none; /* shown only in mobile */
+    background: transparent;
+    border: none;
+    color: var(--color-white);
+    padding: 4px;
+    cursor: pointer;
+    line-height: 1;
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+}
+
+.site-header__submenu-toggle:hover { opacity: 1; }
+
+.site-header__submenu-toggle svg {
+    display: block;
+    transition: transform 0.2s ease;
+}
+
+.menu-item-has-children.is-open .site-header__submenu-toggle svg {
+    transform: rotate(180deg);
+}
+
+/* ── Responsive — ≤1024px ──────────────────────────────────────────────── */
 @media (max-width: 1024px) {
+
     .site-header__inner {
-        grid-template-columns: auto auto auto;
+        grid-template-columns: auto 1fr auto;
     }
 
+    /* Full-screen mobile nav overlay */
     .site-header__nav {
         display: none;
         position: fixed;
@@ -379,12 +511,74 @@ p + p {
 
     .site-header__nav-list {
         flex-direction: column;
-        align-items: flex-start;
-        gap: var(--space-24);
+        align-items: stretch;
+        gap: 0;
+        width: 100%;
     }
 
-    .site-header__nav-list a {
+    .site-header__nav-list > li {
+        border-bottom: 1px solid rgba( 255, 255, 255, 0.08 );
+    }
+
+    /* Top-level link row — link + accordion toggle side by side */
+    .site-header__nav-list > li > a {
+        display: flex;
+        align-items: center;
+        padding: 16px 0;
         font-size: var(--text-md);
+    }
+
+    /* Hide desktop chevron on mobile — we use the toggle button instead */
+    .site-header__nav-list .menu-item-has-children > a::after {
+        display: none;
+    }
+
+    /* Accordion toggle button — visible on mobile */
+    .site-header__submenu-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 16px 0;
+        margin-left: auto;
+        min-width: 44px;
+    }
+
+    /* Mobile submenu — hidden by default, slide down when open */
+    .site-header__nav-list .sub-menu {
+        position: static;
+        transform: none;
+        border: none;
+        border-top: 1px solid rgba( 255, 255, 255, 0.08 );
+        background-color: transparent;
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        padding: 0 0 8px 16px;
+        /* Collapse */
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+    }
+
+    /* Override hover trigger on mobile — use .is-open only */
+    .site-header__nav-list .menu-item-has-children:hover > .sub-menu {
+        max-height: 0;
+    }
+
+    .site-header__nav-list .menu-item-has-children.is-open > .sub-menu {
+        max-height: 400px;
+    }
+
+    /* Pseudo bridge not needed on mobile */
+    .site-header__nav-list .menu-item-has-children > .sub-menu::before {
+        display: none;
+    }
+
+    .site-header__nav-list .sub-menu a {
+        padding: 12px 0;
+        font-size: var(--text-sm);
+        text-transform: none;
+        letter-spacing: normal;
     }
 
     .site-header__nav-toggle {
