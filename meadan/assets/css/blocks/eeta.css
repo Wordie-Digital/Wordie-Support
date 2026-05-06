@@ -1,0 +1,911 @@
+/* ============================================================
+   EETA — Essential Energy Training Academy
+   All Figma tokens from node 2417:1178
+   ============================================================ */
+
+/* Google Fonts — Inter */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+/* Tokens */
+:root {
+    --eeta-navy:   #002263;
+    --eeta-mint:   #00ef97;
+    --eeta-teal:   #00595a;
+    --eeta-orange: #ff5300;
+    --eeta-dark:   #1c1c1c;
+    --eeta-border: #dbe6e6;
+    --eeta-white:  #ffffff;
+    --eeta-radius: 8px;
+}
+
+/* ── Reset / Base ── */
+.eeta-page * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.eeta-page {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    color: var(--eeta-dark);
+    line-height: 1.3;
+}
+
+/* ── Navigation ── */
+.eeta-nav {
+    background: var(--eeta-white);
+    border-bottom: 1px solid var(--eeta-border);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.eeta-nav__inner {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 20px 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.eeta-nav__logo img,
+.eeta-nav__logo-svg svg {
+    height: 69px;
+    width: auto;
+    display: block;
+}
+
+.eeta-nav__logo-text {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--eeta-navy);
+    text-decoration: none;
+    display: block;
+}
+
+.eeta-nav__links {
+    display: flex;
+    gap: 30px;
+    list-style: none;
+}
+
+.eeta-nav__links a {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--eeta-navy);
+    text-decoration: none;
+    letter-spacing: -0.16px;
+    line-height: 1.3;
+    white-space: nowrap;
+}
+
+.eeta-nav__links a:hover { color: var(--eeta-teal); }
+
+.eeta-nav__cta {
+    background: var(--eeta-mint);
+    color: var(--eeta-navy);
+    font-size: 16px;
+    font-weight: 700;
+    padding: 16px 20px;
+    border-radius: var(--eeta-radius);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    line-height: 1;
+    white-space: nowrap;
+    transition: opacity 0.15s;
+}
+
+.eeta-nav__cta:hover { opacity: 0.85; }
+.eeta-nav__cta svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+/* Hamburger — mobile */
+.eeta-nav__hamburger {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    color: var(--eeta-navy);
+}
+
+.eeta-nav__mobile-menu {
+    display: none;
+    flex-direction: column;
+    background: var(--eeta-white);
+    border-top: 1px solid var(--eeta-border);
+    padding: 20px 24px;
+    gap: 20px;
+}
+
+.eeta-nav__mobile-menu.is-open { display: flex; }
+
+.eeta-nav__mobile-menu a {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--eeta-navy);
+    text-decoration: none;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--eeta-border);
+}
+
+.eeta-nav__mobile-cta {
+    background: var(--eeta-mint);
+    color: var(--eeta-navy);
+    font-size: 16px;
+    font-weight: 700;
+    padding: 16px 20px;
+    border-radius: var(--eeta-radius);
+    text-decoration: none;
+    text-align: center;
+}
+
+/* ── Hero ── */
+.eeta-hero {
+    display: flex;
+    min-height: 720px;
+}
+
+.eeta-hero__text-panel {
+    background: var(--eeta-navy);
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.eeta-hero__text-inner {
+    padding: 72px 80px;
+    max-width: 720px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.eeta-hero__heading {
+    font-size: 60px;
+    font-weight: 400;
+    color: var(--eeta-white);
+    line-height: 1;
+}
+
+.eeta-hero__subheading {
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--eeta-white);
+    line-height: 1.2;
+}
+
+.eeta-hero__lower {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.eeta-hero__cta-label {
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--eeta-white);
+    line-height: 1.1;
+}
+
+.eeta-hero__cta {
+    background: var(--eeta-mint);
+    color: var(--eeta-navy);
+    font-size: 16px;
+    font-weight: 700;
+    padding: 16px 20px;
+    border-radius: var(--eeta-radius);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    line-height: 1;
+    align-self: flex-start;
+    transition: opacity 0.15s;
+}
+
+.eeta-hero__cta:hover { opacity: 0.85; }
+.eeta-hero__cta svg { width: 16px; height: 16px; }
+
+.eeta-hero__image-panel {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+}
+
+.eeta-hero__wave {
+    position: absolute;
+    bottom: -314px;
+    right: -118px;
+    width: 585px;
+    height: 650px;
+    transform: scaleY(-1);
+    pointer-events: none;
+}
+
+.eeta-hero__wave img {
+    width: 100%;
+    height: 100%;
+}
+
+.eeta-hero__image-panel img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* ── Text + Image Block ── */
+.eeta-text-image {
+    background: var(--eeta-navy);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 72px 80px;
+    gap: 80px;
+}
+
+.eeta-text-image__image-wrap {
+    flex-shrink: 0;
+    position: relative;
+    width: 624px;
+}
+
+.eeta-text-image__image-wrap img {
+    width: 100%;
+    height: 499px;
+    object-fit: cover;
+    border-radius: var(--eeta-radius);
+    display: block;
+}
+
+.eeta-text-image__caption {
+    font-size: 12px;
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.2;
+    margin-top: 8px;
+}
+
+.eeta-text-image__copy {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.eeta-text-image__heading {
+    font-size: 48px;
+    font-weight: 400;
+    color: var(--eeta-white);
+    line-height: 1.15;
+}
+
+.eeta-text-image__body {
+    font-size: 16px;
+    color: var(--eeta-white);
+    line-height: 1.3;
+}
+
+.eeta-text-image__body p + p { margin-top: 20px; }
+
+/* ── Audience Cards ── */
+.eeta-audience {
+    background: var(--eeta-mint);
+    padding: 72px 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+    align-items: center;
+}
+
+.eeta-audience__header {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.eeta-audience__heading {
+    font-size: 48px;
+    font-weight: 400;
+    color: var(--eeta-navy);
+    line-height: 1.15;
+}
+
+.eeta-audience__subheading {
+    font-size: 16px;
+    color: var(--eeta-dark);
+    line-height: 1.3;
+}
+
+.eeta-audience__grid {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    align-items: stretch;
+}
+
+.eeta-audience__card {
+    background: var(--eeta-white);
+    border-radius: var(--eeta-radius);
+    overflow: hidden;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.eeta-audience__card-image {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    display: block;
+    border-bottom: 0.25px solid var(--eeta-border);
+}
+
+.eeta-audience__card-body {
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    flex: 1;
+}
+
+/* Card title and bullet colors by order */
+.eeta-audience__card:nth-child(1) .eeta-audience__card-title { color: var(--eeta-teal); }
+.eeta-audience__card:nth-child(2) .eeta-audience__card-title { color: var(--eeta-navy); }
+.eeta-audience__card:nth-child(3) .eeta-audience__card-title { color: var(--eeta-orange); }
+
+.eeta-audience__card:nth-child(1) .eeta-audience__bullet-dot { background: var(--eeta-teal); }
+.eeta-audience__card:nth-child(2) .eeta-audience__bullet-dot { background: var(--eeta-navy); }
+.eeta-audience__card:nth-child(3) .eeta-audience__bullet-dot { background: var(--eeta-orange); }
+
+.eeta-audience__card-title {
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 1.1;
+}
+
+.eeta-audience__bullets {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.eeta-audience__bullet {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    font-size: 16px;
+    color: var(--eeta-dark);
+    line-height: 1.3;
+}
+
+.eeta-audience__bullet-dot {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.eeta-audience__bullet-dot svg { width: 12px; height: 12px; }
+
+/* ── Icon Boxes ── */
+.eeta-icon-boxes {
+    background: var(--eeta-navy);
+    padding: 72px 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    align-items: center;
+}
+
+.eeta-icon-boxes__heading {
+    font-size: 48px;
+    font-weight: 400;
+    color: var(--eeta-white);
+    line-height: 1.15;
+    text-align: center;
+    max-width: 800px;
+}
+
+.eeta-icon-boxes__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: 100%;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.eeta-icon-box {
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.eeta-icon-box__icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.eeta-icon-box__icon img,
+.eeta-icon-box__icon svg {
+    width: 24px;
+    height: 24px;
+    filter: brightness(0) invert(1);
+}
+
+.eeta-icon-box__text {
+    font-size: 16px;
+    color: var(--eeta-white);
+    line-height: 1.3;
+}
+
+/* ── Upcoming Courses ── */
+.eeta-upcoming {
+    background: linear-gradient(90deg, rgba(219, 230, 230, 0.2), rgba(219, 230, 230, 0.2)), #ffffff;
+    padding: 72px 80px;
+}
+
+.eeta-upcoming__content {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    max-width: 1280px;
+}
+
+.eeta-upcoming__header {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.eeta-upcoming__heading {
+    font-size: 48px;
+    font-weight: 400;
+    color: var(--eeta-navy);
+    line-height: 1.15;
+}
+
+.eeta-upcoming__subheading {
+    font-size: 16px;
+    color: var(--eeta-dark);
+    line-height: 1.3;
+}
+
+.eeta-upcoming__courses {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border-left: 1.5px solid rgba(0, 34, 99, 0.44);
+    margin-left: 13px;
+}
+
+.eeta-upcoming__course {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+    padding-bottom: 40px;
+    position: relative;
+}
+
+.eeta-upcoming__course:last-child { padding-bottom: 0; }
+
+.eeta-upcoming__year-col {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    width: 207px;
+    flex-shrink: 0;
+    margin-left: -14px;
+}
+
+.eeta-upcoming__dot {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 2px solid rgba(0, 34, 99, 0.44);
+    background: #f8fafa;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.eeta-upcoming__dot--active {
+    background: var(--eeta-mint);
+    border-color: var(--eeta-mint);
+}
+
+.eeta-upcoming__dot--active::after {
+    content: '';
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #f8fafa;
+}
+
+.eeta-upcoming__year-label {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--eeta-dark);
+    line-height: 1;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.eeta-upcoming__course-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-top: 2px;
+}
+
+.eeta-upcoming__course-title {
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--eeta-dark);
+    line-height: 1.1;
+}
+
+.eeta-upcoming__course-desc {
+    font-size: 16px;
+    color: var(--eeta-dark);
+    line-height: 1.3;
+}
+
+.eeta-upcoming__course-desc p + p { margin-top: 20px; }
+
+/* ── Enquire ── */
+.eeta-enquire {
+    display: flex;
+    min-height: 698px;
+}
+
+.eeta-enquire__copy {
+    background: var(--eeta-white);
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.eeta-enquire__copy-inner {
+    padding: 72px 80px;
+    max-width: 720px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 100%;
+}
+
+.eeta-enquire__heading {
+    font-size: 48px;
+    font-weight: 400;
+    color: var(--eeta-navy);
+    line-height: 1.15;
+}
+
+.eeta-enquire__subheading {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--eeta-dark);
+    line-height: 1.2;
+}
+
+.eeta-enquire__intro {
+    font-size: 16px;
+    color: var(--eeta-dark);
+    line-height: 1.3;
+}
+
+.eeta-enquire__intro p + p { margin-top: 20px; }
+
+.eeta-enquire__benefits {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 4px;
+}
+
+.eeta-enquire__benefit {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    font-size: 16px;
+    color: var(--eeta-dark);
+    line-height: 1.3;
+}
+
+.eeta-enquire__check {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--eeta-mint);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1px;
+}
+
+.eeta-enquire__disclaimer {
+    font-size: 14px;
+    color: var(--eeta-dark);
+    line-height: 1.2;
+}
+
+.eeta-enquire__form-panel {
+    background: var(--eeta-mint);
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 55px;
+}
+
+.eeta-enquire__form-container {
+    background: var(--eeta-white);
+    padding: 40px;
+    width: 100%;
+    max-width: 610px;
+    position: relative;
+    z-index: 1;
+}
+
+/* Gravity Forms overrides */
+.eeta-enquire__form-container .gform_wrapper { margin: 0; }
+
+.eeta-enquire__form-container .gform_wrapper input[type="text"],
+.eeta-enquire__form-container .gform_wrapper input[type="email"],
+.eeta-enquire__form-container .gform_wrapper input[type="tel"],
+.eeta-enquire__form-container .gform_wrapper select,
+.eeta-enquire__form-container .gform_wrapper textarea {
+    border: 1px solid var(--eeta-border);
+    border-radius: var(--eeta-radius);
+    padding: 10px 14px;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    color: var(--eeta-dark);
+    width: 100%;
+}
+
+.eeta-enquire__form-container .gform_wrapper .gfield_label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--eeta-teal);
+    margin-bottom: 6px;
+}
+
+.eeta-enquire__form-container .gform_wrapper .gform_footer input[type="submit"],
+.eeta-enquire__form-container .gform_wrapper .gform_page_footer input[type="submit"] {
+    background: var(--eeta-mint);
+    color: var(--eeta-navy);
+    border: none;
+    border-radius: var(--eeta-radius);
+    padding: 16px 20px;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: opacity 0.15s;
+}
+
+.eeta-enquire__form-container .gform_wrapper .gform_footer input[type="submit"]:hover { opacity: 0.85; }
+
+.eeta-enquire__no-gf {
+    font-size: 14px;
+    color: var(--eeta-dark);
+    padding: 20px;
+    border: 1px dashed var(--eeta-border);
+}
+
+/* ── Footer ── */
+.eeta-footer {
+    background: var(--eeta-navy);
+    color: var(--eeta-white);
+}
+
+.eeta-footer__info {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 40px 80px;
+}
+
+.eeta-footer__info-left h4 {
+    font-size: 24px;
+    font-weight: 400;
+    color: var(--eeta-white);
+    line-height: 1.1;
+    margin-bottom: 8px;
+}
+
+.eeta-footer__info-left p {
+    font-size: 16px;
+    color: var(--eeta-white);
+    line-height: 1.3;
+}
+
+.eeta-footer__contacts {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.eeta-footer__contact {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--eeta-white);
+    line-height: 1.2;
+    letter-spacing: -0.14px;
+}
+
+.eeta-footer__contact-icon {
+    width: 32px;
+    height: 32px;
+    background: var(--eeta-mint);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.eeta-footer__contact-icon svg {
+    width: 16px;
+    height: 16px;
+    fill: var(--eeta-navy);
+}
+
+.eeta-footer__ack {
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 20px 80px;
+    display: flex;
+    gap: 24px;
+    align-items: center;
+}
+
+.eeta-footer__ack-image {
+    width: 101px;
+    height: 73px;
+    object-fit: cover;
+    flex-shrink: 0;
+    border-radius: 4px;
+}
+
+.eeta-footer__ack-text {
+    font-size: 14px;
+    color: var(--eeta-white);
+    line-height: 1.2;
+    flex: 1;
+}
+
+.eeta-footer__bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 80px;
+}
+
+.eeta-footer__copyright {
+    font-size: 14px;
+    color: var(--eeta-white);
+    line-height: 1.2;
+}
+
+.eeta-footer__links {
+    display: flex;
+    gap: 16px;
+    list-style: none;
+}
+
+.eeta-footer__links a {
+    font-size: 14px;
+    color: var(--eeta-white);
+    text-decoration: none;
+    line-height: 1;
+    letter-spacing: 0.14px;
+    text-transform: capitalize;
+}
+
+.eeta-footer__links a:hover { opacity: 0.7; }
+
+/* ============================================================
+   Responsive — Tablet (≤ 1024px)
+   ============================================================ */
+@media (max-width: 1024px) {
+    .eeta-nav__inner { padding: 16px 32px; }
+    .eeta-nav__links { display: none; }
+    .eeta-nav__cta { display: none; }
+    .eeta-nav__hamburger { display: flex; }
+
+    .eeta-hero { flex-direction: column; }
+    .eeta-hero__text-inner { padding: 48px 32px; }
+    .eeta-hero__heading { font-size: 40px; }
+    .eeta-hero__image-panel { height: 312px; position: relative; }
+    .eeta-hero__image-panel img { position: absolute; }
+
+    .eeta-text-image { flex-direction: column; padding: 48px 32px; gap: 40px; }
+    .eeta-text-image__image-wrap { width: 100%; }
+    .eeta-text-image__image-wrap img { height: 286px; }
+
+    .eeta-audience { padding: 48px 32px; }
+    .eeta-audience__heading { font-size: 36px; }
+    .eeta-audience__grid { flex-direction: column; }
+
+    .eeta-icon-boxes { padding: 48px 32px; }
+    .eeta-icon-boxes__heading { font-size: 36px; }
+    .eeta-icon-boxes__grid { grid-template-columns: 1fr; }
+
+    .eeta-upcoming { padding: 48px 32px; }
+    .eeta-upcoming__heading { font-size: 36px; }
+
+    .eeta-enquire { flex-direction: column; }
+    .eeta-enquire__copy-inner { padding: 48px 32px; }
+    .eeta-enquire__heading { font-size: 36px; }
+    .eeta-enquire__form-panel { padding: 40px 16px; }
+
+    .eeta-footer__info { flex-direction: column; gap: 32px; padding: 40px 32px; }
+    .eeta-footer__ack { padding: 20px 32px; }
+    .eeta-footer__bottom { padding: 20px 32px; }
+}
+
+/* ============================================================
+   Responsive — Mobile (≤ 767px)
+   ============================================================ */
+@media (max-width: 767px) {
+    .eeta-nav__inner { padding: 14px 16px; }
+
+    .eeta-hero__text-inner { padding: 38px 16px; }
+    .eeta-hero__heading { font-size: 32px; }
+    .eeta-hero__subheading { font-size: 16px; }
+    .eeta-hero__image-panel { height: 250px; }
+
+    .eeta-text-image { padding: 40px 16px; }
+    .eeta-text-image__heading { font-size: 32px; }
+    .eeta-text-image__image-wrap img { height: 240px; }
+
+    .eeta-audience { padding: 40px 16px; }
+    .eeta-audience__heading { font-size: 32px; }
+
+    .eeta-icon-boxes { padding: 40px 16px; }
+    .eeta-icon-boxes__heading { font-size: 32px; }
+
+    .eeta-upcoming { padding: 40px 16px; }
+    .eeta-upcoming__heading { font-size: 32px; }
+    .eeta-upcoming__year-col { width: auto; }
+
+    .eeta-enquire__copy-inner { padding: 40px 16px; }
+    .eeta-enquire__heading { font-size: 32px; }
+    .eeta-enquire__form-panel { padding: 32px 16px; min-height: auto; }
+
+    .eeta-footer__info { padding: 32px 16px; }
+    .eeta-footer__ack { padding: 20px 16px; flex-direction: column; }
+    .eeta-footer__bottom { padding: 20px 16px; flex-direction: column; gap: 12px; }
+}
