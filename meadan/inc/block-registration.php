@@ -78,6 +78,78 @@ add_action( 'acf/init', function () {
             'keywords'      => [ 'gallery', 'images', 'grid', 'photos', 'meadan' ],
             'enqueue_style' => MEADAN_URI . '/assets/css/blocks/gallery-section.css',
         ],
+        [
+            'name'          => 'hero-video',
+            'title'         => __( 'Hero Video', 'meadan' ),
+            'description'   => __( 'Full-viewport video hero with overlay, heading and dual CTAs.', 'meadan' ),
+            'icon'          => 'video-alt3',
+            'keywords'      => [ 'hero', 'video', 'banner', 'meadan' ],
+            'enqueue_style' => MEADAN_URI . '/assets/css/blocks/hero-video.css',
+        ],
+        [
+            'name'          => 'intro-about',
+            'title'         => __( 'Intro / About', 'meadan' ),
+            'description'   => __( 'Centred section with label, heading, body and dual CTAs.', 'meadan' ),
+            'icon'          => 'align-center',
+            'keywords'      => [ 'intro', 'about', 'centred', 'meadan' ],
+            'enqueue_style' => MEADAN_URI . '/assets/css/blocks/intro-about.css',
+        ],
+        [
+            'name'          => 'designs-section',
+            'title'         => __( 'Designs Section', 'meadan' ),
+            'description'   => __( 'Dynamic home designs feed from Design CPT.', 'meadan' ),
+            'icon'          => 'layout',
+            'keywords'      => [ 'designs', 'floor plans', 'meadan' ],
+            'enqueue_style' => MEADAN_URI . '/assets/css/blocks/designs-section.css',
+        ],
+        [
+            'name'          => 'projects-section',
+            'title'         => __( 'Projects Section', 'meadan' ),
+            'description'   => __( 'Dynamic project feed from Project CPT with slider navigation.', 'meadan' ),
+            'icon'          => 'portfolio',
+            'keywords'      => [ 'projects', 'portfolio', 'meadan' ],
+            'enqueue_style' => MEADAN_URI . '/assets/css/blocks/projects-section.css',
+        ],
+        [
+            'name'          => 'services-section',
+            'title'         => __( 'Services Section', 'meadan' ),
+            'description'   => __( 'Grid of service cards with image, title, description and CTAs.', 'meadan' ),
+            'icon'          => 'grid-view',
+            'keywords'      => [ 'services', 'cards', 'meadan' ],
+            'enqueue_style' => MEADAN_URI . '/assets/css/blocks/services-section.css',
+        ],
+        [
+            'name'          => 'news-section',
+            'title'         => __( 'News Section', 'meadan' ),
+            'description'   => __( 'Dynamic latest posts feed with section header and navigation.', 'meadan' ),
+            'icon'          => 'welcome-write-blog',
+            'keywords'      => [ 'news', 'blog', 'posts', 'meadan' ],
+            'enqueue_style' => MEADAN_URI . '/assets/css/blocks/news-section.css',
+        ],
+        [
+            'name'          => 'image-carousel',
+            'title'         => __( 'Image Carousel', 'meadan' ),
+            'description'   => __( 'Full-width image slider with dot pagination.', 'meadan' ),
+            'icon'          => 'images-alt2',
+            'keywords'      => [ 'carousel', 'slider', 'images', 'meadan' ],
+            'enqueue_style' => MEADAN_URI . '/assets/css/blocks/image-carousel.css',
+        ],
+        [
+            'name'          => 'contact-section',
+            'title'         => __( 'Contact Section', 'meadan' ),
+            'description'   => __( 'Section label, heading, description and contact form shortcode.', 'meadan' ),
+            'icon'          => 'email',
+            'keywords'      => [ 'contact', 'form', 'meadan' ],
+            'enqueue_style' => MEADAN_URI . '/assets/css/blocks/contact-section.css',
+        ],
+        [
+            'name'          => 'display-home',
+            'title'         => __( 'Display Home', 'meadan' ),
+            'description'   => __( 'Two-column section promoting the display home with image and CTA.', 'meadan' ),
+            'icon'          => 'admin-home',
+            'keywords'      => [ 'display', 'home', 'meadan' ],
+            'enqueue_style' => MEADAN_URI . '/assets/css/blocks/display-home.css',
+        ],
     ];
 
     foreach ( $blocks as $block ) {
@@ -114,13 +186,22 @@ add_filter( 'allowed_block_types_all', function ( $allowed_blocks, $editor_conte
     }
 
     return [
-        // Meadan ACF blocks
+        // Meadan ACF blocks — full inventory
         'acf/hero-banner',
+        'acf/hero-video',
         'acf/feature-cards',
         'acf/about-section',
+        'acf/intro-about',
+        'acf/designs-section',
+        'acf/projects-section',
+        'acf/services-section',
+        'acf/news-section',
         'acf/testimonial-slider',
         'acf/cta-section',
         'acf/gallery-section',
+        'acf/image-carousel',
+        'acf/contact-section',
+        'acf/display-home',
         // Core paragraph as a fallback / convenience
         'core/paragraph',
     ];
