@@ -100,6 +100,7 @@ $bg_style        = $bg_image ? ' style="background-image:url(' . esc_url( $bg_im
                 .eeta-enquire__submit:active { transform: scale(0.98); }
                 @media (max-width: 600px) {
                     .eeta-enquire__form-row--half { flex-direction: column; }
+                    .eeta-enquire__submit { width: 100%; }
                 }
             </style>
             <form class="eeta-enquire__form" method="post" action="#">

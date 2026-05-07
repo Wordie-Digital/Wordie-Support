@@ -905,6 +905,10 @@
     .eeta-enquire__copy-inner { padding: 40px 16px; }
     .eeta-enquire__heading { font-size: 32px; }
     .eeta-enquire__form-panel { padding: 32px 16px; min-height: auto; }
+    .eeta-enquire__form-container { padding: 24px 16px; }
+
+    .eeta-upcoming__year-col { width: 130px; }
+    .eeta-upcoming__year-label { font-size: 14px; letter-spacing: 1px; }
 
     .eeta-footer__info { padding: 32px 16px; }
     .eeta-footer__ack { padding: 20px 16px; flex-direction: column; }
