@@ -842,7 +842,7 @@
 @media (max-width: 1024px) {
     .eeta-nav__inner { padding: 16px 32px; }
     .eeta-nav__links { display: none; }
-    .eeta-nav__cta { display: none; }
+    .eeta-nav__cta { display: inline-flex; flex: 1; justify-content: center; margin: 0 12px; font-size: 14px; padding: 10px 18px; }
     .eeta-nav__hamburger { display: flex; }
 
     .eeta-hero { flex-direction: column; }
@@ -886,6 +886,7 @@
     .eeta-hero__text-inner { padding: 38px 16px; gap: 24px; }
     .eeta-hero__heading { font-size: 32px; }
     .eeta-hero__subheading { font-size: 16px; }
+    .eeta-hero__cta { align-self: stretch; justify-content: center; }
     .eeta-hero__image-panel { height: 250px; }
 
     .eeta-text-image { padding: 40px 16px; }
