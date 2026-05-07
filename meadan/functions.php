@@ -99,13 +99,26 @@ add_action( 'wp_enqueue_scripts', function () {
         );
     }
 
-    // Our Process — page template styles
+    // Our Process — page template styles + shared contact section CSS + slider JS
     if ( is_page_template( 'templates/page-our-process.php' ) ) {
+        wp_enqueue_style(
+            'meadan-contact-section',
+            MEADAN_URI . '/assets/css/blocks/contact-section.css',
+            [ 'meadan-main' ],
+            filemtime( MEADAN_DIR . '/assets/css/blocks/contact-section.css' )
+        );
         wp_enqueue_style(
             'meadan-page-our-process',
             MEADAN_URI . '/assets/css/blocks/page-our-process.css',
-            [ 'meadan-main' ],
+            [ 'meadan-main', 'meadan-contact-section' ],
             filemtime( MEADAN_DIR . '/assets/css/blocks/page-our-process.css' )
+        );
+        wp_enqueue_script(
+            'meadan-process-overview',
+            MEADAN_URI . '/assets/js/process-overview.js',
+            [],
+            filemtime( MEADAN_DIR . '/assets/js/process-overview.js' ),
+            true
         );
     }
 } );

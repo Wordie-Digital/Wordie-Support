@@ -1,154 +1,348 @@
 /* ==========================================================================
    page-our-process.css
-   Styles for the "Our Process" page template.
-   Used by both:
-     /our-process-build-to-your-plans/
-     /our-process-design-and-build/
+   Styles for the "Our Process" page template — templates/page-our-process.php
+   Figma nodes: 4515:30751 (BTYP), 6990:23723 (DB)
+
+   Sections:
+     1. .process-hero-image   — full-width 471px hero with dark overlay + tagline
+     2. .process-overview     — sand bg; centered title + description + 3-col step slider
+     3. .process-timeline     — white bg; TIMELINE label/h2/desc; two-col steps with centre line
+     4. Contact section       — handled by contact-section.css (shared block CSS)
    ========================================================================== */
 
-/* ── 1. Process hero ─────────────────────────────────────────────────────── */
+/* ── 1. Hero image — full-width with overlay ─────────────────────────────── */
 
-.process-hero {
-    background-color: var(--color-stone);
-    padding: var(--space-60) var(--space-60) var(--space-80);
-    min-height: 400px;
+.process-hero-image {
+    position: relative;
+    min-height: 471px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: var(--color-dark); /* fallback / overlay base */
     display: flex;
-    align-items: flex-end;
+    align-items: center;
+    justify-content: center;
 }
 
-.process-hero__inner {
-    max-width: var(--max-width);
-    margin: 0 auto;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-40);
+.process-hero-image__overlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(28, 28, 28, 0.45);
+    z-index: 1;
 }
 
-.process-hero__breadcrumbs {
-    /* inherits global .breadcrumbs__list styles from main.css */
+.process-hero-image--has-bg .process-hero-image__overlay {
+    background-color: rgba(28, 28, 28, 0.4);
 }
 
-.process-hero__content {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-24);
-    max-width: 720px;
+.process-hero-image__content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: var(--space-60) var(--gutter);
 }
 
-.process-hero__label {
-    font-size: var(--text-xs);
-    font-weight: var(--weight-light);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--color-dark);
-    margin: 0;
-}
-
-.process-hero__title {
+.process-hero-image__tagline {
     font-family: var(--font-heading);
-    font-size: clamp(2rem, 5vw, var(--text-xl));
+    font-size: clamp(2rem, 5vw, var(--text-2xl));
     font-weight: var(--weight-regular);
-    line-height: 1.0;
+    line-height: 1.1;
+    color: var(--color-white);
+    margin: 0;
+    letter-spacing: 0.02em;
+}
+
+/* ── 2. Project Engagement Overview — sand bg ────────────────────────────── */
+
+.process-overview {
+    background-color: var(--color-sand-light);
+    padding: var(--space-80) var(--gutter);
+}
+
+.process-overview__inner {
+    max-width: var(--max-width);
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-60);
+}
+
+/* Centred title + description */
+.process-overview__heading-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-28);
+    max-width: 900px;
+    margin-inline: auto;
+    text-align: center;
+}
+
+.process-overview__title {
+    font-family: var(--font-heading);
+    font-size: clamp(1.75rem, 3.5vw, var(--text-xl));
+    font-weight: var(--weight-regular);
+    line-height: 1.1;
     color: var(--color-dark);
     margin: 0;
 }
 
-.process-hero__intro {
+.process-overview__description {
+    font-family: var(--font-body);
     font-size: var(--text-sm);
     font-weight: var(--weight-light);
     line-height: 1.7;
     color: var(--color-dark);
     margin: 0;
-    max-width: 580px;
 }
 
-/* ── 2. Process steps ────────────────────────────────────────────────────── */
+/* Slider wrapper — contains the scrollable steps row + prev/next nav */
+.process-overview__slider-wrap {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-32);
+}
 
-.process-steps {
-    padding: var(--space-80) var(--space-60);
+/* Horizontal scrollable steps row — 3 columns visible */
+.process-overview__steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-40);
+    overflow: hidden; /* JS will manage scroll via transform/scrollLeft */
+}
+
+/* Individual step card */
+.process-overview__step {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-16);
+    padding: var(--space-40);
     background-color: var(--color-white);
+    min-width: 0; /* allow grid cell shrink */
 }
 
-.process-steps__inner {
-    max-width: var(--max-width);
-    margin: 0 auto;
-}
-
-.process-steps__list {
-    list-style: none;
+.process-overview__step-heading {
+    font-family: var(--font-heading);
+    font-size: clamp(1.125rem, 2vw, 1.375rem);
+    font-weight: var(--weight-regular);
+    line-height: 1.2;
+    color: var(--color-dark);
     margin: 0;
-    padding: 0;
+}
+
+.process-overview__step-subheading {
+    font-family: var(--font-body);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-medium);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-stone);
+    margin: 0;
+}
+
+.process-overview__step-body {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-light);
+    line-height: 1.7;
+    color: var(--color-dark);
+    margin: 0;
+}
+
+/* Prev / next navigation */
+.process-overview__nav {
+    display: flex;
+    align-items: center;
+    gap: var(--space-12);
+    justify-content: flex-end;
+}
+
+/* Arrow buttons — shared with projects/other sliders */
+.arrow-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--color-dark);
+    background-color: transparent;
+    color: var(--color-dark);
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    border-radius: 0;
+    flex-shrink: 0;
+}
+
+.arrow-btn:hover {
+    background-color: var(--color-dark);
+    color: var(--color-white);
+}
+
+.arrow-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+.arrow-btn:disabled:hover {
+    background-color: transparent;
+    color: var(--color-dark);
+}
+
+/* ── 3. Timeline — white bg, two-column with centre vertical line ─────────── */
+
+.process-timeline {
+    background-color: var(--color-white);
+    padding: var(--space-80) var(--gutter);
+}
+
+.process-timeline__inner {
+    max-width: var(--max-width);
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-80);
+}
+
+/* Centred header */
+.process-timeline__header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-20);
+    max-width: 780px;
+    margin-inline: auto;
+    text-align: center;
+}
+
+.process-timeline__label {
+    font-family: var(--font-body);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-medium);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-dark);
+    opacity: 0.55;
+    margin: 0;
+}
+
+.process-timeline__title {
+    font-family: var(--font-heading);
+    font-size: clamp(1.75rem, 3.5vw, var(--text-xl));
+    font-weight: var(--weight-regular);
+    line-height: 1.1;
+    color: var(--color-dark);
+    margin: 0;
+}
+
+.process-timeline__description {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-light);
+    line-height: 1.7;
+    color: var(--color-dark);
+    margin: 0;
+}
+
+/* Two-column layout — left col has border-right as the vertical centre line */
+.process-timeline__columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    position: relative;
+}
+
+/* Left column — steps 01, 03, 05 */
+.process-timeline__col--left {
+    border-right: 1px solid var(--color-sand);
+    padding-right: var(--space-60);
     display: flex;
     flex-direction: column;
     gap: 0;
 }
 
-/* ── Process step item ───────────────────────────────────────────────────── */
+/* Right column — steps 02, 04  */
+.process-timeline__col--right {
+    padding-left: var(--space-60);
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+
+    /* Offset right col down by roughly one step's worth so 02 aligns between 01+03 */
+    padding-top: calc( var(--space-80) * 2 );
+}
+
+/* ── Process step ────────────────────────────────────────────────────────── */
 
 .process-step {
-    display: grid;
-    grid-template-columns: 120px 1fr;
-    gap: var(--space-60);
-    align-items: start;
-    padding: var(--space-60) 0;
-    border-bottom: 1px solid var(--color-sand);
-    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-28);
+    padding-bottom: var(--space-80);
 }
 
-.process-step:first-child {
-    padding-top: 0;
+/* Number row — left steps: number LEFT, hr extends RIGHT */
+.process-step__numrow {
+    display: flex;
+    align-items: center;
+    gap: var(--space-24);
 }
 
-.process-step:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
-}
-
-/* Steps with an image get a 3-column layout */
-.process-step:has(.process-step__image-wrap) {
-    grid-template-columns: 120px 1fr 1fr;
+/* Number row — right steps: hr LEFT, number RIGHT */
+.process-step__numrow--right {
+    flex-direction: row-reverse;
 }
 
 .process-step__number {
     font-family: var(--font-heading);
-    font-size: clamp(3rem, 6vw, 5rem);
+    font-size: clamp(3rem, 6vw, 5.5rem);
     font-weight: var(--weight-regular);
     line-height: 1;
     color: var(--color-stone);
-    /* Align number with title */
-    padding-top: var(--space-6);
+    flex-shrink: 0;
 }
 
-.process-step__content {
+.process-step__rule {
+    flex: 1;
+    border: none;
+    border-top: 1px solid var(--color-sand);
+    margin: 0;
+}
+
+/* Text block */
+.process-step__text {
     display: flex;
     flex-direction: column;
-    gap: var(--space-20);
+    gap: var(--space-16);
+    max-width: 520px;
+}
+
+.process-step--right .process-step__text {
+    /* Right column text aligns to the left of the right column */
+    text-align: left;
 }
 
 .process-step__title {
     font-family: var(--font-heading);
-    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+    font-size: clamp(1.125rem, 2vw, 1.375rem);
     font-weight: var(--weight-regular);
-    line-height: 1.15;
+    line-height: 1.2;
     color: var(--color-dark);
     margin: 0;
 }
 
-.process-step__description {
+.process-step__body {
+    font-family: var(--font-body);
     font-size: var(--text-sm);
     font-weight: var(--weight-light);
     line-height: 1.75;
     color: var(--color-dark);
     margin: 0;
-    max-width: 520px;
 }
 
+/* Optional step image */
 .process-step__image-wrap {
     margin: 0;
     overflow: hidden;
     aspect-ratio: 4 / 3;
-    align-self: center;
 }
 
 .process-step__image {
@@ -163,255 +357,73 @@
     transform: scale(1.03);
 }
 
-/* Alternating layout — even steps flip image to left */
-.process-step:nth-child(even):has(.process-step__image-wrap) {
-    grid-template-columns: 120px 1fr 1fr;
-    grid-template-areas: "num img content";
-}
-
-.process-step:nth-child(even):has(.process-step__image-wrap) .process-step__number {
-    grid-area: num;
-}
-
-.process-step:nth-child(even):has(.process-step__image-wrap) .process-step__image-wrap {
-    grid-area: img;
-}
-
-.process-step:nth-child(even):has(.process-step__image-wrap) .process-step__content {
-    grid-area: content;
-}
-
-/* ── Block content fallback ──────────────────────────────────────────────── */
-
-.process-block-content {
-    padding: var(--space-80) var(--space-60);
-    background-color: var(--color-white);
-}
-
-.process-block-content--plain .process-block-content__inner {
-    max-width: 874px;
-    margin: 0 auto;
-    font-size: var(--text-sm);
-    font-weight: var(--weight-light);
-    line-height: 1.75;
-    color: var(--color-dark);
-}
-
-/* ── 3. Why Meadan ───────────────────────────────────────────────────────── */
-
-.process-why {
-    background-color: var(--color-sand-light);
-    padding: var(--space-80) var(--space-60);
-}
-
-.process-why__inner {
-    max-width: var(--max-width);
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-80);
-    align-items: center;
-}
-
-.process-why__text {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-28);
-}
-
-.process-why__heading {
-    font-family: var(--font-heading);
-    font-size: clamp(1.75rem, 3.5vw, var(--text-xl));
-    font-weight: var(--weight-regular);
-    line-height: 1.1;
-    color: var(--color-dark);
-    margin: 0;
-}
-
-.process-why__description {
-    font-size: var(--text-sm);
-    font-weight: var(--weight-light);
-    line-height: 1.75;
-    color: var(--color-dark);
-    margin: 0;
-}
-
-.process-why__points {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-16);
-}
-
-.process-why__point {
-    display: flex;
-    align-items: flex-start;
-    gap: var(--space-12);
-    font-size: var(--text-sm);
-    font-weight: var(--weight-light);
-    line-height: 1.5;
-    color: var(--color-dark);
-}
-
-.process-why__point-icon {
-    display: flex;
-    flex-shrink: 0;
-    margin-top: 2px;
-    color: var(--color-stone);
-}
-
-.process-why__image-wrap {
-    margin: 0;
-    overflow: hidden;
-    aspect-ratio: 4 / 3;
-}
-
-.process-why__image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-}
-
-/* ── 4. Process CTA ──────────────────────────────────────────────────────── */
-
-.process-cta {
-    background-color: var(--color-dark);
-    padding: var(--space-80) var(--space-60);
-}
-
-.process-cta__inner {
-    max-width: var(--max-width);
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-60);
-}
-
-.process-cta__text {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-16);
-}
-
-.process-cta__heading {
-    font-family: var(--font-heading);
-    font-size: clamp(1.75rem, 3.5vw, var(--text-xl));
-    font-weight: var(--weight-regular);
-    line-height: 1.1;
-    color: var(--color-white);
-    margin: 0;
-}
-
-.process-cta__subheading {
-    font-size: var(--text-sm);
-    font-weight: var(--weight-light);
-    line-height: 1.6;
-    color: var(--color-stone);
-    margin: 0;
-}
-
-.process-cta__buttons {
-    display: flex;
-    align-items: center;
-    flex-shrink: 0;
-    gap: var(--space-20);
-    flex-wrap: wrap;
-}
-
-/* Light outline button on dark bg */
-.process-cta .btn--outline {
-    background-color: transparent;
-    color: var(--color-white);
-    border-color: var(--color-white);
-}
-
-.process-cta .btn--outline:hover {
-    background-color: var(--color-white);
-    color: var(--color-dark);
-}
-
 /* ── Responsive ──────────────────────────────────────────────────────────── */
 
-@media ( max-width: 1200px ) {
-    .process-step:has(.process-step__image-wrap),
-    .process-step:nth-child(even):has(.process-step__image-wrap) {
-        grid-template-columns: 100px 1fr;
-        grid-template-areas: none;
-    }
-
-    .process-step__image-wrap {
-        grid-column: 2 / 3;
-        margin-top: var(--space-24);
-    }
-
-    .process-step:nth-child(even):has(.process-step__image-wrap) .process-step__number,
-    .process-step:nth-child(even):has(.process-step__image-wrap) .process-step__image-wrap,
-    .process-step:nth-child(even):has(.process-step__image-wrap) .process-step__content {
-        grid-area: auto;
-    }
-}
-
 @media ( max-width: 1024px ) {
-    .process-hero,
-    .process-steps,
-    .process-why,
-    .process-cta,
-    .process-block-content {
-        padding: var(--space-60) var(--space-40);
+    .process-overview,
+    .process-timeline {
+        padding: var(--space-60) var(--gutter);
     }
 
-    .process-why__inner {
+    .process-timeline__columns {
         grid-template-columns: 1fr;
-        gap: var(--space-48);
     }
 
-    .process-why__image-wrap {
-        order: -1;
+    .process-timeline__col--left {
+        border-right: none;
+        border-bottom: 1px solid var(--color-sand);
+        padding-right: 0;
+        padding-bottom: var(--space-60);
     }
 
-    .process-cta__inner {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: var(--space-40);
+    .process-timeline__col--right {
+        padding-left: 0;
+        padding-top: var(--space-60);
+    }
+
+    /* Restore natural stacking: 01,02,03,04,05 order via separate column divs isn't preserved — use consistent layout instead */
+    .process-step__numrow--right {
+        flex-direction: row; /* same direction as left steps on single column */
+    }
+
+    .process-overview__steps {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
 @media ( max-width: 768px ) {
-    .process-step {
-        grid-template-columns: 80px 1fr;
-        gap: var(--space-32);
-        padding: var(--space-48) 0;
+    .process-hero-image {
+        min-height: 320px;
+    }
+
+    .process-overview__steps {
+        grid-template-columns: 1fr;
     }
 
     .process-step__number {
-        font-size: clamp(2.5rem, 8vw, 3.5rem);
+        font-size: clamp(2.5rem, 10vw, 3.5rem);
     }
 }
 
 @media ( max-width: 640px ) {
-    .process-hero,
-    .process-steps,
-    .process-why,
-    .process-cta,
-    .process-block-content {
-        padding: var(--space-48) var(--space-24);
+    .process-overview,
+    .process-timeline {
+        padding: var(--space-48) var(--gutter-mobile);
     }
 
-    .process-step {
-        grid-template-columns: 60px 1fr;
-        gap: var(--space-20);
+    .process-hero-image {
+        min-height: 260px;
     }
 
-    .process-hero {
-        min-height: 300px;
+    .process-hero-image__tagline {
+        font-size: clamp(1.5rem, 7vw, 2.5rem);
     }
 
-    .process-cta__buttons {
-        flex-direction: column;
-        align-items: flex-start;
+    .process-overview__step {
+        padding: var(--space-28);
+    }
+
+    .process-timeline__inner {
+        gap: var(--space-48);
     }
 }

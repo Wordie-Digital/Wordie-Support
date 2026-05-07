@@ -56,3 +56,25 @@ add_action( 'init', function () {
     ] );
 
 } );
+
+// ---------------------------------------------------------------------------
+// Flush rewrite rules on theme activation so /offers-and-partnerships/ works
+// immediately after activation (no need to manually visit Permalink Settings).
+// ---------------------------------------------------------------------------
+add_action( 'after_switch_theme', function () {
+    // The CPT registers on 'init' before after_switch_theme fires, so
+    // rewrite rules are already registered by the time we flush.
+    flush_rewrite_rules();
+} );
+
+// ---------------------------------------------------------------------------
+// Limit the WordPress search to the 'offer' CPT when the hidden
+// post_type=offer input is present in the query (sent by archive-offer.php
+// search form). Without this, WP would search all public post types.
+// ---------------------------------------------------------------------------
+add_action( 'pre_get_posts', function ( WP_Query $q ) {
+    if ( $q->is_main_query() && $q->is_search() && $q->get( 'post_type' ) === 'offer' ) {
+        $q->set( 'post_type', 'offer' );
+        $q->set( 'post_status', 'publish' );
+    }
+} );

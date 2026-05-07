@@ -1,249 +1,281 @@
 /* ==========================================================================
    archive-offer.css
-   Styles for /offers-and-partnerships/ archive template.
+   Styles for /offers-and-partnerships/ — templates/archive-offer.php
+   Figma node 4515:29328 — "Offers List"
+
+   Sections:
+     1. .offer-hero-image     — 400px full-width bg image
+     2. .offer-archive-intro  — two-col intro: left label+h1, right desc+CTA
+     3. .offer-archive-search — centered search bar
+     4. .offer-archive-list   — horizontal list cards (image left, content right)
    ========================================================================== */
 
-/* ── 1. Archive hero ─────────────────────────────────────────────────────── */
+/* ── 1. Hero image ───────────────────────────────────────────────────────── */
 
-.offer-archive-hero {
-    background-color: var(--color-stone);
-    padding: var(--space-80) var(--space-60);
+.offer-hero-image {
+    min-height: 400px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: var(--color-stone); /* fallback when no ACF image */
 }
 
-.offer-archive-hero__inner {
+/* ── 2. Intro — two-col ──────────────────────────────────────────────────── */
+
+.offer-archive-intro {
+    background-color: var(--color-white);
+    padding: var(--space-80) var(--gutter);
+}
+
+.offer-archive-intro__inner {
     max-width: var(--max-width);
-    margin: 0 auto;
+    margin-inline: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-80);
+    align-items: start;
+}
+
+/* Left column */
+.offer-archive-intro__left {
     display: flex;
     flex-direction: column;
-    gap: var(--space-24);
+    gap: var(--space-16);
 }
 
-.offer-archive-hero__label {
+.offer-archive-intro__label {
     font-family: var(--font-body);
     font-size: var(--text-xs);
-    font-weight: var(--weight-light);
-    letter-spacing: 0.12em;
+    font-weight: var(--weight-medium);
+    letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--color-dark);
+    opacity: 0.65;
+    margin: 0;
 }
 
-.offer-archive-hero__title {
+.offer-archive-intro__title {
     font-family: var(--font-heading);
     font-size: clamp(2rem, 4vw, var(--text-xl));
     font-weight: var(--weight-regular);
     line-height: 1.1;
     color: var(--color-dark);
     margin: 0;
-    max-width: 720px;
 }
 
-.offer-archive-hero__description {
+/* Right column */
+.offer-archive-intro__right {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-28);
+    padding-top: var(--space-10); /* optical alignment with label */
+}
+
+.offer-archive-intro__desc {
+    font-family: var(--font-body);
     font-size: var(--text-sm);
     font-weight: var(--weight-light);
-    line-height: 1.65;
+    line-height: 1.7;
     color: var(--color-dark);
-    max-width: 580px;
     margin: 0;
 }
 
-/* ── 2. Offers grid ──────────────────────────────────────────────────────── */
+/* ── 3. Search bar ───────────────────────────────────────────────────────── */
 
-.offer-archive-grid {
-    padding: var(--space-80) var(--space-60);
-    background-color: var(--color-white);
+.offer-archive-search {
+    background-color: var(--color-sand-light);
+    padding: var(--space-40) var(--gutter);
 }
 
-.offer-archive-grid__inner {
+.offer-archive-search__inner {
     max-width: var(--max-width);
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-60);
+    margin-inline: auto;
 }
 
-.offer-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--space-40);
+.offer-archive-search__form {
+    width: 100%;
 }
 
-/* ── Offer card ──────────────────────────────────────────────────────────── */
-
-.offer-card {
+.offer-archive-search__field-wrap {
+    position: relative;
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    border-bottom: 1px solid var(--color-dark);
+}
+
+.offer-archive-search__icon {
+    flex-shrink: 0;
+    color: var(--color-dark);
+    opacity: 0.55;
+    margin-right: var(--space-12);
+}
+
+.offer-archive-search__input {
+    flex: 1;
+    appearance: none;
+    border: none;
+    background: transparent;
+    padding: var(--space-16) 0;
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-light);
+    color: var(--color-dark);
+    outline: none;
+}
+
+.offer-archive-search__input::placeholder {
+    color: var(--color-dark);
+    opacity: 0.45;
+}
+
+/* ── 4. Offers list ──────────────────────────────────────────────────────── */
+
+.offer-archive-list {
     background-color: var(--color-white);
-    border: 1px solid var(--color-sand);
-    transition: border-color 0.2s ease;
+    padding: var(--space-80) var(--gutter);
 }
 
-.offer-card:hover {
-    border-color: var(--color-stone);
+.offer-archive-list__inner {
+    max-width: var(--max-width);
+    margin-inline: auto;
 }
 
-.offer-card__image-link {
+/* List container — stacked cards */
+.offer-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+/* ── Horizontal list card ────────────────────────────────────────────────── */
+
+.offer-list-card {
+    display: grid;
+    grid-template-columns: 400px 1fr;
+    gap: 0;
+    border-bottom: 1px solid var(--color-sand);
+}
+
+.offer-list-card:first-child {
+    border-top: 1px solid var(--color-sand);
+}
+
+/* Image */
+.offer-list-card__image-link {
     display: block;
-    aspect-ratio: 16 / 10;
     overflow: hidden;
+    aspect-ratio: 4 / 3;
 }
 
-.offer-card__image {
+.offer-list-card__image {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
-    transition: transform 0.4s ease;
+    transition: transform 0.5s ease;
 }
 
-.offer-card:hover .offer-card__image {
+.offer-list-card:hover .offer-list-card__image {
     transform: scale(1.04);
 }
 
-.offer-card__body {
+.offer-list-card__image-placeholder {
+    width: 400px;
+    background-color: var(--color-sand);
+    aspect-ratio: 4 / 3;
+}
+
+/* Body */
+.offer-list-card__body {
     display: flex;
     flex-direction: column;
-    gap: var(--space-16);
-    padding: var(--space-28) var(--space-28) var(--space-32);
-    flex: 1;
+    justify-content: space-between;
+    padding: var(--space-48) var(--space-60);
+    gap: var(--space-28);
 }
 
-.offer-card__partner {
-    font-size: var(--text-xs);
-    font-weight: var(--weight-light);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--color-stone);
-    margin: 0;
+.offer-list-card__header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
 }
 
-.offer-card__title {
+.offer-list-card__title {
     font-family: var(--font-heading);
-    font-size: clamp(1.125rem, 2vw, 1.375rem);
+    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
     font-weight: var(--weight-regular);
-    line-height: 1.2;
+    line-height: 1.15;
     margin: 0;
 }
 
-.offer-card__title a {
+.offer-list-card__title a {
     color: var(--color-dark);
     text-decoration: none;
     transition: color 0.2s ease;
 }
 
-.offer-card__title a:hover {
+.offer-list-card__title a:hover {
     color: var(--color-stone);
 }
 
-.offer-card__excerpt {
+.offer-list-card__partner {
+    font-family: var(--font-body);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-medium);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-stone);
+    margin: 0;
+}
+
+.offer-list-card__excerpt {
+    font-family: var(--font-body);
     font-size: var(--text-sm);
     font-weight: var(--weight-light);
-    line-height: 1.65;
+    line-height: 1.7;
     color: var(--color-dark);
     margin: 0;
     flex: 1;
 
-    /* Clamp to 3 lines */
+    /* 4-line clamp */
     display: -webkit-box;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
 
-.offer-card__footer {
+.offer-list-card__footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
-    gap: var(--space-12);
+    gap: var(--space-16);
     margin-top: auto;
-    padding-top: var(--space-16);
-    border-top: 1px solid var(--color-sand);
 }
 
-.offer-card__cta {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-8);
+.offer-list-card__date {
+    font-family: var(--font-body);
     font-size: var(--text-xs);
-    font-weight: var(--weight-light);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--color-dark);
-    text-decoration: none;
-    transition: gap 0.2s ease, color 0.2s ease;
-}
-
-.offer-card__cta:hover {
-    gap: var(--space-12);
-    color: var(--color-stone);
-}
-
-.offer-card__cta svg {
-    flex-shrink: 0;
-    transition: transform 0.2s ease;
-}
-
-.offer-card__cta:hover svg {
-    transform: translateX(3px);
-}
-
-.offer-card__expiry {
-    font-size: 0.75rem;
     font-weight: var(--weight-light);
     color: var(--color-stone);
     margin: 0;
 }
 
-/* ── Pagination ──────────────────────────────────────────────────────────── */
-
-.offer-archive-pagination {
-    margin-top: var(--space-20);
-}
-
-.offer-archive-pagination .nav-links {
-    display: flex;
-    align-items: center;
-    gap: var(--space-8);
-    flex-wrap: wrap;
-}
-
-.offer-archive-pagination .page-numbers {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 40px;
-    height: 40px;
-    padding: 0 var(--space-12);
+.offer-list-card__link {
+    font-family: var(--font-body);
     font-size: var(--text-xs);
     font-weight: var(--weight-light);
-    letter-spacing: 0.04em;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     color: var(--color-dark);
     text-decoration: none;
-    border: 1px solid var(--color-grey);
-    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 2px;
+    transition: opacity 0.2s ease;
 }
 
-.offer-archive-pagination .page-numbers:hover,
-.offer-archive-pagination .page-numbers.current {
-    background-color: var(--color-dark);
-    border-color: var(--color-dark);
-    color: var(--color-white);
-}
-
-.offer-archive-pagination .prev.page-numbers,
-.offer-archive-pagination .next.page-numbers {
-    gap: var(--space-8);
-    padding: 0 var(--space-16);
-    min-width: auto;
-    border: none;
-    font-size: var(--text-xs);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-}
-
-.offer-archive-pagination .prev.page-numbers span,
-.offer-archive-pagination .next.page-numbers span {
-    display: inline-block;
+.offer-list-card__link:hover {
+    opacity: 0.6;
 }
 
 /* ── Empty state ─────────────────────────────────────────────────────────── */
@@ -263,72 +295,106 @@
     color: var(--color-dark);
 }
 
-/* ── 3. CTA strip ────────────────────────────────────────────────────────── */
+/* ── Pagination ──────────────────────────────────────────────────────────── */
 
-.offer-archive-cta {
-    background-color: var(--color-sand-light);
-    padding: var(--space-80) var(--space-60);
-}
-
-.offer-archive-cta__inner {
-    max-width: var(--max-width);
-    margin: 0 auto;
+.nav-links {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: var(--space-40);
+    justify-content: center;
+    gap: var(--space-8);
+    flex-wrap: wrap;
+    margin-top: var(--space-60);
 }
 
-.offer-archive-cta__heading {
-    font-family: var(--font-heading);
-    font-size: clamp(1.5rem, 3vw, 2rem);
-    font-weight: var(--weight-regular);
-    line-height: 1.1;
-    color: var(--color-dark);
-    margin: 0 0 var(--space-12);
-}
-
-.offer-archive-cta__subheading {
-    font-size: var(--text-sm);
+.nav-links .page-numbers {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+    padding: 0 var(--space-12);
+    font-family: var(--font-body);
+    font-size: var(--text-xs);
     font-weight: var(--weight-light);
-    line-height: 1.6;
+    letter-spacing: 0.04em;
     color: var(--color-dark);
-    margin: 0;
+    text-decoration: none;
+    border: 1px solid var(--color-grey);
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.nav-links .page-numbers:hover,
+.nav-links .page-numbers.current {
+    background-color: var(--color-dark);
+    border-color: var(--color-dark);
+    color: var(--color-white);
+}
+
+.nav-links .prev.page-numbers,
+.nav-links .next.page-numbers {
+    min-width: auto;
+    border: none;
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
 }
 
 /* ── Responsive ──────────────────────────────────────────────────────────── */
 
+@media ( max-width: 1200px ) {
+    .offer-list-card {
+        grid-template-columns: 320px 1fr;
+    }
+}
+
 @media ( max-width: 1024px ) {
-    .offer-archive-hero,
-    .offer-archive-grid,
-    .offer-archive-cta {
-        padding: var(--space-60) var(--space-40);
+    .offer-archive-intro,
+    .offer-archive-search,
+    .offer-archive-list {
+        padding: var(--space-60) var(--gutter);
     }
 
-    .offer-grid {
-        grid-template-columns: repeat(2, 1fr);
+    .offer-archive-intro__inner {
+        grid-template-columns: 1fr;
+        gap: var(--space-40);
     }
 
-    .offer-archive-cta__inner {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: var(--space-32);
+    .offer-list-card {
+        grid-template-columns: 280px 1fr;
+    }
+
+    .offer-list-card__body {
+        padding: var(--space-32) var(--space-40);
+    }
+}
+
+@media ( max-width: 768px ) {
+    .offer-list-card {
+        grid-template-columns: 1fr;
+    }
+
+    .offer-list-card__image-link {
+        aspect-ratio: 16 / 9;
+    }
+
+    .offer-list-card__image-placeholder {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+    }
+
+    .offer-list-card__body {
+        padding: var(--space-28) var(--space-28) var(--space-32);
     }
 }
 
 @media ( max-width: 640px ) {
-    .offer-archive-hero,
-    .offer-archive-grid,
-    .offer-archive-cta {
-        padding: var(--space-48) var(--space-24);
+    .offer-archive-intro,
+    .offer-archive-search,
+    .offer-archive-list {
+        padding: var(--space-48) var(--gutter-mobile);
     }
 
-    .offer-grid {
-        grid-template-columns: 1fr;
-        gap: var(--space-32);
-    }
-
-    .offer-card__body {
-        padding: var(--space-20) var(--space-20) var(--space-24);
+    .offer-hero-image {
+        min-height: 260px;
     }
 }
