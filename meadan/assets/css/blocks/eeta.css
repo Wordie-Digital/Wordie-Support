@@ -90,7 +90,7 @@
     font-size: 16px;
     font-weight: 700;
     padding: 16px 20px;
-    border-radius: var(--eeta-radius);
+    border-radius: 999px;
     text-decoration: none;
     display: inline-flex;
     align-items: center;
@@ -139,7 +139,7 @@
     font-size: 16px;
     font-weight: 700;
     padding: 16px 20px;
-    border-radius: var(--eeta-radius);
+    border-radius: 999px;
     text-decoration: none;
     text-align: center;
 }
@@ -198,7 +198,7 @@
     font-size: 16px;
     font-weight: 700;
     padding: 16px 20px;
-    border-radius: var(--eeta-radius);
+    border-radius: 999px;
     text-decoration: none;
     display: inline-flex;
     align-items: center;
@@ -911,6 +911,7 @@
     .eeta-upcoming__year-label { font-size: 14px; letter-spacing: 1px; }
 
     .eeta-footer__info { padding: 32px 16px; }
-    .eeta-footer__ack { padding: 20px 16px; flex-direction: column; }
+    .eeta-footer__ack { padding: 20px 16px; align-items: flex-start; }
+    .eeta-footer__ack-image { width: 72px; height: auto; flex-shrink: 0; }
     .eeta-footer__bottom { padding: 20px 16px; flex-direction: column; gap: 12px; }
 }
