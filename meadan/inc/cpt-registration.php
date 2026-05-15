@@ -1,10 +1,18 @@
 <?php
 /**
  * Meadan — inc/cpt-registration.php
- * Registers custom post types: Project, Design.
+ * Registers custom post types: Project, Design, Display Home.
+ *
+ * Auto-flush strategy: bump MEADAN_CPT_VERSION whenever a new CPT or rewrite
+ * slug is added. On the next request after a deploy WordPress detects the
+ * mismatch, flushes once, and stores the new version — no Permalinks visit
+ * required.
  */
 
 defined( 'ABSPATH' ) || exit;
+
+// Bump this string any time a new CPT or rewrite slug is introduced.
+define( 'MEADAN_CPT_VERSION', '1.1.0' );
 
 add_action( 'init', function () {
 
@@ -96,8 +104,21 @@ add_action( 'init', function () {
 } );
 
 // ---------------------------------------------------------------------------
-// Flush rewrite rules on activation (run once via theme switch hook)
+// Auto-flush rewrite rules when the CPT version changes.
+//
+// Runs on every request but is cheap: one get_option() call. The flush itself
+// (an expensive DB write) only happens once per version bump — on the very
+// first request after a deploy that changes MEADAN_CPT_VERSION.
+//
+// also kept: after_switch_theme covers fresh installations.
 // ---------------------------------------------------------------------------
+add_action( 'init', function () {
+    if ( get_option( 'meadan_cpt_version' ) !== MEADAN_CPT_VERSION ) {
+        flush_rewrite_rules();
+        update_option( 'meadan_cpt_version', MEADAN_CPT_VERSION, false );
+    }
+}, 99 ); // priority 99 — after all CPTs are registered above (priority 10)
+
 add_action( 'after_switch_theme', function () {
     flush_rewrite_rules();
 } );
