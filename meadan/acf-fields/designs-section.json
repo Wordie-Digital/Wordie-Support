@@ -27,10 +27,32 @@
       "rows": 3
     },
     {
+      "key": "field_designs_selected_designs",
+      "label": "Featured Designs",
+      "name": "selected_designs",
+      "type": "relationship",
+      "instructions": "Pick specific designs to feature in this block. Leave empty to auto-display the latest designs using the count setting below.",
+      "required": 0,
+      "post_type": [
+        "design"
+      ],
+      "taxonomy": [],
+      "filters": [
+        "search"
+      ],
+      "elements": [
+        "featured_image"
+      ],
+      "min": "",
+      "max": "",
+      "return_format": "object"
+    },
+    {
       "key": "field_designs_count",
       "label": "Number of Designs to Show",
       "name": "count",
       "type": "number",
+      "instructions": "Applies only when no specific designs are selected above.",
       "default_value": 2,
       "min": 1,
       "max": 6

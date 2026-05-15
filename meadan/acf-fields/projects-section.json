@@ -27,11 +27,32 @@
       "rows": 3
     },
     {
+      "key": "field_projects_selected_projects",
+      "label": "Featured Projects",
+      "name": "selected_projects",
+      "type": "relationship",
+      "instructions": "Pick specific projects to feature in this block. Leave empty to auto-display the latest projects using the count setting below.",
+      "required": 0,
+      "post_type": [
+        "project"
+      ],
+      "taxonomy": [],
+      "filters": [
+        "search"
+      ],
+      "elements": [
+        "featured_image"
+      ],
+      "min": "",
+      "max": "",
+      "return_format": "object"
+    },
+    {
       "key": "field_projects_count",
       "label": "Number of Projects to Show",
       "name": "count",
       "type": "number",
-      "instructions": "How many project cards to display per page",
+      "instructions": "Applies only when no specific projects are selected above.",
       "default_value": 3,
       "min": 1,
       "max": 9

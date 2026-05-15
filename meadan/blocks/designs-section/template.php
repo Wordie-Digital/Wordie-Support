@@ -3,6 +3,10 @@
  * Block: Designs Section
  * Slug: acf/designs-section
  * Dynamic: queries Design CPT.
+ *
+ * Query priority:
+ *   1. selected_designs ACF relationship field (admin-curated)
+ *   2. Auto-query — latest N designs by menu_order (default behaviour)
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -13,15 +17,29 @@ $description   = get_field( 'description' );
 $count         = (int) ( get_field( 'count' ) ?: 2 );
 $cta_label     = get_field( 'cta_label' );
 $cta_url       = get_field( 'cta_url' );
+$selected      = get_field( 'selected_designs' ); // WP_Post[] or []
 
-$designs = new WP_Query( [
-    'post_type'      => 'design',
-    'posts_per_page' => $count,
-    'post_status'    => 'publish',
-    'orderby'        => 'menu_order',
-    'order'          => 'ASC',
-    'no_found_rows'  => true,
-] );
+if ( ! empty( $selected ) ) {
+    // ── Curated: query exactly the admin-selected posts, preserving picker order.
+    $designs = new WP_Query( [
+        'post_type'      => 'design',
+        'post__in'       => wp_list_pluck( $selected, 'ID' ),
+        'orderby'        => 'post__in',
+        'posts_per_page' => count( $selected ),
+        'post_status'    => 'publish',
+        'no_found_rows'  => true,
+    ] );
+} else {
+    // ── Default: auto-select by menu_order.
+    $designs = new WP_Query( [
+        'post_type'      => 'design',
+        'posts_per_page' => $count,
+        'post_status'    => 'publish',
+        'orderby'        => 'menu_order',
+        'order'          => 'ASC',
+        'no_found_rows'  => true,
+    ] );
+}
 
 $block_id = ! empty( $block['anchor'] ) ? ' id="' . esc_attr( $block['anchor'] ) . '"' : '';
 ?>

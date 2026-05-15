@@ -3,6 +3,10 @@
  * Block: Projects Section
  * Slug: acf/projects-section
  * Dynamic: queries Project CPT.
+ *
+ * Query priority:
+ *   1. selected_projects ACF relationship field (admin-curated)
+ *   2. Auto-query — latest N projects by menu_order (default behaviour)
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -13,15 +17,29 @@ $description   = get_field( 'description' );
 $count         = (int) ( get_field( 'count' ) ?: 3 );
 $cta_label     = get_field( 'cta_label' );
 $cta_url       = get_field( 'cta_url' );
+$selected      = get_field( 'selected_projects' ); // WP_Post[] or []
 
-$projects = new WP_Query( [
-    'post_type'      => 'project',
-    'posts_per_page' => $count,
-    'post_status'    => 'publish',
-    'orderby'        => 'menu_order',
-    'order'          => 'ASC',
-    'no_found_rows'  => true,
-] );
+if ( ! empty( $selected ) ) {
+    // ── Curated: query exactly the admin-selected posts, preserving picker order.
+    $projects = new WP_Query( [
+        'post_type'      => 'project',
+        'post__in'       => wp_list_pluck( $selected, 'ID' ),
+        'orderby'        => 'post__in',
+        'posts_per_page' => count( $selected ),
+        'post_status'    => 'publish',
+        'no_found_rows'  => true,
+    ] );
+} else {
+    // ── Default: auto-select by menu_order.
+    $projects = new WP_Query( [
+        'post_type'      => 'project',
+        'posts_per_page' => $count,
+        'post_status'    => 'publish',
+        'orderby'        => 'menu_order',
+        'order'          => 'ASC',
+        'no_found_rows'  => true,
+    ] );
+}
 
 $block_id = ! empty( $block['anchor'] ) ? ' id="' . esc_attr( $block['anchor'] ) . '"' : '';
 ?>

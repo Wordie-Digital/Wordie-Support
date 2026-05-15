@@ -15,8 +15,9 @@
       "label": "Title",
       "name": "title",
       "type": "text",
-      "required": 1,
-      "placeholder": "Discover Your Dream Home - Book a Private Viewing Today."
+      "required": 0,
+      "placeholder": "Discover Your Dream Home - Book a Private Viewing Today.",
+      "instructions": "Used in promo mode (when no display homes are selected below)."
     },
     {
       "key": "field_display_home_description",
@@ -24,7 +25,8 @@
       "name": "description",
       "type": "textarea",
       "required": 0,
-      "rows": 4
+      "rows": 4,
+      "instructions": "Used in promo mode (when no display homes are selected below)."
     },
     {
       "key": "field_display_home_cta_label",
@@ -46,10 +48,31 @@
       "label": "Image (3:2 ratio)",
       "name": "image",
       "type": "image",
-      "instructions": "Upload a landscape image at 3:2 ratio (e.g. 1200x800px)",
-      "required": 1,
+      "instructions": "Used in promo mode (when no display homes are selected below). Upload a landscape image at 3:2 ratio (e.g. 1200x800px).",
+      "required": 0,
       "return_format": "array",
       "preview_size": "medium"
+    },
+    {
+      "key": "field_display_home_selected_display_homes",
+      "label": "Featured Display Homes",
+      "name": "selected_display_homes",
+      "type": "relationship",
+      "instructions": "Pick specific Display Home entries to show as a card grid. When populated, the block switches from the promo layout to a card grid. Leave empty to use the promo layout above.",
+      "required": 0,
+      "post_type": [
+        "display-home"
+      ],
+      "taxonomy": [],
+      "filters": [
+        "search"
+      ],
+      "elements": [
+        "featured_image"
+      ],
+      "min": "",
+      "max": "",
+      "return_format": "object"
     }
   ],
   "location": [
