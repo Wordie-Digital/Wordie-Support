@@ -883,6 +883,7 @@
     .eeta-nav__inner { padding: 14px 16px; }
 
     .eeta-hero { min-height: unset; }
+    .eeta-hero__image-panel { display: none; }
     .eeta-hero__text-inner { padding: 38px 16px; gap: 24px; }
     .eeta-hero__heading { font-size: 32px; }
     .eeta-hero__subheading { font-size: 16px; }
