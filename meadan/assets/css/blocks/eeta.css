@@ -883,12 +883,11 @@
     .eeta-nav__inner { padding: 14px 16px; }
 
     .eeta-hero { min-height: unset; }
-    .eeta-hero__image-panel { display: none; }
+    .eeta-hero__image-panel { display: none !important; }
     .eeta-hero__text-inner { padding: 38px 16px; gap: 24px; }
     .eeta-hero__heading { font-size: 32px; }
     .eeta-hero__subheading { font-size: 16px; }
     .eeta-hero__cta { align-self: stretch; justify-content: center; }
-    .eeta-hero__image-panel { height: 250px; }
 
     .eeta-text-image { padding: 40px 16px; }
     .eeta-text-image__heading { font-size: 32px; }
