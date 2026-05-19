@@ -111,20 +111,40 @@ jobs:
             echo "name=${{ secrets.WPE_ENV_DEVELOPMENT }}" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Deploy wordie/ to wp-content/themes/wordie/
-        uses: wpengine/github-action-wpe-site-deploy@v3
-        with:
-          WPE_SSHG_KEY_PRIVATE: ${{ secrets.WPE_SSH_KEY }}
-          WPE_ENV:              ${{ steps.wpe_env.outputs.name }}
-          SRC_PATH:             "wordie/"
-          REMOTE_PATH:          "wp-content/themes/wordie/"
-          CACHE_CLEAR:          true
-          FLAGS: >
-            --exclude=".git"
-            --exclude=".github"
-            --exclude="node_modules"
-            --exclude=".gitignore"
-            --exclude="*.md"
+      - name: Configure SSH key for WP Engine
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s' "${{ secrets.WPE_SSH_KEY }}" | sed 's/\\n/\n/g' | tr -d '\r' > ~/.ssh/wpengine_ed25519
+          echo "" >> ~/.ssh/wpengine_ed25519
+          chmod 600 ~/.ssh/wpengine_ed25519
+          ssh-keyscan -t rsa git.wpengine.com >> ~/.ssh/known_hosts 2>/dev/null
+          cat >> ~/.ssh/config <<'EOF'
+          Host git.wpengine.com
+            IdentityFile ~/.ssh/wpengine_ed25519
+            StrictHostKeyChecking no
+          EOF
+
+      - name: Configure Git identity
+        run: |
+          git config --global user.email "deploy@wordie.com.au"
+          git config --global user.name  "Wordie CI"
+
+      - name: Build WP Engine deploy tree
+        run: |
+          mkdir -p /tmp/wpe-deploy/wp-content/themes/wordie
+          rsync -a --exclude='.git' --exclude='.github' --exclude='node_modules' --exclude='*.md' \
+            wordie/ /tmp/wpe-deploy/wp-content/themes/wordie/
+          cd /tmp/wpe-deploy
+          git init
+          git add -A
+          git commit -m "Deploy Wordie theme ${{ github.sha }}"
+
+      - name: Push to WP Engine
+        run: |
+          cd /tmp/wpe-deploy
+          git remote add wpengine \
+            "git@git.wpengine.com:production/${{ steps.wpe_env.outputs.name }}.git"
+          git push wpengine HEAD:master --force
 
       - name: Deployment summary
         run: |
