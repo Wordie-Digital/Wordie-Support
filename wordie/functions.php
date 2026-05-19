@@ -84,6 +84,24 @@ add_action( 'wp_enqueue_scripts', function () {
 } );
 
 // ---------------------------------------------------------------------------
+// Fix DirectoryIndex: prevent React app index.html from intercepting root URL.
+// Prepends DirectoryIndex index.php to .htaccess so LiteSpeed serves WordPress
+// for / requests instead of the static React app. Runs once and is idempotent.
+// ---------------------------------------------------------------------------
+add_action( 'init', function () {
+	$htaccess = ABSPATH . '.htaccess';
+	if ( ! file_exists( $htaccess ) || ! is_writable( $htaccess ) ) {
+		return;
+	}
+	$content = file_get_contents( $htaccess );
+	if ( false !== strpos( $content, '# BEGIN Wordie DirectoryIndex Fix' ) ) {
+		return;
+	}
+	$prepend = "# BEGIN Wordie DirectoryIndex Fix\nDirectoryIndex index.php\n# END Wordie DirectoryIndex Fix\n\n";
+	file_put_contents( $htaccess, $prepend . $content );
+} );
+
+// ---------------------------------------------------------------------------
 // Enqueue block editor assets
 // ---------------------------------------------------------------------------
 add_action( 'enqueue_block_editor_assets', function () {
