@@ -129,14 +129,17 @@ jobs:
           git config --global user.email "deploy@wordie.com.au"
           git config --global user.name  "Wordie CI"
 
-      - name: Build WP Engine cleanup tree
+      - name: Build WP Engine deploy tree
         run: |
+          mkdir -p /tmp/wpe-deploy/wp-content/themes/wordie
           mkdir -p /tmp/wpe-deploy/wp-content/mu-plugins
-          cp .github/cleanup-wordie.php /tmp/wpe-deploy/wp-content/mu-plugins/cleanup-wordie.php
+          rsync -a --exclude='.git' --exclude='.github' --exclude='node_modules' --exclude='*.md' \
+            wordie/ /tmp/wpe-deploy/wp-content/themes/wordie/
+          cp .github/activate-wordie.php /tmp/wpe-deploy/wp-content/mu-plugins/activate-wordie.php
           cd /tmp/wpe-deploy
           git init
           git add -A
-          git commit -m "Cleanup incorrectly deployed Wordie files from wordiev2"
+          git commit -m "Deploy Wordie theme ${{ github.sha }}"
 
       - name: Push to WP Engine
         run: |
