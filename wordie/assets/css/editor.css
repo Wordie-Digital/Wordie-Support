@@ -1,0 +1,15 @@
+/**
+ * Wordie — Block Editor Styles
+ *
+ * Loaded in the Gutenberg editor via enqueue_block_editor_assets.
+ * Keeps editor chrome minimal — blocks handle their own visual styles.
+ */
+
+.editor-styles-wrapper {
+	font-family: var( --wp--preset--font-family--body, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif );
+}
+
+/* Prevent ACF blocks from collapsing to zero-height in the editor */
+.acf-block-preview {
+	min-height: 60px;
+}
