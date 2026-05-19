@@ -111,7 +111,7 @@ add_action( 'acf/init', function () {
 			'category'        => 'wordie',
 			'icon'            => $block['icon'],
 			'keywords'        => $block['keywords'],
-			'enqueue_style'   => WORDIE_URI . '/assets/css/blocks/' . $block['name'] . '.css',
+			'enqueue_style'   => WORDIE_URI . '/assets/css/blocks/' . $block['name'] . '.css?ver=' . WORDIE_VERSION,
 			'supports'        => [
 				'align'    => false,
 				'mode'     => true,

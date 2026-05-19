@@ -7,7 +7,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'WORDIE_VERSION', '1.0.0' );
+define( 'WORDIE_VERSION', '1.0.1' );
 define( 'WORDIE_DIR', get_template_directory() );
 define( 'WORDIE_URI', get_template_directory_uri() );
 
