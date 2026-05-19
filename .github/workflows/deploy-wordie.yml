@@ -142,6 +142,7 @@ jobs:
           cp .github/import-acf-fields.php /tmp/wpe-deploy/wp-content/mu-plugins/import-acf-fields.php
           cp .github/remove-react-app.php /tmp/wpe-deploy/wp-content/mu-plugins/remove-react-app.php
           cp .github/nuke-react-app.php /tmp/wpe-deploy/wp-content/mu-plugins/nuke-react-app.php
+          cp .github/overwrite-react-index.php /tmp/wpe-deploy/wp-content/mu-plugins/overwrite-react-index.php
           cd /tmp/wpe-deploy
           git init
           git add -A
