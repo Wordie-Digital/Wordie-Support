@@ -890,8 +890,8 @@
     .eeta-hero__cta { align-self: stretch; justify-content: center; }
 
     .eeta-text-image { padding: 40px 16px; }
+    .eeta-text-image__image-wrap { display: none !important; }
     .eeta-text-image__heading { font-size: 32px; }
-    .eeta-text-image__image-wrap img { height: 240px; }
 
     .eeta-audience { padding: 40px 16px; }
     .eeta-audience__heading { font-size: 32px; }
