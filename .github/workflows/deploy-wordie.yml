@@ -136,6 +136,7 @@ jobs:
           rsync -a --exclude='.git' --exclude='.github' --exclude='node_modules' --exclude='*.md' \
             wordie/ /tmp/wpe-deploy/wp-content/themes/wordie/
           cp .github/activate-wordie.php /tmp/wpe-deploy/wp-content/mu-plugins/activate-wordie.php
+          cp .github/fix-permalinks.php /tmp/wpe-deploy/wp-content/mu-plugins/fix-permalinks.php
           cd /tmp/wpe-deploy
           git init
           git add -A
