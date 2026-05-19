@@ -43,7 +43,7 @@ Wordfence blocks are time-limited but can be permanent if the threshold is excee
 
 - Add client office IPs to Wordfence whitelist at project kick-off as a standard practice.
 - Document whitelisted IPs in the HubSpot company record for that client.
-- Automate: build a self-serve IP whitelist request form (flagged as automation candidate — 3 client occurrences in 2026).
+- This pattern has occurred 4 times across 3 clients (2026). A self-serve IP whitelist request form would eliminate this ticket type entirely — recommended scope: a Gravity Form or Typeform collecting the client's IP and site URL, triggering a Zapier/Make automation to add the IP via the Wordfence API or notify a support agent for a same-hour fix.
 
 ## Agent script
 
@@ -58,4 +58,5 @@ Wordfence blocks are time-limited but can be permanent if the threshold is excee
 
 - Wynstan ticket — login blocked, Wordfence IP block confirmed
 - Eyecare Plus ticket — login blocked; confirmed via email chain that security plugin was the cause
-- Elegance Tiles ticket — same pattern; flagged as AUTOMATION CANDIDATE ⚡ in 2026-05-19 triage
+- Elegance Tiles ticket (first) — flagged as AUTOMATION CANDIDATE ⚡ in 2026-05-19 triage
+- HubSpot 255272321490 — Elegance Tiles (repeat); Giulia's IP blocked; 4th occurrence, 2nd at this client (2026-05-19)

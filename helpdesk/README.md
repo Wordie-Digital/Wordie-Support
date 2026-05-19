@@ -6,7 +6,8 @@ Support playbooks distilled from resolved HubSpot tickets. Each playbook is a ca
 
 | Playbook | Category | Confidence | Pattern Frequency |
 |---|---|---|---|
-| [WooCommerce Order Flow Failure](woocommerce/order-flow-failure.md) | WooCommerce / WP-Cron | 9/10 | High |
+| [WooCommerce Order Flow Failure](woocommerce/order-flow-failure.md) | WooCommerce / WP-Cron | 10/10 | High |
+| [WooCommerce Bulk Import Attribute Overwrite](woocommerce/bulk-import-attribute-overwrite.md) | WooCommerce / Data | 8/10 | Medium |
 | [WordPress Media Upload Error](wordpress/media-upload-error.md) | WordPress / Server | 8/10 | Medium |
 | [Member Login Blocked](wordpress/member-login-blocked.md) | WordPress / Security | 8/10 | High |
 | [GTM Container Replaced](analytics/gtm-container-replaced.md) | Analytics / GTM | 10/10 | Medium |

@@ -1,7 +1,7 @@
 # WooCommerce Order Flow Failure
 
 **Category**: WooCommerce / WP-Cron  
-**Confidence**: 9/10  
+**Confidence**: 10/10  
 **Pattern frequency**: High  
 **Last seen**: 2026-05-19  
 
@@ -21,6 +21,8 @@ This commonly occurs after:
 - Server-side cron replacements or hosting migrations
 - Manual `wp_clear_scheduled_hook` calls in update routines
 
+**Differential**: WP Mail SMTP auth token expiry produces the same symptom (emails not sending) but WP-Cron events remain intact. Check Step 6 to distinguish between the two.
+
 ## Diagnosis steps
 
 1. Check `wp_options` table for `cron` key — confirm `automate_dispatching_recent_task` is absent or overdue.
@@ -28,8 +30,11 @@ This commonly occurs after:
 3. Check email delivery logs (WP Mail SMTP or equivalent) for failures in the affected period.
 4. Review recent plugin update history for anything touching order automation or cron.
 5. Confirm orders are being created but stuck in "Processing" (rules out payment gateway issues).
+6. **Differential — SMTP token expiry**: If WP-Cron events are present and correctly scheduled, check WP Mail SMTP > Settings — confirm the OAuth token or API key is still valid and not expired. A lapsed token causes identical symptoms but requires re-authentication, not a cron fix.
 
 ## Fix
+
+**If root cause is WP-Cron (event missing):**
 
 1. Re-register the missing cron event:
    ```php
@@ -42,11 +47,18 @@ This commonly occurs after:
 4. Verify cron is firing: install WP Crontrol plugin temporarily, confirm next scheduled run appears.
 5. Remove WP Crontrol after verification.
 
+**If root cause is SMTP token expiry:**
+
+1. Go to WP Mail SMTP > Settings > reconnect or re-authenticate the mailer.
+2. Send a test email from WP Mail SMTP > Tools > Email Test.
+3. Confirm WooCommerce order emails resume — trigger a test order if needed.
+
 ## Prevention
 
 - Add a cron health check to site monitoring (e.g., Uptime Robot hitting a `/wp-cron.php` endpoint).
 - After any major plugin update, run `wp cron event list` to confirm events are intact.
 - Consider replacing WP-Cron with a real server cron (`*/5 * * * * wget -q -O - https://site.com/wp-cron.php?doing_wp_cron`) for high-volume WooCommerce sites.
+- Set a calendar reminder to review SMTP token expiry on OAuth-based mailers (Google/Microsoft tokens typically expire annually).
 
 ## Agent script
 
@@ -61,4 +73,4 @@ This commonly occurs after:
 
 - GCS-423 — order confirmation emails not sending (WP-Cron cleared post-update)
 - GCS-414 — orders stuck in Processing (same root cause, separate client)
-- HubSpot ticket 255137028572 — Foodbank ticket in open queue matching this pattern (flagged 2026-05-19)
+- HubSpot 255137028572 — Foodbank NSW; order emails stopped; client noted prior SMTP token issue as past cause — this instance confirmed as WP-Cron (2026-05-19)
