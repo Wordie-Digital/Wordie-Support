@@ -1,0 +1,94 @@
+[
+  {
+    "key": "group_wordie_client_logos",
+    "title": "Client Logos",
+    "fields": [
+      {
+        "key": "field_wordie_client_logos_kicker",
+        "label": "Kicker Text",
+        "name": "kicker_text",
+        "type": "text",
+        "instructions": "Small uppercase label above the logos. Example: \"Trusted by brands that take digital seriously\"",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": { "width": "", "class": "", "id": "" },
+        "default_value": "Trusted by brands that take digital seriously",
+        "placeholder": "Trusted by brands that take digital seriously",
+        "maxlength": 80
+      },
+      {
+        "key": "field_wordie_client_logos_logos",
+        "label": "Client Logos",
+        "name": "logos",
+        "type": "repeater",
+        "instructions": "Add client logos in the order they should appear in the marquee. Logos are automatically scrolled. Recommended image: 300×160px transparent PNG or SVG.",
+        "required": 1,
+        "conditional_logic": 0,
+        "wrapper": { "width": "", "class": "", "id": "" },
+        "min": 3,
+        "max": 20,
+        "layout": "block",
+        "button_label": "Add Logo",
+        "sub_fields": [
+          {
+            "key": "field_wordie_client_logos_logo_image",
+            "label": "Logo Image",
+            "name": "logo_image",
+            "type": "image",
+            "instructions": "Client logo. Transparent PNG or SVG recommended. Max size: 300×160px.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": { "width": "60", "class": "", "id": "" },
+            "return_format": "array",
+            "preview_size": "thumbnail",
+            "library": "all",
+            "mime_types": "png,svg,webp"
+          },
+          {
+            "key": "field_wordie_client_logos_logo_name",
+            "label": "Client Name",
+            "name": "logo_name",
+            "type": "text",
+            "instructions": "Client or brand name — used as the image alt text.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": { "width": "40", "class": "", "id": "" },
+            "default_value": "",
+            "placeholder": "e.g. Mitsubishi Electric"
+          },
+          {
+            "key": "field_wordie_client_logos_logo_link",
+            "label": "Website URL",
+            "name": "logo_link",
+            "type": "url",
+            "instructions": "Optional. If set, the logo becomes a link to the client's website.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": { "width": "", "class": "", "id": "" },
+            "default_value": "",
+            "placeholder": "https://"
+          }
+        ]
+      }
+    ],
+    "location": [
+      [
+        {
+          "param": "block",
+          "operator": "==",
+          "value": "acf/client-logos"
+        }
+      ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "seamless",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Fields for the Client Logos marquee block.",
+    "show_in_rest": 0,
+    "modified": 1747612800
+  }
+]

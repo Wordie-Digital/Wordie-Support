@@ -1,0 +1,213 @@
+/* ==========================================================================
+   Block: Testimonial
+   Figma node: 3045:18172
+   Layout: white bg, flex items-center justify-between px/py 72px
+           left content 538px / right portrait 662×441px radius-12px
+   ========================================================================== */
+
+.block-testimonial {
+	background-color: var(--colour-white);
+}
+
+/* --------------------------------------------------------------------------
+   Slides wrapper
+   -------------------------------------------------------------------------- */
+
+.block-testimonial__slides {
+	position: relative;
+}
+
+/* --------------------------------------------------------------------------
+   Single slide — flex justify-between items-center, full padding
+   -------------------------------------------------------------------------- */
+
+.block-testimonial__slide {
+	display: none;
+	align-items: center;
+	justify-content: space-between;
+	max-width: 1440px;
+	margin-inline: auto;
+	padding: var(--margin-lr); /* 72px — matches Figma px/py tokens */
+	gap: 40px;
+}
+
+.block-testimonial__slide.is-active {
+	display: flex;
+}
+
+/* --------------------------------------------------------------------------
+   Left content — 538px
+   Figma: flex-col gap-[40px] between text and nav
+   -------------------------------------------------------------------------- */
+
+.block-testimonial__content {
+	display: flex;
+	flex-direction: column;
+	gap: 40px; /* Figma gap-[40px] between text block and nav buttons */
+	flex: 0 0 538px;
+	max-width: 538px;
+}
+
+/* Text block: logo → quote → author, gap-[28px] */
+.block-testimonial__text {
+	display: flex;
+	flex-direction: column;
+	gap: 28px; /* Figma gap-[28px] */
+}
+
+/* Client logo */
+.block-testimonial__logo {
+	display: flex;
+	align-items: center;
+}
+
+.block-testimonial__logo-img {
+	max-height: 81px;
+	max-width: 101px;
+	width: auto;
+	object-fit: contain;
+}
+
+/* Quote — Montserrat Regular 18px, dark grey */
+.block-testimonial__quote {
+	font-family: var(--font-heading);
+	font-size: 1.125rem; /* 18px — Figma text-[18px] Montserrat Regular */
+	font-weight: 400; /* Regular weight */
+	line-height: 1.2;
+	color: var(--colour-dark-grey); /* #062028 */
+	margin: 0;
+	padding: 0;
+	border: none;
+}
+
+/* Author block */
+.block-testimonial__author {
+	display: flex;
+	flex-direction: column;
+}
+
+.block-testimonial__author-name {
+	font-family: var(--font-heading);
+	font-size: 1.125rem; /* 18px — Figma Mobile/H5 Bold */
+	font-weight: 700;
+	line-height: 1.2;
+	color: var(--colour-text-body); /* #505c5f */
+	margin: 0;
+}
+
+.block-testimonial__author-role {
+	font-family: var(--font-body);
+	font-size: 0.875rem; /* 14px */
+	font-weight: 400;
+	line-height: 1.3;
+	color: var(--colour-disabled); /* #9ba6a9 */
+	margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Nav buttons — coral border, circular, p-[8px], rounded-[100px]
+   -------------------------------------------------------------------------- */
+
+.block-testimonial__nav {
+	display: flex;
+	align-items: center;
+	gap: 20px; /* Figma gap-[20px] */
+}
+
+.block-testimonial__nav-btn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 34px; /* p-[8px] + 16px icon + border */
+	height: 34px;
+	padding: 8px; /* Figma p-[8px] */
+	border: 1px solid var(--colour-coral); /* Figma border border-coral */
+	border-radius: 100px; /* Figma rounded-[100px] */
+	background: transparent;
+	color: var(--colour-coral);
+	cursor: pointer;
+	transition: background-color 0.2s ease, color 0.2s ease;
+	box-sizing: content-box;
+}
+
+.block-testimonial__nav-btn:hover,
+.block-testimonial__nav-btn:focus-visible {
+	background-color: var(--colour-coral);
+	color: var(--colour-white);
+}
+
+/* --------------------------------------------------------------------------
+   Right portrait — 662×441px, border-radius 12px (wordie-portrait size)
+   -------------------------------------------------------------------------- */
+
+.block-testimonial__figure {
+	flex: 0 0 662px;
+	width: 662px;
+	height: 441px;
+	border-radius: 12px; /* Figma border-radius/images token */
+	overflow: hidden;
+	margin: 0;
+}
+
+.block-testimonial__portrait {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+
+.block-testimonial__portrait-placeholder {
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(135deg, var(--colour-dark-teal) 0%, #0d4a5c 100%);
+}
+
+/* --------------------------------------------------------------------------
+   Responsive — tablet (≤1024px): stack vertically
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 1024px) {
+	.block-testimonial__slide {
+		flex-direction: column-reverse; /* image on top, text below */
+		align-items: stretch;
+		gap: 36px;
+		padding: 48px 32px;
+	}
+
+	.block-testimonial__content {
+		flex: none;
+		max-width: 100%;
+	}
+
+	.block-testimonial__figure {
+		flex: none;
+		width: 100%;
+		height: auto;
+		aspect-ratio: 662 / 441;
+	}
+}
+
+/* --------------------------------------------------------------------------
+   Responsive — mobile (≤640px)
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 640px) {
+	.block-testimonial__slide {
+		padding: 40px 20px;
+		gap: 28px;
+	}
+
+	.block-testimonial__quote {
+		font-size: 1rem;
+	}
+}
+
+/* --------------------------------------------------------------------------
+   Reduced motion
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+	.block-testimonial__nav-btn {
+		transition: none;
+	}
+}

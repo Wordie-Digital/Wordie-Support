@@ -1,0 +1,149 @@
+[
+  {
+    "key": "group_wordie_navigation_options",
+    "title": "Navigation Settings",
+    "fields": [
+      {
+        "key": "field_wordie_nav_site_logo",
+        "label": "Site Logo",
+        "name": "site_logo",
+        "type": "image",
+        "instructions": "Wordie logo for the site header. Recommended: SVG or PNG, 256×96px max.",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": { "width": "", "class": "", "id": "" },
+        "return_format": "array",
+        "preview_size": "thumbnail",
+        "library": "all",
+        "mime_types": "svg,png,webp"
+      },
+      {
+        "key": "field_wordie_nav_cta",
+        "label": "Navigation CTA",
+        "name": "nav_cta",
+        "type": "link",
+        "instructions": "CTA button in the navigation pill. Example: \"Brief us\" → /contact",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": { "width": "", "class": "", "id": "" },
+        "return_format": "array"
+      }
+    ],
+    "location": [
+      [
+        {
+          "param": "options_page",
+          "operator": "==",
+          "value": "wordie-navigation-settings"
+        }
+      ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "seamless",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Global navigation fields — logo and CTA button.",
+    "show_in_rest": 0,
+    "modified": 1747612800
+  },
+  {
+    "key": "group_wordie_footer_options",
+    "title": "Footer Settings",
+    "fields": [
+      {
+        "key": "field_wordie_footer_phone",
+        "label": "Phone Number",
+        "name": "footer_phone",
+        "type": "text",
+        "instructions": "Contact phone number displayed in the footer.",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": { "width": "50", "class": "", "id": "" },
+        "default_value": "",
+        "placeholder": "+61 3 0000 0000"
+      },
+      {
+        "key": "field_wordie_footer_email",
+        "label": "Email Address",
+        "name": "footer_email",
+        "type": "email",
+        "instructions": "Contact email address displayed in the footer.",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": { "width": "50", "class": "", "id": "" },
+        "default_value": "",
+        "placeholder": "hello@wordie.com.au"
+      },
+      {
+        "key": "field_wordie_footer_address",
+        "label": "Physical Address",
+        "name": "footer_address",
+        "type": "textarea",
+        "instructions": "Street address. Each line will be displayed as a separate row.",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": { "width": "", "class": "", "id": "" },
+        "rows": 3,
+        "new_lines": "br"
+      },
+      {
+        "key": "field_wordie_footer_linkedin",
+        "label": "LinkedIn URL",
+        "name": "social_linkedin",
+        "type": "url",
+        "instructions": "Full LinkedIn profile URL. Leave blank to hide the icon.",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": { "width": "50", "class": "", "id": "" },
+        "default_value": "",
+        "placeholder": "https://linkedin.com/company/wordie"
+      },
+      {
+        "key": "field_wordie_footer_instagram",
+        "label": "Instagram URL",
+        "name": "social_instagram",
+        "type": "url",
+        "instructions": "Full Instagram profile URL. Leave blank to hide the icon.",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": { "width": "50", "class": "", "id": "" },
+        "default_value": "",
+        "placeholder": "https://instagram.com/wordie"
+      },
+      {
+        "key": "field_wordie_footer_copyright",
+        "label": "Copyright Text",
+        "name": "footer_copyright",
+        "type": "text",
+        "instructions": "Footer copyright line. Use {year} as a placeholder for the current year.",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": { "width": "", "class": "", "id": "" },
+        "default_value": "© {year} Wordie Digital. All rights reserved.",
+        "placeholder": "© {year} Wordie Digital. All rights reserved."
+      }
+    ],
+    "location": [
+      [
+        {
+          "param": "options_page",
+          "operator": "==",
+          "value": "wordie-footer-settings"
+        }
+      ]
+    ],
+    "menu_order": 10,
+    "position": "normal",
+    "style": "seamless",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Global footer fields — contact info, social links, and copyright.",
+    "show_in_rest": 0,
+    "modified": 1747612800
+  }
+]

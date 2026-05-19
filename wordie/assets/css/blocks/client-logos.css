@@ -1,0 +1,161 @@
+/**
+ * Block: Client Logos
+ * Figma node: 2923:1418
+ *
+ * Layout: dark #062028 background, centred kicker text, then a marquee
+ * of client logos that scrolls continuously left.
+ *
+ * Logo cells: 152×81px with 50px gap (per Figma).
+ * Marquee: logos are duplicated in the DOM; CSS animation translates -50%
+ * so the duplicate set seamlessly replaces the first set.
+ */
+
+.block-client-logos {
+  background-color: var(--colour-dark-grey);
+  padding-block: var(--margin-tb);
+  overflow: hidden;
+}
+
+.block-client-logos__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-8);   /* 30px between kicker and logos per Figma */
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--margin-lr);
+}
+
+/* ── Kicker text ─────────────────────────────────────────────────────────── */
+.block-client-logos__kicker {
+  font-family: var(--font-body);
+  font-size: var(--text-label-sm);   /* 14px */
+  font-weight: var(--weight-bold);
+  line-height: var(--lh-cta);        /* 1 */
+  letter-spacing: var(--ls-label-sm); /* 10px / 0.625rem */
+  text-transform: uppercase;
+  color: var(--colour-disabled);     /* #9ba6a9 */
+  text-align: center;
+}
+
+/* ── Marquee wrapper ─────────────────────────────────────────────────────── */
+.block-client-logos__marquee {
+  width: 100%;
+  overflow: hidden;
+  /* Subtle edge fade so logos don't hard-clip at viewport edges */
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 8%,
+    black 92%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 8%,
+    black 92%,
+    transparent 100%
+  );
+}
+
+/* ── Track — the scrolling strip ────────────────────────────────────────── */
+.block-client-logos__track {
+  display: flex;
+  align-items: center;
+  gap: 50px;                        /* 50px gap per Figma */
+  width: max-content;               /* Grows to fit all items */
+  animation: wordie-marquee 28s linear infinite;
+  will-change: transform;
+}
+
+/* Pause on hover (accessibility — prevents motion sickness) */
+.block-client-logos__marquee:hover .block-client-logos__track,
+.block-client-logos__marquee:focus-within .block-client-logos__track {
+  animation-play-state: paused;
+}
+
+/* ── Individual logo cell ────────────────────────────────────────────────── */
+.block-client-logos__item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 152px;
+  height: 81px;
+  overflow: hidden;
+}
+
+.block-client-logos__link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.block-client-logos__logo {
+  /* Keep logos monochromatic — desaturate and reduce opacity to match Figma */
+  filter: grayscale(100%) brightness(1.8);
+  opacity: 0.7;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  transition: filter var(--transition-medium), opacity var(--transition-medium);
+}
+
+.block-client-logos__item:hover .block-client-logos__logo,
+.block-client-logos__link:focus .block-client-logos__logo {
+  filter: grayscale(0%) brightness(1);
+  opacity: 1;
+}
+
+/* ── Marquee keyframes ───────────────────────────────────────────────────── */
+@keyframes wordie-marquee {
+  from { transform: translateX(0); }
+  /* Translate exactly -50% since track content is doubled */
+  to   { transform: translateX(-50%); }
+}
+
+/* ── Respect reduced-motion preference ──────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .block-client-logos__track {
+    animation: none;
+  }
+
+  .block-client-logos__marquee {
+    -webkit-mask-image: none;
+    mask-image: none;
+    overflow-x: auto;
+    scrollbar-width: thin;
+  }
+}
+
+/* ── Responsive — tablet (769px–1024px) ─────────────────────────────────── */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .block-client-logos__track {
+    gap: 32px;
+    animation-duration: 22s;
+  }
+
+  .block-client-logos__item {
+    width: 120px;
+    height: 64px;
+  }
+}
+
+/* ── Responsive — mobile (≤768px) ───────────────────────────────────────── */
+@media (max-width: 768px) {
+  .block-client-logos__track {
+    gap: 24px;
+    animation-duration: 18s;
+  }
+
+  .block-client-logos__item {
+    width: 100px;
+    height: 52px;
+  }
+}

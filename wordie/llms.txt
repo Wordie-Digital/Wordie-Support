@@ -1,0 +1,63 @@
+# Wordie Digital — AI Content Map
+
+## Purpose
+Wordie is an Australian digital agency specialising in design-led WordPress development, powered by AI-enhanced workflows. The site showcases Wordie's services, work portfolio, process, and technology stack, and is the primary lead generation vehicle for the agency. Target audience: marketing managers, startup founders, and business leaders looking for a premium WordPress partner.
+
+## Content Model
+
+### Blocks (ACF Gutenberg)
+
+| Block slug      | Purpose                                                        | Key fields                                    |
+|-----------------|----------------------------------------------------------------|-----------------------------------------------|
+| hero-banner     | Full-viewport dark-teal hero section                          | heading (H1), subheading, cta_primary, cta_secondary, background_image |
+| client-logos    | Kicker text + scrolling marquee of client logos               | kicker_text, logos (repeater: logo_image, logo_name, logo_link) |
+| services-grid   | Section header + 3-column bordered service cards              | section_kicker, section_heading, services (repeater: service_title, service_description, service_link) |
+| work-section    | Featured project carousel with stats panel + thumbnail row    | section_kicker, section_heading, section_cta, projects (repeater: project_image, project_client_logo, project_title, project_link, project_stats (repeater: stat_value, stat_label), project_description, project_tags) |
+| why-wordie      | Dark two-column section — heading/intro left, numbered reasons right | section_kicker, section_heading, section_description, reasons (repeater: reason_title, reason_description) |
+| cta-banner      | Dark-grey banner with rounded bottom corners and dual CTA buttons    | section_heading, section_description, cta_primary, cta_secondary |
+| tech-stack      | Centred header + 3-col platform cards + supporting stack logo row    | section_kicker, section_heading, section_description, platforms (repeater: platform_logo, platform_name, platform_description), supporting_label, supporting_logos (repeater: logo_image, logo_alt) |
+| process-steps   | Left-aligned header + horizontal steps row with dashed left borders  | section_kicker, section_heading, steps (repeater: step_title, step_description) |
+| testimonial     | Two-column testimonial carousel — quote/author left, portrait right  | testimonials (repeater: client_logo, author_image, quote, author_name, author_title) |
+| bottom-cta      | Dark-teal panel with rounded top corners, connects flush to footer   | section_heading, section_description, trust_line, cta_primary, cta_secondary |
+
+### Options Pages (Global / Sitewide)
+
+| Options page          | Fields                                                |
+|-----------------------|-------------------------------------------------------|
+| Navigation Settings   | site_logo, nav_cta (link)                             |
+| Footer Settings       | footer_phone, footer_email, footer_address, social_linkedin, social_instagram, footer_copyright |
+
+### Custom Post Types
+None registered in v1.0. Blog posts use the core `post` type.
+
+## Key URLs
+- Homepage: /
+- Blog: /blog/
+- Contact: /contact/
+- AI site map: /wp-json/ai/v1/site-map
+- AI content model: /wp-json/ai/v1/content-model
+- AI single page: /wp-json/ai/v1/page/{id}
+
+## Data Source Rules
+- All structured content is served via ACF fields — no content is hardcoded in templates.
+- Global/shared content (logo, nav CTA, footer contact) is served from ACF Options Pages.
+- REST endpoints at /wp-json/ai/v1/* return clean JSON of all ACF field output.
+
+## Design Tokens (from Figma cUj0E1fwR3TZOm9hOnmdJ1)
+- Primary colour: #F5634D (Wordie Coral)
+- Background dark: #0A3542 (Wordie Dark Teal)
+- Background light: #F6F9F9 (Wordie White)
+- Text headers: #062028
+- Text body: #505c5f
+- Heading font: Montserrat Bold
+- Body font: Open Sans Regular
+- Desktop H1: 48px, line-height 1.2
+- CTA border-radius: 12px
+
+## Tech Stack
+- WordPress 6.x
+- PHP 8.2
+- ACF Pro (Flexible Content + Options Pages)
+- No page builders — custom Gutenberg blocks only
+- Hosting: WP Engine
+- Deployments: GitHub → WP Engine via GitHub Actions

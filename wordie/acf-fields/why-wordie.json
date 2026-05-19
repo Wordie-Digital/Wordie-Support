@@ -1,0 +1,112 @@
+[
+  {
+    "key": "group_wordie_why_wordie",
+    "title": "Why Wordie",
+    "fields": [
+      {
+        "key": "field_wordie_why_wordie_kicker",
+        "label": "Section Kicker",
+        "name": "section_kicker",
+        "type": "text",
+        "instructions": "Small uppercase label above the heading. Example: \"Why Wordie\"",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": { "width": "", "class": "", "id": "" },
+        "default_value": "Why Wordie",
+        "placeholder": "Why Wordie",
+        "maxlength": 60
+      },
+      {
+        "key": "field_wordie_why_wordie_heading",
+        "label": "Section Heading",
+        "name": "section_heading",
+        "type": "text",
+        "instructions": "H2 heading in the left panel.",
+        "required": 1,
+        "conditional_logic": 0,
+        "wrapper": { "width": "", "class": "", "id": "" },
+        "default_value": "How we work is the difference",
+        "placeholder": "How we work is the difference",
+        "maxlength": 100
+      },
+      {
+        "key": "field_wordie_why_wordie_description",
+        "label": "Section Description",
+        "name": "section_description",
+        "type": "textarea",
+        "instructions": "Supporting paragraph beneath the heading. 2–3 sentences.",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": { "width": "", "class": "", "id": "" },
+        "default_value": "Enterprise quality. Without the enterprise overhead. Our AI-enhanced workflows and lean specialist model let us deliver what large agencies charge multiples more for.",
+        "placeholder": "Enterprise quality. Without the enterprise overhead…",
+        "rows": 3,
+        "new_lines": "br",
+        "maxlength": 300
+      },
+      {
+        "key": "field_wordie_why_wordie_reasons",
+        "label": "Reasons",
+        "name": "reasons",
+        "type": "repeater",
+        "instructions": "Add 2–6 numbered reasons. Numbers (01, 02…) are generated automatically — just enter the title and description.",
+        "required": 1,
+        "conditional_logic": 0,
+        "wrapper": { "width": "", "class": "", "id": "" },
+        "min": 2,
+        "max": 6,
+        "layout": "block",
+        "button_label": "Add Reason",
+        "sub_fields": [
+          {
+            "key": "field_wordie_why_wordie_reason_title",
+            "label": "Title",
+            "name": "reason_title",
+            "type": "text",
+            "instructions": "Short heading for this reason. Example: \"Design first, always\"",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": { "width": "", "class": "", "id": "" },
+            "default_value": "",
+            "placeholder": "Design first, always",
+            "maxlength": 80
+          },
+          {
+            "key": "field_wordie_why_wordie_reason_description",
+            "label": "Description",
+            "name": "reason_description",
+            "type": "textarea",
+            "instructions": "2–3 sentence explanation. Plain text only.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": { "width": "", "class": "", "id": "" },
+            "default_value": "",
+            "placeholder": "Every project begins with UX research and a clear design rationale…",
+            "rows": 3,
+            "new_lines": "br",
+            "maxlength": 300
+          }
+        ]
+      }
+    ],
+    "location": [
+      [
+        {
+          "param": "block",
+          "operator": "==",
+          "value": "acf/why-wordie"
+        }
+      ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "seamless",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Fields for the Why Wordie numbered reasons block.",
+    "show_in_rest": 0,
+    "modified": 1747612800
+  }
+]

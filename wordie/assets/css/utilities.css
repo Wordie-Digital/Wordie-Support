@@ -1,0 +1,145 @@
+/**
+ * Wordie — utilities.css
+ *
+ * Layout helpers, visibility utilities, and flex/grid primitives.
+ * All values reference tokens from global.css.
+ */
+
+/* ---------------------------------------------------------------------------
+   Display
+---------------------------------------------------------------------------- */
+.d-none       { display: none !important; }
+.d-block      { display: block !important; }
+.d-flex       { display: flex !important; }
+.d-grid       { display: grid !important; }
+.d-inline     { display: inline !important; }
+.d-inline-flex{ display: inline-flex !important; }
+
+/* ---------------------------------------------------------------------------
+   Flex helpers
+---------------------------------------------------------------------------- */
+.flex-center  { display: flex; align-items: center; justify-content: center; }
+.flex-between { display: flex; align-items: center; justify-content: space-between; }
+.flex-start   { display: flex; align-items: flex-start; }
+.flex-col     { flex-direction: column; }
+.flex-wrap    { flex-wrap: wrap; }
+.flex-1       { flex: 1; }
+.flex-shrink-0{ flex-shrink: 0; }
+
+/* ---------------------------------------------------------------------------
+   Gap scale
+---------------------------------------------------------------------------- */
+.gap-2  { gap: var(--space-2); }
+.gap-4  { gap: var(--space-4); }
+.gap-6  { gap: var(--space-6); }
+.gap-8  { gap: var(--space-8); }
+.gap-10 { gap: var(--space-10); }
+.gap-12 { gap: var(--space-12); }
+
+/* ---------------------------------------------------------------------------
+   Padding scale
+---------------------------------------------------------------------------- */
+.p-4  { padding: var(--space-4); }
+.p-6  { padding: var(--space-6); }
+.p-8  { padding: var(--space-8); }
+.px-4 { padding-inline: var(--space-4); }
+.px-5 { padding-inline: var(--space-5); }
+.px-8 { padding-inline: var(--space-8); }
+.py-4 { padding-block: var(--space-4); }
+.py-8 { padding-block: var(--space-8); }
+.py-12{ padding-block: var(--space-12); }
+.py-18{ padding-block: var(--space-18); }
+.py-20{ padding-block: var(--space-20); }
+
+/* ---------------------------------------------------------------------------
+   Margin scale
+---------------------------------------------------------------------------- */
+.mb-4  { margin-bottom: var(--space-4); }
+.mb-6  { margin-bottom: var(--space-6); }
+.mb-8  { margin-bottom: var(--space-8); }
+.mb-10 { margin-bottom: var(--space-10); }
+.mt-4  { margin-top: var(--space-4); }
+.mt-8  { margin-top: var(--space-8); }
+.mx-auto { margin-inline: auto; }
+
+/* ---------------------------------------------------------------------------
+   Text alignment
+---------------------------------------------------------------------------- */
+.text-left   { text-align: left; }
+.text-center { text-align: center; }
+.text-right  { text-align: right; }
+
+/* ---------------------------------------------------------------------------
+   Text colours
+---------------------------------------------------------------------------- */
+.text-white   { color: var(--colour-white) !important; }
+.text-coral   { color: var(--colour-coral) !important; }
+.text-dark    { color: var(--colour-dark-grey) !important; }
+.text-body    { color: var(--colour-text-body) !important; }
+.text-light   { color: var(--colour-light-green) !important; }
+
+/* ---------------------------------------------------------------------------
+   Background colours
+---------------------------------------------------------------------------- */
+.bg-dark  { background-color: var(--colour-dark-teal); }
+.bg-white { background-color: var(--colour-white); }
+.bg-coral { background-color: var(--colour-coral); }
+.bg-light { background-color: #f0f6f6; }
+
+/* ---------------------------------------------------------------------------
+   Border radius
+---------------------------------------------------------------------------- */
+.rounded-cta   { border-radius: var(--radius-cta); }
+.rounded-image { border-radius: var(--radius-image); }
+.rounded-full  { border-radius: 9999px; }
+
+/* ---------------------------------------------------------------------------
+   Width / max-width helpers
+---------------------------------------------------------------------------- */
+.w-full  { width: 100%; }
+.w-auto  { width: auto; }
+.mw-700  { max-width: 700px; }
+.mw-524  { max-width: 524px; }
+
+/* ---------------------------------------------------------------------------
+   Overflow
+---------------------------------------------------------------------------- */
+.overflow-hidden { overflow: hidden; }
+.overflow-clip   { overflow: clip; }
+
+/* ---------------------------------------------------------------------------
+   Position helpers
+---------------------------------------------------------------------------- */
+.relative { position: relative; }
+.absolute { position: absolute; }
+.inset-0  { inset: 0; }
+
+/* ---------------------------------------------------------------------------
+   Object fit
+---------------------------------------------------------------------------- */
+.object-cover   { object-fit: cover; }
+.object-contain { object-fit: contain; }
+
+/* ---------------------------------------------------------------------------
+   Kicker / label text
+---------------------------------------------------------------------------- */
+.kicker {
+  font-family: var(--font-body);
+  font-size: var(--text-label-sm);
+  font-weight: var(--weight-bold);
+  line-height: var(--lh-cta);
+  letter-spacing: var(--ls-label-sm);
+  text-transform: uppercase;
+  color: var(--colour-coral);
+}
+
+/* ---------------------------------------------------------------------------
+   Responsive visibility
+---------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  .hide-mobile  { display: none !important; }
+}
+
+@media (min-width: 769px) {
+  .hide-desktop { display: none !important; }
+}

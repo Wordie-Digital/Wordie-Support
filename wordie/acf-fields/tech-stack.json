@@ -1,0 +1,188 @@
+[
+  {
+    "key": "group_wordie_tech_stack",
+    "title": "Tech Stack",
+    "fields": [
+      {
+        "key": "field_wordie_tech_stack_kicker",
+        "label": "Section Kicker",
+        "name": "section_kicker",
+        "type": "text",
+        "instructions": "Small uppercase label above the heading. Example: \"Technologies\"",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": { "width": "", "class": "", "id": "" },
+        "default_value": "Technologies",
+        "placeholder": "Technologies",
+        "maxlength": 60
+      },
+      {
+        "key": "field_wordie_tech_stack_heading",
+        "label": "Section Heading",
+        "name": "section_heading",
+        "type": "text",
+        "instructions": "H2 heading above the platform cards.",
+        "required": 1,
+        "conditional_logic": 0,
+        "wrapper": { "width": "", "class": "", "id": "" },
+        "default_value": "The platforms we know deeply",
+        "placeholder": "The platforms we know deeply",
+        "maxlength": 100
+      },
+      {
+        "key": "field_wordie_tech_stack_description",
+        "label": "Section Description",
+        "name": "section_description",
+        "type": "textarea",
+        "instructions": "Supporting paragraph beneath the heading. 2–3 sentences.",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": { "width": "", "class": "", "id": "" },
+        "default_value": "We don't just use these platforms — we have built systems, automations and AI tooling on top of them. That depth translates directly into better outcomes for your project.",
+        "placeholder": "We don't just use these platforms…",
+        "rows": 3,
+        "new_lines": "br",
+        "maxlength": 300
+      },
+      {
+        "key": "field_wordie_tech_stack_platforms",
+        "label": "Primary Platforms",
+        "name": "platforms",
+        "type": "repeater",
+        "instructions": "Add 2–6 primary platform cards. Each card shows a logo and a short description.",
+        "required": 1,
+        "conditional_logic": 0,
+        "wrapper": { "width": "", "class": "", "id": "" },
+        "min": 2,
+        "max": 6,
+        "layout": "block",
+        "button_label": "Add Platform",
+        "sub_fields": [
+          {
+            "key": "field_wordie_tech_stack_platform_logo",
+            "label": "Platform Logo",
+            "name": "platform_logo",
+            "type": "image",
+            "instructions": "Platform logo displayed inside the card. Recommended: transparent background, max 302×103px.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": { "width": "40", "class": "", "id": "" },
+            "return_format": "array",
+            "preview_size": "thumbnail",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "max_width": "",
+            "max_height": ""
+          },
+          {
+            "key": "field_wordie_tech_stack_platform_name",
+            "label": "Platform Name",
+            "name": "platform_name",
+            "type": "text",
+            "instructions": "Platform name — used as logo alt text if the image has no alt. Example: \"WordPress\"",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": { "width": "60", "class": "", "id": "" },
+            "default_value": "",
+            "placeholder": "WordPress",
+            "maxlength": 60
+          },
+          {
+            "key": "field_wordie_tech_stack_platform_description",
+            "label": "Description",
+            "name": "platform_description",
+            "type": "textarea",
+            "instructions": "2–3 sentence description of this platform and how Wordie uses it.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": { "width": "", "class": "", "id": "" },
+            "default_value": "",
+            "placeholder": "Our primary build platform. Custom themes, Gutenberg block systems…",
+            "rows": 3,
+            "new_lines": "br",
+            "maxlength": 250
+          }
+        ]
+      },
+      {
+        "key": "field_wordie_tech_stack_supporting_label",
+        "label": "Supporting Stack Label",
+        "name": "supporting_label",
+        "type": "text",
+        "instructions": "Small uppercase label above the supporting logos row.",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": { "width": "", "class": "", "id": "" },
+        "default_value": "Supporting Stack",
+        "placeholder": "Supporting Stack",
+        "maxlength": 60
+      },
+      {
+        "key": "field_wordie_tech_stack_supporting_logos",
+        "label": "Supporting Stack Logos",
+        "name": "supporting_logos",
+        "type": "repeater",
+        "instructions": "Add logos for the supporting technology row. 3–10 logos recommended.",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": { "width": "", "class": "", "id": "" },
+        "min": 0,
+        "max": 12,
+        "layout": "table",
+        "button_label": "Add Logo",
+        "sub_fields": [
+          {
+            "key": "field_wordie_tech_stack_sup_logo_image",
+            "label": "Logo Image",
+            "name": "logo_image",
+            "type": "image",
+            "instructions": "Logo image. Recommended: SVG or PNG with transparent background, max 200×60px.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": { "width": "60", "class": "", "id": "" },
+            "return_format": "array",
+            "preview_size": "thumbnail",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "max_width": "",
+            "max_height": ""
+          },
+          {
+            "key": "field_wordie_tech_stack_sup_logo_alt",
+            "label": "Logo Alt Text",
+            "name": "logo_alt",
+            "type": "text",
+            "instructions": "Accessible name for this logo. Example: \"WP Engine\"",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": { "width": "40", "class": "", "id": "" },
+            "default_value": "",
+            "placeholder": "WP Engine",
+            "maxlength": 60
+          }
+        ]
+      }
+    ],
+    "location": [
+      [
+        {
+          "param": "block",
+          "operator": "==",
+          "value": "acf/tech-stack"
+        }
+      ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "seamless",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Fields for the Tech Stack block.",
+    "show_in_rest": 0,
+    "modified": 1747612800
+  }
+]
