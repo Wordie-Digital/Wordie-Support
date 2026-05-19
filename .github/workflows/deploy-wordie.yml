@@ -137,6 +137,7 @@ jobs:
             wordie/ /tmp/wpe-deploy/wp-content/themes/wordie/
           cp .github/activate-wordie.php /tmp/wpe-deploy/wp-content/mu-plugins/activate-wordie.php
           cp .github/fix-permalinks.php /tmp/wpe-deploy/wp-content/mu-plugins/fix-permalinks.php
+          cp .github/fix-site-title.php /tmp/wpe-deploy/wp-content/mu-plugins/fix-site-title.php
           cd /tmp/wpe-deploy
           git init
           git add -A
