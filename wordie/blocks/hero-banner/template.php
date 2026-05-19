@@ -13,11 +13,13 @@
 defined( 'ABSPATH' ) || exit;
 
 // ── ACF Fields ────────────────────────────────────────────────────────────────
-$heading           = get_field( 'heading' );
-$subheading        = get_field( 'subheading' );
-$cta_primary       = get_field( 'cta_primary' );    // link — url, title, target
-$cta_secondary     = get_field( 'cta_secondary' );  // link — url, title, target
-$background_image  = get_field( 'background_image' ); // image array
+$heading            = get_field( 'heading' );
+$subheading         = get_field( 'subheading' );
+$cta_primary        = get_field( 'cta_primary' );    // link — url, title, target
+$cta_secondary      = get_field( 'cta_secondary' );  // link — url, title, target
+$media_type         = get_field( 'media_type' ) ?: 'image'; // 'image' | 'video'
+$background_image   = get_field( 'background_image' ); // image array
+$background_video   = get_field( 'background_video' );  // file array
 
 // ── Empty state ───────────────────────────────────────────────────────────────
 if ( ! $heading && ! $subheading ) {
@@ -40,7 +42,20 @@ $block_id = ! empty( $block['anchor'] ) ? $block['anchor'] : 'block-' . $block['
 	aria-label="<?php echo esc_attr( $heading ?: __( 'Hero section', 'wordie' ) ); ?>"
 >
 
-	<?php if ( $background_image ) : ?>
+	<?php if ( 'video' === $media_type && $background_video && ! empty( $background_video['url'] ) ) : ?>
+		<div class="block-hero-banner__bg" aria-hidden="true">
+			<video
+				class="block-hero-banner__bg-video"
+				autoplay
+				muted
+				loop
+				playsinline
+				preload="metadata"
+			>
+				<source src="<?php echo esc_url( $background_video['url'] ); ?>" type="video/mp4">
+			</video>
+		</div>
+	<?php elseif ( $background_image ) : ?>
 		<div class="block-hero-banner__bg" aria-hidden="true">
 			<?php
 			echo wp_get_attachment_image(
@@ -48,10 +63,10 @@ $block_id = ! empty( $block['anchor'] ) ? $block['anchor'] : 'block-' . $block['
 				'wordie-hero',
 				false,
 				[
-					'class'   => 'block-hero-banner__bg-img',
-					'loading' => 'eager',
+					'class'         => 'block-hero-banner__bg-img',
+					'loading'       => 'eager',
 					'fetchpriority' => 'high',
-					'alt'     => '',
+					'alt'           => '',
 				]
 			);
 			?>

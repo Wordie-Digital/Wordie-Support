@@ -56,13 +56,41 @@
         "return_format": "array"
       },
       {
+        "key": "field_wordie_hero_banner_media_type",
+        "label": "Background Media Type",
+        "name": "media_type",
+        "type": "radio",
+        "instructions": "Choose whether the hero background uses a static image or an MP4 video.",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": { "width": "", "class": "", "id": "" },
+        "choices": {
+          "image": "Image",
+          "video": "Video (MP4)"
+        },
+        "default_value": "image",
+        "layout": "horizontal",
+        "return_format": "value",
+        "allow_null": 0,
+        "other_choice": 0,
+        "save_other_choice": 0
+      },
+      {
         "key": "field_wordie_hero_banner_background_image",
         "label": "Background Image",
         "name": "background_image",
         "type": "image",
-        "instructions": "Optional hero background image. Recommended: 1440×810px, WebP or JPG. Appears on the right side of the hero with a dark overlay.",
+        "instructions": "Recommended: 1440×810px, WebP or JPG. Shown when Media Type is set to Image.",
         "required": 0,
-        "conditional_logic": 0,
+        "conditional_logic": [
+          [
+            {
+              "field": "field_wordie_hero_banner_media_type",
+              "operator": "==",
+              "value": "image"
+            }
+          ]
+        ],
         "wrapper": { "width": "", "class": "", "id": "" },
         "return_format": "array",
         "preview_size": "medium",
@@ -74,6 +102,29 @@
         "max_height": "",
         "max_size": "",
         "mime_types": "jpg,jpeg,webp,png"
+      },
+      {
+        "key": "field_wordie_hero_banner_background_video",
+        "label": "Background Video",
+        "name": "background_video",
+        "type": "file",
+        "instructions": "Upload an MP4 video for the hero background. Keep under 10 MB for best performance. Shown when Media Type is set to Video.",
+        "required": 0,
+        "conditional_logic": [
+          [
+            {
+              "field": "field_wordie_hero_banner_media_type",
+              "operator": "==",
+              "value": "video"
+            }
+          ]
+        ],
+        "wrapper": { "width": "", "class": "", "id": "" },
+        "return_format": "array",
+        "library": "all",
+        "min_size": "",
+        "max_size": "",
+        "mime_types": "mp4"
       }
     ],
     "location": [
