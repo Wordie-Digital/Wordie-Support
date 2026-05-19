@@ -1,0 +1,110 @@
+[
+  {
+    "key": "group_wordie_services_grid",
+    "title": "Services Grid",
+    "fields": [
+      {
+        "key": "field_wordie_services_kicker",
+        "label": "Section Kicker",
+        "name": "section_kicker",
+        "type": "text",
+        "instructions": "Small uppercase label above the heading. Example: \"What we do\"",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": { "width": "", "class": "", "id": "" },
+        "default_value": "What we do",
+        "placeholder": "What we do",
+        "maxlength": 60
+      },
+      {
+        "key": "field_wordie_services_heading",
+        "label": "Section Heading",
+        "name": "section_heading",
+        "type": "textarea",
+        "instructions": "H2 heading centred above the cards. Keep to 1–2 sentences.",
+        "required": 1,
+        "conditional_logic": 0,
+        "wrapper": { "width": "", "class": "", "id": "" },
+        "default_value": "Every engagement starts with design thinking. Every build ships with AI behind it.",
+        "placeholder": "Every engagement starts with design thinking. Every build ships with AI behind it.",
+        "rows": 3,
+        "new_lines": "br",
+        "maxlength": 200
+      },
+      {
+        "key": "field_wordie_services_cards",
+        "label": "Services",
+        "name": "services",
+        "type": "repeater",
+        "instructions": "Add 1–6 service cards. Each card has a title, description and optional link.",
+        "required": 1,
+        "conditional_logic": 0,
+        "wrapper": { "width": "", "class": "", "id": "" },
+        "min": 1,
+        "max": 6,
+        "layout": "block",
+        "button_label": "Add Service",
+        "sub_fields": [
+          {
+            "key": "field_wordie_services_card_title",
+            "label": "Service Title",
+            "name": "service_title",
+            "type": "text",
+            "instructions": "Card heading (H3). Example: \"UX & UI Design\"",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": { "width": "50", "class": "", "id": "" },
+            "default_value": "",
+            "placeholder": "UX & UI Design",
+            "maxlength": 60
+          },
+          {
+            "key": "field_wordie_services_card_link",
+            "label": "Card Link",
+            "name": "service_link",
+            "type": "link",
+            "instructions": "Optional. The \"Explore [Service] →\" link at the bottom of the card.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": { "width": "50", "class": "", "id": "" },
+            "return_format": "array"
+          },
+          {
+            "key": "field_wordie_services_card_description",
+            "label": "Service Description",
+            "name": "service_description",
+            "type": "textarea",
+            "instructions": "2–4 sentence description of this service. Plain text only.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": { "width": "", "class": "", "id": "" },
+            "default_value": "",
+            "placeholder": "Research-led, conversion-focused design that moves beyond aesthetics...",
+            "rows": 4,
+            "new_lines": "br",
+            "maxlength": 300
+          }
+        ]
+      }
+    ],
+    "location": [
+      [
+        {
+          "param": "block",
+          "operator": "==",
+          "value": "acf/services-grid"
+        }
+      ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "seamless",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Fields for the Services Grid block.",
+    "show_in_rest": 0,
+    "modified": 1747612800
+  }
+]

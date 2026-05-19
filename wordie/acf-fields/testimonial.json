@@ -1,0 +1,118 @@
+[
+  {
+    "key": "group_wordie_testimonial",
+    "title": "Testimonial",
+    "fields": [
+      {
+        "key": "field_wordie_testimonial_items",
+        "label": "Testimonials",
+        "name": "testimonials",
+        "type": "repeater",
+        "instructions": "Add 1–6 testimonials. If more than one is added, prev/next navigation buttons appear automatically.",
+        "required": 1,
+        "conditional_logic": 0,
+        "wrapper": { "width": "", "class": "", "id": "" },
+        "min": 1,
+        "max": 6,
+        "layout": "block",
+        "button_label": "Add Testimonial",
+        "sub_fields": [
+          {
+            "key": "field_wordie_testimonial_client_logo",
+            "label": "Client Logo",
+            "name": "client_logo",
+            "type": "image",
+            "instructions": "Client brand logo displayed above the quote. Recommended: max 101×81px, transparent background.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": { "width": "50", "class": "", "id": "" },
+            "return_format": "array",
+            "preview_size": "thumbnail",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "max_width": "",
+            "max_height": ""
+          },
+          {
+            "key": "field_wordie_testimonial_author_image",
+            "label": "Author Portrait",
+            "name": "author_image",
+            "type": "image",
+            "instructions": "Portrait photo displayed on the right. Recommended: 662×441px (3:2 ratio).",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": { "width": "50", "class": "", "id": "" },
+            "return_format": "array",
+            "preview_size": "medium",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "max_width": "",
+            "max_height": ""
+          },
+          {
+            "key": "field_wordie_testimonial_quote",
+            "label": "Quote",
+            "name": "quote",
+            "type": "textarea",
+            "instructions": "The testimonial quote. Do not add quotation marks — these are added automatically by the design.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": { "width": "", "class": "", "id": "" },
+            "default_value": "",
+            "placeholder": "Collaborating with Wordie was a game-changer for us…",
+            "rows": 5,
+            "new_lines": "br",
+            "maxlength": 600
+          },
+          {
+            "key": "field_wordie_testimonial_author_name",
+            "label": "Author Name",
+            "name": "author_name",
+            "type": "text",
+            "instructions": "Full name of the person giving the testimonial. Example: \"John Doe\"",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": { "width": "50", "class": "", "id": "" },
+            "default_value": "",
+            "placeholder": "John Doe",
+            "maxlength": 80
+          },
+          {
+            "key": "field_wordie_testimonial_author_title",
+            "label": "Author Title",
+            "name": "author_title",
+            "type": "text",
+            "instructions": "Job title and/or company. Example: \"CEO, Sealy\"",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": { "width": "50", "class": "", "id": "" },
+            "default_value": "",
+            "placeholder": "CEO, Sealy",
+            "maxlength": 100
+          }
+        ]
+      }
+    ],
+    "location": [
+      [
+        {
+          "param": "block",
+          "operator": "==",
+          "value": "acf/testimonial"
+        }
+      ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "seamless",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Fields for the Testimonial carousel block.",
+    "show_in_rest": 0,
+    "modified": 1747612800
+  }
+]

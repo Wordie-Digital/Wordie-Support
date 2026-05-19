@@ -1,0 +1,189 @@
+/**
+ * Block: Hero Banner
+ * Figma node: 2923:1409
+ *
+ * Layout: full-viewport height, dark teal background.
+ * Text content is left-aligned in a ~584px column at 72px from left.
+ * Two side-by-side CTA buttons below the subheading.
+ * Header overlaps the top of the hero (fixed header = 108px tall).
+ */
+
+.block-hero-banner {
+  position: relative;
+  min-height: 810px;
+  background-color: var(--colour-dark-teal);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  /* Offset for the fixed header (108px) so content is vertically centred visually */
+  padding-top: 108px;
+}
+
+/* Background image (if provided) fills the right half */
+.block-hero-banner__bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.block-hero-banner__bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center right;
+  opacity: 0.4;  /* Subtle overlay so text remains legible */
+}
+
+/* Dark overlay gradient — keeps left content readable over any bg image */
+.block-hero-banner::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    var(--colour-dark-teal) 45%,
+    rgba(10, 53, 66, 0) 100%
+  );
+  pointer-events: none;
+}
+
+/* Inner container — constrained to 1440px page width */
+.block-hero-banner__container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--margin-lr);
+  padding-block: var(--margin-tb);
+}
+
+/* Content column — max 584px to match Figma */
+.block-hero-banner__content {
+  max-width: 584px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* H1 heading */
+.block-hero-banner__heading {
+  font-family: var(--font-heading);
+  font-size: var(--text-h1);
+  font-weight: var(--weight-bold);
+  line-height: var(--lh-heading);
+  color: var(--colour-white);
+  letter-spacing: var(--ls-default);
+}
+
+/* Body subheading */
+.block-hero-banner__subheading {
+  font-family: var(--font-body);
+  font-size: var(--text-body-lg);   /* 16px per Figma hero */
+  font-weight: var(--weight-regular);
+  line-height: var(--lh-body-lg);  /* 1.4 per Figma */
+  color: var(--colour-white);
+}
+
+/* CTA row — side by side buttons */
+.block-hero-banner__ctas {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}
+
+/* Primary CTA — coral background, white text, arrow icon */
+.block-hero-banner__cta-primary {
+  background-color: var(--colour-coral);
+  color: var(--colour-white);
+  border: 2px solid var(--colour-coral);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--radius-cta);
+  font-family: var(--font-heading);
+  font-size: var(--text-cta);
+  font-weight: var(--weight-bold);
+  line-height: var(--lh-cta);
+  text-decoration: none;
+  transition: opacity var(--transition-base), transform var(--transition-base);
+}
+
+.block-hero-banner__cta-primary:hover {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+
+.block-hero-banner__cta-primary svg,
+.block-hero-banner__cta-primary .icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+/* Secondary CTA — white background, coral text */
+.block-hero-banner__cta-secondary {
+  background-color: var(--colour-white);
+  color: var(--colour-coral);
+  border: 2px solid var(--colour-white);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--radius-cta);
+  font-family: var(--font-heading);
+  font-size: var(--text-cta);
+  font-weight: var(--weight-bold);
+  line-height: var(--lh-cta);
+  text-decoration: none;
+  transition: opacity var(--transition-base), transform var(--transition-base);
+}
+
+.block-hero-banner__cta-secondary:hover {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+
+/* ---------------------------------------------------------------------------
+   Responsive — tablet (769px – 1024px)
+---------------------------------------------------------------------------- */
+@media (min-width: 769px) and (max-width: 1024px) {
+
+  .block-hero-banner {
+    min-height: 600px;
+  }
+
+  .block-hero-banner__content {
+    max-width: 480px;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Responsive — mobile (≤ 768px)
+---------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+
+  .block-hero-banner {
+    min-height: auto;
+    padding-top: 90px;
+    padding-bottom: var(--space-12);
+  }
+
+  .block-hero-banner__content {
+    max-width: 100%;
+  }
+
+  .block-hero-banner__ctas {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .block-hero-banner__cta-primary,
+  .block-hero-banner__cta-secondary {
+    width: 100%;
+    justify-content: center;
+  }
+}

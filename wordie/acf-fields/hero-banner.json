@@ -1,0 +1,99 @@
+[
+  {
+    "key": "group_wordie_hero_banner",
+    "title": "Hero Banner",
+    "fields": [
+      {
+        "key": "field_wordie_hero_banner_heading",
+        "label": "Heading",
+        "name": "heading",
+        "type": "text",
+        "instructions": "Main H1 heading for the hero. Keep under 12 words. Example: \"Design-led WordPress, powered by AI.\"",
+        "required": 1,
+        "conditional_logic": 0,
+        "wrapper": { "width": "", "class": "", "id": "" },
+        "default_value": "",
+        "placeholder": "Design-led WordPress, powered by AI.",
+        "prepend": "",
+        "append": "",
+        "maxlength": 100
+      },
+      {
+        "key": "field_wordie_hero_banner_subheading",
+        "label": "Subheading",
+        "name": "subheading",
+        "type": "textarea",
+        "instructions": "Supporting body text below the heading. Keep to 1–2 sentences (max 200 chars).",
+        "required": 1,
+        "conditional_logic": 0,
+        "wrapper": { "width": "", "class": "", "id": "" },
+        "default_value": "",
+        "placeholder": "We combine design thinking, data insight and AI-enhanced delivery to build WordPress platforms that perform.",
+        "rows": 3,
+        "new_lines": "br",
+        "maxlength": 200
+      },
+      {
+        "key": "field_wordie_hero_banner_cta_primary",
+        "label": "Primary CTA",
+        "name": "cta_primary",
+        "type": "link",
+        "instructions": "Primary action button (coral background). Example: \"Start a project\" → /contact",
+        "required": 1,
+        "conditional_logic": 0,
+        "wrapper": { "width": "50", "class": "", "id": "" },
+        "return_format": "array"
+      },
+      {
+        "key": "field_wordie_hero_banner_cta_secondary",
+        "label": "Secondary CTA",
+        "name": "cta_secondary",
+        "type": "link",
+        "instructions": "Secondary action button (white background). Leave blank to hide. Example: \"Book a 30-min strategy session\"",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": { "width": "50", "class": "", "id": "" },
+        "return_format": "array"
+      },
+      {
+        "key": "field_wordie_hero_banner_background_image",
+        "label": "Background Image",
+        "name": "background_image",
+        "type": "image",
+        "instructions": "Optional hero background image. Recommended: 1440×810px, WebP or JPG. Appears on the right side of the hero with a dark overlay.",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": { "width": "", "class": "", "id": "" },
+        "return_format": "array",
+        "preview_size": "medium",
+        "library": "all",
+        "min_width": "",
+        "min_height": "",
+        "min_size": "",
+        "max_width": "",
+        "max_height": "",
+        "max_size": "",
+        "mime_types": "jpg,jpeg,webp,png"
+      }
+    ],
+    "location": [
+      [
+        {
+          "param": "block",
+          "operator": "==",
+          "value": "acf/hero-banner"
+        }
+      ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "seamless",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Fields for the Wordie Hero Banner block.",
+    "show_in_rest": 0,
+    "modified": 1747612800
+  }
+]

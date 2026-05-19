@@ -1,0 +1,97 @@
+[
+  {
+    "key": "group_wordie_process_steps",
+    "title": "Process Steps",
+    "fields": [
+      {
+        "key": "field_wordie_process_steps_kicker",
+        "label": "Section Kicker",
+        "name": "section_kicker",
+        "type": "text",
+        "instructions": "Small uppercase label above the heading. Example: \"Our process\"",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": { "width": "", "class": "", "id": "" },
+        "default_value": "Our process",
+        "placeholder": "Our process",
+        "maxlength": 60
+      },
+      {
+        "key": "field_wordie_process_steps_heading",
+        "label": "Section Heading",
+        "name": "section_heading",
+        "type": "text",
+        "instructions": "H2 heading above the steps row.",
+        "required": 1,
+        "conditional_logic": 0,
+        "wrapper": { "width": "", "class": "", "id": "" },
+        "default_value": "From brief to live in a structured, transparent process",
+        "placeholder": "From brief to live in a structured, transparent process",
+        "maxlength": 120
+      },
+      {
+        "key": "field_wordie_process_steps_steps",
+        "label": "Steps",
+        "name": "steps",
+        "type": "repeater",
+        "instructions": "Add 2–6 process steps. Step numbers (01, 02…) are generated automatically.",
+        "required": 1,
+        "conditional_logic": 0,
+        "wrapper": { "width": "", "class": "", "id": "" },
+        "min": 2,
+        "max": 6,
+        "layout": "block",
+        "button_label": "Add Step",
+        "sub_fields": [
+          {
+            "key": "field_wordie_process_steps_step_title",
+            "label": "Step Title",
+            "name": "step_title",
+            "type": "text",
+            "instructions": "Short name for this step. Example: \"Discover\"",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": { "width": "", "class": "", "id": "" },
+            "default_value": "",
+            "placeholder": "Discover",
+            "maxlength": 60
+          },
+          {
+            "key": "field_wordie_process_steps_step_description",
+            "label": "Step Description",
+            "name": "step_description",
+            "type": "textarea",
+            "instructions": "2–3 sentence description of this step. Plain text only.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": { "width": "", "class": "", "id": "" },
+            "default_value": "",
+            "placeholder": "We start with your goals, your users and your data…",
+            "rows": 3,
+            "new_lines": "br",
+            "maxlength": 300
+          }
+        ]
+      }
+    ],
+    "location": [
+      [
+        {
+          "param": "block",
+          "operator": "==",
+          "value": "acf/process-steps"
+        }
+      ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "seamless",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Fields for the Process Steps block.",
+    "show_in_rest": 0,
+    "modified": 1747612800
+  }
+]

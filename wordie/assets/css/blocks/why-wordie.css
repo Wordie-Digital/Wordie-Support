@@ -1,0 +1,149 @@
+/* ==========================================================================
+   Block: Why Wordie
+   Figma node: 3035:17031
+   Layout: px-[72px] py-[72px], flex justify-between, left 415px / right 847px
+   ========================================================================== */
+
+.block-why-wordie {
+	background-color: var(--colour-dark-grey);
+	color: var(--colour-white);
+}
+
+.block-why-wordie__container {
+	max-width: 1440px;
+	margin-inline: auto;
+	padding: var(--margin-lr); /* 72px block + inline — matches Figma px/py */
+	display: grid;
+	grid-template-columns: 415px 1fr;
+	gap: 34px; /* 1296 - 415 - 847 = 34px — replicates justify-between at max width */
+	align-items: start;
+}
+
+/* --------------------------------------------------------------------------
+   Left panel — 415px, min 295px (Figma min-w)
+   -------------------------------------------------------------------------- */
+
+.block-why-wordie__panel {
+	min-width: 295px;
+	display: flex;
+	flex-direction: column;
+	gap: 12px; /* Figma gap-[12px] on both Header and outer container */
+}
+
+.block-why-wordie__kicker {
+	font-family: var(--font-body);
+	font-size: 0.875rem; /* 14px */
+	font-weight: 700;
+	letter-spacing: 0.1em; /* 1.4px at 14px — matches Figma tracking-[1.4px] */
+	text-transform: uppercase;
+	line-height: 1;
+	color: var(--colour-white);
+	margin: 0;
+}
+
+.block-why-wordie__heading {
+	font-family: var(--font-heading);
+	font-size: 2.25rem; /* 36px — Figma Desktop/H2 */
+	font-weight: 700;
+	line-height: 1.2;
+	color: var(--colour-white);
+	margin: 0;
+}
+
+.block-why-wordie__description {
+	font-family: var(--font-body);
+	font-size: 1rem; /* 16px */
+	font-weight: 400;
+	line-height: 1.4;
+	color: var(--colour-white);
+	margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Right panel — reasons list, 847px (fills 1fr up to that)
+   -------------------------------------------------------------------------- */
+
+.block-why-wordie__reasons {
+	display: flex;
+	flex-direction: column;
+	gap: 40px; /* Figma gap-[40px] between Detail items */
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	max-width: 847px;
+}
+
+.block-why-wordie__reason {
+	display: flex;
+	flex-direction: column;
+	gap: 10px; /* Figma gap-[10px] within each Detail */
+}
+
+.block-why-wordie__reason-number {
+	font-family: var(--font-heading);
+	font-size: 2.25rem; /* 36px — Figma text-[36px] */
+	font-weight: 700;
+	line-height: 1.2;
+	color: var(--colour-white);
+}
+
+.block-why-wordie__reason-title {
+	font-family: var(--font-heading);
+	font-size: 1.5rem; /* 24px — Figma Desktop/H4 */
+	font-weight: 700;
+	line-height: 1.2;
+	color: var(--colour-white);
+	margin: 0;
+}
+
+.block-why-wordie__reason-desc {
+	font-family: var(--font-body);
+	font-size: 1rem; /* 16px */
+	font-weight: 400;
+	line-height: 1.4;
+	color: var(--colour-white);
+	margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Responsive — tablet (≤1024px): stack to single column
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 1024px) {
+	.block-why-wordie__container {
+		grid-template-columns: 1fr;
+		gap: 48px;
+		padding: 48px 32px;
+	}
+
+	.block-why-wordie__reasons {
+		max-width: 100%;
+	}
+}
+
+/* --------------------------------------------------------------------------
+   Responsive — mobile (≤640px)
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 640px) {
+	.block-why-wordie__container {
+		padding: 48px 20px;
+		gap: 36px;
+	}
+
+	.block-why-wordie__heading {
+		font-size: 1.75rem;
+	}
+
+	.block-why-wordie__reason-number {
+		font-size: 1.75rem;
+	}
+
+	.block-why-wordie__reason-title {
+		font-size: 1.25rem;
+	}
+
+	.block-why-wordie__reasons {
+		gap: 32px;
+	}
+}

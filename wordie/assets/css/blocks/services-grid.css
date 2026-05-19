@@ -1,0 +1,198 @@
+/**
+ * Block: Services Grid
+ * Figma node: 2957:2984
+ *
+ * Layout: dark #062028 background, centred kicker + H2, then a 3-column
+ * grid of bordered cards. Padding is 60px LR / 80px TB per Figma
+ * (--desktop-left-right: 60 / --top-bottom: 80 tokens).
+ *
+ * Cards:
+ *   border: 1px solid #c7e4e4, border-radius: 16px
+ *   padding: 40px top/bottom, 30px left/right
+ *   gap between sections: 30px (content → link)
+ *   gap between cards: 20px
+ */
+
+/* ── Section wrapper ─────────────────────────────────────────────────────── */
+.block-services-grid {
+  position: relative;
+  background-color: var(--colour-dark-grey);
+  padding-block: 80px;
+  padding-inline: 60px;
+  overflow: hidden;
+}
+
+/* Decorative background noise/wave — subtle radial glow effect approximating
+   the Figma SVG background element */
+.block-services-grid__bg-decoration {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 80% 60% at 60% 120%, rgba(17, 110, 110, 0.18) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 40% at 100% 60%, rgba(10, 53, 66, 0.25) 0%, transparent 70%);
+  z-index: 0;
+}
+
+/* ── Inner container ─────────────────────────────────────────────────────── */
+.block-services-grid__container {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+}
+
+/* ── Section header ──────────────────────────────────────────────────────── */
+.block-services-grid__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);         /* 12px per Figma */
+  max-width: 700px;
+  text-align: center;
+}
+
+.block-services-grid__kicker {
+  font-family: var(--font-body);
+  font-size: var(--text-label-sm);    /* 14px */
+  font-weight: var(--weight-bold);
+  line-height: var(--lh-cta);
+  letter-spacing: var(--ls-label-sm);
+  text-transform: uppercase;
+  color: var(--colour-disabled);
+}
+
+.block-services-grid__heading {
+  font-family: var(--font-heading);
+  font-size: var(--text-h2);          /* 36px */
+  font-weight: var(--weight-bold);
+  line-height: var(--lh-heading);
+  color: var(--colour-white);
+}
+
+/* ── Cards grid ──────────────────────────────────────────────────────────── */
+.block-services-grid__cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  width: 100%;
+  max-width: 1122px;   /* Figma: cards container 1122px wide */
+}
+
+/* ── Individual card ─────────────────────────────────────────────────────── */
+.block-services-grid__card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;                          /* 30px between content area and link */
+  padding: 40px 30px;                 /* 40px TB, 30px LR per Figma */
+  border: 1px solid #c7e4e4;         /* Figma: border #c7e4e4 */
+  border-radius: 16px;               /* Figma: 16px — slightly larger than global 12px token */
+  overflow: hidden;
+  background-color: transparent;
+  transition: border-color var(--transition-medium),
+              background-color var(--transition-medium);
+}
+
+.block-services-grid__card:hover {
+  border-color: rgba(199, 228, 228, 0.7);
+  background-color: rgba(255, 255, 255, 0.03);
+}
+
+/* ── Card inner content ──────────────────────────────────────────────────── */
+.block-services-grid__card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;                          /* 20px gap between title and body */
+  width: 100%;
+  text-align: center;
+}
+
+.block-services-grid__card-title {
+  font-family: var(--font-heading);
+  font-size: var(--text-h4);          /* 24px */
+  font-weight: var(--weight-bold);
+  line-height: var(--lh-heading);
+  color: var(--colour-white);
+}
+
+.block-services-grid__card-description {
+  font-family: var(--font-body);
+  font-size: var(--text-body);        /* 14px */
+  font-weight: var(--weight-regular);
+  line-height: var(--lh-body);        /* 1.3 */
+  color: var(--colour-white);
+  opacity: 0.85;
+}
+
+/* ── Card link / CTA ─────────────────────────────────────────────────────── */
+.block-services-grid__card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);                /* 12px per Figma */
+  font-family: var(--font-heading);
+  font-size: var(--text-cta);         /* 16px */
+  font-weight: var(--weight-bold);
+  line-height: var(--lh-cta);
+  color: var(--colour-coral);
+  text-decoration: none;
+  flex-shrink: 0;
+  transition: gap var(--transition-base), opacity var(--transition-base);
+}
+
+.block-services-grid__card-link svg {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  transition: transform var(--transition-base);
+}
+
+.block-services-grid__card-link:hover {
+  opacity: 0.8;
+}
+
+.block-services-grid__card-link:hover svg {
+  transform: translateX(3px);
+}
+
+/* ── Responsive — tablet (769px–1024px) ─────────────────────────────────── */
+@media (min-width: 769px) and (max-width: 1024px) {
+
+  .block-services-grid {
+    padding-inline: var(--margin-lr);
+    padding-block: 60px;
+  }
+
+  .block-services-grid__cards {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 100%;
+  }
+
+  /* Last odd card spans full width on 2-col layout */
+  .block-services-grid__card:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    max-width: 440px;
+    margin-inline: auto;
+  }
+}
+
+/* ── Responsive — mobile (≤768px) ───────────────────────────────────────── */
+@media (max-width: 768px) {
+
+  .block-services-grid {
+    padding-inline: var(--margin-lr);
+    padding-block: var(--space-12);
+  }
+
+  .block-services-grid__cards {
+    grid-template-columns: 1fr;
+    max-width: 100%;
+  }
+}

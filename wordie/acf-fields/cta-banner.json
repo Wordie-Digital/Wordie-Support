@@ -1,0 +1,75 @@
+[
+  {
+    "key": "group_wordie_cta_banner",
+    "title": "CTA Banner",
+    "fields": [
+      {
+        "key": "field_wordie_cta_banner_heading",
+        "label": "Heading",
+        "name": "section_heading",
+        "type": "text",
+        "instructions": "Large H2 heading. Example: \"Let's work together\"",
+        "required": 1,
+        "conditional_logic": 0,
+        "wrapper": { "width": "", "class": "", "id": "" },
+        "default_value": "Let's work together",
+        "placeholder": "Let's work together",
+        "maxlength": 80
+      },
+      {
+        "key": "field_wordie_cta_banner_description",
+        "label": "Description",
+        "name": "section_description",
+        "type": "text",
+        "instructions": "Short supporting line beneath the heading. 1 sentence.",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": { "width": "", "class": "", "id": "" },
+        "default_value": "Ready to get started? Get in touch for a quote or consultation.",
+        "placeholder": "Ready to get started? Get in touch for a quote or consultation.",
+        "maxlength": 150
+      },
+      {
+        "key": "field_wordie_cta_banner_cta_primary",
+        "label": "Primary CTA",
+        "name": "cta_primary",
+        "type": "link",
+        "instructions": "Coral button — main call to action. Example: \"Book a strategy session\"",
+        "required": 1,
+        "conditional_logic": 0,
+        "wrapper": { "width": "50", "class": "", "id": "" },
+        "return_format": "array"
+      },
+      {
+        "key": "field_wordie_cta_banner_cta_secondary",
+        "label": "Secondary CTA",
+        "name": "cta_secondary",
+        "type": "link",
+        "instructions": "White button with coral text. Optional. Example: \"Send us a brief\"",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": { "width": "50", "class": "", "id": "" },
+        "return_format": "array"
+      }
+    ],
+    "location": [
+      [
+        {
+          "param": "block",
+          "operator": "==",
+          "value": "acf/cta-banner"
+        }
+      ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "seamless",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Fields for the CTA Banner block.",
+    "show_in_rest": 0,
+    "modified": 1747612800
+  }
+]

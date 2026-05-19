@@ -1,0 +1,90 @@
+[
+  {
+    "key": "group_wordie_bottom_cta",
+    "title": "Bottom CTA",
+    "fields": [
+      {
+        "key": "field_wordie_bottom_cta_heading",
+        "label": "Heading",
+        "name": "section_heading",
+        "type": "text",
+        "instructions": "H2 heading. Example: \"Let's figure out what your platform needs.\"",
+        "required": 1,
+        "conditional_logic": 0,
+        "wrapper": { "width": "", "class": "", "id": "" },
+        "default_value": "Let’s figure out what your platform needs.",
+        "placeholder": "Let’s figure out what your platform needs.",
+        "maxlength": 100
+      },
+      {
+        "key": "field_wordie_bottom_cta_description",
+        "label": "Description",
+        "name": "section_description",
+        "type": "textarea",
+        "instructions": "Supporting paragraph beneath the heading. 2–3 sentences.",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": { "width": "", "class": "", "id": "" },
+        "default_value": "Book a free 30-minute strategy session. We will review your current site, discuss your goals and tell you plainly what we think the right next step is.",
+        "placeholder": "Book a free 30-minute strategy session…",
+        "rows": 3,
+        "new_lines": "br",
+        "maxlength": 300
+      },
+      {
+        "key": "field_wordie_bottom_cta_trust_line",
+        "label": "Trust Line",
+        "name": "trust_line",
+        "type": "text",
+        "instructions": "Short bold reassurance line below the description. Example: \"No obligation. We respond within one business day.\"",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": { "width": "", "class": "", "id": "" },
+        "default_value": "No obligation. We respond within one business day.",
+        "placeholder": "No obligation. We respond within one business day.",
+        "maxlength": 120
+      },
+      {
+        "key": "field_wordie_bottom_cta_primary",
+        "label": "Primary CTA",
+        "name": "cta_primary",
+        "type": "link",
+        "instructions": "Coral button — main call to action.",
+        "required": 1,
+        "conditional_logic": 0,
+        "wrapper": { "width": "50", "class": "", "id": "" },
+        "return_format": "array"
+      },
+      {
+        "key": "field_wordie_bottom_cta_secondary",
+        "label": "Secondary CTA",
+        "name": "cta_secondary",
+        "type": "link",
+        "instructions": "White/coral button. Optional.",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": { "width": "50", "class": "", "id": "" },
+        "return_format": "array"
+      }
+    ],
+    "location": [
+      [
+        {
+          "param": "block",
+          "operator": "==",
+          "value": "acf/bottom-cta"
+        }
+      ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "seamless",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Fields for the Bottom CTA block.",
+    "show_in_rest": 0,
+    "modified": 1747612800
+  }
+]

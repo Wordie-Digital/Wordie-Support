@@ -1,0 +1,163 @@
+/* ==========================================================================
+   Block: CTA Banner
+   Figma node: 2958:17193
+   Layout: white section bg, dark-grey inner banner with border-radius 0 0 50px 50px
+           flex justify-between, left text 700px / right CTAs, padding 72px
+   ========================================================================== */
+
+.block-cta-banner {
+	background-color: var(--colour-white);
+}
+
+/* Dark banner with rounded bottom corners — matches Figma "Footer Text Group" + "Background" */
+.block-cta-banner__inner {
+	max-width: 1440px;
+	margin-inline: auto;
+	padding: var(--margin-lr); /* 72px — matches Figma px-[72px] py-[72px] */
+	background-color: var(--colour-dark-grey);
+	border-radius: 0 0 50px 50px; /* Figma rounded-bl-[50px] rounded-br-[50px] */
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 40px;
+	min-height: 257px; /* Figma h-[257px] on Footer Text Group */
+	box-sizing: border-box;
+}
+
+/* --------------------------------------------------------------------------
+   Text block — left, 700px wide
+   -------------------------------------------------------------------------- */
+
+.block-cta-banner__text {
+	display: flex;
+	flex-direction: column;
+	gap: 12px; /* Figma gap-[12px] */
+	max-width: 700px; /* Figma max-w-[700px] */
+	min-width: 295px; /* Figma min-w-[295px] */
+	flex-shrink: 1;
+}
+
+.block-cta-banner__heading {
+	font-family: var(--font-heading);
+	font-size: 3rem; /* 48px — Figma Desktop/H1 */
+	font-weight: 700;
+	line-height: 1.2;
+	color: var(--colour-white);
+	margin: 0;
+}
+
+.block-cta-banner__description {
+	font-family: var(--font-body);
+	font-size: 1rem; /* 16px */
+	font-weight: 400;
+	line-height: 1.4;
+	color: var(--colour-white);
+	margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   CTA pair — right side, gap-[10px]
+   -------------------------------------------------------------------------- */
+
+.block-cta-banner__ctas {
+	display: flex;
+	align-items: center;
+	gap: 10px; /* Figma gap-[10px] */
+	flex-shrink: 0;
+}
+
+/* Primary: coral bg, white text — reuses global .btn--primary pattern */
+.block-cta-banner__btn {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	padding: 16px 20px; /* Figma px-[20px] py-[16px] */
+	font-family: var(--font-heading);
+	font-size: 1rem; /* 16px — Figma Label/CTA */
+	font-weight: 700;
+	line-height: 1;
+	text-decoration: none;
+	border-radius: var(--radius-cta); /* 12px */
+	white-space: nowrap;
+	transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.block-cta-banner__btn--primary {
+	background-color: var(--colour-coral); /* #F5634D */
+	color: var(--colour-white);
+	border: 2px solid var(--colour-coral);
+}
+
+.block-cta-banner__btn--primary:hover,
+.block-cta-banner__btn--primary:focus-visible {
+	background-color: transparent;
+	color: var(--colour-coral);
+}
+
+.block-cta-banner__btn--primary svg {
+	transition: transform 0.2s ease;
+}
+
+.block-cta-banner__btn--primary:hover svg,
+.block-cta-banner__btn--primary:focus-visible svg {
+	transform: translateX(3px);
+}
+
+/* Secondary: white bg, coral text — Figma bg-[#f6f9f9] text-[#f5634d] */
+.block-cta-banner__btn--secondary {
+	background-color: var(--colour-white);
+	color: var(--colour-coral);
+	border: 2px solid var(--colour-white);
+}
+
+.block-cta-banner__btn--secondary:hover,
+.block-cta-banner__btn--secondary:focus-visible {
+	background-color: transparent;
+	color: var(--colour-white);
+	border-color: var(--colour-white);
+}
+
+/* --------------------------------------------------------------------------
+   Responsive — tablet (≤1024px)
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 1024px) {
+	.block-cta-banner__inner {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 32px;
+		border-radius: 0 0 32px 32px;
+		min-height: auto;
+		padding: 48px 32px;
+	}
+
+	.block-cta-banner__heading {
+		font-size: 2.25rem;
+	}
+}
+
+/* --------------------------------------------------------------------------
+   Responsive — mobile (≤640px)
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 640px) {
+	.block-cta-banner__inner {
+		padding: 40px 20px;
+		border-radius: 0 0 24px 24px;
+		gap: 28px;
+	}
+
+	.block-cta-banner__heading {
+		font-size: 1.875rem;
+	}
+
+	.block-cta-banner__ctas {
+		flex-direction: column;
+		align-items: stretch;
+		width: 100%;
+	}
+
+	.block-cta-banner__btn {
+		justify-content: center;
+	}
+}

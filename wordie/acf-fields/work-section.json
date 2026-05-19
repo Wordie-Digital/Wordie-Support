@@ -1,0 +1,208 @@
+[
+  {
+    "key": "group_wordie_work_section",
+    "title": "Work Section",
+    "fields": [
+      {
+        "key": "field_wordie_work_section_kicker",
+        "label": "Section Kicker",
+        "name": "section_kicker",
+        "type": "text",
+        "instructions": "Small uppercase label above the heading. Example: \"Our work\"",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": { "width": "", "class": "", "id": "" },
+        "default_value": "Our work",
+        "placeholder": "Our work",
+        "maxlength": 60
+      },
+      {
+        "key": "field_wordie_work_section_heading",
+        "label": "Section Heading",
+        "name": "section_heading",
+        "type": "text",
+        "instructions": "H2 heading displayed above the carousel.",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": { "width": "70", "class": "", "id": "" },
+        "default_value": "Design decisions backed by outcomes",
+        "placeholder": "Design decisions backed by outcomes",
+        "maxlength": 100
+      },
+      {
+        "key": "field_wordie_work_section_cta",
+        "label": "Header CTA",
+        "name": "section_cta",
+        "type": "link",
+        "instructions": "Optional CTA button displayed in the section header, e.g. \"View all work\".",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": { "width": "30", "class": "", "id": "" },
+        "return_format": "array"
+      },
+      {
+        "key": "field_wordie_work_section_projects",
+        "label": "Projects",
+        "name": "projects",
+        "type": "repeater",
+        "instructions": "Add 2–6 featured projects. Each project populates one carousel slide and one thumbnail.",
+        "required": 1,
+        "conditional_logic": 0,
+        "wrapper": { "width": "", "class": "", "id": "" },
+        "min": 2,
+        "max": 6,
+        "layout": "block",
+        "button_label": "Add Project",
+        "sub_fields": [
+          {
+            "key": "field_wordie_work_section_proj_image",
+            "label": "Project Image",
+            "name": "project_image",
+            "type": "image",
+            "instructions": "Featured image shown in the carousel slide and thumbnail row. Recommended: 740×557px.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": { "width": "50", "class": "", "id": "" },
+            "return_format": "array",
+            "preview_size": "medium",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "max_width": "",
+            "max_height": ""
+          },
+          {
+            "key": "field_wordie_work_section_proj_logo",
+            "label": "Client Logo",
+            "name": "project_client_logo",
+            "type": "image",
+            "instructions": "Client logo displayed in the details panel. Recommended: up to 149×46px, transparent background.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": { "width": "50", "class": "", "id": "" },
+            "return_format": "array",
+            "preview_size": "thumbnail",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "max_width": "",
+            "max_height": ""
+          },
+          {
+            "key": "field_wordie_work_section_proj_title",
+            "label": "Project Title",
+            "name": "project_title",
+            "type": "text",
+            "instructions": "H3 title for this project, shown in the slide details and thumbnail aria-label.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": { "width": "50", "class": "", "id": "" },
+            "default_value": "",
+            "placeholder": "Brand Redesign for Acme Co.",
+            "maxlength": 100
+          },
+          {
+            "key": "field_wordie_work_section_proj_link",
+            "label": "Case Study Link",
+            "name": "project_link",
+            "type": "link",
+            "instructions": "Optional link to the full case study page.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": { "width": "50", "class": "", "id": "" },
+            "return_format": "array"
+          },
+          {
+            "key": "field_wordie_work_section_proj_stats",
+            "label": "Project Stats",
+            "name": "project_stats",
+            "type": "repeater",
+            "instructions": "Add up to 4 outcome stats shown in coral beneath the project title.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": { "width": "", "class": "", "id": "" },
+            "min": 0,
+            "max": 4,
+            "layout": "table",
+            "button_label": "Add Stat",
+            "sub_fields": [
+              {
+                "key": "field_wordie_work_section_stat_value",
+                "label": "Stat Value",
+                "name": "stat_value",
+                "type": "text",
+                "instructions": "The headline number or metric. Example: \"3×\" or \"+42%\"",
+                "required": 1,
+                "conditional_logic": 0,
+                "wrapper": { "width": "40", "class": "", "id": "" },
+                "default_value": "",
+                "placeholder": "3×",
+                "maxlength": 20
+              },
+              {
+                "key": "field_wordie_work_section_stat_label",
+                "label": "Stat Label",
+                "name": "stat_label",
+                "type": "text",
+                "instructions": "Short descriptor beneath the value. Example: \"conversion rate\"",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": { "width": "60", "class": "", "id": "" },
+                "default_value": "",
+                "placeholder": "conversion rate",
+                "maxlength": 50
+              }
+            ]
+          },
+          {
+            "key": "field_wordie_work_section_proj_desc",
+            "label": "Project Description",
+            "name": "project_description",
+            "type": "textarea",
+            "instructions": "2–3 sentence overview of this project. Plain text only.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": { "width": "", "class": "", "id": "" },
+            "default_value": "",
+            "placeholder": "We partnered with Acme to redesign their checkout experience...",
+            "rows": 3,
+            "new_lines": "br",
+            "maxlength": 300
+          },
+          {
+            "key": "field_wordie_work_section_proj_tags",
+            "label": "Tags / Services",
+            "name": "project_tags",
+            "type": "text",
+            "instructions": "Comma-separated list of services delivered. Example: \"UX Design, WordPress, ACF\"",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": { "width": "", "class": "", "id": "" },
+            "default_value": "",
+            "placeholder": "UX Design, WordPress, ACF Pro",
+            "maxlength": 150
+          }
+        ]
+      }
+    ],
+    "location": [
+      [
+        {
+          "param": "block",
+          "operator": "==",
+          "value": "acf/work-section"
+        }
+      ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "seamless",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Fields for the Work Section carousel block.",
+    "show_in_rest": 0,
+    "modified": 1747612800
+  }
+]

@@ -1,0 +1,156 @@
+name: Deploy Wordie Theme to WP Engine
+
+on:
+  push:
+    branches:
+      - main        # → Production
+      - staging     # → Staging
+      - development # → Development
+    paths:
+      - 'wordie/**'
+      - '.github/workflows/deploy-wordie.yml'
+
+concurrency:
+  group: deploy-wordie-${{ github.ref_name }}
+  cancel-in-progress: true
+
+env:
+  PHP_VERSION: "8.2"
+  THEME_DIR:   wordie
+
+jobs:
+  # ---------------------------------------------------------------------------
+  # 1. Lint — PHP syntax + ACF JSON
+  # ---------------------------------------------------------------------------
+  lint:
+    name: Lint (PHP + ACF JSON)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup PHP ${{ env.PHP_VERSION }}
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ env.PHP_VERSION }}
+          tools: phpcs
+          coverage: none
+
+      - name: PHP CodeSniffer (WordPress coding standards)
+        run: |
+          phpcs \
+            --standard=WordPress \
+            --extensions=php \
+            --ignore=vendor,node_modules \
+            --report=summary \
+            ${{ env.THEME_DIR }}/ || true
+
+      - name: PHP syntax check
+        run: |
+          find ${{ env.THEME_DIR }} -name "*.php" | xargs -I{} php -l {}
+
+      - name: ACF JSON validation
+        run: |
+          find ${{ env.THEME_DIR }}/acf-fields -name "*.json" | while read f; do
+            python3 -m json.tool "$f" > /dev/null && echo "✓ $f" || (echo "✗ $f" && exit 1)
+          done
+
+  # ---------------------------------------------------------------------------
+  # 2. Smoke test — verify required theme files exist
+  # ---------------------------------------------------------------------------
+  smoke-test:
+    name: Smoke Test
+    runs-on: ubuntu-latest
+    needs: lint
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check required theme files
+        run: |
+          REQUIRED=(
+            "${{ env.THEME_DIR }}/style.css"
+            "${{ env.THEME_DIR }}/functions.php"
+            "${{ env.THEME_DIR }}/index.php"
+            "${{ env.THEME_DIR }}/header.php"
+            "${{ env.THEME_DIR }}/footer.php"
+            "${{ env.THEME_DIR }}/inc/block-registration.php"
+            "${{ env.THEME_DIR }}/acf-fields/hero-banner.json"
+            "${{ env.THEME_DIR }}/blocks/hero-banner/template.php"
+          )
+          for f in "${REQUIRED[@]}"; do
+            if [ -f "$f" ]; then
+              echo "✓ $f"
+            else
+              echo "✗ Missing: $f" && exit 1
+            fi
+          done
+
+  # ---------------------------------------------------------------------------
+  # 3. Deploy — rsync wordie/ to wp-content/themes/wordie/ via WP Engine SSH
+  # ---------------------------------------------------------------------------
+  deploy:
+    name: Deploy → WP Engine (${{ github.ref_name }})
+    runs-on: ubuntu-latest
+    needs: smoke-test
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Resolve WP Engine environment name
+        id: wpe_env
+        run: |
+          if [[ "${{ github.ref_name }}" == "main" ]]; then
+            echo "name=${{ secrets.WPE_ENV_PRODUCTION }}" >> "$GITHUB_OUTPUT"
+          elif [[ "${{ github.ref_name }}" == "staging" ]]; then
+            echo "name=${{ secrets.WPE_ENV_STAGING }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "name=${{ secrets.WPE_ENV_DEVELOPMENT }}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Configure SSH key for WP Engine
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.WPE_SSH_KEY }}" | tr -d '\r' > ~/.ssh/wpengine_ed25519
+          chmod 600 ~/.ssh/wpengine_ed25519
+          ssh-keyscan -t rsa git.wpengine.com >> ~/.ssh/known_hosts 2>/dev/null
+          cat >> ~/.ssh/config <<'EOF'
+          Host git.wpengine.com
+            IdentityFile ~/.ssh/wpengine_ed25519
+            StrictHostKeyChecking no
+          EOF
+
+      - name: Configure Git identity
+        run: |
+          git config user.email "deploy@wordie.com.au"
+          git config user.name  "Wordie CI"
+
+      - name: Add WP Engine remote
+        run: |
+          git remote remove wpengine 2>/dev/null || true
+          git remote add wpengine \
+            "git@git.wpengine.com:production/${{ steps.wpe_env.outputs.name }}.git"
+
+      - name: Push to WP Engine
+        run: |
+          git push wpengine HEAD:master --force
+
+      - name: Deployment summary
+        run: |
+          echo "========================================"
+          echo " Deployment complete"
+          echo " Branch  : ${{ github.ref_name }}"
+          echo " WPE env : ${{ steps.wpe_env.outputs.name }}"
+          echo " Commit  : ${{ github.sha }}"
+          echo "========================================"
+
+# ── Required GitHub Secrets (same as deploy.yml) ──────────────────────────
+# WPE_SSH_KEY          — WP Engine SSH private key
+# WPE_ENV_PRODUCTION   — WP Engine environment name for production
+# WPE_ENV_STAGING      — WP Engine environment name for staging
+# WPE_ENV_DEVELOPMENT  — WP Engine environment name for development
