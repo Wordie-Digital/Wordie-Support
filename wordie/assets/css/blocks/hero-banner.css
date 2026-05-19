@@ -31,21 +31,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center right;
-  opacity: 0.4;  /* Subtle overlay so text remains legible */
-}
-
-/* Dark overlay gradient — keeps left content readable over any bg image */
-.block-hero-banner::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    90deg,
-    var(--colour-dark-teal) 45%,
-    rgba(10, 53, 66, 0) 100%
-  );
-  pointer-events: none;
+  object-position: center center;
 }
 
 /* Inner container — constrained to 1440px page width */
