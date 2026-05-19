@@ -140,10 +140,7 @@ jobs:
           cp .github/fix-permalinks.php /tmp/wpe-deploy/wp-content/mu-plugins/fix-permalinks.php
           cp .github/fix-site-title.php /tmp/wpe-deploy/wp-content/mu-plugins/fix-site-title.php
           cp .github/import-acf-fields.php /tmp/wpe-deploy/wp-content/mu-plugins/import-acf-fields.php
-          cp .github/remove-react-app.php /tmp/wpe-deploy/wp-content/mu-plugins/remove-react-app.php
-          cp .github/nuke-react-app.php /tmp/wpe-deploy/wp-content/mu-plugins/nuke-react-app.php
-          cp .github/overwrite-react-index.php /tmp/wpe-deploy/wp-content/mu-plugins/overwrite-react-index.php
-          cp .github/react-debug.php /tmp/wpe-deploy/wp-content/mu-plugins/react-debug.php
+          cp .github/fix-directory-index.php /tmp/wpe-deploy/wp-content/mu-plugins/fix-directory-index.php
           cd /tmp/wpe-deploy
           git init
           git add -A
