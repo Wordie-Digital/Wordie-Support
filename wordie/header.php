@@ -36,7 +36,7 @@ $nav_cta = get_field( 'nav_cta', 'option' );
 				] );
 			else :
 				?>
-				<span class="site-header__logo-text"><?php bloginfo( 'name' ); ?></span>
+				<span class="site-header__logo-text">Wordie</span>
 			<?php endif; ?>
 		</a>
 
