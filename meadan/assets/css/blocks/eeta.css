@@ -848,12 +848,10 @@
     .eeta-hero { flex-direction: column; }
     .eeta-hero__text-inner { padding: 48px 32px; }
     .eeta-hero__heading { font-size: 40px; }
-    .eeta-hero__image-panel { height: 312px; position: relative; }
-    .eeta-hero__image-panel img { position: absolute; }
+    .eeta-hero__image-panel { display: none !important; }
 
     .eeta-text-image { flex-direction: column; padding: 48px 32px; gap: 40px; }
-    .eeta-text-image__image-wrap { width: 100%; }
-    .eeta-text-image__image-wrap img { height: 286px; }
+    .eeta-text-image__image-wrap { display: none !important; }
 
     .eeta-audience { padding: 48px 32px; }
     .eeta-audience__heading { font-size: 36px; }
