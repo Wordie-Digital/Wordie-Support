@@ -116,7 +116,8 @@ jobs:
       - name: Configure SSH key for WP Engine
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.WPE_SSH_KEY }}" | tr -d '\r' > ~/.ssh/wpengine_ed25519
+          printf '%s' "${{ secrets.WPE_SSH_KEY }}" | sed 's/\\n/\n/g' | tr -d '\r' > ~/.ssh/wpengine_ed25519
+          echo "" >> ~/.ssh/wpengine_ed25519
           chmod 600 ~/.ssh/wpengine_ed25519
           ssh-keyscan -t rsa git.wpengine.com >> ~/.ssh/known_hosts 2>/dev/null
           cat >> ~/.ssh/config <<'EOF'
