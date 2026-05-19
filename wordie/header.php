@@ -40,17 +40,24 @@ $nav_cta = get_field( 'nav_cta', 'option' );
 			<?php endif; ?>
 		</a>
 
+		<?php
+		$has_primary_menu = has_nav_menu( 'primary' );
+		$has_nav_cta      = $nav_cta && ! empty( $nav_cta['url'] );
+		if ( $has_primary_menu || $has_nav_cta ) :
+		?>
 		<nav class="site-header__nav" aria-label="<?php esc_attr_e( 'Primary navigation', 'wordie' ); ?>">
 			<?php
-			wp_nav_menu( [
-				'theme_location' => 'primary',
-				'container'      => false,
-				'menu_class'     => 'site-header__menu',
-				'fallback_cb'    => false,
-			] );
+			if ( $has_primary_menu ) {
+				wp_nav_menu( [
+					'theme_location' => 'primary',
+					'container'      => false,
+					'menu_class'     => 'site-header__menu',
+					'fallback_cb'    => false,
+				] );
+			}
 			?>
 
-			<?php if ( $nav_cta && ! empty( $nav_cta['url'] ) ) : ?>
+			<?php if ( $has_nav_cta ) : ?>
 				<a
 					href="<?php echo esc_url( $nav_cta['url'] ); ?>"
 					class="btn btn--primary site-header__cta"
@@ -60,6 +67,7 @@ $nav_cta = get_field( 'nav_cta', 'option' );
 				</a>
 			<?php endif; ?>
 		</nav>
+		<?php endif; ?>
 
 		<button
 			class="site-header__menu-toggle"

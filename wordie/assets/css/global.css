@@ -288,10 +288,6 @@ p {
   box-shadow: var(--shadow-nav);
 }
 
-.site-header__nav:empty {
-  display: none;
-}
-
 .site-header__menu {
   display: flex;
   align-items: center;
