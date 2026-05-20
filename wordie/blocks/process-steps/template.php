@@ -15,9 +15,9 @@
 defined( 'ABSPATH' ) || exit;
 
 // ── ACF Fields ────────────────────────────────────────────────────────────────
-$kicker  = get_field( 'section_kicker' );
-$heading = get_field( 'section_heading' );
-$steps   = get_field( 'steps' );
+$kicker  = get_sub_field( 'section_kicker' );
+$heading = get_sub_field( 'section_heading' );
+$steps   = get_sub_field( 'steps' );
 
 // ── Empty state ───────────────────────────────────────────────────────────────
 if ( ! $heading && ! $steps ) {

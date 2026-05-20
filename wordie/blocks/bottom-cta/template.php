@@ -14,14 +14,14 @@
 defined( 'ABSPATH' ) || exit;
 
 // ── ACF Fields ────────────────────────────────────────────────────────────────
-$heading       = get_field( 'section_heading' );
-$description   = get_field( 'section_description' );
-$trust_line    = get_field( 'trust_line' );
-$cta_primary   = get_field( 'cta_primary' );
-$cta_secondary = get_field( 'cta_secondary' );
+$heading       = get_sub_field( 'section_heading' );
+$description   = get_sub_field( 'section_description' );
+$trust_line    = get_sub_field( 'trust_line' );
+$cta_primary   = get_sub_field( 'cta_primary' );
+$cta_secondary = get_sub_field( 'cta_secondary' );
 
 // Wordie logo from global options (shown top-right per Figma)
-$site_logo = get_field( 'site_logo', 'option' );
+$site_logo = get_sub_field( 'site_logo', 'option' );
 
 // ── Empty state ───────────────────────────────────────────────────────────────
 if ( ! $heading ) {

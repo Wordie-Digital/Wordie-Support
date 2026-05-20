@@ -13,8 +13,8 @@
 defined( 'ABSPATH' ) || exit;
 
 // ── ACF Fields ────────────────────────────────────────────────────────────────
-$kicker_text = get_field( 'kicker_text' );
-$logos       = get_field( 'logos' );
+$kicker_text = get_sub_field( 'kicker_text' );
+$logos       = get_sub_field( 'logos' );
 
 // ── Empty state ───────────────────────────────────────────────────────────────
 if ( ! $logos ) {

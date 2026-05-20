@@ -14,10 +14,10 @@
 defined( 'ABSPATH' ) || exit;
 
 // ── ACF Fields ────────────────────────────────────────────────────────────────
-$kicker   = get_field( 'section_kicker' );
-$heading  = get_field( 'section_heading' );
-$cta      = get_field( 'section_cta' );
-$projects = get_field( 'projects' );
+$kicker   = get_sub_field( 'section_kicker' );
+$heading  = get_sub_field( 'section_heading' );
+$cta      = get_sub_field( 'section_cta' );
+$projects = get_sub_field( 'projects' );
 
 // ── Empty state ───────────────────────────────────────────────────────────────
 if ( ! $projects ) {

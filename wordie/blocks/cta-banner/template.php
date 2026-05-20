@@ -14,10 +14,10 @@
 defined( 'ABSPATH' ) || exit;
 
 // ── ACF Fields ────────────────────────────────────────────────────────────────
-$heading     = get_field( 'section_heading' );
-$description = get_field( 'section_description' );
-$cta_primary = get_field( 'cta_primary' );
-$cta_secondary = get_field( 'cta_secondary' );
+$heading     = get_sub_field( 'section_heading' );
+$description = get_sub_field( 'section_description' );
+$cta_primary = get_sub_field( 'cta_primary' );
+$cta_secondary = get_sub_field( 'cta_secondary' );
 
 // ── Empty state ───────────────────────────────────────────────────────────────
 if ( ! $heading ) {

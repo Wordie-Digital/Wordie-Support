@@ -14,12 +14,12 @@
 defined( 'ABSPATH' ) || exit;
 
 // ── ACF Fields ────────────────────────────────────────────────────────────────
-$kicker           = get_field( 'section_kicker' );
-$heading          = get_field( 'section_heading' );
-$description      = get_field( 'section_description' );
-$platforms        = get_field( 'platforms' );
-$supporting_label = get_field( 'supporting_label' );
-$supporting_logos = get_field( 'supporting_logos' );
+$kicker           = get_sub_field( 'section_kicker' );
+$heading          = get_sub_field( 'section_heading' );
+$description      = get_sub_field( 'section_description' );
+$platforms        = get_sub_field( 'platforms' );
+$supporting_label = get_sub_field( 'supporting_label' );
+$supporting_logos = get_sub_field( 'supporting_logos' );
 
 // ── Empty state ───────────────────────────────────────────────────────────────
 if ( ! $heading && ! $platforms ) {

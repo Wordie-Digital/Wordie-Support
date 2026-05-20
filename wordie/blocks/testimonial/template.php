@@ -15,7 +15,7 @@
 defined( 'ABSPATH' ) || exit;
 
 // ── ACF Fields ────────────────────────────────────────────────────────────────
-$testimonials = get_field( 'testimonials' );
+$testimonials = get_sub_field( 'testimonials' );
 
 // ── Empty state ───────────────────────────────────────────────────────────────
 if ( ! $testimonials ) {
