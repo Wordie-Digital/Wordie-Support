@@ -1,43 +1,25 @@
 <?php
 /**
- * Block: Hero Banner
- * Slug: hero-banner
- * Description: Full-viewport hero with heading, subheading and dual CTA buttons.
- * Registered via: acf_register_block_type() in inc/block-registration.php
- * ACF fields: acf-fields/hero-banner.json
- * Figma node: 2923:1409
- *
- * @package wordie
+ * Layout: Hero Banner
+ * Flexible Content layout — rendered via page.php sections loop.
  */
-
 defined( 'ABSPATH' ) || exit;
 
-// ── ACF Fields ────────────────────────────────────────────────────────────────
-$heading            = get_field( 'heading' );
-$subheading         = get_field( 'subheading' );
-$cta_primary        = get_field( 'cta_primary' );    // link — url, title, target
-$cta_secondary      = get_field( 'cta_secondary' );  // link — url, title, target
-$media_type         = get_field( 'media_type' ) ?: 'image'; // 'image' | 'video'
-$background_image   = get_field( 'background_image' ); // image array
-$background_video   = get_field( 'background_video' );  // file array
+$heading          = get_sub_field( 'heading' );
+$subheading       = get_sub_field( 'subheading' );
+$cta_primary      = get_sub_field( 'cta_primary' );
+$cta_secondary    = get_sub_field( 'cta_secondary' );
+$media_type       = get_sub_field( 'media_type' ) ?: 'image';
+$background_image = get_sub_field( 'background_image' );
+$background_video = get_sub_field( 'background_video' );
 
-// ── Empty state ───────────────────────────────────────────────────────────────
 if ( ! $heading && ! $subheading ) {
 	return;
 }
-
-// ── Block classes ─────────────────────────────────────────────────────────────
-$class = 'block-hero-banner';
-if ( ! empty( $block['className'] ) ) {
-	$class .= ' ' . esc_attr( $block['className'] );
-}
-
-$block_id = ! empty( $block['anchor'] ) ? $block['anchor'] : 'block-' . $block['id'];
 ?>
 
 <section
-	id="<?php echo esc_attr( $block_id ); ?>"
-	class="<?php echo esc_attr( $class ); ?>"
+	class="block-hero-banner"
 	data-block="hero-banner"
 	aria-label="<?php echo esc_attr( $heading ?: __( 'Hero section', 'wordie' ) ); ?>"
 >
@@ -46,30 +28,19 @@ $block_id = ! empty( $block['anchor'] ) ? $block['anchor'] : 'block-' . $block['
 		<div class="block-hero-banner__bg" aria-hidden="true">
 			<video
 				class="block-hero-banner__bg-video"
-				autoplay
-				muted
-				loop
-				playsinline
-				preload="metadata"
+				autoplay muted loop playsinline preload="metadata"
 			>
 				<source src="<?php echo esc_url( $background_video['url'] ); ?>" type="video/mp4">
 			</video>
 		</div>
 	<?php elseif ( $background_image ) : ?>
 		<div class="block-hero-banner__bg" aria-hidden="true">
-			<?php
-			echo wp_get_attachment_image(
-				$background_image['ID'],
-				'wordie-hero',
-				false,
-				[
-					'class'         => 'block-hero-banner__bg-img',
-					'loading'       => 'eager',
-					'fetchpriority' => 'high',
-					'alt'           => '',
-				]
-			);
-			?>
+			<?php echo wp_get_attachment_image( $background_image['ID'], 'wordie-hero', false, [
+				'class'         => 'block-hero-banner__bg-img',
+				'loading'       => 'eager',
+				'fetchpriority' => 'high',
+				'alt'           => '',
+			] ); ?>
 		</div>
 	<?php endif; ?>
 
@@ -77,15 +48,11 @@ $block_id = ! empty( $block['anchor'] ) ? $block['anchor'] : 'block-' . $block['
 		<div class="block-hero-banner__content">
 
 			<?php if ( $heading ) : ?>
-				<h1 class="block-hero-banner__heading">
-					<?php echo esc_html( $heading ); ?>
-				</h1>
+				<h1 class="block-hero-banner__heading"><?php echo esc_html( $heading ); ?></h1>
 			<?php endif; ?>
 
 			<?php if ( $subheading ) : ?>
-				<p class="block-hero-banner__subheading">
-					<?php echo esc_html( $subheading ); ?>
-				</p>
+				<p class="block-hero-banner__subheading"><?php echo esc_html( $subheading ); ?></p>
 			<?php endif; ?>
 
 			<?php if ( $cta_primary || $cta_secondary ) : ?>

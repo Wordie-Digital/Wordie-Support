@@ -7,7 +7,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'WORDIE_VERSION', '1.0.1' );
+define( 'WORDIE_VERSION', '1.0.2' );
 define( 'WORDIE_DIR', get_template_directory() );
 define( 'WORDIE_URI', get_template_directory_uri() );
 
@@ -15,7 +15,6 @@ define( 'WORDIE_URI', get_template_directory_uri() );
 // Required files
 // ---------------------------------------------------------------------------
 require_once WORDIE_DIR . '/inc/theme-setup.php';
-require_once WORDIE_DIR . '/inc/block-registration.php';
 require_once WORDIE_DIR . '/inc/acf-options.php';
 require_once WORDIE_DIR . '/inc/ai-endpoints.php';
 
@@ -81,6 +80,20 @@ add_action( 'wp_enqueue_scripts', function () {
 		);
 	}
 
+	// Enqueue all layout CSS on pages that use flexible content
+	if ( is_page() || is_front_page() ) {
+		$layout_css_dir = WORDIE_DIR . '/assets/css/blocks';
+		foreach ( glob( $layout_css_dir . '/*.css' ) as $css_file ) {
+			$handle = 'wordie-' . basename( $css_file, '.css' );
+			wp_enqueue_style(
+				$handle,
+				WORDIE_URI . '/assets/css/blocks/' . basename( $css_file ),
+				[ 'wordie-global' ],
+				WORDIE_VERSION
+			);
+		}
+	}
+
 } );
 
 // ---------------------------------------------------------------------------
@@ -101,14 +114,3 @@ add_action( 'init', function () {
 	file_put_contents( $htaccess, $prepend . $content );
 } );
 
-// ---------------------------------------------------------------------------
-// Enqueue block editor assets
-// ---------------------------------------------------------------------------
-add_action( 'enqueue_block_editor_assets', function () {
-	wp_enqueue_style(
-		'wordie-editor',
-		WORDIE_URI . '/assets/css/editor.css',
-		[ 'wp-edit-blocks' ],
-		WORDIE_VERSION
-	);
-} );
