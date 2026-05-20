@@ -77,7 +77,7 @@ jobs:
             "${{ env.THEME_DIR }}/header.php"
             "${{ env.THEME_DIR }}/footer.php"
             "${{ env.THEME_DIR }}/inc/block-registration.php"
-            "${{ env.THEME_DIR }}/acf-fields/hero-banner.json"
+            "${{ env.THEME_DIR }}/acf-fields/page-sections.json"
             "${{ env.THEME_DIR }}/blocks/hero-banner/template.php"
           )
           for f in "${REQUIRED[@]}"; do
