@@ -9,6 +9,7 @@ on:
     paths:
       - 'wordie/**'
       - '.github/workflows/deploy-wordie.yml'
+      - '.github/*.php'
 
 concurrency:
   group: deploy-wordie-${{ github.ref_name }}
