@@ -18,11 +18,10 @@
   background: linear-gradient(
     to right,
     var(--colour-dark-teal)        0%,
-    var(--colour-dark-teal)        50%,
-    rgba(10, 53, 66, 0.90)         58%,
-    rgba(10, 53, 66, 0.65)         66%,
-    rgba(10, 53, 66, 0.30)         74%,
-    rgba(10, 53, 66, 0)            82%
+    var(--colour-dark-teal)        55%,
+    rgba(10, 53, 66, 0.85)         65%,
+    rgba(10, 53, 66, 0.55)         78%,
+    rgba(10, 53, 66, 0.30)         100%
   );
   pointer-events: none;
 }
