@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || exit;
 
 // ── ACF Fields ────────────────────────────────────────────────────────────────
 $kicker_text = get_sub_field( 'kicker_text' );
-$logos       = get_sub_field( 'logos' );
+$logos       = get_sub_field( 'client_logos' );
 
 // ── Empty state ───────────────────────────────────────────────────────────────
 if ( ! $logos ) {
@@ -23,18 +23,13 @@ if ( ! $logos ) {
 
 // ── Block classes ─────────────────────────────────────────────────────────────
 $class = 'block-client-logos';
-if ( ! empty( $block['className'] ) ) {
-	$class .= ' ' . esc_attr( $block['className'] );
-}
 
-$block_id = ! empty( $block['anchor'] ) ? $block['anchor'] : 'block-' . $block['id'];
 
 // Duplicate logos for seamless marquee loop
 $logos_doubled = array_merge( $logos, $logos );
 ?>
 
 <section
-	id="<?php echo esc_attr( $block_id ); ?>"
 	class="<?php echo esc_attr( $class ); ?>"
 	data-block="client-logos"
 	aria-label="<?php echo esc_attr( $kicker_text ?: __( 'Our clients', 'wordie' ) ); ?>"
@@ -51,8 +46,8 @@ $logos_doubled = array_merge( $logos, $logos );
 			<ul class="block-client-logos__track" role="list">
 				<?php foreach ( $logos_doubled as $index => $logo ) :
 					$image = $logo['logo_image'] ?? null;
-					$name  = $logo['logo_name'] ?? '';
-					$link  = $logo['logo_link'] ?? '';
+					$name  = $logo['client_name'] ?? '';
+					$link  = $logo['website_url'] ?? '';
 
 					if ( ! $image ) { continue; }
 				?>
@@ -69,7 +64,7 @@ $logos_doubled = array_merge( $logos, $logos );
 
 						<?php
 						echo wp_get_attachment_image(
-							$image['ID'],
+							$image['ID'] ?? $image,
 							[ 152, 81 ],
 							false,
 							[
@@ -93,8 +88,8 @@ $logos_doubled = array_merge( $logos, $logos );
 		?>
 		<ul class="block-client-logos__accessible-list sr-only" role="list" aria-label="<?php echo esc_attr( $kicker_text ?: __( 'Client logos', 'wordie' ) ); ?>">
 			<?php foreach ( $logos as $logo ) :
-				$name = $logo['logo_name'] ?? '';
-				$link = $logo['logo_link'] ?? '';
+				$name = $logo['client_name'] ?? '';
+				$link = $logo['website_url'] ?? '';
 				if ( ! $name ) { continue; }
 			?>
 				<li>

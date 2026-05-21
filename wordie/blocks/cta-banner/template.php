@@ -14,8 +14,8 @@
 defined( 'ABSPATH' ) || exit;
 
 // ── ACF Fields ────────────────────────────────────────────────────────────────
-$heading     = get_sub_field( 'section_heading' );
-$description = get_sub_field( 'section_description' );
+$heading     = get_sub_field( 'heading' );
+$description = get_sub_field( 'description' );
 $cta_primary = get_sub_field( 'cta_primary' );
 $cta_secondary = get_sub_field( 'cta_secondary' );
 
@@ -26,15 +26,10 @@ if ( ! $heading ) {
 
 // ── Block classes ─────────────────────────────────────────────────────────────
 $class = 'block-cta-banner';
-if ( ! empty( $block['className'] ) ) {
-	$class .= ' ' . esc_attr( $block['className'] );
-}
 
-$block_id = ! empty( $block['anchor'] ) ? $block['anchor'] : 'block-' . $block['id'];
 ?>
 
 <section
-	id="<?php echo esc_attr( $block_id ); ?>"
 	class="<?php echo esc_attr( $class ); ?>"
 	data-block="cta-banner"
 >
