@@ -19,6 +19,22 @@
   padding-top: 108px;
 }
 
+/* Gradient overlay — dark teal left → transparent right, sits above bg media */
+.block-hero-banner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    to right,
+    var(--colour-dark-teal) 0%,
+    var(--colour-dark-teal) 40%,
+    rgba(10, 53, 66, 0.85) 55%,
+    rgba(10, 53, 66, 0) 75%
+  );
+  pointer-events: none;
+}
+
 /* Background image (if provided) fills the right half */
 .block-hero-banner__bg {
   position: absolute;
@@ -37,7 +53,7 @@
 /* Inner container — constrained to 1440px page width */
 .block-hero-banner__container {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   width: 100%;
   max-width: var(--container-max);
   margin-inline: auto;
