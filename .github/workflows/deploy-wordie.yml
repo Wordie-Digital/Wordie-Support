@@ -144,6 +144,7 @@ jobs:
           cp .github/fix-root-redirect.php /tmp/wpe-deploy/wp-content/mu-plugins/fix-root-redirect.php
           cp .github/nuke-index-html.php /tmp/wpe-deploy/wp-content/mu-plugins/nuke-index-html.php
           cp .github/force-css-version.php /tmp/wpe-deploy/wp-content/mu-plugins/force-css-version.php
+          cp .github/fix-block-templates.php /tmp/wpe-deploy/wp-content/mu-plugins/fix-block-templates.php
           # Overwrite index.html in the webroot — kills React app for good
           printf '<!DOCTYPE html><html><head><meta http-equiv="refresh" content="0;url=/home/"><script>window.location.replace("/home/");</script></head><body></body></html>' > /tmp/wpe-deploy/index.html
           cd /tmp/wpe-deploy
