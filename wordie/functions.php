@@ -49,6 +49,14 @@ add_action( 'wp_enqueue_scripts', function () {
 		WORDIE_VERSION
 	);
 
+	// Site footer — global, enqueued on every page
+	wp_enqueue_style(
+		'wordie-site-footer',
+		WORDIE_URI . '/assets/css/site-footer.css',
+		[ 'wordie-global' ],
+		WORDIE_VERSION
+	);
+
 	// Navigation JS
 	wp_enqueue_script(
 		'wordie-navigation',

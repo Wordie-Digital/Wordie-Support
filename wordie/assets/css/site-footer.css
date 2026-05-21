@@ -1,0 +1,360 @@
+/**
+ * Wordie — site-footer.css
+ *
+ * Global footer styles. Pixel-perfect from Figma node 2942:14797.
+ *
+ * Layout spec (desktop):
+ *   Outer padding:      72px LR (--space-18), 48px TB (--space-12)
+ *   Columns gap:        40px (--space-10)
+ *   Industries gap:     8px heading → sub-cols, 16px between sub-cols, 4px between links
+ *   Contact items gap:  16px (--space-4)
+ *   Bottom bar:         rgba(246,249,249,0.1) bg, px 24px py 18px, radius 20px
+ *   Legal links gap:    40px (--space-10)
+ *   Social icons gap:   27px
+ *
+ * Typography:
+ *   Column headings:    Montserrat Bold 14px  (--font-heading)
+ *   Sub-headings/bold:  Open Sans Bold 14px   (--font-body, --weight-bold)
+ *   Regular links:      Open Sans Regular 14px (--font-body, --weight-regular)
+ *   Contact text:       Open Sans Regular 16px (line-height 1.5)
+ *   Bottom bar:         Open Sans Regular 12px
+ */
+
+/* ---------------------------------------------------------------------------
+   Footer wrapper
+---------------------------------------------------------------------------- */
+.site-footer {
+  background-color: var(--colour-dark-teal);
+  padding: var(--space-12) var(--space-18);  /* 48px 72px */
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10);  /* 40px between main cols row and bottom bar */
+}
+
+/* ---------------------------------------------------------------------------
+   Main columns row
+   Figma: flex, gap 40px, items-start
+   Order: Industries | Locations | Quick Links | Contact Us
+---------------------------------------------------------------------------- */
+.site-footer__main {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-10);  /* 40px */
+  width: 100%;
+}
+
+/* ---------------------------------------------------------------------------
+   Column heading — "Industries", "Locations", "Quick Links", "Contact Us"
+   Figma: Montserrat Bold, 14px, #F6F9F9
+---------------------------------------------------------------------------- */
+.site-footer__col-heading {
+  font-family: var(--font-heading);
+  font-size: 0.875rem;   /* 14px */
+  font-weight: var(--weight-bold);
+  line-height: normal;
+  color: var(--colour-white);
+  padding: 6px;
+  margin: 0 0 calc(var(--space-2) - 2px) 0;  /* gap-8px from heading to links */
+}
+
+/* ---------------------------------------------------------------------------
+   Industries block — heading + horizontal sub-columns
+   Figma: flex-col gap-8px, then sub-cols flex gap-16px
+---------------------------------------------------------------------------- */
+.site-footer__industries {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);  /* 8px */
+}
+
+.site-footer__industry-cols {
+  display: flex;
+  gap: var(--space-4);  /* 16px between sub-columns */
+  align-items: flex-start;
+}
+
+.site-footer__industry-col {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;  /* gap-4px between links */
+}
+
+/* ---------------------------------------------------------------------------
+   Sub-heading (e.g. "Business & Finance", "Hospitality & Retail")
+   Figma: Source Sans Pro Bold → Open Sans Bold, 14px, #F6F9F9
+---------------------------------------------------------------------------- */
+.site-footer__sub-heading {
+  font-family: var(--font-body);
+  font-size: 0.875rem;   /* 14px */
+  font-weight: var(--weight-bold);
+  line-height: normal;
+  color: var(--colour-white);
+  padding: 6px;
+  margin: 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Simple nav column (Locations, Quick Links)
+   Figma: flex-col gap-8px (heading + links list with gap-4px)
+---------------------------------------------------------------------------- */
+.site-footer__col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);  /* 8px */
+}
+
+/* ---------------------------------------------------------------------------
+   Link lists — shared by industries, locations, quick links
+   Figma: flex-col, gap-4px between items
+---------------------------------------------------------------------------- */
+.site-footer__link-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.site-footer__link-item {
+  margin: 0;
+}
+
+.site-footer__link {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 0.875rem;   /* 14px */
+  font-weight: var(--weight-regular);
+  line-height: normal;
+  color: var(--colour-white);
+  text-decoration: none;
+  padding: 6px;
+  transition: opacity var(--transition-base, 0.2s ease);
+}
+
+a.site-footer__link:hover {
+  opacity: 0.75;
+  text-decoration: underline;
+}
+
+/* ---------------------------------------------------------------------------
+   Contact Us column
+   Figma: flex-1, flex-col, gap-20px (heading + contact items list)
+---------------------------------------------------------------------------- */
+.site-footer__contact {
+  flex: 1 0 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);  /* 20px */
+}
+
+.site-footer__contact-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);  /* 16px between contact items */
+}
+
+/* Each contact item: icon (24px) + text side by side, gap 16px */
+.site-footer__contact-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);  /* 16px */
+}
+
+.site-footer__contact-icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  color: var(--colour-white);
+  opacity: 0.85;
+}
+
+/* Contact text — Source Sans Pro Regular 16px, line-height 1.5 */
+.site-footer__contact-item span,
+.site-footer__contact-link {
+  font-family: var(--font-body);
+  font-size: 1rem;       /* 16px */
+  font-weight: var(--weight-regular);
+  line-height: 1.5;
+  color: var(--colour-white);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+a.site-footer__contact-link:hover {
+  text-decoration: underline;
+  opacity: 0.85;
+}
+
+/* ---------------------------------------------------------------------------
+   Bottom bar
+   Figma: bg rgba(246,249,249,0.1), px 24px py 18px, radius 20px,
+          flex justify-between items-center
+---------------------------------------------------------------------------- */
+.site-footer__bar {
+  background-color: rgba(246, 249, 249, 0.10);
+  padding: 18px var(--space-6);  /* 18px 24px */
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-10);
+  width: 100%;
+}
+
+/* Copyright — Source Sans Pro Regular 12px */
+.site-footer__copyright {
+  font-family: var(--font-body);
+  font-size: 0.75rem;   /* 12px */
+  font-weight: var(--weight-regular);
+  line-height: normal;
+  color: var(--colour-white);
+  text-transform: capitalize;
+  margin: 0;
+  white-space: nowrap;
+}
+
+/* Legal links — flex, gap 40px */
+.site-footer__legal {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.site-footer__legal-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-10);  /* 40px */
+}
+
+.site-footer__legal-link {
+  font-family: var(--font-body);
+  font-size: 0.75rem;   /* 12px */
+  font-weight: var(--weight-regular);
+  line-height: normal;
+  color: var(--colour-white);
+  text-decoration: none;
+  text-transform: capitalize;
+  transition: opacity var(--transition-base, 0.2s ease);
+}
+
+a.site-footer__legal-link:hover {
+  opacity: 0.75;
+  text-decoration: underline;
+}
+
+/* Social icons — flex, gap ~27px, icons 16×16px */
+.site-footer__social {
+  display: flex;
+  align-items: center;
+  gap: 27px;
+}
+
+.site-footer__social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  color: var(--colour-white);
+  text-decoration: none;
+  flex-shrink: 0;
+  transition: opacity var(--transition-base, 0.2s ease);
+}
+
+.site-footer__social-link:hover {
+  opacity: 0.75;
+}
+
+.site-footer__social-link svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* ---------------------------------------------------------------------------
+   Responsive — tablet (769px – 1024px)
+---------------------------------------------------------------------------- */
+@media (min-width: 769px) and (max-width: 1024px) {
+
+  .site-footer {
+    padding: var(--space-10) var(--space-6);  /* 40px 24px */
+  }
+
+  .site-footer__main {
+    flex-wrap: wrap;
+    gap: var(--space-8);  /* 32px */
+  }
+
+  .site-footer__industries {
+    width: 100%;
+  }
+
+  .site-footer__bar {
+    flex-wrap: wrap;
+    gap: var(--space-4);
+  }
+
+  .site-footer__legal {
+    order: 3;
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .site-footer__legal-list {
+    flex-wrap: wrap;
+    gap: var(--space-5);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Responsive — mobile (≤ 768px)
+---------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+
+  .site-footer {
+    padding: var(--space-10) var(--space-5);  /* 40px 20px */
+    gap: var(--space-8);  /* 32px */
+  }
+
+  /* Stack all columns vertically */
+  .site-footer__main {
+    flex-direction: column;
+    gap: var(--space-8);  /* 32px */
+  }
+
+  /* Industries sub-cols stack vertically on mobile */
+  .site-footer__industry-cols {
+    flex-direction: column;
+    gap: var(--space-4);  /* 16px */
+  }
+
+  /* Contact items allow text wrapping */
+  .site-footer__contact-item span,
+  .site-footer__contact-link {
+    white-space: normal;
+  }
+
+  /* Bottom bar stacks */
+  .site-footer__bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-5);  /* 20px */
+    padding: var(--space-5) var(--space-4);
+  }
+
+  .site-footer__legal-list {
+    flex-direction: column;
+    gap: var(--space-2);  /* 8px */
+  }
+
+  .site-footer__legal-link {
+    padding: 4px 0;
+  }
+}
