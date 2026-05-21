@@ -1,46 +1,47 @@
 <?php
 /**
- * MU-Plugin: Fix DirectoryIndex to prevent React app from intercepting root URL.
- * Prepends "DirectoryIndex index.php" to .htaccess so LiteSpeed serves WordPress
- * (index.php) instead of the React app (index.html) for requests to /.
+ * MU-Plugin: Delete React app index.html from server root.
+ *
+ * The Resource Planner index.html lives at ABSPATH/index.html and takes
+ * priority over index.php (WordPress) when LiteSpeed serves the root URL.
+ * DirectoryIndex via .htaccess is ignored by WP Engine's server-level config.
+ *
+ * This plugin directly deletes the file so WordPress index.php handles /.
+ * Runs on every init until the file is gone, then becomes a no-op.
  */
 add_action( 'init', function () {
+
+    $index_html = ABSPATH . 'index.html';
+
+    if ( ! file_exists( $index_html ) ) {
+        return; // already gone — nothing to do
+    }
+
+    $deleted = @unlink( $index_html );
+    error_log( 'fix-directory-index: delete index.html result=' . ( $deleted ? 'SUCCESS' : 'FAILED' ) . ' path=' . $index_html );
+
+    // Also ensure .htaccess has DirectoryIndex index.php as a belt-and-braces backup
     $htaccess = ABSPATH . '.htaccess';
-
-    $exists   = file_exists( $htaccess );
-    $writable = is_writable( $htaccess );
-
-    if ( ! $exists || ! $writable ) {
-        error_log( "fix-directory-index: .htaccess not writable. exists={$exists} writable={$writable} path={$htaccess}" );
-        return;
+    if ( file_exists( $htaccess ) && is_writable( $htaccess ) ) {
+        $content = file_get_contents( $htaccess );
+        if ( strpos( $content, '# BEGIN Wordie DirectoryIndex Fix' ) === false ) {
+            $prepend = "# BEGIN Wordie DirectoryIndex Fix\nDirectoryIndex index.php\n# END Wordie DirectoryIndex Fix\n\n";
+            file_put_contents( $htaccess, $prepend . $content );
+        }
     }
 
-    $content = file_get_contents( $htaccess );
-
-    if ( strpos( $content, '# BEGIN Wordie DirectoryIndex Fix' ) !== false ) {
-        error_log( 'fix-directory-index: already applied.' );
-        return;
-    }
-
-    $prepend = "# BEGIN Wordie DirectoryIndex Fix\n" .
-               "DirectoryIndex index.php\n" .
-               "# END Wordie DirectoryIndex Fix\n\n";
-
-    $result = file_put_contents( $htaccess, $prepend . $content );
-    error_log( 'fix-directory-index: write result=' . var_export( $result, true ) );
 } );
 
-// Admin notice to show .htaccess state for diagnosis.
+// Admin notice — shows delete status and file existence
 add_action( 'admin_notices', function () {
-    if ( ! current_user_can( 'manage_options' ) ) return;
-    $htaccess = ABSPATH . '.htaccess';
-    $exists   = file_exists( $htaccess );
-    $writable = is_writable( $htaccess );
-    $applied  = $exists && strpos( file_get_contents( $htaccess ) ?: '', '# BEGIN Wordie DirectoryIndex Fix' ) !== false;
-    $first_line = $exists ? strtok( file_get_contents( $htaccess ), "\n" ) : 'n/a';
-    echo '<div class="notice notice-' . ( $applied ? 'success' : 'error' ) . '"><p>';
-    echo '<strong>DirectoryIndex Fix:</strong> ';
-    echo "htaccess exists={$exists} writable={$writable} fix_applied=" . ( $applied ? 'YES' : 'NO' );
-    echo " | first_line=" . esc_html( $first_line );
-    echo '</p></div>';
+    if ( ! current_user_can( 'manage_options' ) ) {
+        return;
+    }
+    $index_html = ABSPATH . 'index.html';
+    $exists     = file_exists( $index_html );
+    $color      = $exists ? 'error' : 'success';
+    $msg        = $exists
+        ? '⚠️ <strong>index.html still exists</strong> at ' . esc_html( $index_html ) . ' — delete failed (check PHP file permissions).'
+        : '✅ <strong>index.html deleted</strong> — WordPress is now served at the root URL.';
+    echo '<div class="notice notice-' . $color . ' is-dismissible"><p>' . $msg . '</p></div>';
 } );
