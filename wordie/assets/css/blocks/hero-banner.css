@@ -14,25 +14,8 @@
   background-color: var(--colour-dark-teal);
   overflow: hidden;
   display: flex;
-  align-items: center;
-  /* Offset for the fixed header (108px) so content is vertically centred visually */
-  padding-top: 108px;
-}
-
-/* Gradient overlay — dark teal left → transparent right, sits above bg media */
-.block-hero-banner::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: linear-gradient(
-    to right,
-    var(--colour-dark-teal) 0%,
-    var(--colour-dark-teal) 40%,
-    rgba(10, 53, 66, 0.85) 55%,
-    rgba(10, 53, 66, 0) 75%
-  );
-  pointer-events: none;
+  align-items: flex-start;  /* Figma: content top-aligned, not centred */
+  padding-top: 108px;       /* offset for fixed header */
 }
 
 /* Background image (if provided) fills the right half */
@@ -58,7 +41,8 @@
   max-width: var(--container-max);
   margin-inline: auto;
   padding-inline: var(--margin-lr);
-  padding-block: var(--margin-tb);
+  padding-top: 31px;              /* 108px hero + 31px = 139px from top — matches Figma */
+  padding-bottom: var(--margin-tb);
 }
 
 /* Content column — max 584px to match Figma */
