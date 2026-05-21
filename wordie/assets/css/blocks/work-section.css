@@ -3,7 +3,7 @@
    ========================================================================== */
 
 .block-work-section {
-	background-color: var(--colour-white);
+	background-color: var(--colour-dark-grey);  /* Figma: dark navy — same as services/why-wordie */
 	padding-block: 80px;
 }
 
@@ -47,7 +47,7 @@
 	font-family: var(--font-heading);
 	font-size: var(--text-h2);
 	font-weight: 700;
-	color: var(--colour-dark-grey);
+	color: var(--colour-white);  /* Figma: white heading on dark bg */
 	line-height: 1.2;
 	margin: 0;
 	max-width: 600px;
