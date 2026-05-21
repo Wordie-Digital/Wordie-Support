@@ -50,7 +50,7 @@
   max-width: 584px;
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
+  gap: 12px;  /* Figma: gap-12px between H1 and body */
 }
 
 /* H1 heading */
@@ -77,7 +77,7 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: var(--space-3);
+  gap: 10px;   /* Figma: gap-10px between CTA buttons */
   margin-top: var(--space-4);
 }
 
@@ -85,7 +85,7 @@
 .block-hero-banner__cta-primary {
   background-color: var(--colour-coral);
   color: var(--colour-white);
-  border: 2px solid var(--colour-coral);
+  border: none;
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
@@ -115,7 +115,7 @@
 .block-hero-banner__cta-secondary {
   background-color: var(--colour-white);
   color: var(--colour-coral);
-  border: 2px solid var(--colour-white);
+  border: none;
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
