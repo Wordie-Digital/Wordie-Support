@@ -141,6 +141,7 @@ jobs:
           cp .github/fix-site-title.php /tmp/wpe-deploy/wp-content/mu-plugins/fix-site-title.php
           cp .github/import-acf-fields.php /tmp/wpe-deploy/wp-content/mu-plugins/import-acf-fields.php
           cp .github/fix-directory-index.php /tmp/wpe-deploy/wp-content/mu-plugins/fix-directory-index.php
+          cp .github/fix-root-redirect.php /tmp/wpe-deploy/wp-content/mu-plugins/fix-root-redirect.php
           cd /tmp/wpe-deploy
           git init
           git add -A
