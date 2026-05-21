@@ -1,0 +1,25 @@
+/**
+ * Hero Banner — gradient overlay
+ * Separate file forces CDN cache miss (new URL, never cached).
+ * Gradient: dark teal solid left → transparent right so bg video shows through.
+ */
+
+.block-hero-banner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    to right,
+    var(--colour-dark-teal) 0%,
+    var(--colour-dark-teal) 40%,
+    rgba(10, 53, 66, 0.85) 55%,
+    rgba(10, 53, 66, 0) 75%
+  );
+  pointer-events: none;
+}
+
+/* Container must sit above the gradient overlay */
+.block-hero-banner__container {
+  z-index: 2;
+}
