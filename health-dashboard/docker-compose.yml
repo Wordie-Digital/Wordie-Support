@@ -1,0 +1,68 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: wordie_health
+      POSTGRES_USER: wordie
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-localdev}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./apps/api/src/db/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U wordie -d wordie_health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: ./apps/api
+      dockerfile: Dockerfile
+    ports:
+      - "3031:3031"
+    environment:
+      NODE_ENV: production
+      PORT: 3031
+      DATABASE_URL: postgresql://wordie:${POSTGRES_PASSWORD:-localdev}@postgres:5432/wordie_health
+      REDIS_URL: redis://redis:6379
+      DASHBOARD_URL: ${DASHBOARD_URL:-http://localhost:3030}
+      WPENGINE_USER: ${WPENGINE_USER}
+      WPENGINE_PASS: ${WPENGINE_PASS}
+      GITHUB_TOKEN: ${GITHUB_TOKEN}
+      PAGESPEED_API_KEY: ${PAGESPEED_API_KEY}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+
+  dashboard:
+    build:
+      context: ./apps/dashboard
+      dockerfile: Dockerfile
+    ports:
+      - "3030:3030"
+    environment:
+      NODE_ENV: production
+      NEXT_PUBLIC_API_URL: ${API_URL:-http://api:3031}
+    depends_on:
+      - api
+    restart: unless-stopped
+
+volumes:
+  postgres_data:

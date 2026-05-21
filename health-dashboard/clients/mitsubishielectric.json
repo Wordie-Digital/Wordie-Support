@@ -1,0 +1,240 @@
+{
+  "id": "mitsubishielectric",
+  "client_name": "Mitsubishi Electric Australia",
+  "domain": "www.mitsubishielectric.com.au",
+  "wpengine_install": "meaust",
+  "reports": {
+    "2026-05": {
+      "report_month": "2026-05",
+      "generated_at": "2026-05-07",
+      "health_score": 84,
+      "health_score_prev": null,
+      "overall_status": "AMBER",
+      "executive_summary": "This is Mitsubishi Electric Australia's first monthly health assessment. The site performs well overall — scoring 89/100 on Google's mobile speed test, which is close to the top tier. Security and infrastructure are healthy on WP Engine. The main opportunity is Speed Index, which is currently failing at 2.8 seconds due to render-blocking resources and unoptimised product images. Resolving these would push the site into the GREEN band and strengthen product page rankings during peak buying seasons.",
+      "highlights": [
+        "89/100 mobile PageSpeed — approaching the 90+ GREEN threshold",
+        "Perfect Total Blocking Time of 0ms — site is immediately interactive",
+        "Excellent First Contentful Paint of 0.4s — server response is fast",
+        "CLS of 0.016 — near-perfect layout stability",
+        "WAF active on WP Engine — no security threats detected",
+        "Daily automated backups running successfully"
+      ],
+      "key_risks": [
+        "Speed Index of 2.8s is failing — visual load time is slower than it should be",
+        "Render-blocking CSS and JavaScript delaying initial render",
+        "Image delivery not optimised — product images likely served in legacy formats",
+        "Unused JavaScript and CSS adding unnecessary payload on every page load"
+      ],
+      "sections": {
+        "performance": {
+          "status": "AMBER",
+          "score": 76,
+          "trend": "STABLE",
+          "headline": "Strong score — Speed Index and image delivery are the remaining gaps",
+          "interpretation": "Mitsubishi Electric Australia scores 89/100 on Google's mobile performance test (PageSpeed Insights lab data, run 7 May 2026). This places the site in the upper AMBER band, just short of GREEN (90+). Total Blocking Time is a perfect 0ms, and First Contentful Paint is an excellent 0.4s, indicating the server and initial render are well-configured. The gap is Speed Index (2.8s, failing) and LCP (1.4s, average) — both driven by render-blocking assets and unoptimised product imagery. A targeted optimisation sprint would push this to 90+.",
+          "metrics": [
+            { "label": "PageSpeed (Mobile)", "value": "89/100", "status": "AMBER", "description": "Upper amber — 1 point from the GREEN threshold" },
+            { "label": "Speed Index", "value": "2.8s", "status": "RED", "description": "Failing — page takes too long to appear visually complete" },
+            { "label": "Largest Contentful Paint", "value": "1.4s", "status": "AMBER", "description": "Average — improvable to GREEN with image optimisation" },
+            { "label": "First Contentful Paint", "value": "0.4s", "status": "GREEN", "description": "Excellent — server response is fast" },
+            { "label": "Total Blocking Time", "value": "0ms", "status": "GREEN", "description": "Perfect — site is immediately interactive" },
+            { "label": "Cumulative Layout Shift", "value": "0.016", "status": "GREEN", "description": "Near-perfect layout stability" }
+          ],
+          "risk": "A Speed Index of 2.8s on a high-traffic product catalogue site means visitors on mobile see a slow visual load before they can browse products. During peak buying seasons (e.g. summer air conditioning demand), slow pages directly impact conversion and organic rankings.",
+          "recommended_action": "Resolve render-blocking CSS/JS requests and convert product images to WebP. Expected outcome: Speed Index under 2s, PageSpeed score 90+."
+        },
+        "security": {
+          "status": "GREEN",
+          "score": 90,
+          "trend": "STABLE",
+          "headline": "WAF active — no threats detected on first assessment",
+          "interpretation": "The WP Engine WAF is active and blocking threats at the edge. No malware or suspicious logins detected. SSL is valid. As this is the first assessment, a full plugin security audit will be completed in this cycle to establish a clean baseline.",
+          "metrics": [
+            { "label": "WAF Status", "value": "Active", "status": "GREEN", "description": "Firewall blocking threats at the edge" },
+            { "label": "Malware Scan", "value": "Clean", "status": "GREEN", "description": "No malware or suspicious files detected" },
+            { "label": "SSL Certificate", "value": "Valid", "status": "GREEN", "description": "HTTPS active — certificate valid" },
+            { "label": "Plugin Audit", "value": "Pending", "status": "AMBER", "description": "First-cycle audit to establish baseline" }
+          ],
+          "risk": "No active security threat. First-cycle plugin audit will confirm no abandoned or vulnerable plugins.",
+          "recommended_action": null
+        },
+        "reliability": {
+          "status": "GREEN",
+          "score": 98,
+          "trend": "STABLE",
+          "headline": "Site fully available — no downtime recorded",
+          "interpretation": "The site is running on WP Engine infrastructure with 100% uptime recorded this period. No incidents or degraded-performance events detected.",
+          "metrics": [
+            { "label": "Uptime (30 days)", "value": "100%", "status": "GREEN", "description": "No downtime recorded" },
+            { "label": "Incidents", "value": "0", "status": "GREEN", "description": "No outages or errors detected" }
+          ],
+          "risk": "No reliability risk at this time.",
+          "recommended_action": null
+        },
+        "updates": {
+          "status": "AMBER",
+          "score": 75,
+          "trend": "STABLE",
+          "headline": "First-cycle plugin and theme update review in progress",
+          "interpretation": "This is the first maintenance cycle for Mitsubishi Electric Australia. A full review of plugin, theme, and WordPress core update status is underway. All pending updates will be applied and tested this cycle.",
+          "metrics": [
+            { "label": "Update Status", "value": "In review", "status": "AMBER", "description": "First-cycle baseline review in progress" },
+            { "label": "WordPress Core", "value": "Current", "status": "GREEN", "description": "Running latest stable release" },
+            { "label": "PHP Version", "value": "To confirm", "status": "AMBER", "description": "PHP version to be confirmed this cycle" }
+          ],
+          "risk": "Pending updates may expose known vulnerabilities. Completing the baseline update review this cycle removes that risk.",
+          "recommended_action": "Apply all pending plugin and theme updates. Confirm PHP version is 8.1 or higher."
+        },
+        "backups": {
+          "status": "GREEN",
+          "score": 95,
+          "trend": "STABLE",
+          "headline": "Automated daily backups confirmed healthy",
+          "interpretation": "WP Engine automated daily backups are active and completing successfully. Full restore points are available for the last 30 days.",
+          "metrics": [
+            { "label": "Backup Status", "value": "Healthy", "status": "GREEN", "description": "Automated daily backups completing" },
+            { "label": "Last Backup", "value": "Today", "status": "GREEN", "description": "Most recent backup completed without error" },
+            { "label": "Retention", "value": "30 days", "status": "GREEN", "description": "Full month of restore points available" }
+          ],
+          "risk": "No backup risk.",
+          "recommended_action": null
+        },
+        "engineering": {
+          "status": "GREEN",
+          "score": 90,
+          "trend": "STABLE",
+          "headline": "Clean baseline — onboarding deployment successful",
+          "interpretation": "Mitsubishi Electric Australia has been onboarded to the Wordie maintenance programme this month. The initial baseline deployment was completed without incident. Note: the staging environment (meaustdev) has a database connection issue that will need to be resolved before staging-to-production deployments can proceed.",
+          "metrics": [
+            { "label": "Deployments", "value": "1", "status": "GREEN", "description": "Onboarding deployment completed successfully" },
+            { "label": "Hotfixes", "value": "0", "status": "GREEN", "description": "No emergency fixes required" },
+            { "label": "Staging Status", "value": "DB error", "status": "AMBER", "description": "Staging DB connection needs to be restored" }
+          ],
+          "risk": "The staging environment database error means changes cannot be safely tested before production deployment until it is resolved.",
+          "recommended_action": "Restore the staging environment database connection on meaustdev.wpenginepowered.com before the next deployment cycle."
+        }
+      },
+      "recommended_actions": [
+        {
+          "priority": "HIGH",
+          "title": "Resolve render-blocking CSS and JavaScript to fix Speed Index",
+          "impact": "Speed Index is currently failing at 2.8s. Deferring non-critical CSS/JS and inlining critical styles will reduce visual load time, pushing the PageSpeed score to 90+ and strengthening product page rankings during peak buying seasons."
+        },
+        {
+          "priority": "HIGH",
+          "title": "Restore staging environment database connection",
+          "impact": "The meaustdev staging environment is returning a database error. Without a functioning staging environment, all changes must go directly to production — increasing deployment risk for a high-traffic commercial site."
+        },
+        {
+          "priority": "MEDIUM",
+          "title": "Convert product images to WebP and implement responsive srcsets",
+          "impact": "Image delivery is flagged as a failing audit. Converting product and hero images to WebP with proper responsive sizing will improve LCP and Speed Index, particularly on mobile product catalogue pages."
+        },
+        {
+          "priority": "MEDIUM",
+          "title": "Remove unused JavaScript and CSS from global page load",
+          "impact": "Unused JS and CSS are loaded on every page. Tree-shaking and conditional loading will reduce page weight and contribute to the Speed Index improvement."
+        }
+      ],
+      "support_tickets": {
+        "portal_url": "https://support.wordie.com.au/ticket",
+        "summary": {
+          "opened": 0,
+          "closed": 0,
+          "in_progress": 4,
+          "pending_client": 2
+        },
+        "tickets": [
+          {
+            "id": "HS-252264454634",
+            "subject": "SEO Task",
+            "status": "OPEN",
+            "priority": "HIGH",
+            "type": "Development",
+            "assigned_to": "Stewart L.",
+            "opened": "2026-04-14",
+            "closed": null,
+            "notes": null
+          },
+          {
+            "id": "HS-252273949132",
+            "subject": "260414 Compliance category displaying incorrectly",
+            "status": "OPEN",
+            "priority": "HIGH",
+            "type": "Bug",
+            "assigned_to": "Wordie Support",
+            "opened": "2026-04-14",
+            "closed": null,
+            "notes": "The AE-200E product page incorrectly displays the product category as Compliance Disclaimer instead of Centralised Air Con"
+          },
+          {
+            "id": "HS-252185295313",
+            "subject": "Nitro Pack Configuration",
+            "status": "IN_PROGRESS",
+            "priority": "HIGH",
+            "type": "Maintenance",
+            "assigned_to": "Stewart L.",
+            "opened": "2026-04-10",
+            "closed": null,
+            "notes": null
+          },
+          {
+            "id": "HS-252143472110",
+            "subject": "Homepage Hero Banner",
+            "status": "IN_PROGRESS",
+            "priority": "LOW",
+            "type": "Development",
+            "assigned_to": "Wordie Support",
+            "opened": "2026-04-10",
+            "closed": null,
+            "notes": null
+          },
+          {
+            "id": "HS-251106790852",
+            "subject": "SEO Technical Audit",
+            "status": "IN_PROGRESS",
+            "priority": "MEDIUM",
+            "type": "Development",
+            "assigned_to": "Wordie Support",
+            "opened": "2026-04-02",
+            "closed": null,
+            "notes": "SEO tech audit implementation"
+          },
+          {
+            "id": "HS-226370229739",
+            "subject": "Core Web Vitals",
+            "status": "PENDING_CLIENT",
+            "priority": "LOW",
+            "type": "Development",
+            "assigned_to": "Wordie Support",
+            "opened": "2026-02-06",
+            "closed": null,
+            "notes": null
+          },
+          {
+            "id": "HS-247664183756",
+            "subject": "Compliance Disclaimer product category",
+            "status": "PENDING_CLIENT",
+            "priority": "LOW",
+            "type": "Bug",
+            "assigned_to": "Wordie Support",
+            "opened": "2026-03-09",
+            "closed": null,
+            "notes": "The implementation of our Disclaimer request generated a Compliance Disclaimer product category as a visible page on site."
+          },
+          {
+            "id": "HS-125857065420",
+            "subject": "M&S",
+            "status": "IN_PROGRESS",
+            "priority": "LOW",
+            "type": "Maintenance",
+            "assigned_to": "Wordie Support",
+            "opened": "2025-09-01",
+            "closed": null,
+            "notes": null
+          }
+        ]
+      }
+    }
+  }
+}
