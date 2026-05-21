@@ -284,7 +284,7 @@ p {
   gap: var(--space-5);
   background-color: var(--colour-white);
   border-radius: var(--radius-nav);
-  padding: var(--space-3) var(--space-3) var(--space-3) var(--space-5);
+  padding: 10px 10px 10px var(--space-5);  /* Figma: py-10px pl-20px pr-10px */
   box-shadow: var(--shadow-nav);
 }
 
@@ -299,7 +299,7 @@ p {
   font-size: 0.875rem;
   font-weight: var(--weight-bold);
   color: var(--colour-dark-teal);
-  padding: var(--space-1) var(--space-2);
+  padding: 6px;  /* Figma: p-6px all sides */
   border-radius: 4px;
   transition: color var(--transition-base);
 }
