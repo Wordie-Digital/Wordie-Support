@@ -1,0 +1,145 @@
+/* ==========================================================================
+   Block: Process Steps
+   Figma node: 3090:20837 (Services page — "Why" component)
+   Layout: white/light bg, two-column grid — left 415px panel (kicker + H2),
+           right 1fr panel (steps stacked vertically, gap-[40px])
+   px/py: 72px (--margin-lr token)
+   ========================================================================== */
+
+.block-process-steps {
+	background-color: var(--colour-white);
+}
+
+.block-process-steps__container {
+	max-width: 1440px;
+	margin-inline: auto;
+	padding: var(--margin-lr); /* 72px block + inline */
+	display: grid;
+	grid-template-columns: 415px 1fr;
+	gap: 34px; /* 1296 - 415 - 847 = 34px — matches Figma gap between columns */
+	align-items: start;
+}
+
+/* --------------------------------------------------------------------------
+   Left panel — 415px, holds kicker + heading
+   -------------------------------------------------------------------------- */
+
+.block-process-steps__header {
+	min-width: 295px;
+	display: flex;
+	flex-direction: column;
+	gap: 12px; /* Figma gap-[12px] */
+}
+
+.block-process-steps__kicker {
+	font-family: var(--font-body);
+	font-size: 0.875rem; /* 14px */
+	font-weight: 700;
+	letter-spacing: 0.1em; /* 1.4px at 14px */
+	text-transform: uppercase;
+	line-height: 1;
+	color: var(--colour-disabled); /* #9ba6a9 — grey kicker on light bg */
+	margin: 0;
+}
+
+.block-process-steps__heading {
+	font-family: var(--font-heading);
+	font-size: 2.25rem; /* 36px — Figma Desktop/H2 */
+	font-weight: 700;
+	line-height: 1.2;
+	color: var(--colour-dark-grey); /* #062028 */
+	margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Right panel — steps list, flex column, gap-[40px] between each step
+   -------------------------------------------------------------------------- */
+
+.block-process-steps__steps {
+	display: flex;
+	flex-direction: column;
+	gap: 40px; /* Figma gap-[40px] between Detail items */
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	max-width: 847px;
+}
+
+/* --------------------------------------------------------------------------
+   Individual step — number + title + description, gap-[10px]
+   -------------------------------------------------------------------------- */
+
+.block-process-steps__step {
+	display: flex;
+	flex-direction: column;
+	gap: 10px; /* Figma gap-[10px] within each Detail */
+}
+
+.block-process-steps__step-number {
+	font-family: var(--font-heading);
+	font-size: 2.25rem; /* 36px — Figma text-[36px] for step numbers */
+	font-weight: 700;
+	line-height: 1.2;
+	color: var(--colour-coral); /* #f5634d */
+}
+
+.block-process-steps__step-title {
+	font-family: var(--font-heading);
+	font-size: 1.5rem; /* 24px — Figma Desktop/H4 */
+	font-weight: 700;
+	line-height: 1.2;
+	color: var(--colour-dark-grey); /* #062028 */
+	margin: 0;
+}
+
+.block-process-steps__step-desc {
+	font-family: var(--font-body);
+	font-size: 1rem; /* 16px */
+	font-weight: 400;
+	line-height: 1.4;
+	color: var(--colour-text-body); /* #505c5f */
+	margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Responsive — tablet (≤1024px): stack to single column
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 1024px) {
+	.block-process-steps__container {
+		grid-template-columns: 1fr;
+		gap: 48px;
+		padding: 48px 32px;
+	}
+
+	.block-process-steps__steps {
+		max-width: 100%;
+	}
+}
+
+/* --------------------------------------------------------------------------
+   Responsive — mobile (≤640px)
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 640px) {
+	.block-process-steps__container {
+		padding: 48px 20px;
+		gap: 36px;
+	}
+
+	.block-process-steps__heading {
+		font-size: 1.75rem;
+	}
+
+	.block-process-steps__step-number {
+		font-size: 1.75rem;
+	}
+
+	.block-process-steps__step-title {
+		font-size: 1.25rem;
+	}
+
+	.block-process-steps__steps {
+		gap: 32px;
+	}
+}
