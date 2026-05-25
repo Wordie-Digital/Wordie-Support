@@ -53,6 +53,18 @@
   gap: 12px;  /* Figma: gap-12px between H1 and body */
 }
 
+/* Page kicker — e.g. "SERVICES" */
+.block-hero-banner__kicker {
+  font-family: var(--font-body);
+  font-size: 0.75rem;             /* 12px */
+  font-weight: var(--weight-bold);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--colour-coral);
+  margin: 0;
+  line-height: 1;
+}
+
 /* H1 heading */
 .block-hero-banner__heading {
   font-family: var(--font-heading);

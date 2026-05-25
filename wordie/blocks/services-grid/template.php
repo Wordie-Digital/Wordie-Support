@@ -15,6 +15,8 @@ defined( 'ABSPATH' ) || exit;
 // ── ACF Fields ────────────────────────────────────────────────────────────────
 $kicker   = get_sub_field( 'section_kicker' );
 $heading  = get_sub_field( 'section_heading' );
+$subtitle = get_sub_field( 'section_subtitle' );
+$bg_style = get_sub_field( 'background_style' ) ?: 'dark';
 $services = get_sub_field( 'services' );
 
 // ── Empty state ───────────────────────────────────────────────────────────────
@@ -23,16 +25,11 @@ if ( ! $services ) {
 }
 
 // ── Block classes ─────────────────────────────────────────────────────────────
-$class = 'block-services-grid';
-if ( ! empty( $block['className'] ) ) {
-	$class .= ' ' . esc_attr( $block['className'] );
-}
+$class = 'block-services-grid block-services-grid--' . esc_attr( $bg_style );
 
-$block_id = ! empty( $block['anchor'] ) ? $block['anchor'] : 'block-' . $block['id'];
 ?>
 
 <section
-	id="<?php echo esc_attr( $block_id ); ?>"
 	class="<?php echo esc_attr( $class ); ?>"
 	data-block="services-grid"
 	aria-labelledby="<?php echo esc_attr( $block_id ); ?>-heading"
@@ -51,12 +48,15 @@ $block_id = ! empty( $block['anchor'] ) ? $block['anchor'] : 'block-' . $block['
 				<?php endif; ?>
 
 				<?php if ( $heading ) : ?>
-					<h2
-						id="<?php echo esc_attr( $block_id ); ?>-heading"
-						class="block-services-grid__heading"
-					>
+					<h2 class="block-services-grid__heading">
 						<?php echo esc_html( $heading ); ?>
 					</h2>
+				<?php endif; ?>
+
+				<?php if ( $subtitle ) : ?>
+					<p class="block-services-grid__subtitle">
+						<?php echo esc_html( $subtitle ); ?>
+					</p>
 				<?php endif; ?>
 
 			</header>
@@ -67,12 +67,29 @@ $block_id = ! empty( $block['anchor'] ) ? $block['anchor'] : 'block-' . $block['
 				$title       = $service['service_title']       ?? '';
 				$description = $service['service_description'] ?? '';
 				$link        = $service['service_link']        ?? null;
+				$icon        = $service['service_icon']        ?? null;
+				$expertise   = $service['expertise_items']     ?? [];
 
 				if ( ! $title ) { continue; }
 			?>
 				<li class="block-services-grid__card">
 
 					<div class="block-services-grid__card-content">
+
+						<?php if ( $icon ) : ?>
+							<div class="block-services-grid__card-icon" aria-hidden="true">
+								<?php echo wp_get_attachment_image(
+									$icon['ID'] ?? $icon,
+									[ 78, 78 ],
+									false,
+									[
+										'class'   => 'block-services-grid__card-icon-img',
+										'loading' => 'lazy',
+										'alt'     => '',
+									]
+								); ?>
+							</div>
+						<?php endif; ?>
 
 						<?php if ( $title ) : ?>
 							<h3 class="block-services-grid__card-title">
@@ -84,6 +101,22 @@ $block_id = ! empty( $block['anchor'] ) ? $block['anchor'] : 'block-' . $block['
 							<p class="block-services-grid__card-description">
 								<?php echo esc_html( $description ); ?>
 							</p>
+						<?php endif; ?>
+
+						<?php if ( $expertise ) : ?>
+							<ul class="block-services-grid__expertise" role="list">
+								<?php foreach ( $expertise as $item ) :
+									$text = $item['item_text'] ?? '';
+									if ( ! $text ) { continue; }
+								?>
+									<li class="block-services-grid__expertise-item">
+										<svg class="block-services-grid__expertise-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+											<polyline points="20 6 9 17 4 12"/>
+										</svg>
+										<?php echo esc_html( $text ); ?>
+									</li>
+								<?php endforeach; ?>
+							</ul>
 						<?php endif; ?>
 
 					</div>

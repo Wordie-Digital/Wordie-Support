@@ -24,13 +24,36 @@
             "display": "block",
             "sub_fields": [
               {
+                "key": "field_hero_kicker",
+                "label": "Page Kicker",
+                "name": "kicker",
+                "type": "text",
+                "instructions": "Optional uppercase label shown above the heading (e.g. SERVICES). Leave blank to hide.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "default_value": "",
+                "placeholder": "e.g. SERVICES",
+                "prepend": "",
+                "append": "",
+                "maxlength": 40
+              },
+              {
                 "key": "field_hero_heading",
                 "label": "Heading",
                 "name": "heading",
                 "type": "text",
                 "required": 1,
                 "conditional_logic": 0,
-                "wrapper": { "width": "", "class": "", "id": "" },
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
                 "default_value": "",
                 "placeholder": "",
                 "prepend": "",
@@ -44,7 +67,11 @@
                 "type": "textarea",
                 "required": 0,
                 "conditional_logic": 0,
-                "wrapper": { "width": "", "class": "", "id": "" },
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
                 "default_value": "",
                 "placeholder": "",
                 "maxlength": "",
@@ -58,7 +85,11 @@
                 "type": "link",
                 "required": 1,
                 "conditional_logic": 0,
-                "wrapper": { "width": "", "class": "", "id": "" },
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
                 "return_format": "array"
               },
               {
@@ -68,7 +99,11 @@
                 "type": "link",
                 "required": 0,
                 "conditional_logic": 0,
-                "wrapper": { "width": "", "class": "", "id": "" },
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
                 "return_format": "array"
               },
               {
@@ -78,7 +113,11 @@
                 "type": "radio",
                 "required": 0,
                 "conditional_logic": 0,
-                "wrapper": { "width": "", "class": "", "id": "" },
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
                 "choices": {
                   "image": "Image",
                   "video": "Video"
@@ -102,7 +141,11 @@
                     }
                   ]
                 ],
-                "wrapper": { "width": "", "class": "", "id": "" },
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
                 "return_format": "array",
                 "preview_size": "medium",
                 "library": "all",
@@ -129,7 +172,11 @@
                     }
                   ]
                 ],
-                "wrapper": { "width": "", "class": "", "id": "" },
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
                 "return_format": "array",
                 "library": "all",
                 "min_size": "",
@@ -153,7 +200,11 @@
                 "type": "text",
                 "required": 0,
                 "conditional_logic": 0,
-                "wrapper": { "width": "", "class": "", "id": "" },
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
                 "default_value": "What we do",
                 "placeholder": "",
                 "prepend": "",
@@ -167,11 +218,55 @@
                 "type": "textarea",
                 "required": 1,
                 "conditional_logic": 0,
-                "wrapper": { "width": "", "class": "", "id": "" },
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
                 "default_value": "",
                 "placeholder": "",
                 "maxlength": "",
                 "rows": 3,
+                "new_lines": ""
+              },
+              {
+                "key": "field_services_bg_style",
+                "label": "Background Style",
+                "name": "background_style",
+                "type": "radio",
+                "instructions": "Dark = navy background (homepage default). Light = off-white background (services page).",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "choices": {
+                  "dark": "Dark (default)",
+                  "light": "Light"
+                },
+                "default_value": "dark",
+                "layout": "horizontal",
+                "return_format": "value"
+              },
+              {
+                "key": "field_services_subtitle",
+                "label": "Section Subtitle",
+                "name": "section_subtitle",
+                "type": "textarea",
+                "instructions": "Optional subtitle shown beneath the heading.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "default_value": "",
+                "placeholder": "",
+                "maxlength": "",
+                "rows": 2,
                 "new_lines": ""
               },
               {
@@ -181,7 +276,11 @@
                 "type": "repeater",
                 "required": 0,
                 "conditional_logic": 0,
-                "wrapper": { "width": "", "class": "", "id": "" },
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
                 "collapsed": "",
                 "min": 1,
                 "max": 6,
@@ -189,13 +288,41 @@
                 "button_label": "Add Service",
                 "sub_fields": [
                   {
+                    "key": "field_service_icon",
+                    "label": "Service Icon",
+                    "name": "service_icon",
+                    "type": "image",
+                    "instructions": "Upload a square icon image for this service (recommended: 80\u00d780px, SVG or PNG).",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                      "width": "",
+                      "class": "",
+                      "id": ""
+                    },
+                    "return_format": "array",
+                    "preview_size": "thumbnail",
+                    "library": "all",
+                    "min_width": "",
+                    "min_height": "",
+                    "min_size": "",
+                    "max_width": "",
+                    "max_height": "",
+                    "max_size": "",
+                    "mime_types": ""
+                  },
+                  {
                     "key": "field_service_title",
                     "label": "Service Title",
                     "name": "service_title",
                     "type": "text",
                     "required": 1,
                     "conditional_logic": 0,
-                    "wrapper": { "width": "", "class": "", "id": "" },
+                    "wrapper": {
+                      "width": "",
+                      "class": "",
+                      "id": ""
+                    },
                     "default_value": "",
                     "placeholder": "",
                     "prepend": "",
@@ -209,7 +336,11 @@
                     "type": "link",
                     "required": 0,
                     "conditional_logic": 0,
-                    "wrapper": { "width": "", "class": "", "id": "" },
+                    "wrapper": {
+                      "width": "",
+                      "class": "",
+                      "id": ""
+                    },
                     "return_format": "array"
                   },
                   {
@@ -219,12 +350,56 @@
                     "type": "textarea",
                     "required": 1,
                     "conditional_logic": 0,
-                    "wrapper": { "width": "", "class": "", "id": "" },
+                    "wrapper": {
+                      "width": "",
+                      "class": "",
+                      "id": ""
+                    },
                     "default_value": "",
                     "placeholder": "",
                     "maxlength": "",
                     "rows": 4,
                     "new_lines": ""
+                  },
+                  {
+                    "key": "field_service_expertise_items",
+                    "label": "Expertise Items",
+                    "name": "expertise_items",
+                    "type": "repeater",
+                    "instructions": "List up to 5 key capability bullets for this service.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                      "width": "",
+                      "class": "",
+                      "id": ""
+                    },
+                    "collapsed": "",
+                    "min": 0,
+                    "max": 5,
+                    "layout": "table",
+                    "button_label": "Add Item",
+                    "sub_fields": [
+                      {
+                        "key": "field_service_expertise_item_text",
+                        "label": "Item Text",
+                        "name": "item_text",
+                        "type": "text",
+                        "instructions": "",
+                        "required": 1,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                          "width": "",
+                          "class": "",
+                          "id": ""
+                        },
+                        "default_value": "",
+                        "placeholder": "e.g. Custom WordPress themes",
+                        "prepend": "",
+                        "append": "",
+                        "maxlength": 80
+                      }
+                    ]
                   }
                 ]
               }
@@ -245,7 +420,11 @@
                 "type": "text",
                 "required": 0,
                 "conditional_logic": 0,
-                "wrapper": { "width": "", "class": "", "id": "" },
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
                 "default_value": "Why Wordie",
                 "placeholder": "",
                 "prepend": "",
@@ -259,7 +438,11 @@
                 "type": "text",
                 "required": 1,
                 "conditional_logic": 0,
-                "wrapper": { "width": "", "class": "", "id": "" },
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
                 "default_value": "",
                 "placeholder": "",
                 "prepend": "",
@@ -273,7 +456,11 @@
                 "type": "textarea",
                 "required": 0,
                 "conditional_logic": 0,
-                "wrapper": { "width": "", "class": "", "id": "" },
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
                 "default_value": "",
                 "placeholder": "",
                 "maxlength": "",
@@ -287,7 +474,11 @@
                 "type": "repeater",
                 "required": 0,
                 "conditional_logic": 0,
-                "wrapper": { "width": "", "class": "", "id": "" },
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
                 "collapsed": "",
                 "min": 2,
                 "max": 6,
@@ -301,7 +492,11 @@
                     "type": "text",
                     "required": 1,
                     "conditional_logic": 0,
-                    "wrapper": { "width": "", "class": "", "id": "" },
+                    "wrapper": {
+                      "width": "",
+                      "class": "",
+                      "id": ""
+                    },
                     "default_value": "",
                     "placeholder": "",
                     "prepend": "",
@@ -315,7 +510,11 @@
                     "type": "textarea",
                     "required": 1,
                     "conditional_logic": 0,
-                    "wrapper": { "width": "", "class": "", "id": "" },
+                    "wrapper": {
+                      "width": "",
+                      "class": "",
+                      "id": ""
+                    },
                     "default_value": "",
                     "placeholder": "",
                     "maxlength": "",
@@ -323,6 +522,27 @@
                     "new_lines": ""
                   }
                 ]
+              },
+              {
+                "key": "field_why_wordie_bg_style",
+                "label": "Background Style",
+                "name": "background_style",
+                "type": "radio",
+                "instructions": "Dark = navy background (homepage). Light = off-white background (services page).",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "choices": {
+                  "dark": "Dark (default)",
+                  "light": "Light"
+                },
+                "default_value": "dark",
+                "layout": "horizontal",
+                "return_format": "value"
               }
             ],
             "min": "",
@@ -341,7 +561,11 @@
                 "type": "text",
                 "required": 0,
                 "conditional_logic": 0,
-                "wrapper": { "width": "", "class": "", "id": "" },
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
                 "default_value": "Our work",
                 "placeholder": "",
                 "prepend": "",
@@ -355,7 +579,11 @@
                 "type": "text",
                 "required": 0,
                 "conditional_logic": 0,
-                "wrapper": { "width": "", "class": "", "id": "" },
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
                 "default_value": "",
                 "placeholder": "",
                 "prepend": "",
@@ -369,7 +597,11 @@
                 "type": "link",
                 "required": 0,
                 "conditional_logic": 0,
-                "wrapper": { "width": "", "class": "", "id": "" },
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
                 "return_format": "array"
               },
               {
@@ -379,7 +611,11 @@
                 "type": "repeater",
                 "required": 0,
                 "conditional_logic": 0,
-                "wrapper": { "width": "", "class": "", "id": "" },
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
                 "collapsed": "",
                 "min": 2,
                 "max": 6,
@@ -393,7 +629,11 @@
                     "type": "image",
                     "required": 1,
                     "conditional_logic": 0,
-                    "wrapper": { "width": "", "class": "", "id": "" },
+                    "wrapper": {
+                      "width": "",
+                      "class": "",
+                      "id": ""
+                    },
                     "return_format": "array",
                     "preview_size": "medium",
                     "library": "all",
@@ -412,7 +652,11 @@
                     "type": "image",
                     "required": 0,
                     "conditional_logic": 0,
-                    "wrapper": { "width": "", "class": "", "id": "" },
+                    "wrapper": {
+                      "width": "",
+                      "class": "",
+                      "id": ""
+                    },
                     "return_format": "array",
                     "preview_size": "medium",
                     "library": "all",
@@ -431,7 +675,11 @@
                     "type": "text",
                     "required": 1,
                     "conditional_logic": 0,
-                    "wrapper": { "width": "", "class": "", "id": "" },
+                    "wrapper": {
+                      "width": "",
+                      "class": "",
+                      "id": ""
+                    },
                     "default_value": "",
                     "placeholder": "",
                     "prepend": "",
@@ -445,7 +693,11 @@
                     "type": "link",
                     "required": 0,
                     "conditional_logic": 0,
-                    "wrapper": { "width": "", "class": "", "id": "" },
+                    "wrapper": {
+                      "width": "",
+                      "class": "",
+                      "id": ""
+                    },
                     "return_format": "array"
                   },
                   {
@@ -455,7 +707,11 @@
                     "type": "repeater",
                     "required": 0,
                     "conditional_logic": 0,
-                    "wrapper": { "width": "", "class": "", "id": "" },
+                    "wrapper": {
+                      "width": "",
+                      "class": "",
+                      "id": ""
+                    },
                     "collapsed": "",
                     "min": 0,
                     "max": 4,
@@ -469,7 +725,11 @@
                         "type": "text",
                         "required": 0,
                         "conditional_logic": 0,
-                        "wrapper": { "width": "", "class": "", "id": "" },
+                        "wrapper": {
+                          "width": "",
+                          "class": "",
+                          "id": ""
+                        },
                         "default_value": "",
                         "placeholder": "",
                         "prepend": "",
@@ -483,7 +743,11 @@
                         "type": "text",
                         "required": 0,
                         "conditional_logic": 0,
-                        "wrapper": { "width": "", "class": "", "id": "" },
+                        "wrapper": {
+                          "width": "",
+                          "class": "",
+                          "id": ""
+                        },
                         "default_value": "",
                         "placeholder": "",
                         "prepend": "",
@@ -499,7 +763,11 @@
                     "type": "textarea",
                     "required": 0,
                     "conditional_logic": 0,
-                    "wrapper": { "width": "", "class": "", "id": "" },
+                    "wrapper": {
+                      "width": "",
+                      "class": "",
+                      "id": ""
+                    },
                     "default_value": "",
                     "placeholder": "",
                     "maxlength": "",
@@ -513,7 +781,11 @@
                     "type": "text",
                     "required": 0,
                     "conditional_logic": 0,
-                    "wrapper": { "width": "", "class": "", "id": "" },
+                    "wrapper": {
+                      "width": "",
+                      "class": "",
+                      "id": ""
+                    },
                     "default_value": "",
                     "placeholder": "",
                     "prepend": "",
@@ -539,7 +811,11 @@
                 "type": "repeater",
                 "required": 0,
                 "conditional_logic": 0,
-                "wrapper": { "width": "", "class": "", "id": "" },
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
                 "collapsed": "",
                 "min": 1,
                 "max": 6,
@@ -553,7 +829,11 @@
                     "type": "image",
                     "required": 0,
                     "conditional_logic": 0,
-                    "wrapper": { "width": "", "class": "", "id": "" },
+                    "wrapper": {
+                      "width": "",
+                      "class": "",
+                      "id": ""
+                    },
                     "return_format": "array",
                     "preview_size": "medium",
                     "library": "all",
@@ -572,7 +852,11 @@
                     "type": "image",
                     "required": 0,
                     "conditional_logic": 0,
-                    "wrapper": { "width": "", "class": "", "id": "" },
+                    "wrapper": {
+                      "width": "",
+                      "class": "",
+                      "id": ""
+                    },
                     "return_format": "array",
                     "preview_size": "medium",
                     "library": "all",
@@ -591,7 +875,11 @@
                     "type": "textarea",
                     "required": 1,
                     "conditional_logic": 0,
-                    "wrapper": { "width": "", "class": "", "id": "" },
+                    "wrapper": {
+                      "width": "",
+                      "class": "",
+                      "id": ""
+                    },
                     "default_value": "",
                     "placeholder": "",
                     "maxlength": "",
@@ -605,7 +893,11 @@
                     "type": "text",
                     "required": 1,
                     "conditional_logic": 0,
-                    "wrapper": { "width": "", "class": "", "id": "" },
+                    "wrapper": {
+                      "width": "",
+                      "class": "",
+                      "id": ""
+                    },
                     "default_value": "",
                     "placeholder": "",
                     "prepend": "",
@@ -619,7 +911,11 @@
                     "type": "text",
                     "required": 0,
                     "conditional_logic": 0,
-                    "wrapper": { "width": "", "class": "", "id": "" },
+                    "wrapper": {
+                      "width": "",
+                      "class": "",
+                      "id": ""
+                    },
                     "default_value": "",
                     "placeholder": "",
                     "prepend": "",
@@ -645,7 +941,11 @@
                 "type": "text",
                 "required": 0,
                 "conditional_logic": 0,
-                "wrapper": { "width": "", "class": "", "id": "" },
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
                 "default_value": "Our process",
                 "placeholder": "",
                 "prepend": "",
@@ -659,7 +959,11 @@
                 "type": "text",
                 "required": 1,
                 "conditional_logic": 0,
-                "wrapper": { "width": "", "class": "", "id": "" },
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
                 "default_value": "",
                 "placeholder": "",
                 "prepend": "",
@@ -673,7 +977,11 @@
                 "type": "repeater",
                 "required": 0,
                 "conditional_logic": 0,
-                "wrapper": { "width": "", "class": "", "id": "" },
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
                 "collapsed": "",
                 "min": 2,
                 "max": 6,
@@ -687,7 +995,11 @@
                     "type": "text",
                     "required": 1,
                     "conditional_logic": 0,
-                    "wrapper": { "width": "", "class": "", "id": "" },
+                    "wrapper": {
+                      "width": "",
+                      "class": "",
+                      "id": ""
+                    },
                     "default_value": "",
                     "placeholder": "",
                     "prepend": "",
@@ -701,7 +1013,11 @@
                     "type": "textarea",
                     "required": 1,
                     "conditional_logic": 0,
-                    "wrapper": { "width": "", "class": "", "id": "" },
+                    "wrapper": {
+                      "width": "",
+                      "class": "",
+                      "id": ""
+                    },
                     "default_value": "",
                     "placeholder": "",
                     "maxlength": "",
@@ -727,7 +1043,11 @@
                 "type": "text",
                 "required": 0,
                 "conditional_logic": 0,
-                "wrapper": { "width": "", "class": "", "id": "" },
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
                 "default_value": "Technologies",
                 "placeholder": "",
                 "prepend": "",
@@ -741,7 +1061,11 @@
                 "type": "text",
                 "required": 1,
                 "conditional_logic": 0,
-                "wrapper": { "width": "", "class": "", "id": "" },
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
                 "default_value": "",
                 "placeholder": "",
                 "prepend": "",
@@ -755,7 +1079,11 @@
                 "type": "textarea",
                 "required": 0,
                 "conditional_logic": 0,
-                "wrapper": { "width": "", "class": "", "id": "" },
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
                 "default_value": "",
                 "placeholder": "",
                 "maxlength": "",
@@ -769,7 +1097,11 @@
                 "type": "repeater",
                 "required": 0,
                 "conditional_logic": 0,
-                "wrapper": { "width": "", "class": "", "id": "" },
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
                 "collapsed": "",
                 "min": 2,
                 "max": 6,
@@ -783,7 +1115,11 @@
                     "type": "image",
                     "required": 1,
                     "conditional_logic": 0,
-                    "wrapper": { "width": "", "class": "", "id": "" },
+                    "wrapper": {
+                      "width": "",
+                      "class": "",
+                      "id": ""
+                    },
                     "return_format": "array",
                     "preview_size": "medium",
                     "library": "all",
@@ -802,7 +1138,11 @@
                     "type": "text",
                     "required": 1,
                     "conditional_logic": 0,
-                    "wrapper": { "width": "", "class": "", "id": "" },
+                    "wrapper": {
+                      "width": "",
+                      "class": "",
+                      "id": ""
+                    },
                     "default_value": "",
                     "placeholder": "",
                     "prepend": "",
@@ -816,7 +1156,11 @@
                     "type": "textarea",
                     "required": 1,
                     "conditional_logic": 0,
-                    "wrapper": { "width": "", "class": "", "id": "" },
+                    "wrapper": {
+                      "width": "",
+                      "class": "",
+                      "id": ""
+                    },
                     "default_value": "",
                     "placeholder": "",
                     "maxlength": "",
@@ -832,7 +1176,11 @@
                 "type": "text",
                 "required": 0,
                 "conditional_logic": 0,
-                "wrapper": { "width": "", "class": "", "id": "" },
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
                 "default_value": "Supporting Stack",
                 "placeholder": "",
                 "prepend": "",
@@ -846,7 +1194,11 @@
                 "type": "repeater",
                 "required": 0,
                 "conditional_logic": 0,
-                "wrapper": { "width": "", "class": "", "id": "" },
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
                 "collapsed": "",
                 "min": 0,
                 "max": 12,
@@ -860,7 +1212,11 @@
                     "type": "image",
                     "required": 1,
                     "conditional_logic": 0,
-                    "wrapper": { "width": "", "class": "", "id": "" },
+                    "wrapper": {
+                      "width": "",
+                      "class": "",
+                      "id": ""
+                    },
                     "return_format": "array",
                     "preview_size": "thumbnail",
                     "library": "all",
@@ -879,7 +1235,11 @@
                     "type": "text",
                     "required": 1,
                     "conditional_logic": 0,
-                    "wrapper": { "width": "", "class": "", "id": "" },
+                    "wrapper": {
+                      "width": "",
+                      "class": "",
+                      "id": ""
+                    },
                     "default_value": "",
                     "placeholder": "",
                     "prepend": "",
@@ -905,7 +1265,11 @@
                 "type": "text",
                 "required": 0,
                 "conditional_logic": 0,
-                "wrapper": { "width": "", "class": "", "id": "" },
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
                 "default_value": "Trusted by brands that move fast",
                 "placeholder": "",
                 "prepend": "",
@@ -919,7 +1283,11 @@
                 "type": "repeater",
                 "required": 0,
                 "conditional_logic": 0,
-                "wrapper": { "width": "", "class": "", "id": "" },
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
                 "collapsed": "",
                 "min": 3,
                 "max": 20,
@@ -933,7 +1301,11 @@
                     "type": "image",
                     "required": 1,
                     "conditional_logic": 0,
-                    "wrapper": { "width": "", "class": "", "id": "" },
+                    "wrapper": {
+                      "width": "",
+                      "class": "",
+                      "id": ""
+                    },
                     "return_format": "array",
                     "preview_size": "thumbnail",
                     "library": "all",
@@ -952,7 +1324,11 @@
                     "type": "text",
                     "required": 1,
                     "conditional_logic": 0,
-                    "wrapper": { "width": "", "class": "", "id": "" },
+                    "wrapper": {
+                      "width": "",
+                      "class": "",
+                      "id": ""
+                    },
                     "default_value": "",
                     "placeholder": "",
                     "prepend": "",
@@ -966,7 +1342,11 @@
                     "type": "url",
                     "required": 0,
                     "conditional_logic": 0,
-                    "wrapper": { "width": "", "class": "", "id": "" },
+                    "wrapper": {
+                      "width": "",
+                      "class": "",
+                      "id": ""
+                    },
                     "default_value": "",
                     "placeholder": ""
                   }
@@ -989,7 +1369,11 @@
                 "type": "text",
                 "required": 1,
                 "conditional_logic": 0,
-                "wrapper": { "width": "", "class": "", "id": "" },
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
                 "default_value": "",
                 "placeholder": "",
                 "prepend": "",
@@ -1003,7 +1387,11 @@
                 "type": "text",
                 "required": 0,
                 "conditional_logic": 0,
-                "wrapper": { "width": "", "class": "", "id": "" },
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
                 "default_value": "",
                 "placeholder": "",
                 "prepend": "",
@@ -1017,7 +1405,11 @@
                 "type": "link",
                 "required": 1,
                 "conditional_logic": 0,
-                "wrapper": { "width": "", "class": "", "id": "" },
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
                 "return_format": "array"
               },
               {
@@ -1027,7 +1419,11 @@
                 "type": "link",
                 "required": 0,
                 "conditional_logic": 0,
-                "wrapper": { "width": "", "class": "", "id": "" },
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
                 "return_format": "array"
               }
             ],
@@ -1047,7 +1443,11 @@
                 "type": "text",
                 "required": 1,
                 "conditional_logic": 0,
-                "wrapper": { "width": "", "class": "", "id": "" },
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
                 "default_value": "",
                 "placeholder": "",
                 "prepend": "",
@@ -1061,7 +1461,11 @@
                 "type": "textarea",
                 "required": 0,
                 "conditional_logic": 0,
-                "wrapper": { "width": "", "class": "", "id": "" },
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
                 "default_value": "",
                 "placeholder": "",
                 "maxlength": "",
@@ -1075,7 +1479,11 @@
                 "type": "text",
                 "required": 0,
                 "conditional_logic": 0,
-                "wrapper": { "width": "", "class": "", "id": "" },
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
                 "default_value": "",
                 "placeholder": "",
                 "prepend": "",
@@ -1089,7 +1497,11 @@
                 "type": "link",
                 "required": 1,
                 "conditional_logic": 0,
-                "wrapper": { "width": "", "class": "", "id": "" },
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
                 "return_format": "array"
               },
               {
@@ -1099,7 +1511,11 @@
                 "type": "link",
                 "required": 0,
                 "conditional_logic": 0,
-                "wrapper": { "width": "", "class": "", "id": "" },
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
                 "return_format": "array"
               }
             ],

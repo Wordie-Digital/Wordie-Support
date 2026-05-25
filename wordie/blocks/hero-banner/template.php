@@ -5,6 +5,7 @@
  */
 defined( 'ABSPATH' ) || exit;
 
+$kicker           = get_sub_field( 'kicker' );
 $heading          = get_sub_field( 'heading' );
 $subheading       = get_sub_field( 'subheading' );
 $cta_primary      = get_sub_field( 'cta_primary' );
@@ -46,6 +47,10 @@ if ( ! $heading && ! $subheading ) {
 
 	<div class="block-hero-banner__container">
 		<div class="block-hero-banner__content">
+
+			<?php if ( $kicker ) : ?>
+				<p class="block-hero-banner__kicker"><?php echo esc_html( $kicker ); ?></p>
+			<?php endif; ?>
 
 			<?php if ( $heading ) : ?>
 				<h1 class="block-hero-banner__heading"><?php echo esc_html( $heading ); ?></h1>

@@ -106,6 +106,39 @@
 }
 
 /* --------------------------------------------------------------------------
+   Light background variant (Services page — "OUR PROCESS" section)
+   -------------------------------------------------------------------------- */
+
+.block-why-wordie--light {
+	background-color: var(--colour-white);
+	color: var(--colour-dark-grey);
+}
+
+.block-why-wordie--light .block-why-wordie__kicker {
+	color: var(--colour-coral);
+}
+
+.block-why-wordie--light .block-why-wordie__heading {
+	color: var(--colour-dark-grey);
+}
+
+.block-why-wordie--light .block-why-wordie__description {
+	color: var(--colour-text-body);
+}
+
+.block-why-wordie--light .block-why-wordie__reason-number {
+	color: var(--colour-coral);
+}
+
+.block-why-wordie--light .block-why-wordie__reason-title {
+	color: var(--colour-dark-grey);
+}
+
+.block-why-wordie--light .block-why-wordie__reason-desc {
+	color: var(--colour-text-body);
+}
+
+/* --------------------------------------------------------------------------
    Responsive — tablet (≤1024px): stack to single column
    -------------------------------------------------------------------------- */
 

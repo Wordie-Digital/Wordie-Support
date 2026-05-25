@@ -26,15 +26,10 @@ if ( ! $heading && ! $steps ) {
 
 // ── Block classes ─────────────────────────────────────────────────────────────
 $class = 'block-process-steps';
-if ( ! empty( $block['className'] ) ) {
-	$class .= ' ' . esc_attr( $block['className'] );
-}
 
-$block_id = ! empty( $block['anchor'] ) ? $block['anchor'] : 'block-' . $block['id'];
 ?>
 
 <section
-	id="<?php echo esc_attr( $block_id ); ?>"
 	class="<?php echo esc_attr( $class ); ?>"
 	data-block="process-steps"
 	aria-labelledby="<?php echo esc_attr( $block_id ); ?>-heading"
@@ -47,7 +42,7 @@ $block_id = ! empty( $block['anchor'] ) ? $block['anchor'] : 'block-' . $block['
 				<p class="block-process-steps__kicker"><?php echo esc_html( $kicker ); ?></p>
 			<?php endif; ?>
 			<?php if ( $heading ) : ?>
-				<h2 id="<?php echo esc_attr( $block_id ); ?>-heading" class="block-process-steps__heading">
+				<h2 class="block-process-steps__heading" id="<?php echo esc_attr( $block_id ); ?>-heading">
 					<?php echo esc_html( $heading ); ?>
 				</h2>
 			<?php endif; ?>

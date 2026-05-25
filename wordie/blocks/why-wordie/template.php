@@ -18,6 +18,7 @@ $kicker      = get_sub_field( 'section_kicker' );
 $heading     = get_sub_field( 'section_heading' );
 $description = get_sub_field( 'section_description' );
 $reasons     = get_sub_field( 'reasons' );
+$bg_style    = get_sub_field( 'background_style' ) ?: 'dark';
 
 // ── Empty state ───────────────────────────────────────────────────────────────
 if ( ! $heading && ! $reasons ) {
@@ -25,16 +26,11 @@ if ( ! $heading && ! $reasons ) {
 }
 
 // ── Block classes ─────────────────────────────────────────────────────────────
-$class = 'block-why-wordie';
-if ( ! empty( $block['className'] ) ) {
-	$class .= ' ' . esc_attr( $block['className'] );
-}
+$class = 'block-why-wordie block-why-wordie--' . esc_attr( $bg_style );
 
-$block_id = ! empty( $block['anchor'] ) ? $block['anchor'] : 'block-' . $block['id'];
 ?>
 
 <section
-	id="<?php echo esc_attr( $block_id ); ?>"
 	class="<?php echo esc_attr( $class ); ?>"
 	data-block="why-wordie"
 	aria-labelledby="<?php echo esc_attr( $block_id ); ?>-heading"
@@ -49,7 +45,7 @@ $block_id = ! empty( $block['anchor'] ) ? $block['anchor'] : 'block-' . $block['
 			<?php endif; ?>
 
 			<?php if ( $heading ) : ?>
-				<h2 id="<?php echo esc_attr( $block_id ); ?>-heading" class="block-why-wordie__heading">
+				<h2 class="block-why-wordie__heading" id="<?php echo esc_attr( $block_id ); ?>-heading">
 					<?php echo esc_html( $heading ); ?>
 				</h2>
 			<?php endif; ?>
