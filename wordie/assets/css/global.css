@@ -266,17 +266,16 @@ p {
   justify-content: space-between;
 }
 
-/* Figma: logo sits in its own white rounded box — separate from the nav pill */
+/* Figma: Logo B (inverse) — the SVG file itself contains the white rounded badge.
+   No CSS background needed. Size = 128×48px per Figma node 2964:3113. */
 .site-header__logo {
   display: inline-flex;
   align-items: center;
-  background-color: var(--colour-white);
-  border-radius: 10px;
-  padding: 10px 14px;
+  flex-shrink: 0;
 }
 
 .site-header__logo-img {
-  height: 36px;  /* Figma: logo mark is compact inside its white badge */
+  height: 48px;   /* Figma: logo node height = 48px */
   width: auto;
   display: block;
 }
