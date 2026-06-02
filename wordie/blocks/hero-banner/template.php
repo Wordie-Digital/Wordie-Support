@@ -19,8 +19,14 @@ if ( ! $heading && ! $subheading ) {
 }
 ?>
 
+<?php
+$hero_classes = 'block-hero-banner';
+if ( $background_image || ( 'video' === $media_type && $background_video ) ) {
+	$hero_classes .= ' has-bg';
+}
+?>
 <section
-	class="block-hero-banner"
+	class="<?php echo esc_attr( $hero_classes ); ?>"
 	data-block="hero-banner"
 	aria-label="<?php echo esc_attr( $heading ?: __( 'Hero section', 'wordie' ) ); ?>"
 >

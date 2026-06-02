@@ -11,7 +11,7 @@
 .block-hero-banner {
   position: relative;
   min-height: 810px;
-  background-color: var(--colour-dark-teal);
+  background-color: #062028; /* Figma: hero bg — dark near-black teal, NOT #0A3542 */
   overflow: hidden;
   display: flex;
   align-items: flex-start;  /* Figma: content top-aligned, not centred */

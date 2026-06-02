@@ -10,18 +10,21 @@
  *   Clear zone: 80–100% (video fully visible on right)
  */
 
-.block-hero-banner::before {
+/* Gradient only fires when a background image or video is present (.has-bg class set via PHP).
+   Without media, the hero bg is solid #062028 — no overlay needed and the transparent
+   stops would expose the white body background through the right side. */
+.block-hero-banner.has-bg::before {
   content: '';
   position: absolute;
   inset: 0;
   z-index: 1;
   background: linear-gradient(
     to right,
-    var(--colour-dark-teal)        0%,
-    var(--colour-dark-teal)        55%,
-    rgba(10, 53, 66, 0.85)         65%,
-    rgba(10, 53, 66, 0.55)         78%,
-    rgba(10, 53, 66, 0.30)         100%
+    #062028                        0%,
+    #062028                        50%,
+    rgba(6, 32, 40, 0.88)          62%,
+    rgba(6, 32, 40, 0.60)          78%,
+    rgba(6, 32, 40, 0.35)          100%
   );
   pointer-events: none;
 }

@@ -266,9 +266,19 @@ p {
   justify-content: space-between;
 }
 
+/* Figma: logo sits in its own white rounded box — separate from the nav pill */
+.site-header__logo {
+  display: inline-flex;
+  align-items: center;
+  background-color: var(--colour-white);
+  border-radius: 10px;
+  padding: 10px 14px;
+}
+
 .site-header__logo-img {
-  height: 48px;
+  height: 36px;  /* Figma: logo mark is compact inside its white badge */
   width: auto;
+  display: block;
 }
 
 .site-header__logo-text {
