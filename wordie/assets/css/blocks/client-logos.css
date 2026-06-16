@@ -33,7 +33,7 @@
   font-size: var(--text-label-sm);   /* 14px */
   font-weight: var(--weight-bold);
   line-height: var(--lh-cta);        /* 1 */
-  letter-spacing: var(--ls-label-sm); /* 10px / 0.625rem */
+  letter-spacing: var(--ls-label-sm); /* Figma 10% = 1.4px @ 14px */
   text-transform: uppercase;
   color: var(--colour-disabled);     /* #9ba6a9 */
   text-align: center;
