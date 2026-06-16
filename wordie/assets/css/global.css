@@ -62,7 +62,7 @@
   --lh-cta:     1;
 
   /* ── Typography — letter-spacing ────────────────────────────────────── */
-  --ls-label-sm: 0.625rem; /* 10px — kicker / label small */
+  --ls-label-sm: 0.1em; /* Figma Label/Small letterSpacing 10 = 10% of font size (1.4px @ 14px) */
   --ls-default:  0;
 
   /* ── Spacing — base scale (8px) ──────────────────────────────────────── */

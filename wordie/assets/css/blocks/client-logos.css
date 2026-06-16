@@ -20,7 +20,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-8);   /* 30px between kicker and logos per Figma */
+  gap: 30px;   /* Figma: 30px between kicker and logos (no 8px-scale token for 30) */
   width: 100%;
   max-width: var(--container-max);
   margin-inline: auto;
