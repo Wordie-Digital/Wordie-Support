@@ -71,7 +71,7 @@
   font-size: var(--text-h1);
   font-weight: var(--weight-bold);
   line-height: var(--lh-heading);
-  color: var(--colour-white);
+  color: var(--colour-white-text);  /* Figma: pure #FFFFFF */
   letter-spacing: var(--ls-default);
 }
 
@@ -81,7 +81,7 @@
   font-size: var(--text-body-lg);   /* 16px per Figma hero */
   font-weight: var(--weight-regular);
   line-height: var(--lh-body-lg);  /* 1.4 per Figma */
-  color: var(--colour-white);
+  color: var(--colour-white-text);  /* Figma: pure #FFFFFF */
 }
 
 /* CTA row — side by side buttons */

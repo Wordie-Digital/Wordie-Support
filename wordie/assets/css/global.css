@@ -18,6 +18,7 @@
 
   /* ── Colour palette ──────────────────────────────────────────────────── */
   --colour-white:          #F6F9F9;   /* Wordie White */
+  --colour-white-text:     #FFFFFF;   /* Figma: Colour/White Text — pure white body text on dark */
   --colour-coral:          #F5634D;   /* Wordie Coral — primary accent */
   --colour-dark-teal:      #0A3542;   /* Wordie Dark Teal — dark section bg */
   --colour-dark-grey:      #062028;   /* Theme Dark Grey — text headers */
