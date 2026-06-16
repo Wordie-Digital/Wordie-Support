@@ -1,28 +1,33 @@
 /* ==========================================================================
    Block: Work Section
+   Figma node: 2957:2912
+
+   Treatment (per Figma): dark #062028 section, WHITE text. Featured project =
+   light-teal (#B9DDDD) image tile (left) + details directly on the dark bg
+   (right). Below: a row of 3 light-teal project tiles. Coral nav + CTA.
    ========================================================================== */
 
 .block-work-section {
-	background-color: var(--colour-dark-grey);  /* Figma: dark navy — same as services/why-wordie */
-	padding-block: 80px;
+	background-color: var(--colour-dark-grey);   /* #062028 */
+	padding-block: var(--margin-tb);             /* Figma: 72px TB */
 }
 
 .block-work-section__container {
-	max-width: 1296px;
+	max-width: var(--container-max);             /* 1440 → 1296 content at 72px margins */
 	margin-inline: auto;
-	padding-inline: var(--margin-lr);
+	padding-inline: var(--margin-lr);            /* 72px */
 	display: flex;
 	flex-direction: column;
-	gap: 48px;
+	gap: 48px;                                   /* Figma ~47px */
 }
 
 /* --------------------------------------------------------------------------
-   Header
+   Header — kicker + H2 (left), CTA (right), top-aligned
    -------------------------------------------------------------------------- */
 
 .block-work-section__header {
 	display: flex;
-	align-items: flex-end;
+	align-items: flex-start;          /* Figma: items-start */
 	justify-content: space-between;
 	gap: 24px;
 }
@@ -31,131 +36,117 @@
 	display: flex;
 	flex-direction: column;
 	gap: 12px;
+	max-width: 700px;
 }
 
 .block-work-section__kicker {
 	font-family: var(--font-body);
-	font-size: 0.75rem;
-	font-weight: 700;
-	letter-spacing: 0.1em;
+	font-size: var(--text-label-sm);     /* 14px */
+	font-weight: var(--weight-bold);
+	line-height: var(--lh-cta);          /* 1 */
+	letter-spacing: var(--ls-label-sm);  /* Figma 10% = 1.4px @14px */
 	text-transform: uppercase;
-	color: var(--colour-coral);
+	color: var(--colour-disabled);       /* #9ba6a9 */
 	margin: 0;
 }
 
 .block-work-section__heading {
 	font-family: var(--font-heading);
-	font-size: var(--text-h2);
-	font-weight: 700;
-	color: var(--colour-white);  /* Figma: white heading on dark bg */
-	line-height: 1.2;
+	font-size: var(--text-h2);           /* 36px */
+	font-weight: var(--weight-bold);
+	line-height: var(--lh-heading);      /* 1.2 */
+	color: var(--colour-white-text);     /* Figma: pure #FFFFFF */
 	margin: 0;
-	max-width: 600px;
 }
 
+/* CTA — standard filled primary (matches hero "Start a project") */
 .block-work-section__header-cta {
 	flex-shrink: 0;
 	display: inline-flex;
 	align-items: center;
-	gap: 8px;
-	padding: 14px 28px;
+	gap: var(--space-2);                 /* 8px */
+	padding: var(--space-4) var(--space-5); /* 16px / 20px */
 	background-color: var(--colour-coral);
-	color: var(--colour-white);
+	color: var(--colour-white);          /* Figma button label: Wordie White #F6F9F9 */
 	font-family: var(--font-heading);
-	font-size: 0.9375rem;
-	font-weight: 700;
+	font-size: var(--text-cta);          /* 16px */
+	font-weight: var(--weight-bold);
+	line-height: var(--lh-cta);
 	text-decoration: none;
-	border-radius: var(--radius-cta);
-	border: 2px solid var(--colour-coral);
-	transition: background-color 0.2s ease, color 0.2s ease;
+	border: none;
+	border-radius: var(--radius-cta);    /* 12px */
+	transition: opacity var(--transition-base), transform var(--transition-base);
 }
 
 .block-work-section__header-cta:hover,
 .block-work-section__header-cta:focus-visible {
-	background-color: transparent;
-	color: var(--colour-coral);
+	opacity: 0.88;
+	transform: translateY(-1px);
 }
 
 .block-work-section__header-cta svg {
-	transition: transform 0.2s ease;
-}
-
-.block-work-section__header-cta:hover svg,
-.block-work-section__header-cta:focus-visible svg {
-	transform: translateX(3px);
+	width: 16px;
+	height: 16px;
+	flex-shrink: 0;
 }
 
 /* --------------------------------------------------------------------------
-   Carousel wrapper
+   Carousel — featured project (image tile + details)
    -------------------------------------------------------------------------- */
 
-.block-work-section__carousel {
-	position: relative;
-}
-
-/* --------------------------------------------------------------------------
-   Slides
-   -------------------------------------------------------------------------- */
-
-.block-work-section__slides {
-	position: relative;
-}
+.block-work-section__carousel { position: relative; }
+.block-work-section__slides   { position: relative; }
 
 .block-work-section__slide {
 	display: none;
-	grid-template-columns: 1fr 1fr;
-	gap: 0;
-	border-radius: 20px;
-	overflow: hidden;
-	background-color: #fff;
-	box-shadow: 0 4px 40px rgba(6, 32, 40, 0.08);
+	grid-template-columns: minmax(0, 743fr) minmax(0, 513fr); /* Figma 743 : 513 */
+	gap: 40px;
+	align-items: center;              /* Figma: carousel items-center */
 }
 
-.block-work-section__slide.is-active {
-	display: grid;
-}
+.block-work-section__slide.is-active { display: grid; }
 
-/* --------------------------------------------------------------------------
-   Slide image
-   -------------------------------------------------------------------------- */
-
+/* Image tile — light-teal background with a floating screenshot */
 .block-work-section__slide-image {
 	position: relative;
-	min-height: 480px;
+	aspect-ratio: 743 / 557;          /* Figma tile ratio */
+	border-radius: 16px;
 	overflow: hidden;
-	background-color: var(--colour-dark-teal);
+	background-color: var(--colour-light-green); /* #B9DDDD */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 32px;
 }
 
 .block-work-section__slide-img {
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
+	max-width: 100%;
+	max-height: 100%;
+	width: auto;
+	height: auto;
+	object-fit: contain;
+	border-radius: 10px;
+	box-shadow: var(--shadow-card);   /* Figma: 3px 2px 10.6px rgba(0,0,0,.1) */
 	display: block;
 }
 
 .block-work-section__slide-img-placeholder {
 	width: 100%;
 	height: 100%;
+	border-radius: 10px;
 	background: linear-gradient(135deg, var(--colour-dark-teal) 0%, #0d4a5c 100%);
 }
 
-/* --------------------------------------------------------------------------
-   Slide details panel
-   -------------------------------------------------------------------------- */
-
+/* Details — transparent, white text on the dark section bg */
 .block-work-section__slide-details {
 	display: flex;
 	flex-direction: column;
 	gap: 24px;
-	padding: 48px 48px 40px;
-	background-color: #fff;
+	background-color: transparent;
+	padding: 0;
 }
 
-/* Client logo */
-.block-work-section__client-logo {
-	display: flex;
-	align-items: center;
-}
+.block-work-section__client-logo { display: flex; align-items: center; }
 
 .block-work-section__client-logo-img {
 	max-height: 46px;
@@ -163,104 +154,102 @@
 	display: block;
 }
 
-/* Text content */
 .block-work-section__slide-text {
 	display: flex;
 	flex-direction: column;
-	gap: 20px;
-	flex: 1;
+	gap: 16px;                         /* Figma: 16px */
 }
 
 .block-work-section__slide-title {
 	font-family: var(--font-heading);
-	font-size: 1.375rem;
-	font-weight: 700;
-	color: var(--colour-dark-grey);
-	line-height: 1.3;
+	font-size: var(--text-h3);         /* 32px */
+	font-weight: var(--weight-bold);
+	line-height: var(--lh-h3);         /* 1.23 */
+	color: var(--colour-white-text);   /* #FFFFFF */
 	margin: 0;
 }
 
-/* Stats */
+/* Stats — row of equal-width, centred value+label */
 .block-work-section__stats {
 	display: flex;
-	flex-wrap: wrap;
-	gap: 24px;
+	gap: 20px;
 	list-style: none;
 	margin: 0;
 	padding: 0;
 }
 
 .block-work-section__stat {
+	flex: 1 0 0;
+	min-width: 0;
 	display: flex;
 	flex-direction: column;
+	align-items: center;
+	text-align: center;
 	gap: 4px;
 }
 
 .block-work-section__stat-value {
 	font-family: var(--font-heading);
-	font-size: 1.75rem;
-	font-weight: 700;
+	font-size: var(--text-h4);         /* 24px */
+	font-weight: var(--weight-bold);
+	line-height: var(--lh-heading);    /* 1.2 */
 	color: var(--colour-coral);
-	line-height: 1;
 }
 
 .block-work-section__stat-label {
 	font-family: var(--font-body);
-	font-size: 0.8125rem;
-	color: var(--colour-text-body);
-	line-height: 1.4;
+	font-size: var(--text-label-sm);   /* 14px */
+	font-weight: var(--weight-regular);
+	line-height: var(--lh-body);       /* 1.3 */
+	color: var(--colour-white-text);   /* #FFFFFF */
 }
 
-/* Description + tags */
 .block-work-section__slide-desc {
 	font-family: var(--font-body);
-	font-size: 0.9375rem;
-	color: var(--colour-text-body);
-	line-height: 1.65;
+	font-size: var(--text-body-lg);    /* 16px */
+	font-weight: var(--weight-regular);
+	line-height: var(--lh-body-lg);    /* 1.4 */
+	color: var(--colour-white-text);   /* #FFFFFF */
 	margin: 0;
 }
 
 .block-work-section__slide-tags {
 	font-family: var(--font-body);
-	font-size: 0.8125rem;
-	font-weight: 600;
-	color: var(--colour-disabled);
-	letter-spacing: 0.04em;
+	font-size: var(--text-label-sm);   /* 14px */
+	font-weight: var(--weight-regular);
+	line-height: var(--lh-cta);        /* 1 */
+	letter-spacing: var(--ls-label-sm);/* 1.4px */
 	text-transform: uppercase;
+	color: var(--colour-white-text);   /* #FFFFFF */
 	margin: 0;
 }
 
-/* --------------------------------------------------------------------------
-   Slide footer (case study link + nav buttons)
-   -------------------------------------------------------------------------- */
-
+/* Footer — case-study link + coral nav arrows */
 .block-work-section__slide-footer {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	gap: 16px;
-	margin-top: auto;
 }
 
 .block-work-section__case-study-link {
 	display: inline-flex;
 	align-items: center;
-	gap: 8px;
+	gap: var(--space-3);               /* 12px */
 	font-family: var(--font-heading);
-	font-size: 0.9375rem;
-	font-weight: 700;
-	color: var(--colour-dark-grey);
+	font-size: var(--text-cta);        /* 16px */
+	font-weight: var(--weight-bold);
+	line-height: var(--lh-cta);
+	color: var(--colour-coral);        /* Figma: coral */
 	text-decoration: none;
-	transition: color 0.2s ease;
-}
-
-.block-work-section__case-study-link:hover,
-.block-work-section__case-study-link:focus-visible {
-	color: var(--colour-coral);
+	transition: gap var(--transition-base);
 }
 
 .block-work-section__case-study-link svg {
-	transition: transform 0.2s ease;
+	width: 22px;
+	height: 22px;
+	flex-shrink: 0;
+	transition: transform var(--transition-base);
 }
 
 .block-work-section__case-study-link:hover svg,
@@ -268,62 +257,57 @@
 	transform: translateX(3px);
 }
 
-/* Nav buttons */
 .block-work-section__nav {
 	display: flex;
 	align-items: center;
-	gap: 8px;
+	gap: 20px;                         /* Figma: 20px */
 }
 
 .block-work-section__nav-btn {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	width: 40px;
-	height: 40px;
-	border: 1.5px solid #c7e4e4;
-	border-radius: 50%;
+	padding: 8px;                      /* Figma: p-8, ~34px circle */
+	border: 1px solid var(--colour-coral);
+	border-radius: 100px;
 	background: transparent;
-	color: var(--colour-dark-grey);
+	color: var(--colour-coral);
 	cursor: pointer;
-	transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+	transition: background-color var(--transition-base), color var(--transition-base);
 }
+
+.block-work-section__nav-btn svg { width: 16px; height: 16px; }
 
 .block-work-section__nav-btn:hover,
 .block-work-section__nav-btn:focus-visible {
 	background-color: var(--colour-coral);
-	border-color: var(--colour-coral);
 	color: #fff;
 }
 
 /* --------------------------------------------------------------------------
-   Thumbnails
+   Project tiles row (below the featured project)
    -------------------------------------------------------------------------- */
 
 .block-work-section__thumbnails {
 	display: flex;
-	gap: 16px;
+	gap: 28px;                         /* Figma: 28px */
 	list-style: none;
 	margin: 0;
 	padding: 0;
 }
 
-.block-work-section__thumbnail {
-	flex: 1;
-	border-radius: 12px;
-	overflow: hidden;
-}
+.block-work-section__thumbnail { flex: 1 0 0; min-width: 0; }
 
 .block-work-section__thumbnail-btn {
 	display: block;
 	width: 100%;
 	padding: 0;
-	border: 3px solid transparent;
-	border-radius: 12px;
-	background: none;
+	border: 2px solid transparent;
+	border-radius: 16px;               /* Figma: 16px */
+	background-color: var(--colour-light-green); /* #B9DDDD */
 	cursor: pointer;
 	overflow: hidden;
-	transition: border-color 0.2s ease;
+	transition: border-color var(--transition-base);
 }
 
 .block-work-section__thumbnail-btn:focus-visible {
@@ -337,24 +321,14 @@
 
 .block-work-section__thumbnail-img {
 	width: 100%;
-	aspect-ratio: 360 / 282;
+	aspect-ratio: 416 / 312;           /* Figma tile ratio */
 	object-fit: cover;
-	display: block;
-	transition: opacity 0.2s ease;
-}
-
-.block-work-section__thumbnail-btn:hover .block-work-section__thumbnail-img,
-.block-work-section__thumbnail.is-active .block-work-section__thumbnail-img {
-	opacity: 1;
-}
-
-.block-work-section__thumbnail-img {
-	opacity: 0.6;
+	display: block;                    /* full opacity per Figma */
 }
 
 .block-work-section__thumbnail-placeholder {
 	width: 100%;
-	aspect-ratio: 360 / 282;
+	aspect-ratio: 416 / 312;
 	background: linear-gradient(135deg, var(--colour-dark-teal) 0%, #0d4a5c 100%);
 }
 
@@ -363,71 +337,45 @@
    -------------------------------------------------------------------------- */
 
 @media (max-width: 1024px) {
-	.block-work-section {
-		padding-block: 60px;
-	}
+	.block-work-section { padding-block: 60px; }
 
 	.block-work-section__container {
-		padding-inline: 32px;
+		padding-inline: var(--margin-lr);
 		gap: 36px;
 	}
 
 	.block-work-section__slide {
 		grid-template-columns: 1fr;
-	}
-
-	.block-work-section__slide-image {
-		min-height: 320px;
-	}
-
-	.block-work-section__slide-details {
-		padding: 36px 32px 32px;
+		gap: 28px;
 	}
 
 	.block-work-section__header {
-		align-items: flex-start;
 		flex-direction: column;
-	}
-
-	.block-work-section__header-cta {
-		align-self: flex-start;
+		align-items: flex-start;
 	}
 }
 
 /* --------------------------------------------------------------------------
-   Responsive — mobile (≤640px)
+   Responsive — mobile (≤768px)
    -------------------------------------------------------------------------- */
 
-@media (max-width: 640px) {
-	.block-work-section {
-		padding-block: 48px;
-	}
-
+@media (max-width: 768px) {
 	.block-work-section__container {
-		padding-inline: 20px;
+		padding-inline: var(--margin-lr);
 		gap: 28px;
 	}
 
-	.block-work-section__slide-image {
-		min-height: 240px;
-	}
-
-	.block-work-section__slide-details {
-		padding: 28px 20px 24px;
-		gap: 20px;
-	}
-
-	.block-work-section__slide-title {
-		font-size: 1.125rem;
-	}
-
-	.block-work-section__stat-value {
-		font-size: 1.375rem;
+	.block-work-section__stats {
+		flex-wrap: wrap;
+		gap: 16px;
 	}
 
 	.block-work-section__thumbnails {
-		gap: 10px;
+		flex-wrap: wrap;
+		gap: 16px;
 	}
+
+	.block-work-section__thumbnail { flex: 1 1 40%; }
 
 	.block-work-section__header-cta {
 		width: 100%;
@@ -441,7 +389,9 @@
 
 @media (prefers-reduced-motion: reduce) {
 	.block-work-section__slide,
-	.block-work-section__thumbnail-img {
+	.block-work-section__thumbnail-btn,
+	.block-work-section__nav-btn,
+	.block-work-section__case-study-link svg {
 		transition: none;
 	}
 }
