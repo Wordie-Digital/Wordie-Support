@@ -1,15 +1,12 @@
 name: Deploy Wordie Theme to WP Engine
 
+# FROZEN 2026-06-17: canonical repo for the wordiev2 install is
+# Wordie-Digital/wordie-v2. Auto-deploy from this repo is disabled to prevent
+# competing force-pushes to the same WP Engine install (production/wordiev2).
+# Manual dispatch only — do NOT re-enable push triggers without confirming the
+# repo governance with the team.
 on:
-  push:
-    branches:
-      - main        # → Production
-      - staging     # → Staging
-      - development # → Development
-    paths:
-      - 'wordie/**'
-      - '.github/workflows/deploy-wordie.yml'
-      - '.github/*.php'
+  workflow_dispatch:
 
 concurrency:
   group: deploy-wordie-${{ github.ref_name }}
