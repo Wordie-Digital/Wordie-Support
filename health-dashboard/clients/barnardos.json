@@ -1,0 +1,227 @@
+{
+  "id": "barnardos",
+  "client_name": "Barnardos Australia",
+  "domain": "barnardosaudev.wpengine.com",
+  "wpengine_install": "barnardosaudev",
+  "reports": {
+    "2026-05": {
+      "report_month": "2026-05",
+      "generated_at": "2026-05-07",
+      "health_score": 62,
+      "health_score_prev": 60,
+      "overall_status": "RED",
+      "executive_summary": "May maintenance was completed successfully — all plugins are current, PHP has been upgraded to 8.2, and the site remained available 100% of the time. However, website performance on mobile devices is a significant concern. The site scores 26/100 on Google's mobile speed test, which is well below the threshold where search rankings and visitor experience are affected. The root cause is heavy JavaScript loading before the page becomes usable. A performance remediation plan is the recommended next step.",
+      "highlights": [
+        "All plugins updated — 0 pending updates",
+        "PHP upgraded to 8.2 (current supported version)",
+        "100% uptime over the past 30 days",
+        "Daily backups completing successfully",
+        "No security threats detected — WAF active"
+      ],
+      "key_risks": [
+        "Mobile PageSpeed score of 26/100 — well below the 60 minimum threshold",
+        "970ms Total Blocking Time is preventing interactive use for nearly 1 second",
+        "Bootstrap and FontAwesome contributing 47KB of render-blocking CSS"
+      ],
+      "sections": {
+        "performance": {
+          "status": "RED",
+          "score": 18,
+          "trend": "STABLE",
+          "headline": "Mobile performance requires urgent attention",
+          "interpretation": "Barnardos Australia scores 26/100 on Google's mobile page speed test, run live on 7 May 2026. The main cause is 970ms of Total Blocking Time — JavaScript resources are preventing the page from becoming interactive for nearly a full second. The primary offenders are Bootstrap, FontAwesome, jQuery, and a Convert Experiments analytics script that adds 780ms on its own. Together these resources account for over 15 seconds of network loading time.",
+          "metrics": [
+            { "label": "PageSpeed (Mobile)", "value": "26/100", "status": "RED", "description": "Significantly below the acceptable minimum of 60" },
+            { "label": "Total Blocking Time", "value": "970ms", "status": "RED", "description": "Heavy JavaScript blocking interactivity for nearly 1 second" },
+            { "label": "Largest Contentful Paint", "value": "2.6s", "status": "AMBER", "description": "Just over the 2.5s good threshold — improvable" },
+            { "label": "Layout Stability (CLS)", "value": "0.104", "status": "AMBER", "description": "Content shifts slightly while loading — just over 0.1" },
+            { "label": "First Contentful Paint", "value": "0.8s", "status": "GREEN", "description": "First content appears quickly — server response is fast" },
+            { "label": "Speed Index", "value": "4.0s", "status": "RED", "description": "Page takes too long to appear visually complete" }
+          ],
+          "risk": "A PageSpeed score of 26 is a confirmed Google ranking penalty. Barnardos' donation and service pages are likely losing organic search traffic. Visitors on slow mobile connections will abandon the site before it becomes usable.",
+          "recommended_action": "Conduct a performance remediation sprint: defer the Convert Experiments script, lazy-load FontAwesome, and audit render-blocking CSS. Expected outcome: +20–30 PageSpeed points."
+        },
+        "security": {
+          "status": "GREEN",
+          "score": 95,
+          "trend": "STABLE",
+          "headline": "No threats detected — all security systems active",
+          "interpretation": "The WAF (Web Application Firewall) is active and blocking malicious traffic. No malware, no suspicious logins, and no known vulnerabilities in installed plugins. SSL certificate is valid with 280 days remaining.",
+          "metrics": [
+            { "label": "WAF Status", "value": "Active", "status": "GREEN", "description": "Firewall blocking threats at the edge" },
+            { "label": "Malware Scan", "value": "Clean", "status": "GREEN", "description": "No malware or suspicious files detected" },
+            { "label": "SSL Certificate", "value": "280 days", "status": "GREEN", "description": "Certificate valid and auto-renewing" },
+            { "label": "Login Security", "value": "Secure", "status": "GREEN", "description": "No brute-force attempts detected this month" }
+          ],
+          "risk": "No current security risk. Continued WAF monitoring and plugin update discipline are the primary controls.",
+          "recommended_action": null
+        },
+        "reliability": {
+          "status": "GREEN",
+          "score": 100,
+          "trend": "STABLE",
+          "headline": "100% uptime — site fully available all month",
+          "interpretation": "The site was available 100% of the time over the past 30 days with no downtime events recorded. WP Engine's infrastructure handled all traffic without incident.",
+          "metrics": [
+            { "label": "Uptime (30 days)", "value": "100%", "status": "GREEN", "description": "No downtime recorded this month" },
+            { "label": "Incidents", "value": "0", "status": "GREEN", "description": "No outages or degraded performance events" }
+          ],
+          "risk": "No reliability risk at this time.",
+          "recommended_action": null
+        },
+        "updates": {
+          "status": "GREEN",
+          "score": 100,
+          "trend": "IMPROVING",
+          "headline": "All plugins and themes are current",
+          "interpretation": "All 0 pending updates were applied during the May maintenance window. WordPress core, all plugins, and the active theme are running current versions. PHP has been upgraded to 8.2.",
+          "metrics": [
+            { "label": "Pending Updates", "value": "0", "status": "GREEN", "description": "All plugins, themes, and core are current" },
+            { "label": "PHP Version", "value": "8.2", "status": "GREEN", "description": "Current supported version — upgraded this month" },
+            { "label": "WordPress Core", "value": "Current", "status": "GREEN", "description": "Running latest stable release" }
+          ],
+          "risk": "No update risk. Maintaining zero pending updates eliminates the most common WordPress vulnerability vector.",
+          "recommended_action": null
+        },
+        "backups": {
+          "status": "GREEN",
+          "score": 100,
+          "trend": "STABLE",
+          "headline": "Daily backups completing successfully",
+          "interpretation": "Automated daily backups are completing without error on WP Engine. The most recent backup was verified and is restorable. Retention policy covers the last 30 days.",
+          "metrics": [
+            { "label": "Backup Status", "value": "Healthy", "status": "GREEN", "description": "All scheduled backups completed successfully" },
+            { "label": "Last Backup", "value": "Today", "status": "GREEN", "description": "Most recent backup completed without error" },
+            { "label": "Retention", "value": "30 days", "status": "GREEN", "description": "Full month of restore points available" }
+          ],
+          "risk": "No backup risk. Daily automated backups ensure the site can be restored to any point in the last 30 days.",
+          "recommended_action": null
+        },
+        "engineering": {
+          "status": "GREEN",
+          "score": 90,
+          "trend": "STABLE",
+          "headline": "Clean deployment history — 2 successful deployments",
+          "interpretation": "Two deployments were made to production this month as part of the M&S maintenance work: the PHP 8.2 upgrade and the plugin update batch. Both completed without rollback or incident.",
+          "metrics": [
+            { "label": "Deployments", "value": "2", "status": "GREEN", "description": "Both deployments successful with no rollbacks" },
+            { "label": "Hotfixes", "value": "0", "status": "GREEN", "description": "No emergency fixes required" },
+            { "label": "Failed Builds", "value": "0", "status": "GREEN", "description": "All CI/CD pipelines passed" }
+          ],
+          "risk": "No engineering risk. Clean deployment history indicates well-managed change control.",
+          "recommended_action": null
+        }
+      },
+      "recommended_actions": [
+        {
+          "priority": "HIGH",
+          "title": "Defer Convert Experiments analytics script and lazy-load FontAwesome icons",
+          "impact": "These two changes account for ~1,560ms of blocking time. Expected improvement: +15–20 PageSpeed points. Google uses mobile speed as a ranking factor — this directly impacts organic search traffic to Barnardos' donation and service pages."
+        },
+        {
+          "priority": "HIGH",
+          "title": "Audit and reduce render-blocking CSS — Bootstrap and FontAwesome total 47KB of blocking CSS",
+          "impact": "Reducing render-blocking CSS improves Speed Index and LCP, making the page feel significantly faster. Replace with utility-only classes where possible."
+        },
+        {
+          "priority": "MEDIUM",
+          "title": "Enable WP Engine CDN caching and configure static asset cache headers",
+          "impact": "Low-effort infrastructure change with meaningful impact on repeat visitor load times. Can be done without code changes."
+        },
+        {
+          "priority": "MEDIUM",
+          "title": "Remove jQuery Migrate (5.2KB) — no legacy jQuery code should require it on a current build",
+          "impact": "Reduces page weight and eliminates an unnecessary legacy dependency from every page load."
+        }
+      ],
+      "support_tickets": {
+        "portal_url": "https://support.wordie.com.au/ticket",
+        "summary": {
+          "opened":     3,
+          "closed":     5,
+          "in_progress": 1,
+          "pending_client": 1
+        },
+        "tickets": [
+          {
+            "id": "WRD-1042",
+            "subject": "Homepage hero image not loading on mobile Safari",
+            "status": "CLOSED",
+            "priority": "HIGH",
+            "type": "Bug",
+            "assigned_to": "Stewart L.",
+            "opened": "2026-04-28",
+            "closed": "2026-04-29",
+            "notes": "Resolved — image format converted to WebP with JPEG fallback."
+          },
+          {
+            "id": "WRD-1051",
+            "subject": "PHP 8.2 upgrade — staging verification",
+            "status": "CLOSED",
+            "priority": "HIGH",
+            "type": "Maintenance",
+            "assigned_to": "Stewart L.",
+            "opened": "2026-05-01",
+            "closed": "2026-05-05",
+            "notes": "Upgrade completed. All plugins tested on staging before production push."
+          },
+          {
+            "id": "WRD-1053",
+            "subject": "Add new staff member to About page",
+            "status": "CLOSED",
+            "priority": "LOW",
+            "type": "Content",
+            "assigned_to": "Wordie Team",
+            "opened": "2026-05-02",
+            "closed": "2026-05-03",
+            "notes": "Content updated as requested."
+          },
+          {
+            "id": "WRD-1055",
+            "subject": "Contact form not sending confirmation emails",
+            "status": "CLOSED",
+            "priority": "HIGH",
+            "type": "Bug",
+            "assigned_to": "Stewart L.",
+            "opened": "2026-05-03",
+            "closed": "2026-05-04",
+            "notes": "SMTP configuration corrected. Confirmation emails now delivering."
+          },
+          {
+            "id": "WRD-1058",
+            "subject": "Monthly plugin + theme update batch — May 2026",
+            "status": "CLOSED",
+            "priority": "MEDIUM",
+            "type": "Maintenance",
+            "assigned_to": "Wordie Team",
+            "opened": "2026-05-05",
+            "closed": "2026-05-06",
+            "notes": "All updates applied. Site tested post-update."
+          },
+          {
+            "id": "WRD-1061",
+            "subject": "Performance remediation plan — mobile PageSpeed",
+            "status": "IN_PROGRESS",
+            "priority": "HIGH",
+            "type": "Development",
+            "assigned_to": "Stewart L.",
+            "opened": "2026-05-07",
+            "closed": null,
+            "notes": "Investigation underway. Scoping Convert Experiments defer + FontAwesome lazy-load."
+          },
+          {
+            "id": "WRD-1063",
+            "subject": "Update donation page copy — new campaign text",
+            "status": "PENDING_CLIENT",
+            "priority": "MEDIUM",
+            "type": "Content",
+            "assigned_to": "Wordie Team",
+            "opened": "2026-05-06",
+            "closed": null,
+            "notes": "Waiting on approved copy from Barnardos comms team."
+          }
+        ]
+      }
+    }
+  }
+}

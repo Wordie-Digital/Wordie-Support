@@ -1,0 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Source+Sans+Pro:wght@400;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-body bg-wordie-off-white text-wordie-near-black;
+  }
+  h1, h2, h3, h4, h5 {
+    @apply font-heading;
+  }
+}
+
+@layer components {
+  .traffic-green  { @apply bg-emerald-500; }
+  .traffic-amber  { @apply bg-amber-400; }
+  .traffic-red    { @apply bg-red-500; }
+
+  .status-badge-green  { @apply bg-emerald-50 text-emerald-700 border border-emerald-200; }
+  .status-badge-amber  { @apply bg-amber-50  text-amber-700  border border-amber-200; }
+  .status-badge-red    { @apply bg-red-50    text-red-700    border border-red-200; }
+
+  .card { @apply bg-white rounded-xl border border-gray-100 shadow-sm; }
+  .card-padded { @apply card p-6; }
+
+  .btn-primary {
+    @apply bg-wordie-coral text-white font-heading font-semibold text-sm
+           px-5 py-2.5 rounded-lg hover:bg-red-500 transition-colors;
+  }
+  .btn-secondary {
+    @apply bg-wordie-off-white text-wordie-dark-teal font-heading font-semibold text-sm
+           px-5 py-2.5 rounded-lg border border-wordie-light-green
+           hover:bg-wordie-light-green transition-colors;
+  }
+
+  .section-header {
+    @apply font-heading font-semibold text-wordie-dark-teal;
+  }
+}
+
+@media print {
+  .no-print { display: none !important; }
+  .print-break { page-break-before: always; }
+  body { @apply bg-white; }
+  .card { box-shadow: none !important; border: 1px solid #e5e7eb !important; }
+}

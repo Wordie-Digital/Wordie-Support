@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Barnardos Australia — Website Health Report — May 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Reset ─────────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── Wordie design tokens ──────────────────────────────────────── */
+    :root {
+      --dark-teal:   #0A3542;
+      --accent-teal: #116E6E;
+      --light-green: #B9DDDD;
+      --coral:       #F5634D;
+      --near-black:  #062028;
+      --off-white:   #F6F9F9;
+      --green:       #10b981;
+      --amber:       #f59e0b;
+      --red:         #ef4444;
+      --green-bg:    #ecfdf5;
+      --green-border:#a7f3d0;
+      --green-text:  #065f46;
+      --amber-bg:    #fffbeb;
+      --amber-border:#fde68a;
+      --amber-text:  #92400e;
+      --red-bg:      #fef2f2;
+      --red-border:  #fecaca;
+      --red-text:    #991b1b;
+    }
+
+    /* ── Base ──────────────────────────────────────────────────────── */
+    body {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--near-black);
+      background: var(--off-white);
+    }
+    h1, h2, h3, h4, h5 {
+      font-family: 'Montserrat', sans-serif;
+    }
+    a { color: var(--accent-teal); text-decoration: none; }
+
+    /* ── Layout ────────────────────────────────────────────────────── */
+    .page {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 32px 20px 64px;
+    }
+
+    /* ── Header ────────────────────────────────────────────────────── */
+    .site-header {
+      background: var(--dark-teal);
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 32px;
+      border-radius: 0;
+    }
+    .site-header .wordmark {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 22px;
+      color: var(--off-white);
+      letter-spacing: -0.5px;
+    }
+    .site-header .tagline {
+      font-size: 13px;
+      color: rgba(185,221,221,0.7);
+    }
+
+    /* ── Cards ─────────────────────────────────────────────────────── */
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      border: 1px solid #e5e7eb;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+    .card-body { padding: 24px; }
+    .card-body-sm { padding: 16px 20px; }
+
+    /* ── Cover ─────────────────────────────────────────────────────── */
+    .cover {
+      background: var(--dark-teal);
+      border-radius: 16px;
+      padding: 36px 32px;
+      margin-bottom: 24px;
+      position: relative;
+      overflow: hidden;
+      color: #fff;
+    }
+    .cover::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 220px; height: 220px;
+      background: rgba(185,221,221,0.08);
+      border-radius: 50%;
+    }
+    .cover::after {
+      content: '';
+      position: absolute;
+      bottom: -40px; left: -40px;
+      width: 160px; height: 160px;
+      background: rgba(17,110,110,0.15);
+      border-radius: 50%;
+    }
+    .cover-inner {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .cover-label {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(185,221,221,0.65);
+      margin-bottom: 8px;
+    }
+    .cover h1 {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--off-white);
+      line-height: 1.1;
+      margin-bottom: 4px;
+    }
+    .cover .cover-domain {
+      font-size: 13px;
+      color: rgba(185,221,221,0.65);
+      margin-bottom: 4px;
+    }
+    .cover .cover-period {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--light-green);
+      margin-bottom: 20px;
+    }
+    .cover-summary {
+      background: rgba(255,255,255,0.1);
+      border-radius: 10px;
+      padding: 16px 18px;
+      font-size: 14px;
+      line-height: 1.65;
+      color: rgba(246,249,249,0.88);
+      max-width: 440px;
+    }
+
+    /* ── Score gauge (SVG) ─────────────────────────────────────────── */
+    .gauge-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .gauge-label {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--red);
+      text-align: center;
+    }
+    .gauge-sub {
+      font-size: 12px;
+      color: rgba(185,221,221,0.65);
+      text-align: center;
+    }
+
+    /* ── Traffic light badge ───────────────────────────────────────── */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      border: 1px solid;
+    }
+    .badge-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .badge-green  { background: var(--green-bg);  color: var(--green-text);  border-color: var(--green-border); }
+    .badge-amber  { background: var(--amber-bg);  color: var(--amber-text);  border-color: var(--amber-border); }
+    .badge-red    { background: var(--red-bg);    color: var(--red-text);    border-color: var(--red-border); }
+    .dot-green { background: var(--green); }
+    .dot-amber { background: var(--amber); }
+    .dot-red   { background: var(--red); }
+
+    /* ── Executive summary ─────────────────────────────────────────── */
+    .exec-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    @media (max-width: 560px) { .exec-grid { grid-template-columns: 1fr; } }
+    .exec-col-label {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+    .exec-col-label.green { color: var(--green); }
+    .exec-col-label.amber { color: var(--amber); }
+    .exec-col-label.red   { color: var(--red); }
+    .exec-list { list-style: none; }
+    .exec-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 14px;
+      color: #374151;
+      margin-bottom: 8px;
+      line-height: 1.5;
+    }
+    .exec-list li .icon { flex-shrink: 0; margin-top: 1px; }
+
+    /* ── Key metrics row ───────────────────────────────────────────── */
+    .metrics-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    @media (max-width: 560px) { .metrics-row { grid-template-columns: 1fr 1fr; } }
+    .metric-pill {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      padding: 14px 12px;
+      text-align: center;
+    }
+    .metric-pill .value {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 2px;
+    }
+    .metric-pill .label {
+      font-size: 12px;
+      color: #6b7280;
+      margin-top: 4px;
+    }
+    .v-red   { color: var(--red); }
+    .v-amber { color: var(--amber); }
+    .v-green { color: var(--green); }
+
+    /* ── Section blocks ────────────────────────────────────────────── */
+    .section-header {
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border-bottom: 1px solid;
+    }
+    .section-header.green { background: var(--green-bg); border-color: var(--green-border); }
+    .section-header.amber { background: var(--amber-bg); border-color: var(--amber-border); }
+    .section-header.red   { background: var(--red-bg);   border-color: var(--red-border); }
+
+    .section-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-icon { font-size: 20px; }
+    .section-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--dark-teal);
+    }
+    .section-trend {
+      font-size: 12px;
+      font-weight: 600;
+      margin-top: 1px;
+    }
+    .trend-improving { color: var(--green); }
+    .trend-stable    { color: #9ca3af; }
+    .trend-declining { color: var(--red); }
+
+    .section-score-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .section-score {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--dark-teal);
+      text-align: right;
+      line-height: 1;
+    }
+    .section-score span {
+      font-size: 11px;
+      color: #9ca3af;
+      display: block;
+      font-weight: 400;
+    }
+
+    .section-headline {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--dark-teal);
+      margin-bottom: 8px;
+    }
+    .section-interp {
+      font-size: 14px;
+      color: #4b5563;
+      line-height: 1.65;
+      margin-bottom: 16px;
+    }
+
+    /* ── Metric tiles grid ─────────────────────────────────────────── */
+    .metric-tiles {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    @media (max-width: 480px) { .metric-tiles { grid-template-columns: 1fr; } }
+    .metric-tile {
+      border-radius: 8px;
+      padding: 12px 14px;
+    }
+    .metric-tile.green { background: var(--green-bg); }
+    .metric-tile.amber { background: var(--amber-bg); }
+    .metric-tile.red   { background: var(--red-bg); }
+
+    .metric-tile-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 4px;
+    }
+    .metric-tile-key {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: #6b7280;
+    }
+    .metric-tile-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .metric-tile-value {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .metric-tile.green .metric-tile-value { color: var(--green-text); }
+    .metric-tile.amber .metric-tile-value { color: var(--amber-text); }
+    .metric-tile.red   .metric-tile-value { color: var(--red-text); }
+    .metric-tile-desc {
+      font-size: 12px;
+      color: #6b7280;
+      line-height: 1.4;
+    }
+
+    /* ── Risk + Action boxes ───────────────────────────────────────── */
+    .risk-box {
+      background: #f9fafb;
+      border-radius: 8px;
+      padding: 12px 14px;
+      margin-bottom: 10px;
+    }
+    .risk-box-label {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: #9ca3af;
+      margin-bottom: 4px;
+    }
+    .risk-box p { font-size: 13px; color: #374151; line-height: 1.5; }
+
+    .action-box {
+      border-radius: 8px;
+      padding: 12px 14px;
+      border: 1px solid;
+    }
+    .action-box.red   { background: var(--red-bg);   border-color: var(--red-border); }
+    .action-box.amber { background: var(--amber-bg);  border-color: var(--amber-border); }
+    .action-box.green { background: var(--green-bg);  border-color: var(--green-border); }
+    .action-box-label {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 4px;
+    }
+    .action-box.red   .action-box-label { color: var(--red-text); }
+    .action-box.amber .action-box-label { color: var(--amber-text); }
+    .action-box.green .action-box-label { color: var(--green-text); }
+    .action-box p { font-size: 13px; color: #374151; line-height: 1.5; }
+
+    /* ── Recommended actions ───────────────────────────────────────── */
+    .rec-action {
+      border-radius: 10px;
+      border: 1px solid;
+      padding: 14px 16px;
+      margin-bottom: 10px;
+    }
+    .rec-action.high   { background: var(--red-bg);   border-color: var(--red-border); }
+    .rec-action.medium { background: var(--amber-bg);  border-color: var(--amber-border); }
+    .rec-action.low    { background: #f9fafb;          border-color: #e5e7eb; }
+    .rec-action-top {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+    .priority-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .priority-label {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .rec-action.high   .priority-label { color: var(--red-text); }
+    .rec-action.medium .priority-label { color: var(--amber-text); }
+    .rec-action.low    .priority-label { color: #6b7280; }
+    .rec-action-text {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--dark-teal);
+      margin-bottom: 4px;
+      line-height: 1.4;
+    }
+    .rec-action-impact {
+      font-size: 12px;
+      color: #6b7280;
+      line-height: 1.5;
+    }
+
+    /* ── Section heading ───────────────────────────────────────────── */
+    .page-section-label {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--dark-teal);
+      margin: 28px 0 12px;
+    }
+
+    /* ── Score bar ─────────────────────────────────────────────────── */
+    .score-bar-wrap {
+      margin-bottom: 16px;
+    }
+    .score-bar-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+    .score-bar-top span { font-size: 12px; color: #6b7280; }
+    .score-bar-track {
+      height: 6px;
+      background: #f3f4f6;
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    .score-bar-fill {
+      height: 100%;
+      border-radius: 99px;
+      transition: width 0.5s ease;
+    }
+
+    /* ── Deployment timeline ───────────────────────────────────────── */
+    .deploy-item {
+      display: flex;
+      gap: 12px;
+      padding-bottom: 12px;
+    }
+    .deploy-dot-col { display: flex; flex-direction: column; align-items: center; }
+    .deploy-dot {
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .deploy-line {
+      width: 1px;
+      flex: 1;
+      background: #e5e7eb;
+      margin-top: 4px;
+    }
+    .deploy-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--dark-teal);
+      margin-bottom: 3px;
+    }
+    .deploy-meta {
+      font-size: 12px;
+      color: #9ca3af;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .deploy-sha {
+      background: #f3f4f6;
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 11px;
+      color: #6b7280;
+    }
+    .deploy-status { font-weight: 700; color: var(--green); }
+
+    /* ── Footer ────────────────────────────────────────────────────── */
+    .report-footer {
+      text-align: center;
+      padding: 32px 0 0;
+      border-top: 1px solid #e5e7eb;
+      margin-top: 32px;
+    }
+    .report-footer p { font-size: 12px; color: #9ca3af; margin-bottom: 4px; }
+    .report-footer .wordmark-footer {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--dark-teal);
+      margin-top: 12px;
+    }
+
+    /* ── Print ─────────────────────────────────────────────────────── */
+    .print-btn {
+      position: fixed;
+      bottom: 24px; right: 24px;
+      background: var(--dark-teal);
+      color: #fff;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 12px 20px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(10,53,66,0.3);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .print-btn:hover { background: var(--accent-teal); }
+
+    @media print {
+      body { background: #fff; }
+      .print-btn { display: none; }
+      .site-header { border-radius: 0; margin-bottom: 20px; }
+      .card { box-shadow: none; break-inside: avoid; }
+      .cover { border-radius: 8px; }
+      .page { padding: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="wordmark">wordie</div>
+    <div class="tagline">Website Health Dashboard</div>
+  </header>
+
+  <div class="page">
+
+    <!-- ── COVER ─────────────────────────────────────────────────── -->
+    <div class="cover">
+      <div class="cover-inner">
+        <div>
+          <div class="cover-label">Monthly Health Report</div>
+          <h1>Barnardos Australia</h1>
+          <div class="cover-domain">barnardosaudev.wpengine.com</div>
+          <div class="cover-period">May 2026</div>
+          <div class="cover-summary">
+            May maintenance was completed successfully — all plugins are current, PHP has been upgraded to 8.2, and the site remained available 100% of the time. However, website performance on mobile devices is a significant concern. The site scores 26/100 on Google's mobile speed test, which is well below the threshold where search rankings and visitor experience are affected. The root cause is heavy JavaScript loading before the page becomes usable. A performance remediation plan is the recommended next step.
+          </div>
+        </div>
+        <div class="gauge-wrap">
+          <!-- SVG Gauge -->
+          <svg width="130" height="130" viewBox="0 0 130 130">
+            <circle cx="65" cy="65" r="54" fill="none" stroke="#1d4e5f" stroke-width="10" />
+            <circle cx="65" cy="65" r="54" fill="none" stroke="#ef4444" stroke-width="10"
+              stroke-dasharray="339.3" stroke-dashoffset="251"
+              stroke-linecap="round"
+              transform="rotate(-90 65 65)" />
+            <text x="65" y="60" text-anchor="middle" font-family="Montserrat,sans-serif" font-size="30" font-weight="700" fill="#ef4444">62</text>
+            <text x="65" y="76" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(185,221,221,0.6)">/100</text>
+          </svg>
+          <div class="gauge-label">Action required</div>
+          <div class="gauge-sub">+2 vs last month</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── KEY METRICS ─────────────────────────────────────────────── -->
+    <div class="metrics-row">
+      <div class="metric-pill">
+        <div class="value v-red">26</div>
+        <div style="font-size:11px;color:#9ca3af;">/100</div>
+        <div class="label">PageSpeed mobile</div>
+      </div>
+      <div class="metric-pill">
+        <div class="value v-green">100%</div>
+        <div class="label">Uptime (30 days)</div>
+      </div>
+      <div class="metric-pill">
+        <div class="value v-green">0</div>
+        <div style="font-size:11px;color:#9ca3af;">all current</div>
+        <div class="label">Pending updates</div>
+      </div>
+      <div class="metric-pill">
+        <div class="value v-green">✓</div>
+        <div class="label">Backup status</div>
+      </div>
+    </div>
+
+    <!-- ── EXECUTIVE SUMMARY ──────────────────────────────────────── -->
+    <p class="page-section-label">Executive summary</p>
+    <div class="card">
+      <div class="card-body">
+        <div class="exec-grid">
+          <div>
+            <div class="exec-col-label green">Highlights this month</div>
+            <ul class="exec-list">
+              <li><span class="icon" style="color:var(--green);">✓</span> Site availability was 100% — no downtime events</li>
+              <li><span class="icon" style="color:var(--green);">✓</span> All backups completed successfully every day</li>
+              <li><span class="icon" style="color:var(--green);">✓</span> Plugins updated, PHP upgraded to 8.2</li>
+              <li><span class="icon" style="color:var(--green);">✓</span> 0 critical security vulnerabilities detected</li>
+            </ul>
+          </div>
+          <div>
+            <div class="exec-col-label red">Areas to address</div>
+            <ul class="exec-list">
+              <li><span class="icon" style="color:var(--red);">→</span> Mobile page speed is 26/100 — well below the 60 minimum</li>
+              <li><span class="icon" style="color:var(--red);">→</span> Total Blocking Time of 970ms — heavy JavaScript loading</li>
+              <li><span class="icon" style="color:var(--amber);">→</span> SEO score of 61/100 may be limiting organic search visibility</li>
+              <li><span class="icon" style="color:var(--amber);">→</span> Layout Stability (CLS) is marginally above the good threshold</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── DETAILED BREAKDOWN ─────────────────────────────────────── -->
+    <p class="page-section-label">Detailed breakdown</p>
+
+    <!-- PERFORMANCE -->
+    <div class="card">
+      <div class="section-header red">
+        <div class="section-title-wrap">
+          <span class="section-icon">⚡</span>
+          <div>
+            <div class="section-title">Performance</div>
+            <div class="section-trend trend-stable">→ Stable</div>
+          </div>
+        </div>
+        <div class="section-score-wrap">
+          <div class="section-score">18<span>/100</span></div>
+          <span class="badge badge-red"><span class="badge-dot dot-red"></span>Action required</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="score-bar-wrap">
+          <div class="score-bar-top"><span>Score</span><span>18/100</span></div>
+          <div class="score-bar-track"><div class="score-bar-fill" style="width:18%;background:var(--red);"></div></div>
+        </div>
+        <p class="section-headline">Mobile performance requires urgent attention</p>
+        <p class="section-interp">Barnardos Australia scores 26/100 on Google's mobile page speed test, run live on 7 May 2026. The main cause is 970ms of Total Blocking Time — JavaScript resources are preventing the page from becoming interactive for nearly a full second. The primary offenders are Bootstrap, FontAwesome, jQuery, and a Convert Experiments analytics script that adds 780ms on its own. Together these resources account for over 15 seconds of network loading time.</p>
+
+        <div class="metric-tiles">
+          <div class="metric-tile red">
+            <div class="metric-tile-top">
+              <div class="metric-tile-key">PageSpeed (Mobile)</div>
+              <div class="metric-tile-dot dot-red"></div>
+            </div>
+            <div class="metric-tile-value">26/100</div>
+            <div class="metric-tile-desc">Significantly below the acceptable minimum of 60</div>
+          </div>
+          <div class="metric-tile red">
+            <div class="metric-tile-top">
+              <div class="metric-tile-key">Total Blocking Time</div>
+              <div class="metric-tile-dot dot-red"></div>
+            </div>
+            <div class="metric-tile-value">970ms</div>
+            <div class="metric-tile-desc">Heavy JavaScript blocking interactivity for nearly 1 second</div>
+          </div>
+          <div class="metric-tile amber">
+            <div class="metric-tile-top">
+              <div class="metric-tile-key">Largest Contentful Paint</div>
+              <div class="metric-tile-dot dot-amber"></div>
+            </div>
+            <div class="metric-tile-value">2.6s</div>
+            <div class="metric-tile-desc">Just over the 2.5s good threshold — improvable</div>
+          </div>
+          <div class="metric-tile amber">
+            <div class="metric-tile-top">
+              <div class="metric-tile-key">Layout Stability (CLS)</div>
+              <div class="metric-tile-dot dot-amber"></div>
+            </div>
+            <div class="metric-tile-value">0.104</div>
+            <div class="metric-tile-desc">Content shifts slightly while loading — just over 0.1</div>
+          </div>
+          <div class="metric-tile green">
+            <div class="metric-tile-top">
+              <div class="metric-tile-key">First Contentful Paint</div>
+              <div class="metric-tile-dot dot-green"></div>
+            </div>
+            <div class="metric-tile-value">0.8s</div>
+            <div class="metric-tile-desc">First content appears quickly — server response is fast</div>
+          </div>
+          <div class="metric-tile red">
+            <div class="metric-tile-top">
+              <div class="metric-tile-key">Speed Index</div>
+              <div class="metric-tile-dot dot-red"></div>
+            </div>
+            <div class="metric-tile-value">4.0s</div>
+            <div class="metric-tile-desc">Page takes 4 seconds to visually appear complete</div>
+          </div>
+        </div>
+
+        <div class="risk-box">
+          <div class="risk-box-label">Business risk</div>
+          <p>High risk. Google uses mobile page speed as a ranking factor. A score of 26 is likely suppressing organic search traffic and increasing bounce rates — visitors who wait too long simply leave before engaging with Barnardos' content or donation pages.</p>
+        </div>
+        <div class="action-box red">
+          <div class="action-box-label">Recommended action</div>
+          <p>Performance remediation is the priority for June. Quick wins: defer the Convert Experiments script, lazy-load FontAwesome, enable WP Engine CDN caching. Expected improvement: +20–30 points.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECURITY -->
+    <div class="card">
+      <div class="section-header green">
+        <div class="section-title-wrap">
+          <span class="section-icon">🔒</span>
+          <div>
+            <div class="section-title">Security</div>
+            <div class="section-trend trend-improving">↑ Improving</div>
+          </div>
+        </div>
+        <div class="section-score-wrap">
+          <div class="section-score">95<span>/100</span></div>
+          <span class="badge badge-green"><span class="badge-dot dot-green"></span>Good</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="score-bar-wrap">
+          <div class="score-bar-top"><span>Score</span><span>95/100</span></div>
+          <div class="score-bar-track"><div class="score-bar-fill" style="width:95%;background:var(--green);"></div></div>
+        </div>
+        <p class="section-headline">Security posture is strong</p>
+        <p class="section-interp">No critical vulnerabilities were detected this month. The WP Engine firewall blocked 312 attack attempts automatically. All plugins were updated as part of this month's maintenance work, removing known vulnerability exposure. The SSL certificate is valid.</p>
+        <div class="metric-tiles">
+          <div class="metric-tile green">
+            <div class="metric-tile-top"><div class="metric-tile-key">Known Vulnerabilities</div><div class="metric-tile-dot dot-green"></div></div>
+            <div class="metric-tile-value">0</div>
+            <div class="metric-tile-desc">No vulnerabilities in plugins or themes</div>
+          </div>
+          <div class="metric-tile green">
+            <div class="metric-tile-top"><div class="metric-tile-key">Blocked Attacks (30 days)</div><div class="metric-tile-dot dot-green"></div></div>
+            <div class="metric-tile-value">312</div>
+            <div class="metric-tile-desc">All blocked automatically by WP Engine firewall</div>
+          </div>
+          <div class="metric-tile green">
+            <div class="metric-tile-top"><div class="metric-tile-key">SSL Certificate</div><div class="metric-tile-dot dot-green"></div></div>
+            <div class="metric-tile-value">Valid</div>
+            <div class="metric-tile-desc">SSL certificate is valid and auto-renewing</div>
+          </div>
+          <div class="metric-tile green">
+            <div class="metric-tile-top"><div class="metric-tile-key">Open Security Alerts</div><div class="metric-tile-dot dot-green"></div></div>
+            <div class="metric-tile-value">0</div>
+            <div class="metric-tile-desc">No open alerts in the codebase</div>
+          </div>
+        </div>
+        <div class="risk-box">
+          <div class="risk-box-label">Business risk</div>
+          <p>Low security risk. Site is well protected by WP Engine's enterprise firewall and all software is current.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- RELIABILITY -->
+    <div class="card">
+      <div class="section-header green">
+        <div class="section-title-wrap">
+          <span class="section-icon">📡</span>
+          <div>
+            <div class="section-title">Reliability</div>
+            <div class="section-trend trend-stable">→ Stable</div>
+          </div>
+        </div>
+        <div class="section-score-wrap">
+          <div class="section-score">100<span>/100</span></div>
+          <span class="badge badge-green"><span class="badge-dot dot-green"></span>Good</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="score-bar-wrap">
+          <div class="score-bar-top"><span>Score</span><span>100/100</span></div>
+          <div class="score-bar-track"><div class="score-bar-fill" style="width:100%;background:var(--green);"></div></div>
+        </div>
+        <p class="section-headline">Site is stable and fully available</p>
+        <p class="section-interp">Barnardos Australia had 100% uptime in May with no incidents or downtime events. The site was accessible to every visitor at all times. WP Engine's hosting infrastructure performed as expected.</p>
+        <div class="metric-tiles">
+          <div class="metric-tile green">
+            <div class="metric-tile-top"><div class="metric-tile-key">Uptime (30 days)</div><div class="metric-tile-dot dot-green"></div></div>
+            <div class="metric-tile-value">100%</div>
+            <div class="metric-tile-desc">No downtime recorded this month</div>
+          </div>
+          <div class="metric-tile green">
+            <div class="metric-tile-top"><div class="metric-tile-key">Incidents</div><div class="metric-tile-dot dot-green"></div></div>
+            <div class="metric-tile-value">0</div>
+            <div class="metric-tile-desc">No incidents this month</div>
+          </div>
+        </div>
+        <div class="risk-box">
+          <div class="risk-box-label">Business risk</div>
+          <p>No reliability risk. The site remained fully available to donors, families, and carers throughout the month.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- UPDATES -->
+    <div class="card">
+      <div class="section-header green">
+        <div class="section-title-wrap">
+          <span class="section-icon">🔄</span>
+          <div>
+            <div class="section-title">Updates &amp; technical health</div>
+            <div class="section-trend trend-improving">↑ Improving</div>
+          </div>
+        </div>
+        <div class="section-score-wrap">
+          <div class="section-score">100<span>/100</span></div>
+          <span class="badge badge-green"><span class="badge-dot dot-green"></span>Good</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="score-bar-wrap">
+          <div class="score-bar-top"><span>Score</span><span>100/100</span></div>
+          <div class="score-bar-track"><div class="score-bar-fill" style="width:100%;background:var(--green);"></div></div>
+        </div>
+        <p class="section-headline">All software is current</p>
+        <p class="section-interp">All plugin updates were applied during this month's maintenance window. PHP has been upgraded to 8.2, which receives full security and bug fixes until December 2026. WordPress core is up to date.</p>
+        <div class="metric-tiles">
+          <div class="metric-tile green">
+            <div class="metric-tile-top"><div class="metric-tile-key">WordPress Core</div><div class="metric-tile-dot dot-green"></div></div>
+            <div class="metric-tile-value">Current</div>
+            <div class="metric-tile-desc">Running the latest WordPress version</div>
+          </div>
+          <div class="metric-tile green">
+            <div class="metric-tile-top"><div class="metric-tile-key">Plugin Updates Pending</div><div class="metric-tile-dot dot-green"></div></div>
+            <div class="metric-tile-value">0</div>
+            <div class="metric-tile-desc">All plugins updated during May M&S window</div>
+          </div>
+          <div class="metric-tile green">
+            <div class="metric-tile-top"><div class="metric-tile-key">PHP Version</div><div class="metric-tile-dot dot-green"></div></div>
+            <div class="metric-tile-value">8.2</div>
+            <div class="metric-tile-desc">Actively supported until December 2026</div>
+          </div>
+        </div>
+        <div class="risk-box">
+          <div class="risk-box-label">Business risk</div>
+          <p>No risk from outdated software. All components are current following this month's maintenance.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- BACKUPS -->
+    <div class="card">
+      <div class="section-header green">
+        <div class="section-title-wrap">
+          <span class="section-icon">💾</span>
+          <div>
+            <div class="section-title">Backups &amp; recovery</div>
+            <div class="section-trend trend-stable">→ Stable</div>
+          </div>
+        </div>
+        <div class="section-score-wrap">
+          <div class="section-score">100<span>/100</span></div>
+          <span class="badge badge-green"><span class="badge-dot dot-green"></span>Good</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="score-bar-wrap">
+          <div class="score-bar-top"><span>Score</span><span>100/100</span></div>
+          <div class="score-bar-track"><div class="score-bar-fill" style="width:100%;background:var(--green);"></div></div>
+        </div>
+        <p class="section-headline">Backups are healthy and current</p>
+        <p class="section-interp">WP Engine daily backups completed successfully every day in May. The site can be restored to any point within the last 30 days. A pre-maintenance backup was taken before plugin updates were applied.</p>
+        <div class="metric-tiles">
+          <div class="metric-tile green">
+            <div class="metric-tile-top"><div class="metric-tile-key">Last Backup Status</div><div class="metric-tile-dot dot-green"></div></div>
+            <div class="metric-tile-value">Success</div>
+            <div class="metric-tile-desc">Most recent backup completed successfully</div>
+          </div>
+          <div class="metric-tile green">
+            <div class="metric-tile-top"><div class="metric-tile-key">Retention Period</div><div class="metric-tile-dot dot-green"></div></div>
+            <div class="metric-tile-value">30 days</div>
+            <div class="metric-tile-desc">WP Engine retains 30 days of daily backups</div>
+          </div>
+        </div>
+        <div class="risk-box">
+          <div class="risk-box-label">Business risk</div>
+          <p>Low risk. Full site recovery is available from any point this month. In the event of any incident, the site can be restored quickly.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ENGINEERING -->
+    <div class="card">
+      <div class="section-header green">
+        <div class="section-title-wrap">
+          <span class="section-icon">⚙️</span>
+          <div>
+            <div class="section-title">Engineering activity</div>
+            <div class="section-trend trend-stable">→ Stable</div>
+          </div>
+        </div>
+        <div class="section-score-wrap">
+          <div class="section-score">90<span>/100</span></div>
+          <span class="badge badge-green"><span class="badge-dot dot-green"></span>Good</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="score-bar-wrap">
+          <div class="score-bar-top"><span>Score</span><span>90/100</span></div>
+          <div class="score-bar-track"><div class="score-bar-fill" style="width:90%;background:var(--green);"></div></div>
+        </div>
+        <p class="section-headline">Maintenance completed cleanly</p>
+        <p class="section-interp">This month's maintenance was completed with 2 deployments — a staging validation followed by a production deployment. All changes were tested on staging before going live. No failed builds or emergency fixes were required.</p>
+        <div class="metric-tiles">
+          <div class="metric-tile green">
+            <div class="metric-tile-top"><div class="metric-tile-key">Deployments</div><div class="metric-tile-dot dot-green"></div></div>
+            <div class="metric-tile-value">2</div>
+            <div class="metric-tile-desc">1 staging + 1 production — both successful</div>
+          </div>
+          <div class="metric-tile green">
+            <div class="metric-tile-top"><div class="metric-tile-key">Failed Deployments</div><div class="metric-tile-dot dot-green"></div></div>
+            <div class="metric-tile-value">0</div>
+            <div class="metric-tile-desc">All deployments succeeded first time</div>
+          </div>
+          <div class="metric-tile green">
+            <div class="metric-tile-top"><div class="metric-tile-key">Emergency Hotfixes</div><div class="metric-tile-dot dot-green"></div></div>
+            <div class="metric-tile-value">0</div>
+            <div class="metric-tile-desc">No emergency fixes required</div>
+          </div>
+        </div>
+
+        <!-- Deployments -->
+        <div style="margin-top:16px;">
+          <div style="font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:12px;">Deployment log</div>
+          <div class="deploy-item">
+            <div class="deploy-dot-col">
+              <div class="deploy-dot" style="background:var(--green);"></div>
+              <div class="deploy-line"></div>
+            </div>
+            <div>
+              <div class="deploy-title">May M&S: plugin updates, security review, PHP 8.2 upgrade</div>
+              <div class="deploy-meta">
+                <span class="deploy-sha">f4a19c3</span>
+                <span class="deploy-status">Deployed</span>
+                <span>Production · 6 May, 10:15</span>
+              </div>
+            </div>
+          </div>
+          <div class="deploy-item">
+            <div class="deploy-dot-col">
+              <div class="deploy-dot" style="background:var(--green);"></div>
+            </div>
+            <div>
+              <div class="deploy-title">Staging validation: May M&S changes</div>
+              <div class="deploy-meta">
+                <span class="deploy-sha">e2d88b1</span>
+                <span class="deploy-status">Deployed</span>
+                <span>Staging · 6 May, 09:00</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="risk-box" style="margin-top:16px;">
+          <div class="risk-box-label">Business risk</div>
+          <p>No engineering risk. Maintenance was carried out to a controlled process with staging validation before production deployment.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── RECOMMENDED ACTIONS ────────────────────────────────────── -->
+    <p class="page-section-label">Recommended actions</p>
+    <div class="card">
+      <div class="card-body">
+
+        <div class="rec-action high">
+          <div class="rec-action-top">
+            <div class="priority-dot" style="background:var(--red);"></div>
+            <div class="priority-label">High priority</div>
+          </div>
+          <div class="rec-action-text">Defer Convert Experiments analytics script and lazy-load FontAwesome icons</div>
+          <div class="rec-action-impact">These two changes account for ~1,560ms of blocking time. Expected improvement: +15–20 PageSpeed points. Google uses mobile speed as a ranking factor — this directly impacts organic search traffic to Barnardos' donation and service pages.</div>
+        </div>
+
+        <div class="rec-action high">
+          <div class="rec-action-top">
+            <div class="priority-dot" style="background:var(--red);"></div>
+            <div class="priority-label">High priority</div>
+          </div>
+          <div class="rec-action-text">Audit and reduce render-blocking CSS — Bootstrap and FontAwesome total 47KB of blocking CSS</div>
+          <div class="rec-action-impact">Reducing render-blocking CSS improves Speed Index and LCP, making the page feel significantly faster. Replace with utility-only classes where possible.</div>
+        </div>
+
+        <div class="rec-action medium">
+          <div class="rec-action-top">
+            <div class="priority-dot" style="background:var(--amber);"></div>
+            <div class="priority-label">Medium priority</div>
+          </div>
+          <div class="rec-action-text">Enable WP Engine CDN caching and configure static asset cache headers</div>
+          <div class="rec-action-impact">Low-effort infrastructure change with meaningful impact on repeat visitor load times. Can be done without code changes.</div>
+        </div>
+
+        <div class="rec-action medium">
+          <div class="rec-action-top">
+            <div class="priority-dot" style="background:var(--amber);"></div>
+            <div class="priority-label">Medium priority</div>
+          </div>
+          <div class="rec-action-text">Remove jQuery Migrate (5.2KB) — no legacy jQuery code should require it on a current build</div>
+          <div class="rec-action-impact">Reduces page weight and eliminates an unnecessary legacy dependency from every page load.</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── FOOTER ─────────────────────────────────────────────────── -->
+    <div class="report-footer">
+      <p>This report was generated by Wordie on 7 May 2026.</p>
+      <p>Questions? Contact us at <a href="mailto:support@wordie.com.au">support@wordie.com.au</a></p>
+      <div class="wordmark-footer">wordie — WordPress, done properly.</div>
+    </div>
+
+  </div>
+
+  <!-- Print button -->
+  <button class="print-btn" onclick="window.print()">
+    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+    Print / Export PDF
+  </button>
+
+</body>
+</html>

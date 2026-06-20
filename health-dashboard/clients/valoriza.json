@@ -1,0 +1,173 @@
+{
+  "id": "valoriza",
+  "client_name": "Valoriza Australia",
+  "domain": "www.valoriza.au",
+  "wpengine_install": "valoriza",
+  "reports": {
+    "2026-05": {
+      "report_month": "2026-05",
+      "generated_at": "2026-05-07",
+      "health_score": 77,
+      "health_score_prev": null,
+      "overall_status": "AMBER",
+      "executive_summary": "This is Valoriza Australia's first monthly health assessment. The site is live, stable, and fully available — with strong security and backup posture on WP Engine. However, mobile page speed needs attention. Google's lab test records an 8.3 second Largest Contentful Paint, which is well above the 2.5 second threshold and will impact search rankings for key service pages. The root cause is a combination of render-blocking CSS, an unoptimised hero image, and unused JavaScript. Addressing these is the priority for the next maintenance cycle.",
+      "highlights": [
+        "Site live and fully available — 100% uptime recorded",
+        "WordPress, plugins and theme confirmed running on WP Engine",
+        "Daily automated backups active and healthy",
+        "WAF (Web Application Firewall) active — no threats detected",
+        "CLS score of 0 — no layout instability at all"
+      ],
+      "key_risks": [
+        "LCP of 8.3s in Google lab test — well above the 2.5s threshold (RED)",
+        "6 render-blocking CSS/JS requests delaying first paint",
+        "Hero image not preloaded — causing delayed LCP discovery",
+        "Unused JavaScript and CSS adding unnecessary page weight"
+      ],
+      "sections": {
+        "performance": {
+          "status": "RED",
+          "score": 45,
+          "trend": "STABLE",
+          "headline": "Hero image and render-blocking assets are slowing mobile load",
+          "interpretation": "Valoriza scores 68/100 on Google's mobile performance test (PageSpeed Insights lab data, run 7 May 2026). The critical issue is Largest Contentful Paint of 8.3 seconds — Google's threshold for a good LCP is 2.5 seconds. The cause is a combination of 6 render-blocking CSS/JS requests that delay the browser from rendering anything, and a large hero image that is not preloaded or properly optimised. Real-user field data shows better numbers (LCP 1.3s), but Google's ranking algorithm uses lab scores, so the 68/100 represents the ranking risk.",
+          "metrics": [
+            { "label": "PageSpeed (Mobile)", "value": "68/100", "status": "AMBER", "description": "Amber — below the 80 target but not critical" },
+            { "label": "Largest Contentful Paint", "value": "8.3s", "status": "RED", "description": "Well above the 2.5s good threshold — main ranking risk" },
+            { "label": "First Contentful Paint", "value": "2.7s", "status": "AMBER", "description": "Slightly over the 1.8s good threshold" },
+            { "label": "Total Blocking Time", "value": "130ms", "status": "GREEN", "description": "Within the 200ms good threshold — interactivity is fine" },
+            { "label": "Cumulative Layout Shift", "value": "0.000", "status": "GREEN", "description": "Perfect — no layout shift at all" },
+            { "label": "Speed Index", "value": "4.2s", "status": "AMBER", "description": "Page takes a while to appear visually complete" }
+          ],
+          "risk": "An LCP of 8.3s is a direct Google ranking signal. Service and contact pages competing for organic search traffic will be penalised relative to faster competitors. The fix is targeted and achievable in a single sprint.",
+          "recommended_action": "Preload the hero image using <link rel=preload>, convert it to WebP format, and defer the 6 render-blocking CSS/JS files. Expected outcome: LCP under 3s, PageSpeed score 80+."
+        },
+        "security": {
+          "status": "AMBER",
+          "score": 88,
+          "trend": "STABLE",
+          "headline": "WAF active — plugin audit recommended this cycle",
+          "interpretation": "The WP Engine WAF is active and blocking threats at the edge. No malware or suspicious logins detected. As this is the first assessment, a full plugin audit is recommended to establish a clean security baseline and confirm no outdated or abandoned plugins are installed.",
+          "metrics": [
+            { "label": "WAF Status", "value": "Active", "status": "GREEN", "description": "Firewall blocking threats at the edge" },
+            { "label": "Malware Scan", "value": "Clean", "status": "GREEN", "description": "No malware or suspicious files detected" },
+            { "label": "SSL Certificate", "value": "Valid", "status": "GREEN", "description": "HTTPS active — certificate valid" },
+            { "label": "Plugin Audit", "value": "Pending", "status": "AMBER", "description": "First-cycle audit to establish baseline" }
+          ],
+          "risk": "No active security threat. Establishing a plugin audit baseline this cycle ensures any abandoned or vulnerable plugins are identified before they become an issue.",
+          "recommended_action": "Complete a full plugin audit this cycle — review all installed plugins for activity, update status, and known CVEs."
+        },
+        "reliability": {
+          "status": "GREEN",
+          "score": 97,
+          "trend": "STABLE",
+          "headline": "Site fully available — no downtime recorded",
+          "interpretation": "The site is running on WP Engine infrastructure with 100% uptime recorded this period. No incidents, outages, or degraded-performance events were detected.",
+          "metrics": [
+            { "label": "Uptime (30 days)", "value": "100%", "status": "GREEN", "description": "No downtime recorded" },
+            { "label": "Incidents", "value": "0", "status": "GREEN", "description": "No outages or errors detected" }
+          ],
+          "risk": "No reliability risk at this time.",
+          "recommended_action": null
+        },
+        "updates": {
+          "status": "AMBER",
+          "score": 72,
+          "trend": "STABLE",
+          "headline": "Plugin update review required this cycle",
+          "interpretation": "This is the first maintenance cycle for Valoriza. A full review of plugin and theme update status is underway. Any pending updates will be applied and tested in this cycle to bring the site to a fully current baseline.",
+          "metrics": [
+            { "label": "Update Status", "value": "In review", "status": "AMBER", "description": "First-cycle baseline review in progress" },
+            { "label": "WordPress Core", "value": "Current", "status": "GREEN", "description": "Running latest stable release" },
+            { "label": "PHP Version", "value": "To confirm", "status": "AMBER", "description": "PHP version to be confirmed this cycle" }
+          ],
+          "risk": "Pending plugin updates can expose the site to known vulnerabilities. Completing the first-cycle update baseline removes this risk.",
+          "recommended_action": "Apply all pending plugin and theme updates in this maintenance window. Confirm PHP version is 8.1 or higher."
+        },
+        "backups": {
+          "status": "GREEN",
+          "score": 92,
+          "trend": "STABLE",
+          "headline": "Automated daily backups confirmed healthy",
+          "interpretation": "WP Engine automated daily backups are active and completing successfully. Restore points are available covering the last 30 days.",
+          "metrics": [
+            { "label": "Backup Status", "value": "Healthy", "status": "GREEN", "description": "Automated daily backups completing" },
+            { "label": "Last Backup", "value": "Today", "status": "GREEN", "description": "Most recent backup completed without error" },
+            { "label": "Retention", "value": "30 days", "status": "GREEN", "description": "Full month of restore points available" }
+          ],
+          "risk": "No backup risk. Daily automated backups ensure full recoverability.",
+          "recommended_action": null
+        },
+        "engineering": {
+          "status": "GREEN",
+          "score": 88,
+          "trend": "STABLE",
+          "headline": "Clean baseline — onboarding deployment successful",
+          "interpretation": "Valoriza has been onboarded to the Wordie maintenance programme this month. The initial baseline deployment was completed without incident.",
+          "metrics": [
+            { "label": "Deployments", "value": "1", "status": "GREEN", "description": "Onboarding deployment completed successfully" },
+            { "label": "Hotfixes", "value": "0", "status": "GREEN", "description": "No emergency fixes required" },
+            { "label": "Failed Builds", "value": "0", "status": "GREEN", "description": "All pipelines passed" }
+          ],
+          "risk": "No engineering risk at this time.",
+          "recommended_action": null
+        }
+      },
+      "recommended_actions": [
+        {
+          "priority": "HIGH",
+          "title": "Preload hero image and convert to WebP format",
+          "impact": "The hero image is the LCP element — preloading it and serving it in WebP format is the single highest-impact change. Expected LCP improvement from 8.3s to under 3s, lifting PageSpeed score to 80+. This directly affects Google rankings for Valoriza's service pages."
+        },
+        {
+          "priority": "HIGH",
+          "title": "Defer 6 render-blocking CSS and JavaScript requests",
+          "impact": "Render-blocking resources are preventing the browser from displaying any content until they finish loading. Deferring non-critical JS and inlining critical CSS will reduce First Contentful Paint and Speed Index significantly."
+        },
+        {
+          "priority": "MEDIUM",
+          "title": "Apply all pending plugin and theme updates",
+          "impact": "Establishing a clean update baseline in the first maintenance cycle removes known vulnerability exposure and ensures compatibility with the latest WordPress core."
+        },
+        {
+          "priority": "MEDIUM",
+          "title": "Remove unused JavaScript and CSS",
+          "impact": "Google flags unused JS and CSS as contributing to unnecessary page weight. Removing or conditionally loading these assets will reduce overall load time and improve the PageSpeed score."
+        }
+      ],
+      "support_tickets": {
+        "portal_url": "https://support.wordie.com.au/ticket",
+        "summary": {
+          "opened": 2,
+          "closed": 1,
+          "in_progress": 1,
+          "pending_client": 0
+        },
+        "tickets": [
+          {
+            "id": "WRD-1064",
+            "subject": "Valoriza onboarding — site access and WP Engine setup",
+            "status": "CLOSED",
+            "priority": "HIGH",
+            "type": "Maintenance",
+            "assigned_to": "Stewart L.",
+            "opened": "2026-05-01",
+            "closed": "2026-05-03",
+            "notes": "WP Engine access confirmed. Baseline health snapshot completed."
+          },
+          {
+            "id": "WRD-1065",
+            "subject": "Performance remediation — hero image LCP fix",
+            "status": "IN_PROGRESS",
+            "priority": "HIGH",
+            "type": "Development",
+            "assigned_to": "Stewart L.",
+            "opened": "2026-05-07",
+            "closed": null,
+            "notes": "Hero image preload and WebP conversion scoped. Work commencing next sprint."
+          }
+        ]
+      }
+    }
+  }
+}

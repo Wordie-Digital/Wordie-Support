@@ -1,0 +1,212 @@
+{
+  "id": "meaustdev",
+  "client_name": "Mitsubishi Electric Australia (Staging)",
+  "domain": "meaustdev.wpengine.com",
+  "wpengine_install": "meaustdev",
+  "reports": {
+    "2026-05": {
+      "report_month": "2026-05",
+      "generated_at": "2026-05-07",
+      "health_score": 80,
+      "health_score_prev": null,
+      "overall_status": "AMBER",
+      "executive_summary": "This is the first health assessment for the Mitsubishi Electric Australia staging environment (meaustdev.wpengine.com). The staging site scores 88/100 on Google's mobile speed test — comparable to the production score of 89/100. Core Web Vitals are strong: Total Blocking Time is a perfect 0ms and layout stability is near-perfect at 0.001. Speed Index is elevated at 6.3 seconds compared to production, which is expected without CDN caching active on staging. The homepage hero content is not rendering in the browser viewport — the nav loads correctly but the main content area is blank. This needs to be resolved before the environment can be used for pre-production visual testing.",
+      "highlights": [
+        "88/100 mobile PageSpeed — close to production score of 89/100",
+        "Perfect Total Blocking Time of 0ms — immediately interactive",
+        "First Contentful Paint of 1.7s — initial server response is fast",
+        "Near-perfect CLS of 0.001 — no layout instability",
+        "WP Engine automated backups active on staging"
+      ],
+      "key_risks": [
+        "Homepage hero content not rendering — blank area below navigation",
+        "Speed Index of 6.3s — CDN not active on staging environment",
+        "LCP of 2.9s — just above the 2.5s good threshold",
+        "meaustdev.wpenginepowered.com returning a database error"
+      ],
+      "sections": {
+        "performance": {
+          "status": "AMBER",
+          "score": 75,
+          "trend": "STABLE",
+          "headline": "88/100 mobile — Speed Index elevated without CDN",
+          "interpretation": "The staging environment scores 88/100 on Google's mobile performance test (PageSpeed Insights lab data, run 7 May 2026). This is comparable to the production score of 89/100. Total Blocking Time is a perfect 0ms and CLS is near-perfect at 0.001. Speed Index of 6.3s is elevated compared to production (2.8s) — expected on staging where WP Engine's CDN is not active. LCP of 2.9s is just above the 2.5s good threshold.",
+          "metrics": [
+            { "label": "PageSpeed (Mobile)", "value": "88/100", "status": "AMBER", "description": "Close to production — CDN absence accounts for the gap" },
+            { "label": "Speed Index", "value": "6.3s", "status": "RED", "description": "Elevated vs production — no CDN caching on staging" },
+            { "label": "Largest Contentful Paint", "value": "2.9s", "status": "AMBER", "description": "Just above the 2.5s good threshold" },
+            { "label": "First Contentful Paint", "value": "1.7s", "status": "GREEN", "description": "Good — initial server response is fast" },
+            { "label": "Total Blocking Time", "value": "0ms", "status": "GREEN", "description": "Perfect — site is immediately interactive" },
+            { "label": "Cumulative Layout Shift", "value": "0.001", "status": "GREEN", "description": "Near-perfect layout stability" }
+          ],
+          "risk": "Speed Index is elevated due to absence of CDN on staging — this does not reflect production performance. The homepage hero not rendering is a more immediate concern for pre-production testing.",
+          "recommended_action": "Investigate why the homepage hero content is not rendering. Check for JavaScript errors in the browser console on the staging environment."
+        },
+        "security": {
+          "status": "GREEN",
+          "score": 88,
+          "trend": "STABLE",
+          "headline": "WP Engine WAF active — same infrastructure as production",
+          "interpretation": "The staging environment runs on the same WP Engine infrastructure as production. WAF protection is active at the edge. SSL is valid on the staging subdomain. No malware or suspicious activity detected.",
+          "metrics": [
+            { "label": "WAF Status", "value": "Active", "status": "GREEN", "description": "Firewall active — same infrastructure as production" },
+            { "label": "Malware Scan", "value": "Clean", "status": "GREEN", "description": "No malware or suspicious files detected" },
+            { "label": "SSL Certificate", "value": "Valid", "status": "GREEN", "description": "HTTPS active on staging subdomain" }
+          ],
+          "risk": "No active security threat on staging.",
+          "recommended_action": null
+        },
+        "reliability": {
+          "status": "AMBER",
+          "score": 70,
+          "trend": "STABLE",
+          "headline": "Staging accessible — homepage hero not rendering",
+          "interpretation": "The staging environment is reachable and the WordPress navigation loads correctly. However, the homepage hero content area is blank — a JavaScript rendering issue is preventing the main content from displaying. This needs to be resolved before the environment can be used for pre-production visual reviews.",
+          "metrics": [
+            { "label": "Uptime", "value": "Accessible", "status": "GREEN", "description": "Staging environment is reachable" },
+            { "label": "Homepage Render", "value": "Partial", "status": "AMBER", "description": "Nav loads — hero content area not rendering" },
+            { "label": "Uptime Monitoring", "value": "None", "status": "AMBER", "description": "No formal uptime monitoring configured on staging" }
+          ],
+          "risk": "The blank hero section means staging cannot be used for visual pre-production reviews of homepage changes.",
+          "recommended_action": "Investigate and resolve the homepage hero rendering issue before using this environment for pre-production sign-off."
+        },
+        "updates": {
+          "status": "AMBER",
+          "score": 75,
+          "trend": "STABLE",
+          "headline": "Mirrors production — first-cycle update review in progress",
+          "interpretation": "The staging environment mirrors the production install. Plugin and theme update status follows the same first-cycle review underway on production. All updates will be applied and tested on staging before being pushed to production.",
+          "metrics": [
+            { "label": "Update Status", "value": "In review", "status": "AMBER", "description": "First-cycle review in progress — mirrors production" },
+            { "label": "WordPress Core", "value": "Current", "status": "GREEN", "description": "Running latest stable release" },
+            { "label": "PHP Version", "value": "To confirm", "status": "AMBER", "description": "PHP version to be confirmed this cycle" }
+          ],
+          "risk": "Pending updates on staging should be applied and tested before deploying to production.",
+          "recommended_action": "Apply all pending plugin and theme updates to staging first, verify no regressions, then push to production."
+        },
+        "backups": {
+          "status": "GREEN",
+          "score": 90,
+          "trend": "STABLE",
+          "headline": "WP Engine automated backups active on staging",
+          "interpretation": "WP Engine automated daily backups are active and include the staging environment. Restore points are available if a staging deployment needs to be rolled back.",
+          "metrics": [
+            { "label": "Backup Status", "value": "Healthy", "status": "GREEN", "description": "Automated backups completing" },
+            { "label": "Last Backup", "value": "Today", "status": "GREEN", "description": "Most recent backup completed without error" },
+            { "label": "Retention", "value": "30 days", "status": "GREEN", "description": "Full month of restore points available" }
+          ],
+          "risk": "No backup risk on staging.",
+          "recommended_action": null
+        },
+        "engineering": {
+          "status": "AMBER",
+          "score": 68,
+          "trend": "STABLE",
+          "headline": "Staging environment active — hero rendering and DB issues need resolution",
+          "interpretation": "The meaustdev staging environment is accessible via meaustdev.wpengine.com. WordPress admin, navigation, and WP Engine infrastructure are working. Two issues block full use of this environment: the homepage hero content is not rendering in the browser, and the alternative staging URL meaustdev.wpenginepowered.com is returning a WordPress database error.",
+          "metrics": [
+            { "label": "Environment Status", "value": "Partial", "status": "AMBER", "description": "Accessible but homepage hero not rendering" },
+            { "label": "DB Error (wpenginepowered)", "value": "Active", "status": "RED", "description": "meaustdev.wpenginepowered.com returning DB error" },
+            { "label": "Admin Access", "value": "Working", "status": "GREEN", "description": "WordPress admin accessible" }
+          ],
+          "risk": "The hero rendering issue prevents full visual pre-production testing. Both staging URLs should be functional before this environment is used in the deployment workflow.",
+          "recommended_action": "Resolve the homepage hero rendering issue on meaustdev.wpengine.com and fix the database connection error on meaustdev.wpenginepowered.com."
+        }
+      },
+      "recommended_actions": [
+        {
+          "priority": "HIGH",
+          "title": "Investigate and resolve homepage hero not rendering on staging",
+          "impact": "The staging homepage shows a blank content area below the navigation. Until resolved, staging cannot be used for visual pre-production testing of homepage and hero changes — increasing deployment risk on a high-traffic commercial site."
+        },
+        {
+          "priority": "HIGH",
+          "title": "Fix database connection error on meaustdev.wpenginepowered.com",
+          "impact": "The .wpenginepowered.com subdomain is returning a WordPress database error. Resolving this ensures both staging URLs are functional and accessible for the full team."
+        },
+        {
+          "priority": "MEDIUM",
+          "title": "Apply and test pending plugin and theme updates on staging",
+          "impact": "Testing all pending updates on staging before deploying to production reduces risk of regressions on the live site. Establishing this workflow in the first maintenance cycle sets the standard for all future deployments."
+        }
+      ],
+      "support_tickets": {
+        "portal_url": "https://support.wordie.com.au/ticket",
+        "summary": {
+          "opened": 0,
+          "closed": 0,
+          "in_progress": 4,
+          "pending_client": 2
+        },
+        "tickets": [
+          {
+            "id": "HS-252185295313",
+            "subject": "Nitro Pack Configuration",
+            "status": "IN_PROGRESS",
+            "priority": "HIGH",
+            "type": "Maintenance",
+            "assigned_to": "Stewart L.",
+            "opened": "2026-04-10",
+            "closed": null,
+            "notes": null
+          },
+          {
+            "id": "HS-252143472110",
+            "subject": "Homepage Hero Banner",
+            "status": "IN_PROGRESS",
+            "priority": "LOW",
+            "type": "Development",
+            "assigned_to": "Wordie Support",
+            "opened": "2026-04-10",
+            "closed": null,
+            "notes": null
+          },
+          {
+            "id": "HS-251106790852",
+            "subject": "SEO Technical Audit",
+            "status": "IN_PROGRESS",
+            "priority": "MEDIUM",
+            "type": "Development",
+            "assigned_to": "Wordie Support",
+            "opened": "2026-04-02",
+            "closed": null,
+            "notes": "SEO tech audit implementation"
+          },
+          {
+            "id": "HS-125857065420",
+            "subject": "M&S",
+            "status": "IN_PROGRESS",
+            "priority": "LOW",
+            "type": "Maintenance",
+            "assigned_to": "Wordie Support",
+            "opened": "2025-09-01",
+            "closed": null,
+            "notes": null
+          },
+          {
+            "id": "HS-226370229739",
+            "subject": "Core Web Vitals",
+            "status": "PENDING_CLIENT",
+            "priority": "LOW",
+            "type": "Development",
+            "assigned_to": "Wordie Support",
+            "opened": "2026-02-06",
+            "closed": null,
+            "notes": null
+          },
+          {
+            "id": "HS-247664183756",
+            "subject": "Compliance Disclaimer product category",
+            "status": "PENDING_CLIENT",
+            "priority": "LOW",
+            "type": "Bug",
+            "assigned_to": "Wordie Support",
+            "opened": "2026-03-09",
+            "closed": null,
+            "notes": "The Disclaimer implementation generated a Compliance Disclaimer product category as a visible page on the site."
+          }
+        ]
+      }
+    }
+  }
+}

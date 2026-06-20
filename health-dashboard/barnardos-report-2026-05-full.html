@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Barnardos Australia — Website Health Report — May 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    :root{
+      --dark-teal:#0A3542;--accent-teal:#116E6E;--light-green:#B9DDDD;
+      --coral:#F5634D;--near-black:#062028;--off-white:#F6F9F9;
+      --green:#10b981;--amber:#f59e0b;--red:#ef4444;
+      --green-bg:#ecfdf5;--green-border:#a7f3d0;--green-text:#065f46;
+      --amber-bg:#fffbeb;--amber-border:#fde68a;--amber-text:#92400e;
+      --red-bg:#fef2f2;--red-border:#fecaca;--red-text:#991b1b;
+    }
+    body{font-family:'Source Sans 3',sans-serif;font-size:15px;line-height:1.6;color:var(--near-black);background:var(--off-white);}
+    h1,h2,h3,h4,h5{font-family:'Montserrat',sans-serif;}
+    a{color:var(--accent-teal);text-decoration:none;}
+    .site-header{background:var(--dark-teal);padding:16px 24px;display:flex;align-items:center;justify-content:space-between;margin-bottom:32px;}
+    .wordmark{font-family:'Montserrat',sans-serif;font-weight:700;font-size:22px;color:var(--off-white);letter-spacing:-0.5px;}
+    .tagline{font-size:13px;color:rgba(185,221,221,0.7);}
+    .page{max-width:780px;margin:0 auto;padding:0 20px 64px;}
+    .card{background:#fff;border-radius:12px;border:1px solid #e5e7eb;box-shadow:0 1px 3px rgba(0,0,0,0.06);overflow:hidden;margin-bottom:16px;}
+    .card-body{padding:24px;}
+    .cover{background:var(--dark-teal);border-radius:16px;padding:36px 32px;margin-bottom:24px;position:relative;overflow:hidden;color:#fff;}
+    .cover::before{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;background:rgba(185,221,221,0.08);border-radius:50%;}
+    .cover::after{content:'';position:absolute;bottom:-40px;left:-40px;width:160px;height:160px;background:rgba(17,110,110,0.15);border-radius:50%;}
+    .cover-inner{position:relative;z-index:1;display:flex;align-items:flex-start;justify-content:space-between;gap:24px;flex-wrap:wrap;}
+    .cover-label{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(185,221,221,0.6);margin-bottom:8px;}
+    .cover h1{font-size:32px;font-weight:700;color:#fff;margin-bottom:4px;}
+    .cover-domain{font-size:13px;color:rgba(185,221,221,0.6);margin-bottom:6px;}
+    .cover-period{font-family:'Montserrat',sans-serif;font-size:18px;font-weight:600;color:var(--light-green);margin-bottom:20px;}
+    .cover-summary{background:rgba(255,255,255,0.1);border-radius:10px;padding:16px 18px;font-size:14px;color:rgba(255,255,255,0.88);line-height:1.65;max-width:420px;}
+    .gauge-wrap{display:flex;flex-direction:column;align-items:center;padding-top:8px;}
+    .gauge-label{font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;color:#ef4444;margin-top:6px;}
+    .gauge-sub{font-size:12px;color:rgba(185,221,221,0.6);margin-top:2px;}
+    .exec-card{background:#fff;border-radius:12px;border:1px solid #e5e7eb;padding:24px;margin-bottom:24px;}
+    .exec-card h2{font-size:18px;font-weight:700;color:var(--dark-teal);margin-bottom:16px;}
+    .exec-cols{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+    .exec-col-label{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:10px;}
+    .exec-col-label.green{color:#10b981;} .exec-col-label.amber{color:#f59e0b;}
+    .exec-item{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:#374151;margin-bottom:8px;}
+    .exec-check{color:#10b981;flex-shrink:0;margin-top:1px;font-weight:700;}
+    .exec-arrow{color:#f59e0b;flex-shrink:0;margin-top:1px;font-weight:700;}
+    .section-header{padding:16px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid;}
+    .section-title{font-family:'Montserrat',sans-serif;font-size:15px;font-weight:700;color:var(--dark-teal);}
+    .tl-badge{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;padding:3px 10px;border-radius:99px;letter-spacing:0.5px;}
+    .tl-badge.green{background:#dcfce7;color:#166534;} .tl-badge.amber{background:#fef9c3;color:#854d0e;} .tl-badge.red{background:#fee2e2;color:#991b1b;}
+    .score-bar{margin-bottom:14px;}
+    .score-bar-top{display:flex;justify-content:space-between;font-size:12px;color:#6b7280;margin-bottom:4px;}
+    .score-bar-track{height:6px;background:#f3f4f6;border-radius:99px;overflow:hidden;}
+    .score-bar-fill{height:100%;border-radius:99px;}
+    .section-headline{font-family:'Montserrat',sans-serif;font-size:15px;font-weight:700;color:var(--dark-teal);margin-bottom:8px;}
+    .section-interp{font-size:13px;color:#4b5563;line-height:1.65;margin-bottom:16px;}
+    .metric-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
+    .metric-tile{border-radius:8px;padding:12px 14px;}
+    .metric-tile.green{background:var(--green-bg);} .metric-tile.amber{background:var(--amber-bg);} .metric-tile.red{background:var(--red-bg);}
+    .metric-tile-top{display:flex;align-items:flex-start;justify-content:space-between;gap:6px;margin-bottom:4px;}
+    .metric-tile-label{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:#6b7280;}
+    .metric-tile-value{font-family:'Montserrat',sans-serif;font-size:20px;font-weight:700;line-height:1.1;margin-bottom:4px;}
+    .metric-tile.green .metric-tile-value{color:var(--green-text);} .metric-tile.amber .metric-tile-value{color:var(--amber-text);} .metric-tile.red .metric-tile-value{color:var(--red-text);}
+    .metric-tile-desc{font-size:11px;color:#6b7280;line-height:1.4;}
+    .risk-box{background:#f9fafb;border-radius:8px;padding:12px 14px;margin-bottom:10px;}
+    .risk-box-label{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#9ca3af;margin-bottom:4px;}
+    .risk-box p{font-size:13px;color:#374151;line-height:1.5;}
+    .action-box{border-radius:8px;padding:12px 14px;border:1px solid;}
+    .action-box.red{background:var(--red-bg);border-color:var(--red-border);}
+    .action-box.amber{background:var(--amber-bg);border-color:var(--amber-border);}
+    .action-box.green{background:var(--green-bg);border-color:var(--green-border);}
+    .action-box-label{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:4px;}
+    .action-box.red .action-box-label{color:var(--red-text);} .action-box.amber .action-box-label{color:var(--amber-text);} .action-box.green .action-box-label{color:var(--green-text);}
+    .action-box p{font-size:13px;color:#374151;line-height:1.5;}
+    .report-footer{text-align:center;padding:32px 0;border-top:1px solid #e5e7eb;margin-top:8px;}
+    .report-footer p{font-size:12px;color:#9ca3af;margin-bottom:4px;}
+    .wordmark-footer{font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;color:var(--dark-teal);margin-top:12px;}
+    .print-btn{position:fixed;bottom:24px;right:24px;background:var(--dark-teal);color:#fff;border:none;border-radius:8px;padding:12px 20px;font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:8px;box-shadow:0 4px 12px rgba(10,53,66,0.3);}
+    .print-btn:hover{background:var(--accent-teal);}
+    @media print{
+      .print-btn{display:none!important;}
+      body{background:#fff;}
+      .card,.exec-card{box-shadow:none;}
+      .site-header{margin-bottom:16px;}
+      .page{padding:0 16px 32px;}
+    }
+    @media(max-width:600px){
+      .cover-inner{flex-direction:column;}
+      .exec-cols{grid-template-columns:1fr;}
+      .metric-grid{grid-template-columns:1fr;}
+      .gauge-wrap{align-items:flex-start;}
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wordmark">wordie</div>
+  <div class="tagline">Website Health Dashboard</div>
+</header>
+
+<div class="page">
+
+  
+
+  <!-- COVER -->
+  <div class="cover">
+    <div class="cover-inner">
+      <div>
+        <div class="cover-label">Monthly Health Report</div>
+        <h1>Barnardos Australia</h1>
+        <div class="cover-domain">barnardosaudev.wpengine.com</div>
+        <div class="cover-period">May 2026</div>
+        <div class="cover-summary">May maintenance was completed successfully — all plugins are current, PHP has been upgraded to 8.2, and the site remained available 100% of the time. However, website performance on mobile devices is a significant concern. The site scores 26/100 on Google's mobile speed test, which is well below the threshold where search rankings and visitor experience are affected. The root cause is heavy JavaScript loading before the page becomes usable. A performance remediation plan is the recommended next step.</div>
+      </div>
+      <div class="gauge-wrap">
+        
+<svg width="130" height="130" viewBox="0 0 130 130">
+  <circle cx="65" cy="65" r="54" fill="none" stroke="#1d4e5f" stroke-width="10"/>
+  <circle cx="65" cy="65" r="54" fill="none" stroke="#ef4444" stroke-width="10"
+    stroke-dasharray="339.3" stroke-dashoffset="128.9"
+    stroke-linecap="round" transform="rotate(-90 65 65)"/>
+  <text x="65" y="60" text-anchor="middle" font-family="Montserrat,sans-serif" font-size="30" font-weight="700" fill="#ef4444">62</text>
+  <text x="65" y="76" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(185,221,221,0.6)">/100</text>
+</svg>
+        <div class="gauge-label">Action required</div>
+        <div class="gauge-sub">+2 vs last month</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EXECUTIVE SUMMARY -->
+  <div class="exec-card">
+    <h2>Executive summary</h2>
+    <div class="exec-cols">
+      <div>
+        <div class="exec-col-label green">Highlights this month</div>
+        <div class="exec-item"><span class="exec-check">✓</span><span>All plugins updated — 0 pending updates</span></div><div class="exec-item"><span class="exec-check">✓</span><span>PHP upgraded to 8.2 (current supported version)</span></div><div class="exec-item"><span class="exec-check">✓</span><span>100% uptime over the past 30 days</span></div><div class="exec-item"><span class="exec-check">✓</span><span>Daily backups completing successfully</span></div><div class="exec-item"><span class="exec-check">✓</span><span>No security threats detected — WAF active</span></div>
+      </div>
+      <div>
+        <div class="exec-col-label amber">Areas to address</div>
+        <div class="exec-item"><span class="exec-arrow">→</span><span>Mobile PageSpeed score of 26/100 — well below the 60 minimum threshold</span></div><div class="exec-item"><span class="exec-arrow">→</span><span>970ms Total Blocking Time is preventing interactive use for nearly 1 second</span></div><div class="exec-item"><span class="exec-arrow">→</span><span>Bootstrap and FontAwesome contributing 47KB of render-blocking CSS</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTIONS -->
+  <h2 style="font-family:'Montserrat',sans-serif;font-size:18px;font-weight:700;color:var(--dark-teal);margin-bottom:14px;">Detailed breakdown</h2>
+  
+  <div class="card">
+    <div class="section-header" style="background:#fef2f2;border-color:#fecaca">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:18px;">⚡</span>
+        <div>
+          <div class="section-title">Performance</div>
+          <div style="font-size:11px;font-weight:700;color:#6b7280">→ Stable</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div style="text-align:right;">
+          <div style="font-family:'Montserrat',sans-serif;font-size:20px;font-weight:700;color:var(--dark-teal);line-height:1;">18</div>
+          <div style="font-size:11px;color:#9ca3af;">/100</div>
+        </div>
+        <div class="tl-badge red">RED</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="score-bar">
+        <div class="score-bar-top"><span>Score</span><span>18/100</span></div>
+        <div class="score-bar-track">
+          <div class="score-bar-fill" style="width:18%;background:#ef4444;"></div>
+        </div>
+      </div>
+      <div class="section-headline">Mobile performance requires urgent attention</div>
+      <div class="section-interp">Barnardos Australia scores 26/100 on Google's mobile page speed test, run live on 7 May 2026. The main cause is 970ms of Total Blocking Time — JavaScript resources are preventing the page from becoming interactive for nearly a full second. The primary offenders are Bootstrap, FontAwesome, jQuery, and a Convert Experiments analytics script that adds 780ms on its own. Together these resources account for over 15 seconds of network loading time.</div>
+      <div class="metric-grid">
+    <div class="metric-tile red">
+      <div class="metric-tile-top">
+        <span class="metric-tile-label">PageSpeed (Mobile)</span>
+        <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#ef4444;flex-shrink:0;margin-top:3px;"></span>
+      </div>
+      <div class="metric-tile-value">26/100</div>
+      <div class="metric-tile-desc">Significantly below the acceptable minimum of 60</div>
+    </div>
+    <div class="metric-tile red">
+      <div class="metric-tile-top">
+        <span class="metric-tile-label">Total Blocking Time</span>
+        <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#ef4444;flex-shrink:0;margin-top:3px;"></span>
+      </div>
+      <div class="metric-tile-value">970ms</div>
+      <div class="metric-tile-desc">Heavy JavaScript blocking interactivity for nearly 1 second</div>
+    </div>
+    <div class="metric-tile amber">
+      <div class="metric-tile-top">
+        <span class="metric-tile-label">Largest Contentful Paint</span>
+        <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#f59e0b;flex-shrink:0;margin-top:3px;"></span>
+      </div>
+      <div class="metric-tile-value">2.6s</div>
+      <div class="metric-tile-desc">Just over the 2.5s good threshold — improvable</div>
+    </div>
+    <div class="metric-tile amber">
+      <div class="metric-tile-top">
+        <span class="metric-tile-label">Layout Stability (CLS)</span>
+        <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#f59e0b;flex-shrink:0;margin-top:3px;"></span>
+      </div>
+      <div class="metric-tile-value">0.104</div>
+      <div class="metric-tile-desc">Content shifts slightly while loading — just over 0.1</div>
+    </div>
+    <div class="metric-tile green">
+      <div class="metric-tile-top">
+        <span class="metric-tile-label">First Contentful Paint</span>
+        <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#10b981;flex-shrink:0;margin-top:3px;"></span>
+      </div>
+      <div class="metric-tile-value">0.8s</div>
+      <div class="metric-tile-desc">First content appears quickly — server response is fast</div>
+    </div>
+    <div class="metric-tile red">
+      <div class="metric-tile-top">
+        <span class="metric-tile-label">Speed Index</span>
+        <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#ef4444;flex-shrink:0;margin-top:3px;"></span>
+      </div>
+      <div class="metric-tile-value">4.0s</div>
+      <div class="metric-tile-desc">Page takes too long to appear visually complete</div>
+    </div></div>
+      <div class="risk-box">
+        <div class="risk-box-label">Business risk</div>
+        <p>A PageSpeed score of 26 is a confirmed Google ranking penalty. Barnardos' donation and service pages are likely losing organic search traffic. Visitors on slow mobile connections will abandon the site before it becomes usable.</p>
+      </div>
+      
+    <div class="action-box red">
+      <div class="action-box-label">Recommended action</div>
+      <p>Conduct a performance remediation sprint: defer the Convert Experiments script, lazy-load FontAwesome, and audit render-blocking CSS. Expected outcome: +20–30 PageSpeed points.</p>
+    </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-header" style="background:#ecfdf5;border-color:#a7f3d0">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:18px;">🔒</span>
+        <div>
+          <div class="section-title">Security</div>
+          <div style="font-size:11px;font-weight:700;color:#6b7280">→ Stable</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div style="text-align:right;">
+          <div style="font-family:'Montserrat',sans-serif;font-size:20px;font-weight:700;color:var(--dark-teal);line-height:1;">95</div>
+          <div style="font-size:11px;color:#9ca3af;">/100</div>
+        </div>
+        <div class="tl-badge green">GREEN</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="score-bar">
+        <div class="score-bar-top"><span>Score</span><span>95/100</span></div>
+        <div class="score-bar-track">
+          <div class="score-bar-fill" style="width:95%;background:#10b981;"></div>
+        </div>
+      </div>
+      <div class="section-headline">No threats detected — all security systems active</div>
+      <div class="section-interp">The WAF (Web Application Firewall) is active and blocking malicious traffic. No malware, no suspicious logins, and no known vulnerabilities in installed plugins. SSL certificate is valid with 280 days remaining.</div>
+      <div class="metric-grid">
+    <div class="metric-tile green">
+      <div class="metric-tile-top">
+        <span class="metric-tile-label">WAF Status</span>
+        <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#10b981;flex-shrink:0;margin-top:3px;"></span>
+      </div>
+      <div class="metric-tile-value">Active</div>
+      <div class="metric-tile-desc">Firewall blocking threats at the edge</div>
+    </div>
+    <div class="metric-tile green">
+      <div class="metric-tile-top">
+        <span class="metric-tile-label">Malware Scan</span>
+        <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#10b981;flex-shrink:0;margin-top:3px;"></span>
+      </div>
+      <div class="metric-tile-value">Clean</div>
+      <div class="metric-tile-desc">No malware or suspicious files detected</div>
+    </div>
+    <div class="metric-tile green">
+      <div class="metric-tile-top">
+        <span class="metric-tile-label">SSL Certificate</span>
+        <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#10b981;flex-shrink:0;margin-top:3px;"></span>
+      </div>
+      <div class="metric-tile-value">280 days</div>
+      <div class="metric-tile-desc">Certificate valid and auto-renewing</div>
+    </div>
+    <div class="metric-tile green">
+      <div class="metric-tile-top">
+        <span class="metric-tile-label">Login Security</span>
+        <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#10b981;flex-shrink:0;margin-top:3px;"></span>
+      </div>
+      <div class="metric-tile-value">Secure</div>
+      <div class="metric-tile-desc">No brute-force attempts detected this month</div>
+    </div></div>
+      <div class="risk-box">
+        <div class="risk-box-label">Business risk</div>
+        <p>No current security risk. Continued WAF monitoring and plugin update discipline are the primary controls.</p>
+      </div>
+      
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-header" style="background:#ecfdf5;border-color:#a7f3d0">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:18px;">📡</span>
+        <div>
+          <div class="section-title">Reliability</div>
+          <div style="font-size:11px;font-weight:700;color:#6b7280">→ Stable</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div style="text-align:right;">
+          <div style="font-family:'Montserrat',sans-serif;font-size:20px;font-weight:700;color:var(--dark-teal);line-height:1;">100</div>
+          <div style="font-size:11px;color:#9ca3af;">/100</div>
+        </div>
+        <div class="tl-badge green">GREEN</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="score-bar">
+        <div class="score-bar-top"><span>Score</span><span>100/100</span></div>
+        <div class="score-bar-track">
+          <div class="score-bar-fill" style="width:100%;background:#10b981;"></div>
+        </div>
+      </div>
+      <div class="section-headline">100% uptime — site fully available all month</div>
+      <div class="section-interp">The site was available 100% of the time over the past 30 days with no downtime events recorded. WP Engine's infrastructure handled all traffic without incident.</div>
+      <div class="metric-grid">
+    <div class="metric-tile green">
+      <div class="metric-tile-top">
+        <span class="metric-tile-label">Uptime (30 days)</span>
+        <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#10b981;flex-shrink:0;margin-top:3px;"></span>
+      </div>
+      <div class="metric-tile-value">100%</div>
+      <div class="metric-tile-desc">No downtime recorded this month</div>
+    </div>
+    <div class="metric-tile green">
+      <div class="metric-tile-top">
+        <span class="metric-tile-label">Incidents</span>
+        <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#10b981;flex-shrink:0;margin-top:3px;"></span>
+      </div>
+      <div class="metric-tile-value">0</div>
+      <div class="metric-tile-desc">No outages or degraded performance events</div>
+    </div></div>
+      <div class="risk-box">
+        <div class="risk-box-label">Business risk</div>
+        <p>No reliability risk at this time.</p>
+      </div>
+      
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-header" style="background:#ecfdf5;border-color:#a7f3d0">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:18px;">🔄</span>
+        <div>
+          <div class="section-title">Updates</div>
+          <div style="font-size:11px;font-weight:700;color:#10b981">↑ Improving</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div style="text-align:right;">
+          <div style="font-family:'Montserrat',sans-serif;font-size:20px;font-weight:700;color:var(--dark-teal);line-height:1;">100</div>
+          <div style="font-size:11px;color:#9ca3af;">/100</div>
+        </div>
+        <div class="tl-badge green">GREEN</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="score-bar">
+        <div class="score-bar-top"><span>Score</span><span>100/100</span></div>
+        <div class="score-bar-track">
+          <div class="score-bar-fill" style="width:100%;background:#10b981;"></div>
+        </div>
+      </div>
+      <div class="section-headline">All plugins and themes are current</div>
+      <div class="section-interp">All 0 pending updates were applied during the May maintenance window. WordPress core, all plugins, and the active theme are running current versions. PHP has been upgraded to 8.2.</div>
+      <div class="metric-grid">
+    <div class="metric-tile green">
+      <div class="metric-tile-top">
+        <span class="metric-tile-label">Pending Updates</span>
+        <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#10b981;flex-shrink:0;margin-top:3px;"></span>
+      </div>
+      <div class="metric-tile-value">0</div>
+      <div class="metric-tile-desc">All plugins, themes, and core are current</div>
+    </div>
+    <div class="metric-tile green">
+      <div class="metric-tile-top">
+        <span class="metric-tile-label">PHP Version</span>
+        <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#10b981;flex-shrink:0;margin-top:3px;"></span>
+      </div>
+      <div class="metric-tile-value">8.2</div>
+      <div class="metric-tile-desc">Current supported version — upgraded this month</div>
+    </div>
+    <div class="metric-tile green">
+      <div class="metric-tile-top">
+        <span class="metric-tile-label">WordPress Core</span>
+        <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#10b981;flex-shrink:0;margin-top:3px;"></span>
+      </div>
+      <div class="metric-tile-value">Current</div>
+      <div class="metric-tile-desc">Running latest stable release</div>
+    </div></div>
+      <div class="risk-box">
+        <div class="risk-box-label">Business risk</div>
+        <p>No update risk. Maintaining zero pending updates eliminates the most common WordPress vulnerability vector.</p>
+      </div>
+      
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-header" style="background:#ecfdf5;border-color:#a7f3d0">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:18px;">💾</span>
+        <div>
+          <div class="section-title">Backups</div>
+          <div style="font-size:11px;font-weight:700;color:#6b7280">→ Stable</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div style="text-align:right;">
+          <div style="font-family:'Montserrat',sans-serif;font-size:20px;font-weight:700;color:var(--dark-teal);line-height:1;">100</div>
+          <div style="font-size:11px;color:#9ca3af;">/100</div>
+        </div>
+        <div class="tl-badge green">GREEN</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="score-bar">
+        <div class="score-bar-top"><span>Score</span><span>100/100</span></div>
+        <div class="score-bar-track">
+          <div class="score-bar-fill" style="width:100%;background:#10b981;"></div>
+        </div>
+      </div>
+      <div class="section-headline">Daily backups completing successfully</div>
+      <div class="section-interp">Automated daily backups are completing without error on WP Engine. The most recent backup was verified and is restorable. Retention policy covers the last 30 days.</div>
+      <div class="metric-grid">
+    <div class="metric-tile green">
+      <div class="metric-tile-top">
+        <span class="metric-tile-label">Backup Status</span>
+        <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#10b981;flex-shrink:0;margin-top:3px;"></span>
+      </div>
+      <div class="metric-tile-value">Healthy</div>
+      <div class="metric-tile-desc">All scheduled backups completed successfully</div>
+    </div>
+    <div class="metric-tile green">
+      <div class="metric-tile-top">
+        <span class="metric-tile-label">Last Backup</span>
+        <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#10b981;flex-shrink:0;margin-top:3px;"></span>
+      </div>
+      <div class="metric-tile-value">Today</div>
+      <div class="metric-tile-desc">Most recent backup completed without error</div>
+    </div>
+    <div class="metric-tile green">
+      <div class="metric-tile-top">
+        <span class="metric-tile-label">Retention</span>
+        <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#10b981;flex-shrink:0;margin-top:3px;"></span>
+      </div>
+      <div class="metric-tile-value">30 days</div>
+      <div class="metric-tile-desc">Full month of restore points available</div>
+    </div></div>
+      <div class="risk-box">
+        <div class="risk-box-label">Business risk</div>
+        <p>No backup risk. Daily automated backups ensure the site can be restored to any point in the last 30 days.</p>
+      </div>
+      
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-header" style="background:#ecfdf5;border-color:#a7f3d0">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:18px;">⚙️</span>
+        <div>
+          <div class="section-title">Engineering</div>
+          <div style="font-size:11px;font-weight:700;color:#6b7280">→ Stable</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div style="text-align:right;">
+          <div style="font-family:'Montserrat',sans-serif;font-size:20px;font-weight:700;color:var(--dark-teal);line-height:1;">90</div>
+          <div style="font-size:11px;color:#9ca3af;">/100</div>
+        </div>
+        <div class="tl-badge green">GREEN</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="score-bar">
+        <div class="score-bar-top"><span>Score</span><span>90/100</span></div>
+        <div class="score-bar-track">
+          <div class="score-bar-fill" style="width:90%;background:#10b981;"></div>
+        </div>
+      </div>
+      <div class="section-headline">Clean deployment history — 2 successful deployments</div>
+      <div class="section-interp">Two deployments were made to production this month as part of the M&S maintenance work: the PHP 8.2 upgrade and the plugin update batch. Both completed without rollback or incident.</div>
+      <div class="metric-grid">
+    <div class="metric-tile green">
+      <div class="metric-tile-top">
+        <span class="metric-tile-label">Deployments</span>
+        <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#10b981;flex-shrink:0;margin-top:3px;"></span>
+      </div>
+      <div class="metric-tile-value">2</div>
+      <div class="metric-tile-desc">Both deployments successful with no rollbacks</div>
+    </div>
+    <div class="metric-tile green">
+      <div class="metric-tile-top">
+        <span class="metric-tile-label">Hotfixes</span>
+        <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#10b981;flex-shrink:0;margin-top:3px;"></span>
+      </div>
+      <div class="metric-tile-value">0</div>
+      <div class="metric-tile-desc">No emergency fixes required</div>
+    </div>
+    <div class="metric-tile green">
+      <div class="metric-tile-top">
+        <span class="metric-tile-label">Failed Builds</span>
+        <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#10b981;flex-shrink:0;margin-top:3px;"></span>
+      </div>
+      <div class="metric-tile-value">0</div>
+      <div class="metric-tile-desc">All CI/CD pipelines passed</div>
+    </div></div>
+      <div class="risk-box">
+        <div class="risk-box-label">Business risk</div>
+        <p>No engineering risk. Clean deployment history indicates well-managed change control.</p>
+      </div>
+      
+    </div>
+  </div>
+
+  <!-- RECOMMENDED ACTIONS -->
+  <div class="exec-card">
+    <h2>Recommended actions</h2>
+    <p style="font-size:13px;color:#9ca3af;margin-bottom:16px;">Prioritised list of actions for this month</p>
+    
+  <div class="rec-action" style="border-radius:10px;border:1px solid var(--red-border);background:var(--red-bg);padding:14px 16px;margin-bottom:10px;">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+      <span style="width:8px;height:8px;border-radius:50%;background:#ef4444;flex-shrink:0;"></span>
+      <span style="font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#ef4444;">HIGH PRIORITY</span>
+    </div>
+    <div style="font-family:'Montserrat',sans-serif;font-size:14px;font-weight:700;color:var(--dark-teal);margin-bottom:6px;">Defer Convert Experiments analytics script and lazy-load FontAwesome icons</div>
+    <div style="font-size:13px;color:#374151;line-height:1.5;">These two changes account for ~1,560ms of blocking time. Expected improvement: +15–20 PageSpeed points. Google uses mobile speed as a ranking factor — this directly impacts organic search traffic to Barnardos' donation and service pages.</div>
+  </div>
+  <div class="rec-action" style="border-radius:10px;border:1px solid var(--red-border);background:var(--red-bg);padding:14px 16px;margin-bottom:10px;">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+      <span style="width:8px;height:8px;border-radius:50%;background:#ef4444;flex-shrink:0;"></span>
+      <span style="font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#ef4444;">HIGH PRIORITY</span>
+    </div>
+    <div style="font-family:'Montserrat',sans-serif;font-size:14px;font-weight:700;color:var(--dark-teal);margin-bottom:6px;">Audit and reduce render-blocking CSS — Bootstrap and FontAwesome total 47KB of blocking CSS</div>
+    <div style="font-size:13px;color:#374151;line-height:1.5;">Reducing render-blocking CSS improves Speed Index and LCP, making the page feel significantly faster. Replace with utility-only classes where possible.</div>
+  </div>
+  <div class="rec-action" style="border-radius:10px;border:1px solid var(--amber-border);background:var(--amber-bg);padding:14px 16px;margin-bottom:10px;">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+      <span style="width:8px;height:8px;border-radius:50%;background:#f59e0b;flex-shrink:0;"></span>
+      <span style="font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#f59e0b;">MEDIUM PRIORITY</span>
+    </div>
+    <div style="font-family:'Montserrat',sans-serif;font-size:14px;font-weight:700;color:var(--dark-teal);margin-bottom:6px;">Enable WP Engine CDN caching and configure static asset cache headers</div>
+    <div style="font-size:13px;color:#374151;line-height:1.5;">Low-effort infrastructure change with meaningful impact on repeat visitor load times. Can be done without code changes.</div>
+  </div>
+  <div class="rec-action" style="border-radius:10px;border:1px solid var(--amber-border);background:var(--amber-bg);padding:14px 16px;margin-bottom:10px;">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+      <span style="width:8px;height:8px;border-radius:50%;background:#f59e0b;flex-shrink:0;"></span>
+      <span style="font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#f59e0b;">MEDIUM PRIORITY</span>
+    </div>
+    <div style="font-family:'Montserrat',sans-serif;font-size:14px;font-weight:700;color:var(--dark-teal);margin-bottom:6px;">Remove jQuery Migrate (5.2KB) — no legacy jQuery code should require it on a current build</div>
+    <div style="font-size:13px;color:#374151;line-height:1.5;">Reduces page weight and eliminates an unnecessary legacy dependency from every page load.</div>
+  </div>
+  </div>
+
+  <!-- SUPPORT TICKETS -->
+  
+  <div class="exec-card" style="margin-bottom:16px;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+      <h2 style="font-family:'Montserrat',sans-serif;font-size:18px;font-weight:700;color:var(--dark-teal);">Support tickets</h2>
+      <a href="https://support.wordie.com.au/tickets" style="font-size:12px;color:var(--accent-teal);font-family:'Montserrat',sans-serif;font-weight:600;">View portal →</a>
+    </div>
+    <p style="font-size:13px;color:#9ca3af;margin-bottom:16px;">Activity this month via support.wordie.com.au</p>
+
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px;">
+      
+    <div style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:10px;padding:14px 16px;text-align:center;">
+      <div style="font-family:'Montserrat',sans-serif;font-size:28px;font-weight:700;color:#374151;line-height:1;">3</div>
+      <div style="font-size:11px;color:#6b7280;margin-top:4px;">Opened</div>
+    </div>
+    <div style="background:#dcfce7;border:1px solid #a7f3d0;border-radius:10px;padding:14px 16px;text-align:center;">
+      <div style="font-family:'Montserrat',sans-serif;font-size:28px;font-weight:700;color:#166534;line-height:1;">5</div>
+      <div style="font-size:11px;color:#6b7280;margin-top:4px;">Closed</div>
+    </div>
+    <div style="background:#dbeafe;border:1px solid #bfdbfe;border-radius:10px;padding:14px 16px;text-align:center;">
+      <div style="font-family:'Montserrat',sans-serif;font-size:28px;font-weight:700;color:#1e40af;line-height:1;">1</div>
+      <div style="font-size:11px;color:#6b7280;margin-top:4px;">In progress</div>
+    </div>
+    <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:14px 16px;text-align:center;">
+      <div style="font-family:'Montserrat',sans-serif;font-size:28px;font-weight:700;color:#92400e;line-height:1;">1</div>
+      <div style="font-size:11px;color:#6b7280;margin-top:4px;">Pending client</div>
+    </div>
+    </div>
+
+    <div style="background:#f9fafb;border-radius:8px;padding:10px 14px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;">
+      <span style="font-size:13px;color:#374151;">Ticket resolution rate this month</span>
+      <span style="font-family:'Montserrat',sans-serif;font-size:16px;font-weight:700;color:#854d0e;">71%</span>
+    </div>
+
+    <div>
+      <div style="display:grid;grid-template-columns:80px 1fr auto;gap:12px;padding-bottom:8px;border-bottom:2px solid #e5e7eb;margin-bottom:2px;">
+        <span style="font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:#9ca3af;">Ticket</span>
+        <span style="font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:#9ca3af;">Subject</span>
+        <span style="font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:#9ca3af;">Status</span>
+      </div>
+      
+    <div style="display:grid;grid-template-columns:80px 1fr auto;gap:12px;align-items:start;padding:12px 0;border-bottom:1px solid #f3f4f6;">
+      <div>
+        <div style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:var(--accent-teal);">WRD-1042</div>
+        <div style="font-size:11px;color:#9ca3af;margin-top:2px;">28 Apr</div>
+      </div>
+      <div>
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:4px;">
+          <span style="width:7px;height:7px;border-radius:50%;background:#ef4444;flex-shrink:0;"></span>
+          <span style="font-family:'Montserrat',sans-serif;font-size:13px;font-weight:600;color:var(--dark-teal);">Homepage hero image not loading on mobile Safari</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+          <span style="font-size:11px;background:#fef2f2;color:#991b1b;padding:1px 7px;border-radius:4px;font-weight:600;">Bug</span>
+          <span style="font-size:11px;color:#9ca3af;">→ Stewart L.</span>
+          <span style="font-size:11px;color:#9ca3af;font-style:italic;">Resolved — image format converted to WebP with JPEG fallback.</span>
+        </div>
+      </div>
+      <div>
+        <span style="font-size:11px;font-weight:700;font-family:'Montserrat',sans-serif;background:#dcfce7;color:#166534;padding:3px 9px;border-radius:99px;white-space:nowrap;">Closed</span>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:80px 1fr auto;gap:12px;align-items:start;padding:12px 0;border-bottom:1px solid #f3f4f6;">
+      <div>
+        <div style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:var(--accent-teal);">WRD-1051</div>
+        <div style="font-size:11px;color:#9ca3af;margin-top:2px;">1 May</div>
+      </div>
+      <div>
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:4px;">
+          <span style="width:7px;height:7px;border-radius:50%;background:#ef4444;flex-shrink:0;"></span>
+          <span style="font-family:'Montserrat',sans-serif;font-size:13px;font-weight:600;color:var(--dark-teal);">PHP 8.2 upgrade — staging verification</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+          <span style="font-size:11px;background:#f0fdf4;color:#166534;padding:1px 7px;border-radius:4px;font-weight:600;">Maintenance</span>
+          <span style="font-size:11px;color:#9ca3af;">→ Stewart L.</span>
+          <span style="font-size:11px;color:#9ca3af;font-style:italic;">Upgrade completed. All plugins tested on staging before production push.</span>
+        </div>
+      </div>
+      <div>
+        <span style="font-size:11px;font-weight:700;font-family:'Montserrat',sans-serif;background:#dcfce7;color:#166534;padding:3px 9px;border-radius:99px;white-space:nowrap;">Closed</span>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:80px 1fr auto;gap:12px;align-items:start;padding:12px 0;border-bottom:1px solid #f3f4f6;">
+      <div>
+        <div style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:var(--accent-teal);">WRD-1053</div>
+        <div style="font-size:11px;color:#9ca3af;margin-top:2px;">2 May</div>
+      </div>
+      <div>
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:4px;">
+          <span style="width:7px;height:7px;border-radius:50%;background:#10b981;flex-shrink:0;"></span>
+          <span style="font-family:'Montserrat',sans-serif;font-size:13px;font-weight:600;color:var(--dark-teal);">Add new staff member to About page</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+          <span style="font-size:11px;background:#eff6ff;color:#1e40af;padding:1px 7px;border-radius:4px;font-weight:600;">Content</span>
+          <span style="font-size:11px;color:#9ca3af;">→ Wordie Team</span>
+          <span style="font-size:11px;color:#9ca3af;font-style:italic;">Content updated as requested.</span>
+        </div>
+      </div>
+      <div>
+        <span style="font-size:11px;font-weight:700;font-family:'Montserrat',sans-serif;background:#dcfce7;color:#166534;padding:3px 9px;border-radius:99px;white-space:nowrap;">Closed</span>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:80px 1fr auto;gap:12px;align-items:start;padding:12px 0;border-bottom:1px solid #f3f4f6;">
+      <div>
+        <div style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:var(--accent-teal);">WRD-1055</div>
+        <div style="font-size:11px;color:#9ca3af;margin-top:2px;">3 May</div>
+      </div>
+      <div>
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:4px;">
+          <span style="width:7px;height:7px;border-radius:50%;background:#ef4444;flex-shrink:0;"></span>
+          <span style="font-family:'Montserrat',sans-serif;font-size:13px;font-weight:600;color:var(--dark-teal);">Contact form not sending confirmation emails</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+          <span style="font-size:11px;background:#fef2f2;color:#991b1b;padding:1px 7px;border-radius:4px;font-weight:600;">Bug</span>
+          <span style="font-size:11px;color:#9ca3af;">→ Stewart L.</span>
+          <span style="font-size:11px;color:#9ca3af;font-style:italic;">SMTP configuration corrected. Confirmation emails now delivering.</span>
+        </div>
+      </div>
+      <div>
+        <span style="font-size:11px;font-weight:700;font-family:'Montserrat',sans-serif;background:#dcfce7;color:#166534;padding:3px 9px;border-radius:99px;white-space:nowrap;">Closed</span>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:80px 1fr auto;gap:12px;align-items:start;padding:12px 0;border-bottom:1px solid #f3f4f6;">
+      <div>
+        <div style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:var(--accent-teal);">WRD-1058</div>
+        <div style="font-size:11px;color:#9ca3af;margin-top:2px;">5 May</div>
+      </div>
+      <div>
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:4px;">
+          <span style="width:7px;height:7px;border-radius:50%;background:#f59e0b;flex-shrink:0;"></span>
+          <span style="font-family:'Montserrat',sans-serif;font-size:13px;font-weight:600;color:var(--dark-teal);">Monthly plugin + theme update batch — May 2026</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+          <span style="font-size:11px;background:#f0fdf4;color:#166534;padding:1px 7px;border-radius:4px;font-weight:600;">Maintenance</span>
+          <span style="font-size:11px;color:#9ca3af;">→ Wordie Team</span>
+          <span style="font-size:11px;color:#9ca3af;font-style:italic;">All updates applied. Site tested post-update.</span>
+        </div>
+      </div>
+      <div>
+        <span style="font-size:11px;font-weight:700;font-family:'Montserrat',sans-serif;background:#dcfce7;color:#166534;padding:3px 9px;border-radius:99px;white-space:nowrap;">Closed</span>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:80px 1fr auto;gap:12px;align-items:start;padding:12px 0;border-bottom:1px solid #f3f4f6;">
+      <div>
+        <div style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:var(--accent-teal);">WRD-1061</div>
+        <div style="font-size:11px;color:#9ca3af;margin-top:2px;">7 May</div>
+      </div>
+      <div>
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:4px;">
+          <span style="width:7px;height:7px;border-radius:50%;background:#ef4444;flex-shrink:0;"></span>
+          <span style="font-family:'Montserrat',sans-serif;font-size:13px;font-weight:600;color:var(--dark-teal);">Performance remediation plan — mobile PageSpeed</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+          <span style="font-size:11px;background:#faf5ff;color:#6b21a8;padding:1px 7px;border-radius:4px;font-weight:600;">Development</span>
+          <span style="font-size:11px;color:#9ca3af;">→ Stewart L.</span>
+          <span style="font-size:11px;color:#9ca3af;font-style:italic;">Investigation underway. Scoping Convert Experiments defer + FontAwesome lazy-load.</span>
+        </div>
+      </div>
+      <div>
+        <span style="font-size:11px;font-weight:700;font-family:'Montserrat',sans-serif;background:#dbeafe;color:#1e40af;padding:3px 9px;border-radius:99px;white-space:nowrap;">In progress</span>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:80px 1fr auto;gap:12px;align-items:start;padding:12px 0;border-bottom:1px solid #f3f4f6;">
+      <div>
+        <div style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:var(--accent-teal);">WRD-1063</div>
+        <div style="font-size:11px;color:#9ca3af;margin-top:2px;">6 May</div>
+      </div>
+      <div>
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:4px;">
+          <span style="width:7px;height:7px;border-radius:50%;background:#f59e0b;flex-shrink:0;"></span>
+          <span style="font-family:'Montserrat',sans-serif;font-size:13px;font-weight:600;color:var(--dark-teal);">Update donation page copy — new campaign text</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+          <span style="font-size:11px;background:#eff6ff;color:#1e40af;padding:1px 7px;border-radius:4px;font-weight:600;">Content</span>
+          <span style="font-size:11px;color:#9ca3af;">→ Wordie Team</span>
+          <span style="font-size:11px;color:#9ca3af;font-style:italic;">Waiting on approved copy from Barnardos comms team.</span>
+        </div>
+      </div>
+      <div>
+        <span style="font-size:11px;font-weight:700;font-family:'Montserrat',sans-serif;background:#f3f4f6;color:#374151;padding:3px 9px;border-radius:99px;white-space:nowrap;">Pending client</span>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="report-footer">
+    <p>This report was generated by Wordie on 7 May 2026.</p>
+    <p>Questions? Contact us at <a href="mailto:support@wordie.com.au">support@wordie.com.au</a></p>
+    <div class="wordmark-footer">wordie — WordPress, done properly.</div>
+  </div>
+
+</div>
+
+<button class="print-btn" onclick="window.print()">
+  <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+  Print / Export PDF
+</button>
+
+</body>
+</html>
